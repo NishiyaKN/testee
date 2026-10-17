@@ -1302,3 +1302,294 @@ Assinale a alternativa que apresenta a ordem correta dos eventos, conforme o cic
 **Conceito-chave para a prova:** **N-A-C-R-R-F** (Novo, Atribuído, em Correção, Resolvido, Re-teste, Fechado). Se o re-teste falhar, o status vira **Reaberto** e o defeito volta ao fluxo. "Resolvido" significa que a correção foi **enviada** ao staging; "Fechado" significa que o QA **confirmou** a correção.
 
 ---
+
+## I30 — Diagrama de classes: visibilidade e escopo
+**Subtópico coberto:** 7.2, Diagrama de classes: modificadores de acesso e escopos de membros (apostila p. 83–84; slides p. 65)
+**Por que é provável:** os slides e a apostila listam os 6 símbolos (+, −, #, ~, /, sublinhado) e explicam classificador × instância. É conteúdo de memorização típico de questão de lacunas aplicada a um diagrama.
+**Prioridade:** Alta
+**Tipo ENADE:** Lacunas (aplicada a um diagrama)
+
+**Enunciado:**
+Um analista modelou a classe a seguir no diagrama de classes de um sistema bancário:
+
+| **ContaBancaria** |
+|---|
+| − saldo: double |
+| # agencia: String |
+| ~ codigoInterno: int |
+| / saldoDisponivel: double |
+| + <u>taxaJuros</u>: double _(nome sublinhado no diagrama)_ |
+| + depositar(valor: double): void |
+
+[Figura: retângulo de classe UML com três compartimentos. No superior, o nome "ContaBancaria" em negrito e centralizado. No central, os cinco atributos acima. No inferior, a operação `depositar`.]
+
+Considerando a notação UML de visibilidade e de escopo de membros, complete as lacunas:
+
+"No diagrama, o atributo `saldo` tem visibilidade ______; `agencia` tem visibilidade ______; `codigoInterno` tem visibilidade ______; `saldoDisponivel` é um atributo ______; e `taxaJuros`, por estar sublinhado, é um membro ______, cujo valor é o mesmo em todas as instâncias."
+
+**Alternativas:**
+- **A)** privada; de pacote; protegida; derivado; estático.
+- **B)** protegida; privada; de pacote; estático; derivado.
+- **C)** pública; protegida; de pacote; derivado; abstrato.
+- **D)** privada; protegida; de pacote; derivado; estático.
+- **E)** privada; protegida; derivado; de pacote; de instância.
+
+**Gabarito: D**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Troca `#` (protegido) e `~` (pacote).
+- **B) ❌** — O `−` é **privado**, não protegido. O `/` indica **derivado** e o sublinhado indica **estático**, e a alternativa inverte os dois.
+- **C) ❌** — O `−` não é público (público é `+`). O sublinhado indica estático, não abstrato.
+- **D) ✅** — `+` público, `−` privado, `#` protegido, `~` pacote, `/` derivado, sublinhado = estático, ou seja, escopo de **classificador**: "os valores dos atributos permanecem os mesmos em todas as instâncias" (p. 84; slides p. 65).
+- **E) ❌** — Troca `/` e `~`. Membro sublinhado é de **classificador**, não de **instância**: texto sem formatação indica instância.
+
+**Base no material:** apostila p. 84 e slides p. 65 ("Público (+), Privado (-), Protegido (#), Pacote (~), Derivado (/), Estático (sublinhado)"; "Para indicar um classificador, basta sublinhar seu nome"). Seções da classe na p. 83: o nome é obrigatório, começa com maiúscula, vai em negrito e centralizado.
+**Conceito-chave para a prova:** **+ público · − privado · # protegido · ~ pacote · / derivado · sublinhado estático.** Só o compartimento do **nome** é obrigatório. Os atributos e as operações são opcionais (p. 82–83).
+
+---
+
+## I31 — Diagrama de classes: herança e multiplicidade
+**Subtópico coberto:** 7.2, Diagrama de classes: interações (herança/generalização, associação bidirecional e unidirecional, multiplicidade) (apostila p. 84–85; slides p. 66–68)
+**Por que é provável:** os slides trazem 3 páginas com os exemplos Veículo/Carro, Car/RoadTrip (multiplicidades 0..1 e 0..*) e radar de velocidade (associação unidirecional). Asserção-razão com duas verdades sem nexo é um formato que o squad ainda não usou.
+**Prioridade:** Alta
+**Tipo ENADE:** Asserção-razão
+
+**Enunciado:**
+Uma locadora de veículos está modelando seu sistema com diagramas de classes UML. A classe `Veiculo` tem os atributos velocidade, número de passageiros e combustível e os métodos `go()`, `stop()` e `changeDirection()`. A classe `Carro` acrescenta tipo de modelo, número de portas e fabricante, além de métodos próprios. A classe `Carro` também se associa à classe `Viagem`: na extremidade de `Viagem`, a multiplicidade é 0..*, já que um carro pode fazer várias viagens.
+
+Analise as asserções a seguir e a relação proposta entre elas:
+
+I. A relação entre `Carro` e `Veiculo` deve ser representada por uma linha sólida com seta fechada e vazia apontando para `Veiculo`, e `Carro` herda todos os atributos e métodos de `Veiculo`, além de ter os seus próprios.
+
+**PORQUE**
+
+II. Em um diagrama de classes, a multiplicidade 0..* na extremidade de uma associação indica que uma instância pode estar ligada a nenhuma ou a várias instâncias da outra classe.
+
+**Julgamento:**
+- **Asserção I — Verdadeira.** A herança (generalização) "é mostrada em um diagrama de classes usando uma linha sólida com uma seta fechada e vazia" apontando para a superclasse, e "Carro" herda os atributos e métodos de "Veículo" além dos seus (slides p. 66; apostila p. 84–85).
+- **Asserção II — Verdadeira.** No exemplo dos slides, "um carro poderia fazer várias viagens: o valor da multiplicidade é definido como 0..*" (p. 67).
+- **Relação — a II não justifica a I.** A notação e a semântica da **herança** não decorrem da **multiplicidade** de uma **associação**. São relacionamentos diferentes, e a generalização nem tem multiplicidade.
+
+**Alternativas:**
+- **A)** As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.
+- **B)** As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.
+- **C)** A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.
+- **D)** A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.
+- **E)** As asserções I e II são proposições falsas.
+
+**Gabarito: B**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — É a armadilha clássica: as duas são verdadeiras, mas tratam de relacionamentos distintos.
+- **B) ✅** — As duas são verdadeiras e não há relação de causa entre elas.
+- **C) ❌** — A II é verdadeira.
+- **D) ❌** — A I é verdadeira. Quem confunde a seta de herança com a seta aberta da associação unidirecional pode marcar aqui.
+- **E) ❌** — As duas são verdadeiras.
+
+**Base no material:** slides p. 66 (herança), p. 67 (associação bidirecional: "linha reta entre duas classes"; multiplicidades 0..1 e 0..*) e p. 68 (associação unidirecional: "ponta de seta aberta da classe que conhece para a classe conhecida"; exemplo do radar).
+**Conceito-chave para a prova:** **herança** = linha sólida + triângulo **vazado** apontando para o **pai**. **Associação bidirecional** = linha simples, e as duas classes se conhecem. **Associação unidirecional** = linha com **seta aberta** apontando da classe que conhece para a classe conhecida. Multiplicidades: **0..1** (nenhum ou um) e **0..*** (nenhum ou muitos).
+
+---
+
+## I32 — Diagrama de sequência: fragmentos alt, opt e loop
+**Subtópico coberto:** 7.3, Diagrama de sequência: alternativas, opções e ciclos (slides p. 77)
+**Por que é provável:** os slides trazem uma figura com os três fragmentos combinados em um cenário de compra (pagamento confirmado/recusado, cupom de desconto, verificação de cada item do carrinho). É o mesmo domínio da Q4 (e-commerce, cupom), o que favorece uma questão "respectivamente".
+**Prioridade:** Alta
+**Tipo ENADE:** Resposta única ("respectivamente")
+
+**Enunciado:**
+Ao modelar o diagrama de sequência do processo de checkout de uma loja virtual, a analista precisou representar três trechos da interação:
+
+1. Para cada item do carrinho, o sistema consulta o serviço de estoque para verificar a disponibilidade.
+2. Se o pagamento for confirmado, o sistema exibe a confirmação do pedido. Caso contrário, exibe uma mensagem de falha no pagamento. Apenas um desses fluxos é executado.
+3. Somente se o cliente informar um código de cupom, o sistema aplica o desconto e atualiza o total.
+
+Os quadros (fragmentos combinados) da UML adequados para representar os trechos 1, 2 e 3 são, respectivamente:
+
+**Alternativas:**
+- **A)** loop; opt; alt.
+- **B)** alt; alt; opt.
+- **C)** loop; alt; opt.
+- **D)** opt; alt; loop.
+- **E)** loop; par; opt.
+
+**Gabarito: C**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Inverte opt e alt. Dois caminhos mutuamente exclusivos são **alt**. Um único caminho condicional é **opt**.
+- **B) ❌** — A repetição "para cada item" é **loop**, e não alternativa.
+- **C) ✅** — **loop**: "sequência de mensagens que se repetem até que uma condição seja atendida", aqui `[para cada item do carrinho]`. **alt**: "possíveis fluxos de interação, onde apenas um é executado se uma condição for atendida", aqui `[pagamento confirmado]` / `[pagamento recusado]`. **opt**: "um único caminho que é executado somente se sua condição for verdadeira", aqui `[cliente informa cupom]` (slides p. 77).
+- **D) ❌** — Inverte loop e opt.
+- **E) ❌** — **par** representa fluxos executados em **paralelo**, não escolha condicional entre dois fluxos.
+
+**Base no material:** slides p. 77. A figura mostra "Alternative" ([Payment confirmed]/[Payment declined]), "Option" ([Customer enters discount code]) e "Loop" ([For each item in cart]). "Os três elementos incluem texto entre colchetes para fornecer contexto adicional, como a condição necessária."
+**Conceito-chave para a prova:** **alt** = if/else (vários caminhos, só um executa). **opt** = if sem else (um caminho, executa ou não). **loop** = repetição. A condição de guarda vai **entre colchetes**.
+
+---
+
+## I33 — Diagrama de sequência: símbolos e DSS
+**Subtópico coberto:** 7.3, Diagrama de sequência: linhas de vida, ativação, mensagens e Diagrama de Sequência do Sistema (DSS) (apostila p. 87–92; slides p. 70–76)
+**Por que é provável:** os slides dedicam 4 páginas aos símbolos (linha de vida, ator, caixa de ativação, mensagem de retorno, auto-mensagem, criação e destruição), e a apostila explica o DSS como "caixa-preta". O DSS é um bom alvo para afirmativa falsa.
+**Prioridade:** Alta
+**Tipo ENADE:** Afirmativas múltiplas (I–IV)
+
+**Enunciado:**
+Um hospital está documentando o processo de agendamento de exames do seu sistema de gestão hospitalar com diagramas de sequência UML, que mostram como e em que ordem um grupo de objetos trabalha em conjunto. Sobre os elementos desse diagrama, avalie as afirmações a seguir.
+
+I. A caixa de ativação, um retângulo fino sobre a linha de vida, indica que o objeto está envolvido na operação iniciada por uma mensagem. Quanto mais tempo a tarefa leva, maior é o retângulo.
+
+II. A mensagem de retorno é representada por uma seta tracejada e é enviada quando o receptor termina de processar uma mensagem e devolve o controle ao chamador. A auto-mensagem, uma seta em forma de U, representa uma operação interna do próprio objeto.
+
+III. A mensagem de destruição remove um objeto existente e é marcada com um X na linha de vida destruída. A mensagem de criação adiciona um novo objeto ao diagrama.
+
+IV. No Diagrama de Sequência do Sistema (DSS), o sistema é detalhado em todos os seus objetos internos, e os atores externos não aparecem, pois o foco é a colaboração entre as classes.
+
+É correto o que se afirma em:
+
+**Julgamento das afirmativas:**
+- **I — Verdadeira.** Slides p. 74 e tabela de símbolos da apostila (p. 89).
+- **II — Verdadeira.** Slides p. 75.
+- **III — Verdadeira.** Slides p. 76.
+- **IV — Falsa.** É o oposto. O DSS "normalmente trata o sistema como uma '**caixa-preta**' e se concentra no fluxo de eventos **do ator externo** ao sistema de um caso de uso específico" (apostila p. 87; também p. 91). Quem modela a colaboração de vários objetos internos é o diagrama de sequência **padrão**.
+
+**Alternativas:**
+- **A)** I e II, apenas.
+- **B)** I e IV, apenas.
+- **C)** II e III, apenas.
+- **D)** II, III e IV, apenas.
+- **E)** I, II e III, apenas.
+
+**Gabarito: E**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Omite a III, que também é verdadeira.
+- **B) ❌** — Inclui a IV, que inverte o conceito de DSS.
+- **C) ❌** — Omite a I.
+- **D) ❌** — Inclui a IV e omite a I.
+- **E) ✅** — I, II e III são verdadeiras. A IV é falsa.
+
+**Base no material:** apostila p. 87–92 (definição: também chamado de diagrama de eventos ou cenário de eventos; DSS; benefícios; usos: cenário de uso, lógica do método, lógica de serviço; símbolos); slides p. 70–76.
+**Conceito-chave para a prova:** **linha de vida** = linha tracejada vertical (passagem do tempo). **Ativação** = retângulo fino (o objeto está trabalhando). **Retorno** = seta **tracejada**. **Auto-mensagem** = seta em **U**. **Destruição** = **X**. O diagrama de sequência é um **diagrama de interação**, portanto comportamental. O **DSS** trata o sistema como **caixa-preta** e mostra os eventos ator → sistema de **um caso de uso**.
+
+---
+
+## I34 — Diagrama de atividades
+**Subtópico coberto:** Diagrama de atividades, presente só nos slides; a apostila apenas o cita na seção 2.2 (slides p. 79–87; apostila p. 31)
+**Por que é provável:** os slides dedicam **9 páginas** a esse diagrama, com símbolos de início, ação, decisão, garfo, junção, final de fluxo, término etc. e um exemplo bancário de saque/depósito. Nenhuma questão conhecida cobra o tema.
+**Prioridade:** Alta
+**Tipo ENADE:** Resposta única ("respectivamente")
+
+**Enunciado:**
+Uma analista está modelando, com um diagrama de atividades UML, o processo de saque em um caixa eletrônico. Depois que o cartão é validado, o processo segue estes passos:
+
+1. O fluxo único se divide em duas atividades executadas simultaneamente: "Registrar log de acesso" e "Consultar saldo".
+2. As duas atividades simultâneas se combinam e voltam a formar um único fluxo.
+3. O processo segue por caminhos diferentes conforme a condição "[saldo suficiente]" ou "[saldo insuficiente]".
+4. Por fim, marca-se o estado final da atividade, que representa a conclusão de **todos** os fluxos do processo.
+
+Os símbolos do diagrama de atividades usados nos passos 1, 2, 3 e 4 são, respectivamente:
+
+**Alternativas:**
+- **A)** garfo (fork); junção (barra de sincronização); decisão (losango); término (nó final).
+- **B)** junção (barra de sincronização); garfo (fork); decisão (losango); final de fluxo.
+- **C)** garfo (fork); junção (barra de sincronização); decisão (losango); final de fluxo.
+- **D)** decisão (losango); junção (barra de sincronização); garfo (fork); término (nó final).
+- **E)** garfo (fork); decisão (losango); junção (barra de sincronização); término (nó final).
+
+**Gabarito: A**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ✅** — **Garfo**: "divide um único fluxo de atividade em duas atividades simultâneas". **Junção/barra de sincronização**: "combina duas atividades simultâneas e as reintroduz em um fluxo onde apenas uma atividade ocorre por vez". **Decisão**: losango com pelo menos dois caminhos e texto de condição. **Término**: "marca o estado final de uma atividade e representa a conclusão de todos os fluxos" (slides p. 83 e 86).
+- **B) ❌** — Inverte garfo e junção, e usa final de fluxo no lugar de término.
+- **C) ❌** — Os três primeiros estão certos, mas o **final de fluxo** encerra só **um** fluxo específico e "não deve representar o fim de todos os fluxos em uma atividade. Nesse caso, use o símbolo de término" (slides p. 85).
+- **D) ❌** — A divisão em atividades simultâneas não é uma decisão, porque na decisão só **um** caminho é seguido.
+- **E) ❌** — Troca a ordem de decisão e junção.
+
+**Base no material:** slides p. 79 (diagrama de comportamento, junto com casos de uso e máquina de estados), p. 81 (nó inicial = círculo preto; nó final = círculo preto contornado; nó de decisão = losango com uma entrada e duas ou mais saídas), p. 82–86 (símbolos) e p. 87 (exemplo bancário de saque/depósito).
+**Conceito-chave para a prova:** **garfo = 1 → N simultâneos. Junção = N simultâneos → 1. Decisão = escolhe 1 de N caminhos, com condição entre colchetes. Final de fluxo = encerra um ramo. Término/nó final = encerra a atividade inteira.** Nó inicial = círculo preto. Nó final = círculo preto contornado.
+
+---
+
+## I35 — Diagrama de componentes
+**Subtópico coberto:** 7.4, Diagrama de componentes (apostila p. 93–98; slides p. 88–96)
+**Por que é provável:** os slides detalham símbolos de componente, nó, interface, porta, pacote, nota e dependência, e reservam uma página só para interface fornecida × necessária ("pirulito" × "soquete"). O exemplo do sistema de bibliotecas (slides p. 96) dá um cenário pronto.
+**Prioridade:** Média
+**Tipo ENADE:** Resposta única
+
+**Enunciado:**
+No diagrama de componentes UML de um sistema de gerenciamento de bibliotecas, o componente `Catálogo` disponibiliza o serviço `IConsultaLivros`, e o componente `Empréstimo` precisa desse serviço para verificar se um livro está disponível antes de registrar o empréstimo. A ligação entre os dois foi desenhada com a notação "bola-e-soquete".
+
+A notação de `IConsultaLivros` junto ao componente `Catálogo` e junto ao componente `Empréstimo` corresponde, respectivamente, a:
+
+**Alternativas:**
+- **A)** interface necessária (linha com círculo) junto a `Catálogo` e interface fornecida (linha com semicírculo) junto a `Empréstimo`.
+- **B)** porta (pequeno quadrado) junto a `Catálogo` e dependência (linha sólida com triângulo vazado) junto a `Empréstimo`.
+- **C)** interface fornecida (linha com semicírculo) junto a `Catálogo` e interface necessária (linha com círculo) junto a `Empréstimo`.
+- **D)** interface fornecida (linha com círculo, o "pirulito") junto a `Catálogo` e interface necessária (linha com semicírculo, o "soquete") junto a `Empréstimo`.
+- **E)** nó (caixa tridimensional) junto a `Catálogo` e artefato (retângulo com «artifact») junto a `Empréstimo`.
+
+**Gabarito: D**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Inverte os papéis: quem **disponibiliza** o serviço (`Catálogo`) tem a interface **fornecida**.
+- **B) ❌** — A porta é um ponto de interação separado entre o componente e o ambiente, não a interface fornecida em si. A dependência é representada por linha **tracejada**, não por linha sólida com triângulo, que é a notação de herança.
+- **C) ❌** — Inverte os símbolos: o **círculo** é a fornecida e o **semicírculo** é a necessária.
+- **D) ✅** — "Interface fornecida: uma linha reta a partir da caixa de componentes e com um círculo anexado... a interface na qual um componente produz informações usadas pela interface necessária de outro componente". "Interface necessária: uma linha reta... com um semicírculo anexado... a interface na qual um componente requer informações para executar a função correta" (slides p. 95; figura renderizada).
+- **E) ❌** — Nó e artefato pertencem ao **diagrama de implementação**, e o nó é de nível superior aos componentes.
+
+**Base no material:** slides p. 88 (componente = módulo de classes que representa sistemas ou subsistemas independentes; desenvolvimento baseado em componentes, CBD), p. 91–93 (componente, nó, interface "pirulito, soquete e bola-e-soquete", porta = pequeno quadrado, pacote, nota, dependência = linha tracejada), p. 94–95 (interfaces) e p. 96 (sistema de bibliotecas); apostila p. 93–98.
+**Conceito-chave para a prova:** **pirulito (○) = fornece. Soquete (◡) = requer.** Os dois juntos formam a "bola-e-soquete". **Porta** = quadradinho. **Dependência** = linha tracejada com seta. Componentes e pacotes ligam-se por conectores de **montagem** e de **delegação**. O nome do componente leva o estereótipo «component» e/ou o ícone, para não ser confundido com uma classe.
+
+---
+
+## I36 — Diagrama de implementação
+**Subtópico coberto:** 7.5, Diagrama de implementação, também chamado de implantação (apostila p. 98–103; slides p. 97–102)
+**Por que é provável:** o material define nó de dispositivo × nó de ambiente de execução (EEN: SO, JVM), artefato e percurso de comunicação, e traz o exemplo servidor web + servidor de banco + dispositivo do usuário. Também frisa que o diagrama é **estrutural** e o único que descreve hardware.
+**Prioridade:** Média
+**Tipo ENADE:** Afirmativas múltiplas (I–IV)
+
+**Enunciado:**
+Uma loja virtual documentou a arquitetura física do seu sistema com um diagrama de implementação UML. O diagrama mostra o computador do usuário com o navegador; um servidor web com o sistema operacional Ubuntu e uma JVM, na qual está implantado o arquivo `loja.war`; e um servidor de banco de dados. As caixas que representam os equipamentos estão ligadas por linhas retas. Sobre esse diagrama, avalie as afirmações a seguir.
+
+I. O computador do usuário e os dois servidores são nós de dispositivo. O Ubuntu e a JVM são nós de ambiente de execução (EEN), sistemas de computação que residem dentro de um nó de dispositivo.
+
+II. O arquivo `loja.war`, informação gerada pelo software e implantada na JVM, é um artefato, representado por um retângulo com o estereótipo «artifact» e o nome do arquivo.
+
+III. Por representar o hardware e a distribuição física do software, o diagrama de implementação pertence à família dos diagramas comportamentais da UML.
+
+IV. Esse diagrama permite mostrar quais elementos de software são empregados por quais elementos de hardware e oferece uma visão da topologia do sistema, com os nós ligados por percursos de comunicação.
+
+É correto o que se afirma em:
+
+**Julgamento das afirmativas:**
+- **I — Verdadeira.** Nós de dispositivo são recursos de computação com capacidade de processamento, como PCs, laptops e celulares. O EEN "é qualquer sistema de computação que resida dentro de um nó de dispositivo. Pode ser um sistema operacional, um JVM ou outro recipiente web" (slides p. 100; apostila p. 101).
+- **II — Verdadeira.** "A informação gerada pelo software é chamada de artefato". O artefato é um retângulo com o nome e a palavra "artefato" (artifact) entre aspas angulares (apostila p. 98 e 100).
+- **III — Falsa.** O diagrama de implementação "faz parte da família de diagramação **estrutural**" (p. 98; slides p. 97). Ele é estático e descreve onde cada coisa roda, não comportamento ao longo do tempo.
+- **IV — Verdadeira.** Aplicações do diagrama (slides p. 98) e percurso de comunicação como "uma linha reta que representa a comunicação entre dois nódulos de aparelho" (slides p. 101).
+
+**Alternativas:**
+- **A)** I e III, apenas.
+- **B)** I, II e IV, apenas.
+- **C)** II e III, apenas.
+- **D)** II, III e IV, apenas.
+- **E)** I, II, III e IV.
+
+**Gabarito: B**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Inclui a III (falsa) e omite II e IV.
+- **B) ✅** — I, II e IV são verdadeiras. A III troca estrutural por comportamental.
+- **C) ❌** — Inclui a III e omite I e IV.
+- **D) ❌** — Inclui a III e omite a I.
+- **E) ❌** — A III é falsa.
+
+**Base no material:** apostila p. 98–103 (definição, aplicações, diretrizes, elementos: artefato, associação, componente, dependência, interface, nó, nó como contêiner, estereótipo; base de dados; exemplo da p. 103); slides p. 97–102.
+**Conceito-chave para a prova:** **nó** = caixa **3D**. **Nó de dispositivo** = hardware (PC, servidor, celular). **EEN** = ambiente dentro do dispositivo (SO, JVM, contêiner web). **Artefato** = arquivo gerado ou implantado (.war, .jar, executável). **Percurso de comunicação** = linha entre nós. É diagrama **estrutural**, "único no universo UML" por descrever hardware. A apostila usa "implantação" (p. 30) e "implementação" (p. 98) como sinônimos para o mesmo diagrama (deployment).
+
+---
+
+## Observações finais
+- **Por que tantas questões:** o material do Squad 8 é muito extenso (2 PDFs de 106 p. cada, 32 subseções), e as 4 questões objetivas conhecidas cobrem só os 4 blocos dos slides (Ágil, Fluxos, Requisitos, UML/casos de uso). Os Módulos 5 (POO/arquitetura/design) e 6 (V&V e testes) da apostila não têm nenhuma questão conhecida. Se o banco do squad seguir a premissa "1 questão por subtópico", é ali que estão as questões que faltam.
+- **Prioridade de estudo sugerida:** (1) temas dos slides sem questão: ISO 25010 (I8, I9), frameworks ágeis (I13, I14), PMBOK (I15), RUP (I11), elicitação (I5, I6), diagramas de classes, sequência, atividades, componentes e implementação (I30–I36); (2) temas clássicos de ENADE na apostila: SOLID (I17, I18), V&V (I23), níveis e técnicas de teste (I24–I26), defeitos (I28, I29); (3) os demais.
+- **Inconsistências do material que podem aparecer na prova:** a tabela do PMBOK nos slides (p. 18) duplica o rótulo "Construir uma cultura de empoderamento" (explorado em I15). A duração da sprint é de 1 a 4 semanas nos slides e de 2 a 4 semanas na apostila. A apostila numera duas seções como "5.3" (camadas e cliente-servidor). A apostila chama o mesmo diagrama de "implantação" e de "implementação". Os slides e a apostila dizem que atores são "pessoas" (p. 60/79), mas a apostila (p. 80) corrige para "pessoa, organização ou sistema externo".
+- **Limitação:** as questões inferidas usam só conteúdo do material do squad. Onde foi preciso complementar com conhecimento-padrão (fragmento `par` em I32, caso "severidade alta / prioridade baixa" em I28, valor-limite de 2 pontos em I25), isso está indicado na própria questão.
