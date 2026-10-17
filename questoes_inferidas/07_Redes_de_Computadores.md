@@ -37,7 +37,7 @@
 
 **Hipótese 2 — temas (evidência boa):** o slide p. 2 descreve o conteúdo de cada tema, e cada questão dos slides cobre literalmente um pedaço dessa descrição (ex.: T9 "segurança (WPA2/WPA3, 802.1X, PMF)" = Questão 8; T3 "Hubs, Switches, Roteadores ... domínios de colisão/broadcast" = Questão 1). Os pedaços da descrição **sem questão nos slides** são os candidatos naturais: T1 "camadas do modelo OSI ... arquitetura cliente-servidor e P2P"; T3 "topologias físicas/lógicas"; T4 "IPv6"; T5 "switches L2/L3 e quadros Ethernet"; T7 "funcionamento e portas dos protocolos essenciais: HTTP/HTTPS, DNS, SMTP, FTP e DHCP" (único tema sem nenhuma questão nos slides); T8 "firewalls, VPNs (IPsec, TLS), criptografia simétrica/assimétrica"; T9 "redes 4G/5G, SDN e IoT".
 
-**Hipótese 3 — posição (evidência fraca, é a melhor leitura possível):** as etiquetas combinam temas vizinhos ("Tema 3 & Camadas OSI", "Temas 4 e 5", "Tema 8 & Wi-Fi", "Tema 6 & Aplicações Práticas"), o que sugere um banco numerado em **blocos temáticos contíguos**, e os números faltantes ficam ao lado da questão do mesmo bloco. Além disso, as questões dos slides de categoria 1 do guia (interpretação) abrem o banco, e as de categoria 2 vêm depois, então as de categoria 3 (asserção-razão, ordenação) provavelmente ficam no fim (9 e 10). Resultado proposto:
+**Hipótese 3 — posição (evidência fraca, é a melhor leitura possível):** as etiquetas combinam temas vizinhos ("Tema 3 & Camadas OSI", "Temas 4 e 5", "Tema 8 & Wi-Fi", "Tema 6 & Aplicações Práticas"), o que sugere um banco numerado em **blocos temáticos contíguos**, e os números faltantes ficam ao lado da questão do mesmo bloco. Além disso, a única questão conhecida de categoria 1 do guia (interpretação) é a Questão 1, e as de categoria 2 estão em 5, 6, 8 e 11. Isso é compatível com as faltantes de categoria 1 (lacunas, afirmativa incompleta, resposta única) ficarem junto dela, em 2–4, e as de categoria 3 (asserção-razão, ordenação), em 9–10; sobra a posição 7 para a afirmativa negativa. Resultado proposto:
 
 | Bloco | Nº | Tema provável | Tipo provável | ID aqui | Gabarito proposto |
 |---|---|---|---|---|---|
@@ -495,11 +495,11 @@ Sobre protocolos, arquitetura em camadas e o modelo TCP/IP, assinale a alternati
 **Por que cada alternativa está certa ou errada:**
 - **A) ❌ (verdadeira)** — Os três elementos de Tanenbaum (Manual 1.5).
 - **B) ❌ (verdadeira)** — "Três conceitos precisam ficar bem separados" (Manual p. 9).
-- **C) ✅ (INCORRETA)** — Melhor esforço significa que o IP "tenta entregar, mas não garante ordem, ausência de duplicatas nem a própria entrega" (Manual p. 10). Ordem e eliminação de duplicatas são feitas pelo TCP.
+- **C) ✅ (INCORRETA)** — Melhor esforço significa que o IP "tenta entregar, mas não garante ordem, ausência de duplicatas nem a própria entrega" (Manual p. 11). Ordem e eliminação de duplicatas são feitas pelo TCP.
 - **D) ❌ (verdadeira)** — Modelo *hourglass* (Manual 2.2), "a razão do sucesso da Internet".
 - **E) ❌ (verdadeira)** — As duas diferenças OSI × TCP/IP que o Manual manda guardar (p. 12).
 
-**Base no material:** Manual p. 8–9 (1.5), p. 10 (princípio fim a fim; 4 camadas na RFC 1122 × 5 no modelo híbrido; Figura 3), p. 12 (2.2 ampulheta).
+**Base no material:** Manual p. 8–9 (1.5), p. 11 (princípio fim a fim; 4 camadas na RFC 1122 × 5 no modelo híbrido; Figura 3; melhor esforço), p. 12 (2.2 ampulheta e as duas diferenças OSI × TCP/IP).
 **Conceito-chave para a prova:** IP = melhor esforço, sem conexão, sem garantias; a inteligência fica nas pontas (princípio fim a fim). TCP/IP original tem 4 camadas (aplicação, transporte, internet, acesso à rede); o híbrido de Kurose tem 5.
 
 ---
@@ -767,7 +767,7 @@ No passo 1 há empate entre w e x (ambos 3); a escolha não altera os custos fin
 - **D) ❌** — Usa o enlace direto z–w (5), mais caro que z–y–w (3): 5 + 3 + 1 = 9.
 - **E) ❌** — Desvio desnecessário por v: 2 + 1 + 2 + 2 = 7.
 
-**Base no material:** Manual p. 27 (Tabela 15 LS × DV; 5.2.1, equação 11: D(v) ← min{D(v), D(w) + c(w,v)}), p. 28 (Figura 9 e tabela do Estudo de Caso a partir de u; complexidade O(n²) ou O(|E| log n) com heap).
+**Base no material:** Manual p. 27 (Tabela 15 LS × DV; 5.2.1), p. 28 (equação 11: D(v) ← min{D(v), D(w) + c(w,v)}; Figura 9 e tabela do Estudo de Caso a partir de u; complexidade O(n²) ou O(|E| log n) com heap).
 **Conceito-chave para a prova:** a cada passo entra em N' o nó de menor D ainda não definitivo, e relaxam-se os vizinhos. O resultado é a árvore de menores caminhos e a tabela de encaminhamento (próximo salto). OSPF/IS-IS usam Dijkstra; métrica = custo, não saltos.
 
 ---
@@ -880,7 +880,7 @@ Quadro: D seguido de R = **110101 111**. Verificação: 110101111 ÷ 1011 dá re
 - **D) ❌** — O resto está certo, mas foi colocado **antes** dos dados. O quadro é D seguido de R.
 - **E) ✅** — R = 111, quadro 110101111.
 
-**Base no material:** Manual p. 29 (5.4: serviços do enlace; 5.4.1 paridade simples, paridade 2D que corrige 1 bit, checksum em complemento de 1, CRC; Ethernet usa CRC-32), p. 30 (Estudo de Caso: passos 1–3, verificação no receptor; "detecta todas as rajadas de até r bits").
+**Base no material:** Manual p. 29–30 (5.4: serviços do enlace; 5.4.1 paridade simples, paridade 2D que corrige 1 bit, checksum em complemento de 1, CRC; Ethernet usa CRC-32), p. 30 (Estudo de Caso: passos 1–3, verificação no receptor; "detecta todas as rajadas de até r bits").
 **Conceito-chave para a prova:** acrescentar r zeros (r = grau de G = nº de bits de G − 1), dividir por XOR, anexar o resto. Receptor: resto ≠ 0 ⇒ descarta. Paridade simples falha com 2 bits invertidos; a 2D detecta e corrige erro de 1 bit; checksum é usado no IP/TCP/UDP.
 
 ---
@@ -926,7 +926,7 @@ IV. O tamanho mínimo do quadro Ethernet (64 bytes) existe para que, no meio com
 - **D) ❌** — Inclui II e exclui I.
 - **E) ❌** — Inclui II.
 
-**Base no material:** Manual p. 29–30 (5.4.2: divisão de canal TDMA/FDMA/CDMA, acesso aleatório ALOHA/CSMA/CSMA/CD/CSMA/CA, revezamento), p. 31 (CSMA/CD, *jam*, recuo exponencial; Figura 10; tamanho mínimo), p. 50–51 (9.1 atenuação, interferência, multipercurso, SNR × BER, adaptação de taxa; Figura 21), p. 51–52 (9.2.1 BSS/ESS/ad hoc, beacon; 9.2.2 DIFS/SIFS/ACK/RTS-CTS; Tabela 26 gerações).
+**Base no material:** Manual p. 30 (5.4.2: divisão de canal TDMA/FDMA/CDMA, acesso aleatório ALOHA/CSMA/CSMA/CD/CSMA/CA, revezamento), p. 31 (CSMA/CD, *jam*, recuo exponencial; Figura 10; tamanho mínimo), p. 50–51 (9.1 atenuação, interferência, multipercurso, SNR × BER, adaptação de taxa; Figura 21), p. 51–52 (9.2.1 BSS/ESS/ad hoc, beacon; 9.2.2 DIFS/SIFS/ACK/RTS-CTS; Tabela 26 gerações).
 **Conceito-chave para a prova:** Ethernet compartilhado = CSMA/CD (detecta e recua); com switch full-duplex, não há colisões. Wi-Fi = CSMA/CA (evita, com ACK e recuo que congela com canal ocupado; RTS/CTS contra terminal oculto). Wi-Fi 6 = OFDMA; 6E = faixa de 6 GHz; Wi-Fi 7 = canais de 320 MHz.
 
 ---
