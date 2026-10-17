@@ -1022,3 +1022,283 @@ IV. O formato Y-Statement padroniza a escrita sintética da decisão: "No contex
 **Conceito-chave para a prova:** **ADR não se edita, se substitui** (novo ADR com status "Substituído" no antigo e link entre os dois). "Não existem soluções perfeitas em arquitetura, apenas **trade-offs**". Ganhar modificabilidade custa desempenho, e ganhar disponibilidade (replicação) custa recursos.
 
 ---
+
+## I23 — Verificação × validação
+**Subtópico coberto:** 6.1, Verificação e Validação (apostila p. 66–68)
+**Por que é provável:** a seção abre o Módulo 6 com as "duas perguntas clássicas", o modelo V, uma tabela "Comparativo Direto" e o exemplo da casa (passou na verificação, falhou na validação). Esse exemplo pode ser transposto para software em uma asserção-razão.
+**Prioridade:** Alta
+**Tipo ENADE:** Asserção-razão
+
+**Enunciado:**
+Uma rede de supermercados contratou o desenvolvimento de um sistema de controle de ponto eletrônico. Ao longo da construção, a equipe técnica fez revisões de código, inspeções de documentos, análise estática e testes unitários e de integração, e confirmou que o sistema seguia exatamente o documento de requisitos e os diagramas UML aprovados. No teste de aceitação em homologação, porém, os gerentes das lojas perceberam que o sistema não tratava a escala de trabalho 12×36 usada pelos vigilantes e que, por isso, não resolvia o problema real de apuração das horas.
+
+Analise as asserções a seguir e a relação proposta entre elas:
+
+I. O sistema foi aprovado na verificação, mas reprovado na validação.
+
+**PORQUE**
+
+II. A verificação responde à pergunta "estamos construindo o produto corretamente?" e confere a conformidade com as especificações por meio de revisões, análises estáticas e testes unitários e de integração. A validação responde à pergunta "estamos construindo o produto certo?" e confere se o produto resolve o problema real do cliente, por exemplo por meio de testes de aceitação do usuário.
+
+**Julgamento:**
+- **Asserção I — Verdadeira.** O produto seguiu as especificações (verificação) mas não atende à necessidade real (validação). É a mesma situação da casa construída "exatamente como estava na planta", com portas estreitas demais para a geladeira (p. 67–68).
+- **Asserção II — Verdadeira.** São as definições, os "como é feita" e as perguntas-chave da apostila (p. 66–67).
+- **Relação — II justifica I.** A I só pode ser afirmada porque as atividades executadas (revisões, análise estática, testes unitários e de integração) são de **verificação**, e a falha apareceu no **teste de aceitação**, que é atividade de **validação**.
+
+**Alternativas:**
+- **A)** As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.
+- **B)** As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.
+- **C)** A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.
+- **D)** A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.
+- **E)** As asserções I e II são proposições falsas.
+
+**Gabarito: A**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ✅** — As duas asserções são verdadeiras, e a II explica por que o caso é "verificação ok, validação falhou".
+- **B) ❌** — Há nexo causal direto: a II classifica as atividades que aparecem no cenário.
+- **C) ❌** — A II reproduz as definições do material.
+- **D) ❌** — A I é verdadeira. Quem inverte os conceitos ("verificação = produto certo") cai aqui.
+- **E) ❌** — As duas são verdadeiras.
+
+**Base no material:** p. 66 (verificação: interna, técnica, foco no processo, sem participação do cliente); p. 67 (validação: externa, voltada ao negócio, UAT, testes beta, testes de sistema; tabela "Comparativo Direto"); p. 67–68 (exemplo da casa e da NR-10); figura do modelo V na p. 66.
+**Conceito-chave para a prova:** **Verificação = produto CORRETAMENTE = conforme a especificação.** É feita por desenvolvedores e QA, com revisões, inspeções, análise estática, testes unitários e de integração. **Validação = produto CERTO = conforme a necessidade real.** É feita por usuários e PO, com UAT, beta e testes de sistema. O teste de **sistema** fica na transição entre os dois (p. 69–70).
+
+---
+
+## I24 — Níveis de teste
+**Subtópico coberto:** 6.2, Testes unitários, de integração, de sistema e de aceitação (apostila p. 68–70)
+**Por que é provável:** cada nível tem foco, executor, ambiente e um **exemplo concreto** (`calcularDesconto`, API + PostgreSQL + RabbitMQ, fluxo PIX, gerente da loja), além do "Comparativo Rápido". Exemplos assim viram itens de associação.
+**Prioridade:** Alta
+**Tipo ENADE:** Resposta única ("respectivamente")
+
+**Enunciado:**
+A equipe de qualidade de uma loja virtual montou o plano de testes da nova versão da plataforma, com quatro atividades:
+
+1. Um desenvolvedor verifica se a função `calcularDesconto(valor, taxa)` retorna 90 quando recebe 100 e 0.10, usando mocks para simular o banco de dados.
+2. Desenvolvedores e engenheiros de QA verificam se a API de pedidos grava os dados da compra no PostgreSQL e publica uma mensagem na fila do RabbitMQ.
+3. A equipe de QA, em ambiente de homologação idêntico ao de produção, faz login, adiciona um produto ao carrinho, paga via PIX e confere se o pedido muda para "pago" e se o e-mail de confirmação é disparado.
+4. O gerente da loja usa a plataforma em homologação e confirma que os relatórios atendem às regras do setor contábil, aprovando formalmente a liberação para produção.
+
+As atividades 1, 2, 3 e 4 correspondem, respectivamente, aos testes:
+
+**Alternativas:**
+- **A)** unitário; de sistema; de integração; de aceitação.
+- **B)** de integração; unitário; de aceitação; de sistema.
+- **C)** unitário; de integração; de aceitação; de sistema.
+- **D)** unitário; de integração; de sistema; de regressão.
+- **E)** unitário; de integração; de sistema; de aceitação.
+
+**Gabarito: E**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Troca integração e sistema. A comunicação entre dois módulos (API ↔ banco ↔ fila) é **integração**. O fluxo completo, de ponta a ponta, é **sistema**.
+- **B) ❌** — A menor unidade isolada, com mocks, é o teste **unitário**, não o de integração.
+- **C) ❌** — Troca sistema e aceitação. Quem executa o teste de sistema é a **equipe de QA**. O teste de aceitação é feito pelo **cliente/usuário/PO** e busca a **aprovação formal**.
+- **D) ❌** — Regressão é a reexecução de testes de funcionalidades antigas a cada deploy (p. 75), não um dos 4 níveis. A atividade 4 é aceitação (UAT).
+- **E) ✅** — São os exemplos da apostila para cada nível, na ordem da pirâmide: unitário → integração → sistema → aceitação (p. 68–69).
+
+**Base no material:** p. 68–70. "Comparativo Rápido": unitário (verificação, devs), integração (verificação, devs/QA), sistema (verificação + validação, QA), aceitação (validação, cliente/usuário/PO).
+**Conceito-chave para a prova:** **Unitário** = função ou classe isolada, com mocks/stubs. **Integração** = interfaces e contratos entre módulos, com dependências reais ou contêineres. **Sistema** = ponta a ponta em staging, incluindo RFs e RNFs. **Aceitação (UAT)** = cliente aprova; inclui testes alfa e beta. Os níveis vão do mais técnico ao mais de negócio.
+
+---
+
+## I25 — Particionamento por equivalência e valor-limite
+**Subtópico coberto:** 6.3, técnicas de caixa-preta: particionamento por equivalência e análise do valor-limite (apostila p. 72)
+**Por que é provável:** é o único ponto do Módulo 6 com exemplo numérico ("idades de 18 a 60 anos → 17, 18, 19 e 59, 60, 61"). Exemplo numérico costuma virar questão de cálculo com números trocados.
+**Prioridade:** Alta
+**Tipo ENADE:** Resposta única (cálculo/aplicação)
+
+**Enunciado:**
+O cadastro de um aplicativo bancário só aceita senhas com **8 a 16 caracteres** (inclusive). O analista de testes precisa projetar casos de teste de caixa-preta para esse campo e vai aplicar duas técnicas: o particionamento por equivalência, testando apenas um representante de cada classe de entrada (válidas e inválidas), e a análise do valor-limite, testando os pontos críticos de cada borda (o próprio limite, o valor imediatamente abaixo e o imediatamente acima), como faz a apostila do squad.
+
+O número mínimo de casos de teste exigido pelo particionamento por equivalência e o conjunto de comprimentos de senha a testar pela análise do valor-limite são, respectivamente:
+
+**Alternativas:**
+- **A)** 2 casos; {8, 16}.
+- **B)** 3 casos; {7, 8, 9, 15, 16, 17}.
+- **C)** 3 casos; {8, 12, 16}.
+- **D)** 1 caso; {7, 8, 16, 17}.
+- **E)** 2 casos; {7, 8, 9, 15, 16, 17}.
+
+**Gabarito: B**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Esquece uma das classes inválidas e testa só os limites, sem os vizinhos.
+- **B) ✅** — **Particionamento:** há 3 classes, comprimento < 8 (inválida), 8 a 16 (válida) e > 16 (inválida), e um representante por classe dá **3 casos**. **Valor-limite**, como no exemplo da apostila (18 a 60 → 17, 18, 19, 59, 60, 61): borda inferior **7, 8, 9** e borda superior **15, 16, 17** (conferido em Python: `sorted({lo-1, lo, lo+1, hi-1, hi, hi+1})` = [7, 8, 9, 15, 16, 17]).
+- **C) ❌** — {8, 12, 16} são só valores válidos (um representante da classe válida e os dois limites). Não testam nenhuma borda inválida.
+- **D) ❌** — Um único caso não cobre as classes inválidas. O conjunto de 4 valores omite os vizinhos internos 9 e 15, que o padrão da apostila inclui.
+- **E) ❌** — O conjunto de valores-limite está certo, mas o particionamento exige 3 classes, e não 2.
+
+**Base no material:** p. 72: "Particionamento por Equivalência: divide o conjunto de dados de entrada em classes válidas e inválidas. Testa-se apenas um representante de cada classe"; "Análise do Valor Limite... Se um sistema aceita idades de 18 a 60 anos, os testes avaliam exatamente os pontos críticos: 17, 18, 19 e 59, 60, 61".
+**Conceito-chave para a prova:** um intervalo [a, b] gera **3 classes** (abaixo, dentro, acima). O valor-limite no padrão do material testa **a−1, a, a+1, b−1, b, b+1**. Outras técnicas de caixa-preta: **tabelas de decisão** e **transição de estados**.
+**⚠️ Atenção:** parte da literatura usa o valor-limite "de 2 pontos" (a−1, a, b, b+1 = {7, 8, 16, 17}). Se a prova trouxer só essa opção junto com um número de casos coerente, ela pode ser a esperada. Pelo material do squad, vale o padrão de 3 pontos.
+
+---
+
+## I26 — Caixa-branca, caixa-preta e caixa-cinza
+**Subtópico coberto:** 6.3, Caixa-preta e caixa-branca, e o elo intermediário caixa-cinza (apostila p. 70–73)
+**Por que é provável:** a seção tem 4 páginas, uma tabela comparativa de 3 colunas e um "Exemplo Prático Integrado" (tela de login com bloqueio após 3 tentativas) que mostra as três abordagens no mesmo cenário.
+**Prioridade:** Alta
+**Tipo ENADE:** Afirmativas múltiplas (I–IV)
+
+**Enunciado:**
+Um sistema de internet banking bloqueia o usuário após três tentativas incorretas de senha. Três profissionais testaram esse recurso: o desenvolvedor inspecionou a função `autenticar()`; um testador enviou requisições pelo Postman ao endpoint `/api/login`; e uma analista de QA usou o navegador como um usuário comum. Sobre as abordagens de teste empregadas, avalie as afirmações a seguir.
+
+I. Ao inspecionar `autenticar()`, verificar se a biblioteca de hash BCrypt é invocada corretamente e se o contador de tentativas incrementa até disparar o bloqueio, o desenvolvedor faz um teste de caixa-branca. A essa abordagem pertencem técnicas como cobertura de decisões e análise de complexidade ciclomática.
+
+II. Ao conferir os códigos HTTP 401 e 429 retornados pelo endpoint e consultar o banco de dados para checar se a flag `is_locked` mudou para `true`, sem alterar o código-fonte, o testador faz um teste de caixa-cinza.
+
+III. Tabelas de decisão e transição de estados (por exemplo, "Ativo → Bloqueado → Desbloqueado") são técnicas de caixa-branca, pois dependem da leitura do código-fonte para identificar os caminhos de execução.
+
+IV. Uma desvantagem da caixa-preta é não conseguir testar caminhos ocultos ou não documentados no código. Uma desvantagem da caixa-branca é não garantir que o software atenda às expectativas do cliente, já que pode testar um código perfeito que executa uma regra de negócio errada.
+
+É correto o que se afirma em:
+
+**Julgamento das afirmativas:**
+- **I — Verdadeira.** É o exemplo de caixa-branca da apostila (p. 73). Cobertura de comandos, de decisões e de caminhos e complexidade ciclomática são técnicas de caixa-branca (p. 71).
+- **II — Verdadeira.** O testador tem conhecimento **parcial** (APIs, schemas de banco, logs) e não altera o código: é caixa-cinza (p. 72–73).
+- **III — Falsa.** Tabelas de decisão e transição de estados são técnicas de **caixa-preta**, baseadas em especificação, junto com particionamento e valor-limite (p. 72). Não exigem acesso ao código.
+- **IV — Verdadeira.** São as desvantagens listadas para cada abordagem (p. 71–72).
+
+**Alternativas:**
+- **A)** I e II, apenas.
+- **B)** I e III, apenas.
+- **C)** III e IV, apenas.
+- **D)** I, II e IV, apenas.
+- **E)** I, II, III e IV.
+
+**Gabarito: D**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Omite a IV, que também é verdadeira.
+- **B) ❌** — Inclui a III (falsa) e omite II e IV.
+- **C) ❌** — Inclui a III e omite I e II.
+- **D) ✅** — I, II e IV são verdadeiras. A III troca a família das técnicas.
+- **E) ❌** — A III é falsa.
+
+**Base no material:** p. 70–73. Tabela "Comparativo Direto": visibilidade do código total, nenhuma ou parcial; base para os testes no código, nos requisitos/casos de uso ou nos schemas/APIs; nível do modelo V no teste unitário, nos testes de aceitação/sistema ou nos testes de integração/API. O exemplo da tela de login está na p. 73.
+**Conceito-chave para a prova:** **Branca** (glass-box, estrutural) = vê o código; é feita por devs e SDETs; usa cobertura e complexidade ciclomática; nível unitário. **Preta** (funcional) = só entradas e saídas; é feita por QA, negócio e usuários; usa particionamento, valor-limite, tabela de decisão e transição de estados; níveis de sistema e aceitação. **Cinza** = conhecimento parcial; usada em testes de API, integração e pentest.
+
+---
+
+## I27 — Casos de teste e testes automatizados
+**Subtópico coberto:** 6.4 Casos de teste e 6.5 Testes automatizados, agrupados por serem curtos e relacionados (apostila p. 74–76)
+**Por que é provável:** a 6.4 traz uma tabela de campos com exemplo (CT-AUT-001), e a 6.5 traz a lista "Excelente para automação × Melhor manter manual", com critério de ROI. São duas listas fáceis de transformar em afirmativas com troca.
+**Prioridade:** Média
+**Tipo ENADE:** Afirmativas múltiplas (I–IV)
+
+**Enunciado:**
+Uma varejista online passou a fazer deploys diários com integração e entrega contínuas (CI/CD) e reestruturou seu processo de testes. A coordenadora de QA documentou o caso de teste "CT-AUT-001 — Validar bloqueio de login com senha incorreta" e definiu quais testes seriam automatizados. Avalie as afirmações a seguir.
+
+I. Para ser eficaz, um caso de teste deve ser claro, reproduzível, independente de outros testes e rastreável a um requisito, e deve conter campos como ID, título, pré-condições, massa de dados, passos de execução, resultado esperado e pós-condições.
+
+II. No CT-AUT-001, "usuário cadastrado e ativo no sistema" é a pós-condição, e "nenhuma alteração no estado do perfil do usuário" é a pré-condição.
+
+III. Testes de regressão, testes de fumaça (smoke tests), testes de carga e desempenho e testes orientados a dados são bons candidatos à automação, pois se repetem a cada deploy ou são impossíveis de executar manualmente.
+
+IV. Testes exploratórios e testes de usabilidade devem ser os primeiros a ser automatizados, pois o retorno sobre o investimento é maior em funcionalidades instáveis, cujo layout e regras mudam constantemente.
+
+É correto o que se afirma em:
+
+**Julgamento das afirmativas:**
+- **I — Verdadeira.** Definição e "Estrutura Fundamental de um Caso de Teste" (p. 74).
+- **II — Falsa.** Inverte os campos. "Usuário cadastrado e ativo" é a **pré-condição**, o estado **antes** da execução. "Nenhuma alteração no estado do perfil" é a **pós-condição**, o estado **depois** (p. 74–75).
+- **III — Verdadeira.** É a lista "Excelente para Automação" (p. 75).
+- **IV — Falsa.** Exploratórios, usabilidade/UX e funcionalidades instáveis estão em "**Melhor Manter Manual**". Para funcionalidades instáveis, "o custo de manutenção do código de teste será maior que a execução manual" (p. 75–76).
+
+**Alternativas:**
+- **A)** I e II, apenas.
+- **B)** II e IV, apenas.
+- **C)** I e III, apenas.
+- **D)** I, III e IV, apenas.
+- **E)** II, III e IV, apenas.
+
+**Gabarito: C**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Inclui a II, que troca pré e pós-condição.
+- **B) ❌** — Inclui as duas falsas.
+- **C) ✅** — Só I e III são verdadeiras.
+- **D) ❌** — Inclui a IV.
+- **E) ❌** — Inclui II e IV e omite a I.
+
+**Base no material:** p. 74–75 (tabela de campos com exemplos: CT-AUT-001; joao@email.com / SenhaErrada123; alerta "Usuário ou senha inválidos"); p. 75–76 (quando automatizar; ferramentas: Postman, RestAssured, Supertest; Cypress, Playwright, Selenium; Appium; JMeter, k6, Locust).
+**Conceito-chave para a prova:** a decisão de automatizar depende do **ROI**. **Automatize** o que se **repete** (regressão, smoke, data-driven) ou o que é **impossível manualmente** (carga). **Mantenha manual** o que exige **julgamento humano** (exploratório, usabilidade) ou o que **muda o tempo todo**. Pré-condição = estado **antes**. Pós-condição = estado **depois**.
+
+---
+
+## I28 — Severidade × prioridade de defeitos
+**Subtópico coberto:** 6.6, Defeitos e rastreamento: severidade × prioridade (apostila p. 77)
+**Por que é provável:** a apostila dá um exemplo de "prioridade alta / severidade baixa" (logotipo errado), um caso clássico de pegadinha, e o arquivo de questões conhecidas lista o tema como de risco.
+**Prioridade:** Alta
+**Tipo ENADE:** Resposta única
+
+**Enunciado:**
+Na véspera do lançamento de uma grande campanha publicitária, a equipe de QA de uma rede de farmácias registrou dois defeitos no sistema:
+
+- **D1:** o logotipo da empresa aparece com o nome digitado errado na página principal de login. O sistema funciona normalmente.
+- **D2:** ao salvar um registro no módulo de auditoria anual, que só é usado uma vez por ano e cuja próxima utilização está prevista para daqui a dez meses, um erro de banco de dados derruba completamente o sistema (crash).
+
+Considerando que a severidade mede o impacto técnico da falha e a prioridade mede a urgência de negócio para a correção, assinale a alternativa que classifica corretamente os defeitos D1 e D2.
+
+**Alternativas:**
+- **A)** D1: severidade alta e prioridade alta; D2: severidade baixa e prioridade baixa.
+- **B)** D1: severidade baixa e prioridade baixa; D2: severidade alta e prioridade alta.
+- **C)** D1: severidade alta e prioridade baixa; D2: severidade baixa e prioridade alta.
+- **D)** D1 e D2: severidade e prioridade altas, pois todo defeito visível ao usuário deve ser corrigido imediatamente.
+- **E)** D1: severidade baixa e prioridade alta; D2: severidade alta e prioridade baixa.
+
+**Gabarito: E**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — O logotipo errado "não quebra o sistema", logo sua severidade é baixa. Um crash completo nunca tem severidade baixa.
+- **B) ❌** — Ignora que a prioridade é urgência de negócio. A marca errada às vésperas da campanha "precisa ser corrigida imediatamente".
+- **C) ❌** — Inverte os dois eixos nos dois defeitos.
+- **D) ❌** — Mistura os conceitos e trata severidade e prioridade como se fossem a mesma coisa. A classificação existe justamente para evitar conflitos entre QA, desenvolvimento e negócio.
+- **E) ✅** — D1 é o exemplo da apostila: "não quebra o sistema (baixa severidade), mas prejudica a marca e precisa ser corrigido imediatamente (alta prioridade)". D2 tem o exemplo de severidade alta da apostila (erro de banco que faz o sistema cair ao salvar um registro), mas sem urgência de negócio: o módulo só será usado daqui a dez meses.
+
+**Base no material:** p. 77: "Severidade (Impacto Técnico): Mede o grau de dano que a falha causa..."; "Prioridade (Urgência de Negócio): Mede a rapidez com que a falha deve ser corrigida com base nas necessidades comerciais ou operacionais"; os dois exemplos do texto.
+**Conceito-chave para a prova:** **severidade = quanto quebra** (técnico). **Prioridade = quão rápido corrigir** (negócio). Os eixos são **independentes**, e os casos cruzados (alta/baixa e baixa/alta) são os que caem.
+**⚠️ Atenção:** o caso "severidade alta / prioridade baixa" (D2) não está escrito na apostila. Foi montado aplicando as definições do material. A prioridade é uma decisão de negócio, e o enunciado deixa explícita a falta de urgência para não haver ambiguidade.
+
+---
+
+## I29 — Ciclo de vida do defeito
+**Subtópico coberto:** 6.6, Defeitos e rastreamento: ciclo de vida do defeito (apostila p. 76–77)
+**Por que é provável:** a apostila numera os 6 estados (Novo → Atribuído → Em Correção → Resolvido → Re-teste → Fechado) e cita a alternativa "Reaberto". Sequência numerada costuma virar questão de ordenação.
+**Prioridade:** Alta
+**Tipo ENADE:** Ordenação
+
+**Enunciado:**
+Em uma fintech, a analista de QA Juliana encontrou uma falha no cálculo de juros do simulador de empréstimos e a registrou no Jira. Os eventos ocorridos a partir daí estão listados abaixo, fora de ordem:
+
+I. Juliana executa novamente o caso de teste que havia gerado a falha original.
+II. O líder de desenvolvimento analisa a falha e a atribui ao desenvolvedor Pedro.
+III. O teste falha e Juliana registra o defeito no sistema de rastreamento.
+IV. A correção funciona e o bug é oficialmente encerrado.
+V. Pedro investiga o código-fonte e escreve a correção.
+VI. A correção é enviada para o ambiente de homologação (staging).
+
+Assinale a alternativa que apresenta a ordem correta dos eventos, conforme o ciclo de vida do defeito.
+
+**Alternativas:**
+- **A)** III – II – V – VI – I – IV
+- **B)** III – V – II – VI – I – IV
+- **C)** III – II – V – I – VI – IV
+- **D)** II – III – V – VI – I – IV
+- **E)** III – II – VI – V – I – IV
+
+**Gabarito: A**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ✅** — **Novo** (III) → **Atribuído** (II) → **Em Correção** (V) → **Resolvido/Corrigido** (VI) → **Re-teste** (I) → **Fechado** (IV) (p. 76–77).
+- **B) ❌** — O desenvolvedor só corrige depois que o defeito lhe é **atribuído**.
+- **C) ❌** — Faz o re-teste antes de a correção chegar ao ambiente de testes.
+- **D) ❌** — O líder não pode atribuir um defeito que ainda não foi registrado.
+- **E) ❌** — Envia a correção ao staging antes de ela ser escrita.
+
+**Base no material:** p. 76–77 (ciclo de 6 estados; "Alternativa: Reaberto (Reopened) caso o defeito persistir durante o re-teste"; anatomia do bug report: título claro, passos para reproduzir, resultado obtido × esperado, ambiente, evidências; ferramentas Jira, Azure DevOps, Bugzilla, Redmine, Trello).
+**Conceito-chave para a prova:** **N-A-C-R-R-F** (Novo, Atribuído, em Correção, Resolvido, Re-teste, Fechado). Se o re-teste falhar, o status vira **Reaberto** e o defeito volta ao fluxo. "Resolvido" significa que a correção foi **enviada** ao staging; "Fechado" significa que o QA **confirmou** a correção.
+
+---
