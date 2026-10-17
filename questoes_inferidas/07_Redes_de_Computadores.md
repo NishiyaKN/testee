@@ -120,7 +120,7 @@ Com isso, **todos os 9 temas** ficam com ao menos uma questão "própria" no ban
 | 54 | 9.6 Computação em nuvem, borda e CDN | 55–56 | — | I35 | Média |
 | 55 | 9.7 IoT (LPWAN, MQTT/CoAP, desafios) | 56–58 | Q14 | — | — |
 
-**Resumo:** **55 subtópicos** mapeados; **14** já cobertos integralmente por questões objetivas conhecidas (linhas 7, 9, 14, 16, 17, 21, 22, 31, 35, 36, 42, 48, 51, 55); **41** sem questão objetiva própria (7 deles só tinham estudo de caso, e 5 só cobertura parcial numa afirmativa). Foram escritas **35 questões inferidas**: **6 correspondem às Questões 2, 3, 4, 7, 9 e 10 faltantes dos slides** (I1–I6, 4 alternativas, estilo dos slides) e **29 são adicionais** (I7–I35, 5 alternativas, estilo do Manual). Gabaritos: slides I1–I6 = C, A, D, C, A, D; adicionais I7–I35 = A 6, B 6, C 6, D 6, E 5.
+**Resumo:** **55 subtópicos** mapeados; **14** já cobertos integralmente por questões objetivas conhecidas (linhas 7, 9, 14, 16, 17, 21, 22, 31, 35, 36, 42, 48, 51, 55); **1** (OSI, linha 5) já coberto pela Q6, mas que recebe a I1 por ser o tema provável da Questão 2 dos slides; **40** sem questão objetiva própria (8 deles só tinham estudo de caso, e 5 só cobertura parcial numa afirmativa). Foram escritas **35 questões inferidas**: **6 correspondem às Questões 2, 3, 4, 7, 9 e 10 faltantes dos slides** (I1–I6, 4 alternativas, estilo dos slides) e **29 são adicionais** (I7–I35, 5 alternativas, estilo do Manual). Gabaritos: slides I1–I6 = C, A, D, C, A, D; adicionais I7–I35 = A 6, B 6, C 6, D 6, E 5.
 
 ---
 
@@ -958,3 +958,506 @@ Um servidor (IP 200.1.1.10) executa um serviço HTTPS (TCP 443) e um servidor DN
 
 **Base no material:** Manual p. 32 (6.1 serviços: multiplexação, checksum, confiabilidade/fluxo/congestionamento só no TCP; sem garantia de atraso; 6.2 faixas IANA; socket UDP = dupla), p. 33 (Tabela 17 de portas; socket TCP = quádrupla).
 **Conceito-chave para a prova:** porta = 16 bits. 0–1.023 bem conhecidas; 1.024–49.151 registradas (3306 MySQL, 3389 RDP, 5432 PostgreSQL); 49.152–65.535 efêmeras. UDP: socket = (IP dst, porta dst). TCP: socket = (IP src, porta src, IP dst, porta dst). Portas: 20/21 FTP, 22 SSH, 23 Telnet, 25/587 SMTP, 53 DNS, 67/68 DHCP, 80 HTTP, 110 POP3, 123 NTP, 143 IMAP, 161/162 SNMP, 443 HTTPS, 993 IMAPS.
+
+---
+
+## I22 — Pare e espere e janela
+**Subtópico coberto:** 6.4 Princípios de transferência confiável: os cinco mecanismos, utilização do pare e espere (equação 13), Go-Back-N × repetição seletiva (Manual p. 33–34).
+**Por que é provável:** o Manual tem fórmula, exemplo numérico ("o enlace fica ocioso 99,97% do tempo!") e a comparação GBN × SR com o "híbrido" do TCP. Nenhuma questão conhecida cobra o assunto.
+**Prioridade:** Alta
+**Tipo ENADE:** Resposta única (cálculo)
+
+**Enunciado:**
+Um transmissor usa o protocolo pare e espere (*stop-and-wait*) num enlace de 100 Mbps com RTT de 20 ms, enviando pacotes de 1.500 bytes. A utilização do enlace pelo transmissor e o número mínimo de pacotes que uma janela (Go-Back-N ou repetição seletiva) deveria permitir em trânsito para, teoricamente, ocupar 100% do enlace são, aproximadamente:
+
+**Alternativas:**
+- **A)** 0,6% e 168 pacotes.
+- **B)** 0,075% e 1.335 pacotes.
+- **C)** 1,2% e 85 pacotes.
+- **D)** 99,4% e 1 pacote.
+- **E)** 0,6% e 2 pacotes.
+
+**Gabarito: A**
+
+**Cálculo (conferido em Python):** L/R = 12.000 bits / 10⁸ bps = 0,12 ms. U = 0,12 / (20 + 0,12) = 0,00596 ≈ **0,6%**. Janela: N ≥ (RTT + L/R) / (L/R) = 20,12 / 0,12 = 167,7 ⇒ **168 pacotes**.
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ✅** — U ≈ 0,6%; N = 168 (arredonda para cima, porque 167 não chega a 100%).
+- **B) ❌** — Usa 1.500 **bytes** como bits (L/R = 0,015 ms), o que dá U ≈ 0,075% e N ≈ 1.335.
+- **C) ❌** — Usa só a ida (10 ms) no lugar do RTT: U = 0,12/10,12 ≈ 1,2% e N ≈ 85.
+- **D) ❌** — Inverte a fração: 20/20,12 ≈ 99,4% é a fração do tempo em que o enlace fica **ocioso**.
+- **E) ❌** — "Com N pacotes, a utilização passa a ser N vezes maior": N = 2 só dobra 0,6% para 1,2%.
+
+**Base no material:** Manual p. 33 (6.4: checksum, ACK, temporizador, número de sequência, janela), p. 34 (6.4.1: equação 13, U = (L/R)/(RTT + L/R); exemplo de 1 Gbps, 30 ms e 1.000 bytes ⇒ U ≈ 0,00027; GBN = ACK cumulativo e reenvio de todos os seguintes; SR = guarda fora de ordem e reenvia só o perdido; TCP = híbrido).
+**Conceito-chave para a prova:** pare e espere desperdiça enlaces de alto produto banda-atraso; janela de N pacotes multiplica U por N (até 100%). GBN: receptor só aceita em ordem, reenvia a janela. SR: confirma individualmente, reenvia só o perdido.
+
+---
+
+## I23 — TCP: sequência, ACK, três vias e controle de fluxo
+**Subtópico coberto:** 6.5.1 Segmento TCP (sequência e ACK em bytes); 6.5.2 três vias e SYN flood; 6.5.3 encerramento; 6.5.5 retransmissão rápida; 6.5.6 controle de fluxo (Manual p. 34–36).
+**Por que é provável:** o Manual destaca que "o número de sequência conta bytes, e não segmentos", tem a Figura 13 (três vias) e um box sobre SYN flood. As questões conhecidas sobre TCP tratam só de TCP × UDP e de congestionamento (Reno).
+**Prioridade:** Alta
+**Tipo ENADE:** Afirmativas múltiplas
+
+**Enunciado:**
+Avalie as afirmações sobre o funcionamento do TCP:
+
+I. Se um segmento com número de sequência 1.000 transporta 500 bytes de dados e chega sem erros e em ordem, o receptor responde com ACK = 1.500.
+
+II. Como o número de sequência conta segmentos, o próximo segmento desse transmissor terá número de sequência 1.001.
+
+III. Num ataque SYN flood, o atacante envia SYNs com IPs de origem falsos e nunca completa a terceira via; os SYN cookies permitem que o servidor não guarde estado até receber o ACK final.
+
+IV. A janela de recepção (rwnd) protege a rede contra congestionamento, enquanto a janela de congestionamento (cwnd) protege o buffer do receptor.
+
+É correto apenas o que se afirma em:
+
+**Alternativas:**
+- **A)** I e III.
+- **B)** I e IV.
+- **C)** II e III.
+- **D)** I, II e III.
+- **E)** II, III e IV.
+
+**Gabarito: A**
+
+**Julgamento:**
+- **I — Verdadeira.** O ACK é o número do **próximo byte esperado** (bytes 1.000 a 1.499 recebidos ⇒ ACK = 1.500). É cumulativo.
+- **II — Falsa.** O número de sequência conta **bytes**: o próximo segmento terá seq = 1.500.
+- **III — Verdadeira.** Box "Ataque SYN flood" do Manual: as informações ficam codificadas no próprio número de sequência do SYN+ACK.
+- **IV — Falsa.** Está invertido. rwnd = controle de **fluxo** (não afogar o receptor); cwnd = controle de **congestionamento** (não afogar a rede). O transmissor envia no máximo min(cwnd, rwnd).
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ✅** — Só I e III.
+- **B) ❌** — Inclui IV (inversão rwnd × cwnd).
+- **C) ❌** — Inclui II (sequência por segmento) e exclui I.
+- **D) ❌** — Inclui II.
+- **E) ❌** — Inclui II e IV e exclui I.
+
+**Base no material:** Manual p. 34 (Figura 12; "o número de sequência conta bytes ... ISN pseudoaleatório"; "o número de reconhecimento é o número do próximo byte esperado ... ACK = 1000"), p. 35 (Figura 13; "por que três vias e não duas?"; SYN flood e SYN cookies; 6.5.3 FIN/ACK em quatro mensagens, TIME_WAIT = 2 × MSL, RST), p. 36 (6.5.5: 3 ACKs duplicados ⇒ retransmissão rápida; 6.5.6: equação 17; 6.5.7: min(cwnd, rwnd)).
+**Conceito-chave para a prova:** seq e ACK contam bytes; ACK cumulativo = próximo byte esperado. Três vias: SYN (seq = x) → SYN+ACK (seq = y, ack = x + 1) → ACK (ack = y + 1, pode levar dados). Encerramento em 4 mensagens; quem fecha primeiro fica em TIME_WAIT. Fluxo = rwnd (receptor); congestionamento = cwnd (rede).
+
+---
+
+## I24 — Timeout do TCP
+**Subtópico coberto:** 6.5.4 Estimativa do RTT e temporizador de retransmissão (equações 14–16, RFC 6298) (Manual p. 35–36).
+**Por que é provável:** o Manual tem o Estudo de Caso com a ordem de atualização ("com o EstimatedRTT ainda antigo"), que é um ponto de pegadinha. Só existe o exercício E10.
+**Prioridade:** Média
+**Tipo ENADE:** Resposta única (cálculo)
+
+**Enunciado:**
+Uma conexão TCP tem EstimatedRTT = 80 ms e DevRTT = 8 ms quando chega uma nova medição SampleRTT = 100 ms. Usando α = 0,125, β = 0,25 e atualizando o DevRTT com o EstimatedRTT ainda antigo (RFC 6298), o novo TimeoutInterval é:
+
+**Alternativas:**
+- **A)** 93,5 ms
+- **B)** 114,5 ms
+- **C)** 124,0 ms
+- **D)** 126,5 ms
+- **E)** 144,0 ms
+
+**Gabarito: D**
+
+**Cálculo (conferido em Python):** DevRTT = 0,75 × 8 + 0,25 × |100 − 80| = 6 + 5 = **11 ms**. EstimatedRTT = 0,875 × 80 + 0,125 × 100 = 70 + 12,5 = **82,5 ms**. TimeoutInterval = 82,5 + 4 × 11 = **126,5 ms**.
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — 82,5 + 11: esquece o fator 4 da margem de segurança.
+- **B) ❌** — 82,5 + 4 × 8: usa o DevRTT antigo, sem atualizar.
+- **C) ❌** — Atualiza primeiro o EstimatedRTT e usa |100 − 82,5| no DevRTT (10,375 ms): 82,5 + 41,5 = 124 ms. A ordem errada é a pegadinha que o Manual destaca.
+- **D) ✅** — 126,5 ms.
+- **E) ❌** — 100 + 4 × 11: usa o SampleRTT no lugar do EstimatedRTT.
+
+**Base no material:** Manual p. 35–36 (6.5.4, equações 14–16; Estudo de Caso: 100/10/120 ms ⇒ 12,5 ms, 102,5 ms e 152,5 ms; "a cada timeout, o TCP dobra o intervalo").
+**Conceito-chave para a prova:** EstimatedRTT = 0,875·Est + 0,125·Sample; DevRTT = 0,75·Dev + 0,25·|Sample − Est| (com o Est antigo); Timeout = Est + 4·Dev. Após timeout, o intervalo dobra (recuo exponencial). Três ACKs duplicados disparam retransmissão rápida, sem esperar o timeout.
+
+---
+
+## I25 — RTTs do HTTP persistente e não persistente
+**Subtópico coberto:** 7.2.2 Conexões persistentes e não persistentes; 7.2.3 HTTP/2, HTTP/3 e QUIC (Manual p. 40).
+**Por que é provável:** o Manual tem o Estudo de Caso "Tempo para carregar uma página" (22, 12 e 3 RTT) e uma lista comparativa HTTP/2 × HTTP/3. Só existe o exercício E11.
+**Prioridade:** Alta
+**Tipo ENADE:** Resposta única (cálculo)
+
+**Enunciado:**
+Uma página é formada por um arquivo HTML base e 6 imagens pequenas, todas no mesmo servidor. O RTT é de 40 ms, e o tempo de transmissão dos objetos pode ser desprezado. Os tempos para carregar a página com (a) HTTP não persistente, sem paralelismo, e (b) HTTP persistente com paralelismo (todas as imagens pedidas de uma vez) são, respectivamente:
+
+**Alternativas:**
+- **A)** 280 ms e 120 ms
+- **B)** 560 ms e 80 ms
+- **C)** 560 ms e 120 ms
+- **D)** 320 ms e 120 ms
+- **E)** 560 ms e 320 ms
+
+**Gabarito: C**
+
+**Cálculo:** (a) cada objeto: 1 RTT de *handshake* TCP + 1 RTT de requisição/resposta = 2 RTT; 7 objetos × 2 = 14 RTT = **560 ms**. (b) 1 RTT de *handshake* + 1 RTT para o HTML + 1 RTT para todas as imagens = 3 RTT = **120 ms**. (Persistente sem paralelismo seria 1 + 1 + 6 = 8 RTT = 320 ms.)
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — 280 ms = 7 RTT: esquece o *handshake* de cada conexão não persistente.
+- **B) ❌** — 80 ms = 2 RTT: esquece o *handshake* da conexão persistente.
+- **C) ✅** — 14 RTT e 3 RTT.
+- **D) ❌** — 320 ms é o persistente **sem** paralelismo, não o não persistente.
+- **E) ❌** — 320 ms no (b) ignora o paralelismo (pede uma imagem por RTT).
+
+**Base no material:** Manual p. 40 (7.2.2 e Estudo de Caso; "a evolução do HTTP se concentrou em reduzir o número de idas e voltas"; 7.2.3: HTTP/2 binário, multiplexado, HPACK, mas com *head-of-line blocking* no TCP; HTTP/3 sobre QUIC/UDP, TLS 1.3 integrado, 1 RTT ou 0 RTT, fluxos independentes, migração de conexão).
+**Conceito-chave para a prova:** não persistente = 2 RTT por objeto (HTTP/1.0); persistente = 1 *handshake* + 1 RTT por objeto (HTTP/1.1); com paralelismo/pipelining = 1 + 1 + 1. HTTP/2 resolve o HOL na camada HTTP, não no TCP; HTTP/3 (QUIC) resolve também no transporte.
+
+---
+
+## I26 — Métodos e códigos HTTP, cache
+**Subtópico coberto:** 7.2.1 Formato das mensagens, métodos (Tabela 19, seguro/idempotente) e códigos de status (Tabela 20); 7.2.4 cookies e cache (GET condicional) (Manual p. 38–40).
+**Por que é provável:** o Manual traz duas tabelas e as definições de "seguro" e "idempotente" ("fundamentais no desenho de APIs REST"). A Q12 conhecida só cobra "HTTP sem estado → cookies".
+**Prioridade:** Média
+**Tipo ENADE:** Afirmativas múltiplas
+
+**Enunciado:**
+Uma equipe projeta a API REST de um sistema acadêmico. Avalie as afirmações:
+
+I. Um GET condicional com o cabeçalho If-Modified-Since, quando o objeto não mudou, recebe a resposta 304 Not Modified, sem o corpo do objeto.
+
+II. O método POST é idempotente: repetir a mesma requisição várias vezes tem o mesmo efeito de fazê-la uma única vez.
+
+III. O código 401 Unauthorized pertence à classe 5xx, que indica erro do servidor.
+
+IV. Os métodos PUT e DELETE são idempotentes, mas não são seguros, pois alteram o estado do servidor.
+
+É correto apenas o que se afirma em:
+
+**Alternativas:**
+- **A)** I e II.
+- **B)** I e IV.
+- **C)** II e III.
+- **D)** III e IV.
+- **E)** I, II e IV.
+
+**Gabarito: B**
+
+**Julgamento:**
+- **I — Verdadeira.** O cache valida a cópia; se nada mudou, o servidor responde 304 sem reenviar o objeto (localidade de referência).
+- **II — Falsa.** POST não é seguro nem idempotente (repetir um POST de pagamento pode criar dois pagamentos).
+- **III — Falsa.** 401 é da classe **4xx** (erro do cliente). 5xx = 500, 502, 503.
+- **IV — Verdadeira.** Tabela 19: PUT e DELETE são idempotentes e não são seguros.
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Inclui II.
+- **B) ✅** — Só I e IV.
+- **C) ❌** — II e III são as falsas.
+- **D) ❌** — Inclui III.
+- **E) ❌** — Inclui II.
+
+**Base no material:** Manual p. 38 (7.2: HTTP sem estado), p. 39 (requisição/resposta em texto; Tabela 19: GET, HEAD e OPTIONS seguros e idempotentes; POST nenhum dos dois; PUT e DELETE idempotentes; PATCH não, em geral; Tabela 20: 1xx–5xx, 101, 200/201/204, 301/302/304, 400/401/403/404/429, 500/502/503), p. 40 (7.2.4: Set-Cookie/Cookie, LGPD; cache e GET condicional, If-Modified-Since/If-None-Match → 304).
+**Conceito-chave para a prova:** seguro = não altera o estado; idempotente = repetir tem o mesmo efeito. 2xx sucesso, 3xx redirecionamento (304 = use seu cache), 4xx erro do cliente (401 sem autenticação, 403 proibido, 404 não encontrado, 429 excesso), 5xx erro do servidor.
+
+---
+
+## I27 — Resolução DNS
+**Subtópico coberto:** 7.3 DNS: hierarquia (raiz, TLD, autoritativo, DNS local), consulta recursiva × iterativa, cache e TTL, registros (Tabela 21), DNSSEC/DoH/DoT (Manual p. 40–42).
+**Por que é provável:** o Manual traz duas figuras (hierarquia e resolução passo a passo), uma tabela de registros e uma analogia. As questões conhecidas só usam o DNS como "camada de aplicação" (Q6) e "usa UDP" (Q12).
+**Prioridade:** Alta
+**Tipo ENADE:** Resposta única
+
+**Enunciado:**
+Um aluno acessa www.uscs.edu.br pela primeira vez, e o servidor DNS local da faculdade está com o cache vazio. Sobre a resolução desse nome, é correto afirmar que:
+
+**Alternativas:**
+- **A)** o host do aluno consulta iterativamente o servidor raiz, o TLD .br e o servidor autoritativo, e o DNS local apenas repassa a resposta final.
+- **B)** o servidor raiz responde diretamente com o registro A de www.uscs.edu.br, pois as 13 identidades raiz armazenam todos os nomes da Internet.
+- **C)** o registro do tipo MX é o que mapeia www.uscs.edu.br para o seu endereço IPv6.
+- **D)** por usar exclusivamente TCP na porta 53, o DNS garante a autenticidade das respostas e dispensa o DNSSEC.
+- **E)** o host faz uma consulta recursiva ao DNS local, que faz consultas iterativas à raiz, ao TLD .br e ao autoritativo, recebe o registro A e o guarda em cache pelo tempo do TTL.
+
+**Gabarito: E**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Inverte os papéis: o host faz **uma** consulta recursiva ao DNS local, e quem faz as iterativas é o DNS local (Figura 16).
+- **B) ❌** — A raiz só conhece os servidores dos TLDs e responde "pergunte ao servidor do .br". As 13 identidades lógicas (A a M) têm centenas de instâncias via anycast, mas não guardam todos os nomes.
+- **C) ❌** — MX indica o servidor de e-mail do domínio; nome → IPv6 é o registro **AAAA** (A = IPv4, CNAME = apelido, NS = autoritativo, PTR = reverso).
+- **D) ❌** — O DNS usa **principalmente UDP** 53 (TCP para respostas grandes e transferência de zona), e o DNS original não tem autenticação: o envenenamento de cache é combatido pelo DNSSEC (assinaturas); DoH/DoT cifram as consultas.
+- **E) ✅** — Exatamente os passos 1–8 da Figura 16, com o cache guardado pelo TTL do registro.
+
+**Base no material:** Manual p. 40–41 (7.3: banco distribuído e hierárquico; "por que não centralizar?"; Figura 15; tipos de servidor; 7.3.2 passos 1–8; cache), p. 42 (Figura 16; Tabela 21: A, AAAA, CNAME, MX, NS, PTR, TXT, SOA; analogia da lista telefônica; DNSSEC, DoH, DoT).
+**Conceito-chave para a prova:** host → DNS local = recursiva; DNS local → raiz → TLD → autoritativo = iterativas. Cache por TTL reduz consultas à raiz. A/AAAA/CNAME/MX/NS/PTR. DNS centralizado seria ponto único de falha.
+
+---
+
+## I28 — POP3 × IMAP e SPF/DKIM/DMARC
+**Subtópico coberto:** 7.4 Correio eletrônico: MUA/MTA, SMTP (push) × POP3/IMAP (pull), webmail, SPF/DKIM/DMARC (Manual p. 42–43).
+**Por que é provável:** o Manual traz a Figura 17, o diálogo SMTP e o parágrafo antispam. A Q12 conhecida cobre só "SMTP não lê caixa postal"; POP3 × IMAP e SPF/DKIM/DMARC ficaram sem questão. Prioridade baixa porque o núcleo (SMTP = push) já está coberto.
+**Prioridade:** Baixa
+**Tipo ENADE:** Resposta única
+
+**Enunciado:**
+Uma professora lê e organiza seus e-mails em pastas no celular e no notebook e quer que tudo fique sincronizado entre os dois aparelhos. A equipe de TI também quer impedir que golpistas enviem mensagens se passando pelo domínio uscs.edu.br. A combinação adequada é:
+
+**Alternativas:**
+- **A)** POP3 (portas 110/995), que mantém as mensagens no servidor com pastas, e a publicação de registros MX adicionais no DNS.
+- **B)** SMTP (porta 25) para a leitura nos dois aparelhos e DNSSEC para autenticar o remetente de cada mensagem.
+- **C)** IMAP (portas 143/993), que mantém as mensagens no servidor com pastas e sincronização, e a publicação de registros SPF, DKIM e DMARC no DNS.
+- **D)** FTP (porta 21) para baixar a caixa postal nos dois aparelhos e apenas o registro SPF.
+- **E)** POP3 configurado para baixar e apagar as mensagens do servidor, e apenas DKIM, pois a assinatura dispensa uma política DMARC.
+
+**Gabarito: C**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — O POP3 "normalmente baixa e apaga as mensagens do servidor"; quem mantém pastas e sincroniza é o IMAP. Registros MX só apontam o servidor de e-mail do domínio; não autenticam remetentes.
+- **B) ❌** — SMTP é protocolo de **envio** (push), não de leitura. DNSSEC assina registros DNS, não autentica o remetente de e-mails.
+- **C) ✅** — IMAP para múltiplos dispositivos ("o mais usado hoje"). SPF (quais servidores podem enviar pelo domínio), DKIM (assinatura digital das mensagens) e DMARC (política quando as verificações falham) contra falsificação de remetente.
+- **D) ❌** — FTP não é protocolo de correio. Só SPF não cobre assinatura nem política.
+- **E) ❌** — "Baixar e apagar" impede a sincronização entre aparelhos; sem DMARC não há política definida para mensagens que falham nas verificações.
+
+**Base no material:** Manual p. 42 (7.4: agentes de usuário, servidores, SMTP RFC 5321), p. 43 (Figura 17; SMTP = push; diálogo SMTP; POP3 110/995 × IMAP 143/993; webmail via HTTPS; SPF, DKIM, DMARC).
+**Conceito-chave para a prova:** enviar = SMTP (25 entre servidores; 587 submissão do cliente). Ler = POP3 (baixa e apaga) ou IMAP (mantém, pastas, sincroniza) ou HTTPS (webmail). Antispoofing de domínio = SPF + DKIM + DMARC publicados no DNS (registros TXT).
+
+---
+
+## I29 — Ameaças × propriedades de segurança
+**Subtópico coberto:** 8.1 Propriedades de uma comunicação segura (Tabela 22) e 8.2 principais ameaças (Tabela 23) (Manual p. 45).
+**Por que é provável:** são duas tabelas de correspondência (propriedade ↔ mecanismo e ameaça ↔ propriedade atacada), formato pronto para associação, tipo que o squad usa nos slides. Nenhuma questão conhecida cobra a tríade CID.
+**Prioridade:** Média
+**Tipo ENADE:** Associação
+
+**Enunciado:**
+O relatório de incidentes de uma universidade lista quatro ocorrências. Associe cada ocorrência (Coluna 1) à propriedade de segurança atacada e ao mecanismo típico de proteção (Coluna 2).
+
+**Coluna 1 — Ocorrências**
+1. Captura passiva das credenciais de alunos numa rede Wi-Fi aberta (*sniffing*).
+2. Portal acadêmico fora do ar por um ataque DDoS vindo de uma botnet de câmeras IoT.
+3. Atacante posicionado entre o aluno e o banco (*man-in-the-middle*) altera o valor de uma transferência.
+4. E-mail com remetente forjado do reitor pedindo dados pessoais (*spoofing*).
+
+**Coluna 2 — Propriedade atacada / mecanismo**
+- ( ) Disponibilidade — redundância e proteção anti-DDoS.
+- ( ) Autenticidade — certificados, MFA e assinaturas.
+- ( ) Confidencialidade — criptografia (AES, ChaCha20).
+- ( ) Integridade — hash, HMAC e assinatura digital.
+
+A sequência correta da Coluna 2, de cima para baixo, é:
+
+**Alternativas:**
+- **A)** 1, 2, 3, 4.
+- **B)** 2, 4, 1, 3.
+- **C)** 2, 1, 4, 3.
+- **D)** 3, 4, 1, 2.
+- **E)** 4, 2, 3, 1.
+
+**Gabarito: B**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Liga *sniffing* à disponibilidade e DDoS à autenticidade. Segue só a ordem das colunas, sem associar.
+- **B) ✅** — DDoS (2) → disponibilidade; spoofing de remetente (4) → autenticidade; *sniffing* (1) → confidencialidade; alteração do valor pelo MITM (3) → integridade (a Tabela 23 dá "confid. e integridade" para o MITM; aqui o dano descrito é a alteração).
+- **C) ❌** — Troca *sniffing* (confidencialidade) com spoofing (autenticidade).
+- **D) ❌** — Põe o MITM na disponibilidade e o DDoS na integridade.
+- **E) ❌** — Põe o spoofing na disponibilidade e o *sniffing* na integridade.
+
+**Base no material:** Manual p. 45 (Tabela 22: confidencialidade, integridade, disponibilidade, autenticidade e não repúdio, com mecanismos; Tabela 23: *sniffing*, *spoofing*, MITM, DoS/DDoS, malware, phishing, varredura de portas), p. 58 (botnet Mirai, 2016, com câmeras e roteadores de senha padrão).
+**Conceito-chave para a prova:** C = criptografia; I = hash/HMAC/assinatura; D = redundância/anti-DDoS; autenticidade = certificados/MFA; não repúdio = assinatura com chave privada. *Sniffing* → C; *spoofing*/phishing → autenticidade; MITM → C e I; DDoS → D.
+
+---
+
+## I30 — RSA com números pequenos
+**Subtópico coberto:** 8.3.2 Criptografia assimétrica e o Estudo de Caso RSA; 8.3.3 Diffie-Hellman (Tabela 24); 8.3.4 assinatura digital (Manual p. 46–47).
+**Por que é provável:** o Manual traz o RSA passo a passo e o DH numérico, além da ligação com a complexidade (fatoração). Só existe o exercício E12; trocar p, q e m é a versão alterada natural.
+**Prioridade:** Média
+**Tipo ENADE:** Resposta única (cálculo)
+
+**Enunciado:**
+Para fins didáticos, gera-se um par de chaves RSA com os primos p = 7 e q = 11 e o expoente público e = 7. A chave privada d e o texto cifrado c da mensagem m = 9 são, respectivamente:
+
+**Alternativas:**
+- **A)** d = 43 e c = 37.
+- **B)** d = 43 e c = 63.
+- **C)** d = 11 e c = 37.
+- **D)** d = 7 e c = 37.
+- **E)** d = 43 e c = 9.
+
+**Gabarito: A**
+
+**Cálculo (conferido em Python):** n = 7 × 11 = 77; z = (7 − 1)(11 − 1) = 60; mdc(7, 60) = 1. d: 7 × d ≡ 1 (mod 60) ⇒ 7 × 43 = 301 = 5 × 60 + 1 ⇒ **d = 43**. Cifrar: c = 9⁷ mod 77 = **37**. Decifrar: 37⁴³ mod 77 = 9 ✓. Chave pública (77, 7); privada (77, 43).
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ✅** — d = 43 e c = 37.
+- **B) ❌** — 63 = 9 × 7 mod 77: multiplica m por e em vez de elevar m a e.
+- **C) ❌** — d = 11 sai de usar z = n − 1 = 76 (7 × 11 = 77 ≡ 1 mod 76). O módulo correto é z = (p − 1)(q − 1).
+- **D) ❌** — Supõe d = e. Seria trivial, e 7 × 7 = 49 ≢ 1 (mod 60).
+- **E) ❌** — c = 9 sai de reduzir 9⁷ módulo z = 60 em vez de n = 77. A cifragem é módulo n.
+
+**Base no material:** Manual p. 46 (8.3.2: confidencialidade com a pública do destinatário, assinatura com a privada do remetente; analogia do cadeado; Estudo de Caso p = 5, q = 11, e = 3, d = 27, m = 8 → c = 17; "por que é seguro": fatorar n de 2.048 bits; 8.3.3 DH), p. 47 (Tabela 24: p = 23, g = 5, a = 6, b = 15 ⇒ A = 8, B = 19, segredo 2; Figura 18, assinatura).
+**Conceito-chave para a prova:** n = pq; z = (p−1)(q−1); e coprimo com z; d = e⁻¹ mod z; c = m^e mod n; m = c^d mod n. DH: A = g^a mod p, B = g^b mod p, segredo = B^a = A^b mod p (ex.: p = 23, g = 5, a = 4, b = 3 ⇒ A = 4, B = 10, segredo 18). DH puro não autentica ⇒ vulnerável a MITM ⇒ usa-se com certificados.
+
+---
+
+## I31 — Regras de firewall
+**Subtópico coberto:** 8.4 Firewalls (sem estado, com estado, proxy, NGFW, WAF), Tabela 25 (ordem das regras, negação por padrão), DMZ, IDS/IPS; 8.6 defesa em profundidade e Zero Trust (Manual p. 48–50).
+**Por que é provável:** "Firewalls" é o primeiro item da descrição do Tema 8 (slide p. 2), e o Manual traz uma tabela de regras pronta, com as observações "a ordem das regras importa" e "a regra 4 é típica de um firewall com estado". Nenhuma questão conhecida cobra firewall.
+**Prioridade:** Alta
+**Tipo ENADE:** Resposta única (interpretação de tabela)
+
+**Enunciado:**
+Um firewall com estado aplica as regras abaixo (Tabela 25 do Manual), avaliadas de cima para baixo; vale a primeira que casar.
+
+| # | Origem | Destino | Protocolo/Porta | Estado | Ação |
+|---|---|---|---|---|---|
+| 1 | Qualquer | 200.1.1.10 (Web) | TCP 443 | – | Permitir |
+| 2 | Qualquer | 200.1.1.20 (Mail) | TCP 25 | – | Permitir |
+| 3 | 10.0.0.0/8 (interna) | Qualquer | TCP 80, 443 | – | Permitir |
+| 4 | Qualquer | 10.0.0.0/8 | TCP | Estabelecida | Permitir |
+| 5 | 10.0.5.0/24 (TI) | 200.1.1.0/24 | TCP 22 | – | Permitir |
+| 6 | Qualquer | Qualquer | Qualquer | – | Negar |
+
+Três tentativas são registradas: (1) o analista de TI 10.0.5.20 abre uma sessão SSH com o servidor web 200.1.1.10; (2) um estagiário, 10.0.7.9, tenta o mesmo; (3) um host da Internet tenta **iniciar** uma conexão RDP (TCP 3389) com 10.0.1.5. O resultado de cada tentativa é:
+
+**Alternativas:**
+- **A)** (1) permitida pela regra 3; (2) permitida pela regra 3; (3) negada pela regra 6.
+- **B)** (1) permitida pela regra 5; (2) permitida pela regra 5; (3) permitida pela regra 4.
+- **C)** (1) negada pela regra 6; (2) negada pela regra 6; (3) permitida pela regra 4.
+- **D)** (1) permitida pela regra 1; (2) negada pela regra 6; (3) negada pela regra 6.
+- **E)** (1) permitida pela regra 5; (2) negada pela regra 6; (3) negada pela regra 6.
+
+**Gabarito: E**
+
+**Rastreamento das regras:** (1) regra 1 não casa (porta 22 ≠ 443); 2 não (destino); 3 não (só 80/443); 4 não (destino fora de 10/8); **5 casa** (origem em 10.0.5.0/24, destino em 200.1.1.0/24, TCP 22) ⇒ permitida. (2) 10.0.7.9 não está em 10.0.5.0/24 ⇒ nenhuma regra casa até a **6** ⇒ negada. (3) é conexão nova (SYN), e a regra 4 só aceita conexões **estabelecidas** a partir de dentro ⇒ cai na **6** ⇒ negada.
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — A regra 3 só libera TCP 80 e 443 (navegação), não SSH.
+- **B) ❌** — O estagiário não é da sub-rede da TI. A regra 4 não aceita conexões iniciadas de fora; é o que diferencia o firewall com estado.
+- **C) ❌** — Nega o SSH legítimo da TI (a regra 5 existe para isso) e libera a conexão externa nova.
+- **D) ❌** — A regra 1 casa só com TCP 443.
+- **E) ✅** — Permitida (5), negada (6), negada (6).
+
+**Base no material:** Manual p. 48 (8.4: negação por padrão; tipos; Tabela 25; "a ordem das regras importa"; "a regra 4 é típica de um firewall com estado"; 8.4.2 DMZ; 8.4.3 IDS monitora e alerta, IPS bloqueia; assinatura × anomalia; Snort/Suricata), p. 49 (Figura 19: DMZ entre dois firewalls), p. 50 (8.6 defesa em profundidade; Zero Trust, NIST SP 800-207, menor privilégio).
+**Conceito-chave para a prova:** regras de cima para baixo, vale a primeira que casa, "negar tudo" por último. Sem estado = pacote a pacote (ACL); com estado = tabela de conexões (aceita respostas de conexões iniciadas de dentro). Servidores públicos na DMZ. IDS detecta; IPS bloqueia. Zero Trust: nada é confiável só por estar "dentro".
+
+---
+
+## I32 — IPsec: ESP em modo túnel
+**Subtópico coberto:** 8.5.1 Tipos de VPN e 8.5.2 IPsec (AH, ESP, IKE/SA, modo transporte × túnel), VPN SSL/TLS e WireGuard (Manual p. 49–50, Figura 20).
+**Por que é provável:** o slide p. 2 cita "VPNs (IPsec, TLS)", e o Manual detalha AH × ESP e transporte × túnel com figura. A Q13 conhecida só pede para escolher "VPN de acesso remoto"; os componentes do IPsec não são cobrados.
+**Prioridade:** Média
+**Tipo ENADE:** Resposta única
+
+**Enunciado:**
+Uma empresa quer interligar a rede da matriz (10.1.0.0/16) à da filial (10.2.0.0/16) pela Internet, com confidencialidade e integridade, escondendo também os endereços internos de quem observar o tráfego no caminho. Os usuários não devem instalar nenhum software. A configuração adequada é:
+
+**Alternativas:**
+- **A)** VPN de acesso remoto com IPsec AH em modo transporte, instalada em cada estação.
+- **B)** VPN site a site com IPsec AH em modo túnel, que cifra o datagrama original inteiro.
+- **C)** VPN site a site com IPsec ESP em modo túnel entre os gateways, com algoritmos, chaves e associações de segurança negociados pelo IKE.
+- **D)** VPN site a site com IPsec ESP em modo transporte, que mantém visível o cabeçalho IP original e protege o datagrama inteiro.
+- **E)** Uma VLAN IEEE 802.1Q estendida pela Internet entre os switches da matriz e da filial.
+
+**Gabarito: C**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Acesso remoto é para usuário individual (exigiria cliente instalado). E o AH dá autenticação e integridade **sem confidencialidade**.
+- **B) ❌** — O AH **não cifra**. Também "não funciona bem com NAT".
+- **C) ✅** — Site a site liga redes inteiras por gateways ("os usuários nem percebem"). O ESP dá confidencialidade, integridade e autenticação. O modo túnel encapsula o datagrama inteiro num novo IP (200.1.1.1 ↔ 201.2.2.2 na Figura 20), escondendo 10.1.0.5 ↔ 10.2.0.9. O IKE negocia as SAs, que são unidirecionais.
+- **D) ❌** — Contraditória: o modo transporte protege **só a carga útil** e mantém o cabeçalho original, então não esconde os endereços internos. É usado entre dois hosts.
+- **E) ❌** — VLAN é segmentação de camada 2 da rede local e não oferece criptografia (mesmo erro do distrator D da Q13).
+
+**Base no material:** Manual p. 49 (8.5; Figura 20: VPN site a site com IPsec em modo túnel; 8.5.1 site a site × acesso remoto; 8.5.2 AH, ESP, IKE/SA, modo transporte), p. 50 (modo túnel; VPN SSL/TLS na porta 443; WireGuard).
+**Conceito-chave para a prova:** AH = integridade/autenticação, sem sigilo. ESP = sigilo + integridade + autenticação (o mais usado). IKE = negocia chaves e SAs. Transporte = protege o payload, host a host. Túnel = protege o datagrama inteiro, gateway a gateway (site a site).
+
+---
+
+## I33 — 5G: eMBB, URLLC, mMTC e fatiamento
+**Subtópico coberto:** 9.3 Redes celulares (reuso de frequência, gerações, arquitetura LTE, 5G: eMBB, URLLC, mMTC, mmWave, Massive MIMO, *network slicing*); agrupa 9.4 mobilidade (*handoff*, roteamento indireto/direto) (Manual p. 52–54).
+**Por que é provável:** "redes 4G/5G" está na descrição do Tema 9 (slide p. 2). O Manual traz as três classes da UIT, a Tabela 27 e a Figura 22. A Q14 conhecida só usa "5G mmWave" como distrator.
+**Prioridade:** Média
+**Tipo ENADE:** Resposta única (associação embutida)
+
+**Enunciado:**
+Uma operadora vai atender, sobre a mesma infraestrutura física 5G: (1) transmissão de vídeo 8K para torcedores num estádio; (2) robôs de cirurgia remota, que exigem latência da ordem de 1 ms e altíssima confiabilidade; (3) dezenas de milhares de sensores de vagas de estacionamento por km². A classe de uso definida pela UIT para cada serviço e o recurso que cria "redes virtuais" com características diferentes sobre a mesma infraestrutura são:
+
+**Alternativas:**
+- **A)** 1-URLLC, 2-eMBB, 3-mMTC; *roaming* entre operadoras.
+- **B)** 1-eMBB, 2-mMTC, 3-URLLC; *handoff* entre estações base.
+- **C)** 1-mMTC, 2-URLLC, 3-eMBB; reuso de frequência entre células.
+- **D)** 1-eMBB, 2-URLLC, 3-mMTC; fatiamento de rede (*network slicing*).
+- **E)** 1-eMBB, 2-URLLC, 3-mMTC; roteamento triangular do IP Móvel.
+
+**Gabarito: D**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Troca eMBB (banda larga) com URLLC (latência). *Roaming* não aparece no Manual como recurso de virtualização.
+- **B) ❌** — Troca URLLC e mMTC. *Handoff* é a transferência do usuário entre estações base (mobilidade).
+- **C) ❌** — Inverte tudo. Reuso de frequência é a técnica celular que reaproveita frequências em células distantes, não cria redes virtuais.
+- **D) ✅** — eMBB = banda larga altíssima (vídeo 4K/8K, RA); URLLC = ≈ 1 ms e alta confiabilidade (cirurgia remota, veículos autônomos); mMTC = até 1 milhão de dispositivos/km² (sensores/IoT). O *network slicing* cria várias redes virtuais sobre a mesma infraestrutura.
+- **E) ❌** — As classes estão certas, mas o roteamento triangular é o efeito ineficiente do roteamento indireto no IP Móvel, não um recurso do 5G.
+
+**Base no material:** Manual p. 52 (9.3: células, ERB, reuso de frequência), p. 53 (Tabela 27: 1G–5G; Figura 22: eNodeB, MME, HSS, S-GW, P-GW; separação plano de dados × controle; 9.3.2 eMBB/URLLC/mMTC), p. 54 (mmWave, Massive MIMO, *beamforming*, 5GC em nuvem, *network slicing*; leilão de 2021, 3,5 GHz; 9.4 *handoff*, roteamento indireto × direto, Figura 23).
+**Conceito-chave para a prova:** eMBB = banda; URLLC = latência ≈ 1 ms e confiabilidade; mMTC = densidade de dispositivos. 4G = totalmente IP (VoLTE), OFDMA. Mobilidade: *handoff*; roteamento indireto (via agente nativo, triângulo) × direto (mais eficiente, mais complexo).
+
+---
+
+## I34 — SDN e tabela OpenFlow
+**Subtópico coberto:** 9.5 Redes Definidas por Software: separação dos planos, controlador, encaminhamento por fluxos, programabilidade, APIs *northbound*/*southbound*, OpenFlow "casar e agir" (Tabela 28), NFV (Manual p. 54–55).
+**Por que é provável:** "SDN" está na descrição do Tema 9 (slide p. 2), e o Manual traz figura de três planos e uma tabela de fluxos com prioridades, pronta para cálculo de "qual regra casa". Nenhuma questão conhecida cobra SDN. Se o banco tiver uma 12ª questão, este é um forte candidato.
+**Prioridade:** Alta
+**Tipo ENADE:** Resposta única (interpretação de tabela)
+
+**Enunciado:**
+Um switch OpenFlow tem a tabela de fluxos abaixo (Tabela 28 do Manual); entre as regras que casam, vale a de maior prioridade.
+
+| Prioridade | Casamento (*match*) | Ação |
+|---|---|---|
+| 300 | IP destino = 10.3.0.0/16, TCP porta destino = 22 | Descartar |
+| 200 | IP destino = 10.3.0.0/16 | Encaminhar pela porta 4 |
+| 100 | MAC destino = aa:bb:cc:dd:ee:ff | Encaminhar pela porta 2 |
+| 0 | Qualquer (regra padrão) | Enviar ao controlador |
+
+Chegam os pacotes: P1 para 10.3.7.7, TCP porta 22; P2 para 10.3.1.1, TCP porta 443; P3 com MAC de destino aa:bb:cc:dd:ee:ff e IP de destino 192.168.9.9, UDP porta 53; P4 para 8.8.8.8, com outro MAC de destino. As ações aplicadas a P1, P2, P3 e P4 são, respectivamente:
+
+**Alternativas:**
+- **A)** porta 4; porta 4; porta 2; descartar.
+- **B)** descartar; porta 4; porta 2; enviar ao controlador.
+- **C)** descartar; descartar; enviar ao controlador; porta 2.
+- **D)** porta 4; descartar; porta 2; enviar ao controlador.
+- **E)** enviar ao controlador nos quatro casos, pois o switch SDN não tem plano de dados próprio.
+
+**Gabarito: B**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Para P1 escolhe a regra 200 em vez da 300 (mais prioritária, que bloqueia SSH para 10.3/16). Para P4, o padrão é enviar ao controlador, não descartar.
+- **B) ✅** — P1 casa 300 e 200 → vence 300 (descartar); P2 casa só a 200 → porta 4; P3 não está em 10.3/16 e casa a 100 → porta 2; P4 só casa a 0 → controlador.
+- **C) ❌** — Aplica a regra de SSH a P2 (porta 443) e troca as ações de P3 e P4.
+- **D) ❌** — Inverte as ações de P1 e P2.
+- **E) ❌** — Inverte a arquitetura: na SDN, os comutadores **ficam só com o plano de dados**. O controlador concentra o plano de controle e instala regras; só o que não casa nada sobe ao controlador.
+
+**Base no material:** Manual p. 54 (9.5: quatro ideias: separação dos planos, controle logicamente centralizado, encaminhamento por fluxos, programabilidade), p. 55 (Figura 24: planos de aplicação, controle e dados; *northbound* REST e *southbound* OpenFlow; 9.5.1 *match*, *action*, prioridade, contadores; Tabela 28; um equipamento pode agir como switch, roteador, firewall ou NAT; WAN B4 do Google; NFV).
+**Conceito-chave para a prova:** SDN = plano de dados nos switches + plano de controle no controlador (visão global) + aplicações via API *northbound*; OpenFlow = API *southbound*. Regra = *match* + *action* + prioridade + contadores. NFV = funções de rede como software em servidores comuns (ex.: núcleo 5G).
+
+---
+
+## I35 — IaaS, PaaS, SaaS e CDN
+**Subtópico coberto:** 9.6 Computação em nuvem (definição do NIST, IaaS/PaaS/SaaS, Figura 25, modelos de implantação, VPCs, *leaf-spine*) e 9.6.1 computação de borda e CDNs (Manual p. 55–56).
+**Por que é provável:** o título do Capítulo 9 inclui "Nuvem", e o Manual traz a Figura 25 (divisão de responsabilidades) e a explicação de CDN/edge. Nenhuma questão conhecida cobra nuvem.
+**Prioridade:** Média
+**Tipo ENADE:** Resposta única (associação embutida)
+
+**Enunciado:**
+A universidade tem três projetos: (1) uma *startup* incubada entrega apenas o código da sua API e quer que o provedor cuide de sistema operacional, *runtime* e escalonamento; (2) o laboratório de redes precisa de máquinas virtuais com controle total do sistema operacional e das redes virtuais (VPC); (3) a secretaria quer usar e-mail e editor de documentos prontos, pela Web. Além disso, os vídeos institucionais devem carregar rápido para alunos de todo o país, embora o servidor de origem esteja em São Caetano do Sul. Os modelos de serviço de (1), (2) e (3) e a solução para os vídeos são:
+
+**Alternativas:**
+- **A)** 1-PaaS, 2-IaaS, 3-SaaS; CDN, que replica o conteúdo em servidores próximos dos usuários e os direciona por DNS ou *anycast*.
+- **B)** 1-IaaS, 2-PaaS, 3-SaaS; computação de borda, que processa os vídeos dentro do próprio navegador do aluno.
+- **C)** 1-SaaS, 2-IaaS, 3-PaaS; CDN, que replica o conteúdo em servidores próximos dos usuários.
+- **D)** 1-PaaS, 2-SaaS, 3-IaaS; NAT, que traduz os endereços dos alunos para o IP do servidor de origem.
+- **E)** 1-PaaS, 2-IaaS, 3-SaaS; VPN site a site, que replica o conteúdo nas filiais.
+
+**Gabarito: A**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ✅** — PaaS: "o cliente só entrega o código". IaaS: "máquinas virtuais, redes e armazenamento" (ex.: EC2). SaaS: aplicação pronta (ex.: Microsoft 365, Gmail). CDNs (Akamai, Cloudflare) espalham cópias e usam DNS ou *anycast* para levar cada usuário ao servidor mais próximo.
+- **B) ❌** — Troca IaaS e PaaS. Computação de borda processa dados perto de onde são gerados (ERB 5G, fábrica), não "no navegador".
+- **C) ❌** — Troca SaaS e PaaS (a *startup* não usa um software pronto; a secretaria não desenvolve código).
+- **D) ❌** — Troca IaaS e SaaS. NAT não distribui conteúdo.
+- **E) ❌** — Os modelos estão certos, mas VPN cria túnel cifrado entre redes; não replica nem aproxima conteúdo.
+
+**Base no material:** Manual p. 55 (9.6: NIST SP 800-145; autoatendimento, amplo acesso, compartilhamento, elasticidade, serviço medido; IaaS), p. 56 (Figura 25; PaaS, SaaS; pública, privada, comunitária, híbrida; VPCs, tráfego leste-oeste, Clos/*leaf-spine*; 9.6.1 edge e CDN).
+**Conceito-chave para a prova:** quanto mais "aaS", menos o cliente gerencia: IaaS (gerencia SO para cima), PaaS (só aplicação e dados), SaaS (só usa). Edge = processar perto da fonte (URLLC); CDN = cópias perto do usuário, via DNS ou *anycast*.
+
+---
+
+## Observações finais
+- **Gabaritos das 6 questões dos slides (I1–I6):** C, A, D, C, A, D. Somados aos conhecidos (B, D, B, C, A), dão A 3, B 2, C 3, D 3 nas 11 questões.
+- **Gabaritos das 29 adicionais (I7–I35):** A — I7, I16, I22, I23, I30, I35; B — I14, I18, I21, I26, I29, I34; C — I9, I11, I20, I25, I28, I32; D — I8, I12, I15, I17, I24, I33; E — I10, I13, I19, I27, I31.
+- **O que mais pode cair "alterado" das questões conhecidas** (sem questão nova, ver mapa): Questão 5 dos slides com os itens da Coluna 2 embaralhados; Q7 pedindo eficiência (200/246 ≈ 81,3%); Q11 com 3 ACKs duplicados (cwnd e ssthresh = metade); E4 com outra topologia de domínios; E5/E7 com outro IP/máscara.
