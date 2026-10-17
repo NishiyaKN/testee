@@ -1,0 +1,253 @@
+<section class="topico" id="t01" data-titulo="01 · Complexidade de Algoritmos">
+
+  <section class="sub" id="t01-escala" data-titulo="Escala de crescimento e simplificação">
+    <p class="cai">Questões reais: quiz nº 3 · slides Q3</p>
+    <p>Compara-se a <b>taxa de crescimento</b> quando n → ∞, e não o valor do custo para um n específico. Do mais eficiente ao menos eficiente:</p>
+    <p><b>Θ(1) &lt; Θ(log n) &lt; Θ(n) &lt; Θ(n log n) &lt; Θ(n²) &lt; Θ(n³) &lt; Θ(2ⁿ)</b></p>
+    <p><b>Regra de dominância:</b> despreze constantes (multiplicativas e aditivas) e termos de menor ordem; fica o termo de maior grau. Formalmente, g domina f se lim f(n)/g(n) = 0.</p>
+    <h5>Simplifique antes de comparar (estudo de caso do manual)</h5>
+    <table>
+      <tr><th>Função</th><th>Simplificação</th><th>Classe</th></tr>
+      <tr><td>log₂(n⁵)</td><td>5·log₂ n (o expoente sai do log)</td><td>Θ(log n)</td></tr>
+      <tr><td>100n + 15</td><td>constantes caem</td><td>Θ(n)</td></tr>
+      <tr><td>n·log₂(n³)</td><td>3·n·log₂ n</td><td>Θ(n log n)</td></tr>
+      <tr><td>Σ i (i = 1..n)</td><td>n(n + 1)/2 = 0,5n² + 0,5n (Gauss)</td><td>Θ(n²)</td></tr>
+      <tr><td>2ⁿ + n⁴</td><td>n⁴/2ⁿ → 0: a exponencial domina</td><td>Θ(2ⁿ)</td></tr>
+    </table>
+    <p>A tabela já está em ordem crescente de taxa de crescimento.</p>
+    <div class="chave">log(nᵏ) = k·log n → Θ(log n); n·log(nᵏ) → Θ(n log n); Σ i → Θ(n²); 2ⁿ + qualquer polinômio (até n¹⁰⁰) → Θ(2ⁿ).</div>
+    <div class="pega">Ordens erradas típicas: pôr n log n antes de n (impressionado pelo 100 de 100n); pôr n antes de log₂(n⁵) (lendo como se fosse n⁵); pôr n² antes de n·log₂(n³) (lendo como n·n³ ou "cúbica"; é só 3n log n).</div>
+    <div class="pega">Para n pequeno a ordem dos <i>valores</i> muda por causa das constantes: n(n + 1)/2 só passa 100n + 15 a partir de n = 200, e 3n log₂ n só passa 100n + 15 perto de n ≈ 10¹⁰. A questão pede a classe assintótica, não o valor.</div>
+  </section>
+
+  <section class="sub" id="t01-notacoes" data-titulo="Notações O, Ω, Θ e prova por limite">
+    <p class="cai">Questões reais: quiz nº 1 · slides Q1</p>
+    <table>
+      <tr><th>Notação</th><th>Existem c &gt; 0 e n₀ tais que, ∀ n ≥ n₀:</th><th>Significado</th></tr>
+      <tr><td>f = O(g)</td><td>0 ≤ f(n) ≤ c·g(n)</td><td>limite superior (tempo máximo garantido)</td></tr>
+      <tr><td>f = Ω(g)</td><td>0 ≤ c·g(n) ≤ f(n)</td><td>limite inferior (pelo menos este tempo)</td></tr>
+      <tr><td>f = Θ(g)</td><td>c₁·g(n) ≤ f(n) ≤ c₂·g(n)</td><td>limite firme ("sanduíche": O e Ω juntos)</td></tr>
+    </table>
+    <p><b>Teste do limite</b> (L = lim f(n)/g(n), com n → ∞):</p>
+    <ul>
+      <li>L = 0 → f = O(g), e g domina f;</li>
+      <li>L = constante &gt; 0 → f = Θ(g);</li>
+      <li>L = ∞ → f ≠ O(g): nenhuma constante c serve, e f domina g.</li>
+    </ul>
+    <h5>Exemplo do material: n² × n log₂ n</h5>
+    <p>Para n² = O(n log₂ n) seria preciso n² ≤ c·n log₂ n, isto é, n ≤ c·log₂ n para todo n grande. Mas lim n²/(n log₂ n) = lim n/log₂ n = ∞. Logo:</p>
+    <ul>
+      <li><b>n² = O(n log n) é falso.</b> "n log n domina n²" e "n² ≤ c·n log n para n grande" também são falsos: invertem a dominância.</li>
+      <li><b>n log n = O(n²) é verdadeiro</b>, porque lim (log n)/n = 0: n² domina n log n.</li>
+    </ul>
+    <div class="chave">Asserção-razão: julgue I e II separadamente; só se as duas forem verdadeiras pergunte se II explica I. Em "I. n² = O(n log₂ n) PORQUE II. n log₂ n domina n²", as duas são falsas. Na versão invertida (I. n log n = O(n²) PORQUE II. n² domina n log n), as duas são verdadeiras e II justifica I.</div>
+    <div class="pega">"I verdadeira e II falsa" atrai quem percebe o erro de II mas aceita I por intuição. A dominância correta (n² domina n log n) prova justamente que I é falsa.</div>
+  </section>
+
+  <section class="sub" id="t01-knuth" data-titulo="Modelo de Knuth: busca com sentinela">
+    <p class="cai">Questões reais: quiz nº 2 · slides Q2</p>
+    <p>O Modelo de Knuth dá o custo exato: cada linha i tem custo cᵢ e frequência tᵢ (quantas vezes executa), e <b>T(n) = Σ cᵢ·tᵢ</b>. A <b>sentinela</b> grava a chave em v[n − 1]: o laço nunca passa do fim, então some o teste de limite (i &lt; n) e sobra uma comparação por volta.</p>
+    <pre><code>v[n - 1] = chave;        // Linha 1
+while (v[i] != chave)    // Linha 2
+    i++;                 // Linha 3
+if (i &lt; n - 1)           // Linha 4
+    return i;            // Linha 5
+return -1;               // Linha 6</code></pre>
+    <table>
+      <tr><th>Linha</th><th>Pior caso (chave ausente)</th><th>Melhor caso (chave em v[0])</th></tr>
+      <tr><td>1 sentinela</td><td>1</td><td>1</td></tr>
+      <tr><td>2 teste do while</td><td><b>n</b> (i = 0 … n − 1)</td><td>1</td></tr>
+      <tr><td>3 i++</td><td><b>n − 1</b></td><td>0</td></tr>
+      <tr><td>4 if</td><td>1 (dá falso)</td><td>1 (dá verdadeiro)</td></tr>
+      <tr><td>5 return i</td><td>0</td><td>1</td></tr>
+      <tr><td>6 return −1</td><td>1</td><td>0</td></tr>
+    </table>
+    <ul>
+      <li>Pior: T(n) = c₁ + n·c₂ + (n − 1)·c₃ + c₄ + c₆ → termo de 1º grau → <b>Θ(n)</b>.</li>
+      <li>Melhor: T(n) = c₁ + c₂ + c₄ + c₅ → constante → <b>Θ(1)</b>.</li>
+    </ul>
+    <div class="chave">O teste de um laço roda uma vez a mais que o corpo: n testes e n − 1 incrementos. "Pior caso Θ(n)" e "melhor caso Θ(1)" são verdadeiros ao mesmo tempo (são cenários diferentes).</div>
+    <div class="pega">Erros de contagem: teste do while n − 1 ou n + 1 vezes (com sentinela são exatamente n); i++ n vezes (são n − 1); somar c₅ no pior caso (lá a saída é o return −1, c₆); achar que busca sequencial é "sempre linear" (o melhor caso é Θ(1)).</div>
+    <div class="pega">"Linha 2" segue a numeração dos comentários (Linhas 1 a 6), não a numeração lateral do código no slide.</div>
+  </section>
+
+  <section class="sub" id="t01-binaria" data-titulo="Busca binária: comparações no pior caso">
+    <p class="cai">Questões reais: quiz nº 7 · exemplo do professor (Estrutura de Questões ENADE, p. 9)</p>
+    <p>Exige vetor <b>ordenado</b> com acesso por índice. Cada comparação com o elemento do meio descarta metade: n → n/2 → n/4 → … → 1. Pior caso ≈ <b>log₂ n</b> comparações, Θ(log n). A busca linear faz n no pior caso.</p>
+    <table>
+      <tr><th>n</th><th>Linear (pior)</th><th>Binária: log₂ n</th></tr>
+      <tr><td>1.024 = 2¹⁰</td><td>1.024</td><td>10</td></tr>
+      <tr><td>65.536 = 2¹⁶</td><td>65.536</td><td>16</td></tr>
+      <tr><td>1.048.576 = 2²⁰</td><td>1.048.576</td><td>20</td></tr>
+      <tr><td>1.073.741.824 = 2³⁰</td><td>1.073.741.824</td><td>30</td></tr>
+    </table>
+    <div class="chave">2¹⁰ ≈ mil, 2²⁰ ≈ 1 milhão, 2³⁰ ≈ 1 bilhão: log₂ n é o expoente. Para 1.000.000, log₂ n ≈ 19,9 → 20.</div>
+    <div class="pega">Distratores: n (pior caso da busca <i>linear</i>); n/2 (dividiu ao meio uma vez só; também é a média da busca linear); 10 (confundir 2²⁰ com 2¹⁰ = 1.024, ou usar log₁₀, que daria ≈ 6).</div>
+    <div class="pega">Contagem rigorosa: ⌊log₂ n⌋ + 1 (21 para 2²⁰: 20 divisões + a comparação com o último elemento que sobra). O gabarito do professor usa log₂ n = 20; sem 21 nas opções, fique com log₂ n.</div>
+  </section>
+
+  <section class="sub" id="t01-lacos" data-titulo="Laços aninhados: PG decrescente × triangular">
+    <p class="cai">Questões reais: quiz nº 4 · slides Q4</p>
+    <pre><code>for (int i = n; i &gt; 0; i /= 2)
+    for (int j = 0; j &lt; i; j++)
+        count++;</code></pre>
+    <p>Com n potência de 2, i vale n, n/2, n/4, …, 2, 1 (log₂ n + 1 valores), e o laço interno roda <b>i</b> vezes. O total é uma PG com a₁ = n, q = 1/2 e log₂ n + 1 termos:</p>
+    <p>S = n + n/2 + … + 1 = n·(1 − (1/2)^(log₂ n + 1)) / (1 − 1/2) = 2n·(1 − 1/(2n)) = <b>2n − 1 → Θ(n)</b>. Ex.: n = 16 → 31; n = 1.024 → 2.047.</p>
+    <table>
+      <tr><th>Laço</th><th>Soma</th><th>Total → classe</th></tr>
+      <tr><td>i /= 2; interno j &lt; i</td><td>n + n/2 + … + 1 (PG)</td><td>2n − 1 → Θ(n)</td></tr>
+      <tr><td>i /= 2; interno j &lt; n</td><td>n, somado log₂ n + 1 vezes</td><td>n(log₂ n + 1) → Θ(n log n)</td></tr>
+      <tr><td>i = 1..n; interno j = 1..i</td><td>1 + 2 + … + n (PA, Gauss)</td><td>n(n + 1)/2 → Θ(n²)</td></tr>
+      <tr><td>(outro problema)</td><td>1 + 2 + 4 + … + 2ⁿ⁻¹ (n termos)</td><td>2ⁿ − 1 → Θ(2ⁿ)</td></tr>
+    </table>
+    <div class="chave">Aninhado não quer dizer n log n nem n²: some o que o laço interno realmente executa. Escopo dividido por 2 a cada volta → 2n − 1 = Θ(n).</div>
+    <div class="pega">n log₂ n supõe que o interno roda sempre n vezes (log n voltas × n); n(n + 1)/2 é o laço triangular, com i crescendo de 1 em 1 (a "intuição quadrática"); 2ⁿ − 1 exigiria n termos dobrando, mas aqui há só log₂ n + 1 termos, cada um ≤ n.</div>
+  </section>
+
+  <section class="sub" id="t01-mestre" data-titulo="Recorrências e Teorema Mestre">
+    <p class="cai">Questões reais: quiz nº 5 · slides Q5</p>
+    <p>Divisão e conquista: <b>T(n) = a·T(n/b) + f(n)</b> (a ≥ 1 subproblemas, b &gt; 1 fator de divisão, f = custo de dividir e combinar). Passo 1: calcule a <b>fronteira n^(log_b a)</b>. Passo 2: compare f(n) com ela.</p>
+    <table>
+      <tr><th>Caso</th><th>Condição</th><th>T(n)</th></tr>
+      <tr><td>1 · recursão domina (folhas)</td><td>f menor: f = O(n^(log_b a − ε))</td><td>Θ(n^(log_b a))</td></tr>
+      <tr><td>2 · equilíbrio</td><td>f = Θ(n^(log_b a))</td><td>Θ(n^(log_b a) · log n)</td></tr>
+      <tr><td>3 · combinação domina</td><td>f maior: f = Ω(n^(log_b a + ε)) e a·f(n/b) ≤ c·f(n), c &lt; 1</td><td>Θ(f(n))</td></tr>
+    </table>
+    <table>
+      <tr><th>Recorrência</th><th>Fronteira → caso</th><th>Resultado</th></tr>
+      <tr><td>Alfa: 4T(n/2) + Θ(n)</td><td>n^(log₂ 4) = n² → Caso 1</td><td>Θ(n²)</td></tr>
+      <tr><td>Beta: 2T(n/2) + Θ(n²)</td><td>n^(log₂ 2) = n → Caso 3 (2·(n/2)² = n²/2 ≤ ½·n²)</td><td>Θ(n²)</td></tr>
+      <tr><td>Merge Sort: 2T(n/2) + Θ(n)</td><td>n → Caso 2</td><td>Θ(n log n)</td></tr>
+      <tr><td>Busca binária: T(n/2) + Θ(1)</td><td>n⁰ = 1 → Caso 2</td><td>Θ(log n)</td></tr>
+      <tr><td>8T(n/2) + Θ(n²)</td><td>n³ → Caso 1</td><td>Θ(n³)</td></tr>
+    </table>
+    <div class="chave">Alfa (4 chamadas, combinação linear) e Beta (2 chamadas, combinação quadrática) dão as duas Θ(n²): assintoticamente equivalentes, escolha indiferente do ponto de vista assintótico (conclusão do manual).</div>
+    <div class="pega">Erros explorados: Alfa "no Caso 2 → n log n" (usou a fronteira n^(log₂ 2) = n; com a = 4 ela é n²); "menos chamadas recursivas ⇒ mais rápido" ou Beta = O(log n) (Beta é dominada pela combinação n²; log n só sai de T(n/2) + Θ(1)); Alfa cúbica (isso seria 8T(n/2) + n²); Beta n⁴ (é n²); "exponencial pelo Teorema Mestre" (com a e b constantes ele nunca dá 2ⁿ; exponencial vem de recorrência subtrativa, como T(n) = 2T(n − 1) + 1).</div>
+  </section>
+
+  <section class="sub" id="t01-topk" data-titulo="Ordenação, hash e heap: top-k em fluxo">
+    <p class="cai">Questões reais: quiz nº 6 · slides Q6</p>
+    <table>
+      <tr><th>Algoritmo</th><th>Melhor / médio / pior</th><th>Memória extra</th><th>Estável?</th></tr>
+      <tr><td>Insertion</td><td>n / n² / n²</td><td>Θ(1)</td><td>sim</td></tr>
+      <tr><td>Merge Sort</td><td>n log n (sempre)</td><td>Θ(n) (vetor auxiliar)</td><td>sim</td></tr>
+      <tr><td>Quicksort</td><td>n log n / n log n / <b>n²</b></td><td>Θ(log n) de pilha</td><td>não</td></tr>
+      <tr><td>Heapsort</td><td>n log n (sempre)</td><td>Θ(1), in-place</td><td>não</td></tr>
+    </table>
+    <p>Nenhuma ordenação por comparação fica abaixo de n log n no pior caso.</p>
+    <h5>Top-k com Min-Heap de tamanho k (k ≪ n)</h5>
+    <ol>
+      <li>Monte um Min-Heap com os k primeiros itens: Θ(k).</li>
+      <li>Para cada novo x, compare com a raiz (o <b>menor dos k maiores</b>): Θ(1). Se x &gt; raiz, troque a raiz por x e rode heapify: Θ(log k).</li>
+    </ol>
+    <p>Total: <b>Θ(n log k)</b> de tempo e <b>Θ(k)</b> de memória. É Min-Heap porque a raiz é quem sai quando chega alguém maior.</p>
+    <figure><img src="img/t01-heap.png" alt="Min-Heap com raiz 10 e Max-Heap com raiz 100"><figcaption>Fonte: slides do Squad 11 (Resumo: Complexidade de algoritmos), p. 14</figcaption></figure>
+    <table>
+      <tr><th>Abordagem</th><th>Tempo</th><th>Memória</th></tr>
+      <tr><td>Vetor com tudo + Merge Sort a cada intervalo</td><td>Θ(n log n) a cada reordenação</td><td>Θ(n)</td></tr>
+      <tr><td>Min-Heap de tamanho k</td><td>Θ(n log k) no total</td><td>Θ(k)</td></tr>
+      <tr><td>Hash (encadeamento) + vetor + Heapsort</td><td>Θ(n log n) para ordenar tudo; busca no hash Θ(n) no pior caso</td><td>Θ(n): tabela + vetor</td></tr>
+    </table>
+    <p><b>Hash com encadeamento:</b> Θ(1) em média; se todas as chaves colidirem, a tabela vira uma lista encadeada e a busca cai para <b>Θ(n)</b>, quebrando a previsibilidade de latência.</p>
+    <div class="pega">"Heapsort ordena em O(n)" é falso: ele é Θ(n log n) em todos os casos. É in-place, mas uma solução que guarda as n chaves num hash e as copia para um vetor usa Θ(n) de memória, e ordenar tudo para pegar k itens perde para o Min-Heap (n log k).</div>
+    <div class="pega">O slide diz que o Quicksort usa memória "Θ(1) in-place"; o correto (manual) é pilha de recursão Θ(log n), chegando a Θ(n) sem otimização.</div>
+  </section>
+
+  <section class="sub" id="t01-inf" data-titulo="Tópicos para as questões inferidas">
+
+    <section class="sub" id="t01-inf-escala" data-titulo="Escala clássica: o que cada classe indica">
+      <table>
+        <tr><th>Classe</th><th>Comportamento típico (Tabela 1 do manual)</th></tr>
+        <tr><td>Θ(1) constante</td><td>não depende de n</td></tr>
+        <tr><td>Θ(log n) logarítmica</td><td>cresce muito devagar; divisões sucessivas do espaço de busca</td></tr>
+        <tr><td>Θ(n) linear</td><td>cresce na proporção de n</td></tr>
+        <tr><td>Θ(n log n) linearítmica</td><td>ordenação ótima por divisão e conquista</td></tr>
+        <tr><td>Θ(n²) quadrática</td><td>laços duplos simples ou triangulares</td></tr>
+        <tr><td>Θ(n³) cúbica</td><td>laços triplos; multiplicação ingênua de matrizes</td></tr>
+        <tr><td>Θ(2ⁿ) exponencial</td><td>força bruta; inviável para n médio ou grande</td></tr>
+      </table>
+    </section>
+
+    <section class="sub" id="t01-inf-notacoes" data-titulo="Θ e Ω com constantes">
+      <p>Provar Θ exige mostrar c₁, c₂ e n₀. Exemplo: f(n) = 3n² + 10n.</p>
+      <ul>
+        <li><b>Θ(n²)</b> com c₁ = 3, c₂ = 4, n₀ = 10: 3n² ≤ 3n² + 10n sempre, e 3n² + 10n ≤ 4n² ⇔ n ≥ 10 (em n = 9 falha: 333 &gt; 324).</li>
+        <li><b>Ω(n)</b> (c = 1, n₀ = 1) é verdadeiro, mas não é firme: f/n = 3n + 10 → ∞, logo f ≠ O(n).</li>
+      </ul>
+      <div class="pega">A dominância é pelo maior <b>grau</b>, nunca pelo maior coeficiente: 10n não domina 3n².</div>
+    </section>
+
+    <section class="sub" id="t01-inf-casos" data-titulo="Pior, melhor e caso médio; buscas">
+      <ul>
+        <li><b>Pior caso</b>: limite superior para qualquer entrada de tamanho n; é a garantia para SLA e tempo real.</li>
+        <li><b>Melhor caso</b>: cenário mais favorável; serve para validar fast-paths e não garante nada.</li>
+        <li><b>Caso médio</b>: média sob uma distribuição (comumente uniforme); reflete o uso cotidiano. Busca linear com chave equiprovável: (n + 1)/2 comparações, ainda Θ(n).</li>
+      </ul>
+      <table>
+        <tr><th>Busca</th><th>Melhor / médio / pior</th><th>Causa do pior</th></tr>
+        <tr><td>Linear</td><td>1 / n / n</td><td>chave na última posição ou ausente</td></tr>
+        <tr><td>Binária (vetor ordenado)</td><td>1 / log n / log n</td><td>chave numa folha ou ausente</td></tr>
+        <tr><td>Hash (encadeamento)</td><td>1 / 1 / n</td><td>todas as chaves colidem</td></tr>
+      </table>
+      <div class="pega">A Tabela 2 do manual cita "chave na raiz" como causa do pior caso da binária: na raiz (meio do vetor) é o melhor caso, Θ(1). Vetor ordenado não "degenera" (quem degenera é a ABP sem balanceamento), e hash degenerado vira lista, Θ(n), não árvore.</div>
+    </section>
+
+    <section class="sub" id="t01-inf-triangular" data-titulo="Laço triangular (soma de Gauss)">
+      <pre><code>for (int i = 1; i &lt;= n; i++)
+    for (int j = 1; j &lt;= i; j++)
+        processar_sinal(i, j);</code></pre>
+      <p>O interno roda i vezes: 1 + 2 + … + n = <b>n(n + 1)/2</b> = 0,5n² + 0,5n → Θ(n²). n = 10 → 55; n = 1.000 → 500.500. Com j &lt; i (até i − 1): n(n − 1)/2 = 499.500 para n = 1.000, também Θ(n²).</p>
+      <div class="pega">"n × n = n² execuções" acerta a classe mas erra a contagem; "metade em média" dá n·n/2, que continua quadrático (não gera log); 2n − 1 é do laço com i /= 2.</div>
+    </section>
+
+    <section class="sub" id="t01-inf-caso2" data-titulo="Teorema Mestre: Caso 2 (Merge Sort)">
+      <p>Merge Sort: T(n) = 2T(n/2) + Θ(n). a = 2, b = 2, fronteira n^(log₂ 2) = n. f(n) = Θ(n) é <b>equivalente</b> à fronteira → Caso 2 → <b>Θ(n log n)</b> (log₂ n níveis de recursão, Θ(n) de trabalho por nível).</p>
+      <div class="pega">Erros típicos: esquecer o fator log (responder Θ(n)); usar a fronteira n² (é a de a = 4, como na Estratégia Alfa); confundir o expoente log_b a com "log n" e aplicar o Caso 3.</div>
+    </section>
+
+    <section class="sub" id="t01-inf-paradigmas" data-titulo="Paradigmas de projeto">
+      <table>
+        <tr><th>Paradigma</th><th>Marca registrada</th><th>Exemplo</th></tr>
+        <tr><td>Força bruta</td><td>testa todas as soluções viáveis; robusta, mas pode ser exponencial</td><td>testar todas as combinações</td></tr>
+        <tr><td>Divisão e conquista</td><td>subproblemas <b>independentes</b>, resolvidos e depois combinados</td><td>busca binária, Merge Sort</td></tr>
+        <tr><td>Guloso</td><td>escolha local ótima, sem voltar atrás; exige prova de que leva ao ótimo global</td><td>Dijkstra</td></tr>
+        <tr><td>Programação dinâmica</td><td>subproblemas <b>sobrepostos</b> + subestrutura ótima; resolve cada um uma vez e guarda (tabela ou memorização)</td><td>—</td></tr>
+      </table>
+    </section>
+
+    <section class="sub" id="t01-inf-ordenacao" data-titulo="Ordenação: qual escolher e pior caso do Quicksort">
+      <ul>
+        <li>Pouca memória + tempo garantido para qualquer entrada → <b>Heapsort</b> (Θ(n log n) sempre, Θ(1) extra; instável e com pior uso de cache que o Quicksort).</li>
+        <li>Estabilidade + garantia → <b>Merge Sort</b>, pagando Θ(n) de memória.</li>
+        <li>Mais rápido na prática (caso médio) → <b>Quicksort</b>, com risco de Θ(n²).</li>
+        <li><b>Insertion Sort</b>: Θ(n) só no melhor caso (já ordenado); em ordem inversa, Θ(n²).</li>
+      </ul>
+      <p><b>Pior caso do Quicksort:</b> vetor já ordenado e pivô sempre o menor (ou maior) elemento → cada partição separa só o pivô → (n − 1) + (n − 2) + … + 1 = n(n − 1)/2 comparações → Θ(n²), com pilha de até Θ(n).</p>
+      <div class="pega">Melhor caso e "mais rápido na prática" não são garantia de pior caso.</div>
+    </section>
+
+    <section class="sub" id="t01-inf-abp" data-titulo="ABP: degeneração e percursos">
+      <p>Na ABP, esquerda &lt; raiz ≤ direita. Busca, inserção e remoção custam proporcional à altura: Θ(log n) em média. Inserir em ordem crescente ou decrescente sem balanceamento (AVL, Red-Black) gera uma "linha" de altura n → <b>Θ(n)</b>, igual a uma lista encadeada.</p>
+      <figure><img src="img/t01-abp.png" alt="ABP com raiz 40, filhos 30 e 50, folhas 25, 35, 45 e 60"><figcaption>Fonte: slides do Squad 11 (Resumo: Complexidade de algoritmos), p. 14</figcaption></figure>
+      <table>
+        <tr><th>Percurso</th><th>Uso</th><th>Na árvore da figura</th></tr>
+        <tr><td>Pré-ordem (raiz, esq., dir.)</td><td>clonar / serializar</td><td>40 30 25 35 50 45 60</td></tr>
+        <tr><td>Em-ordem (esq., raiz, dir.)</td><td>chaves em ordem crescente</td><td>25 30 35 40 45 50 60</td></tr>
+        <tr><td>Pós-ordem (esq., dir., raiz)</td><td>liberar nós da memória</td><td>25 35 30 45 60 50 40</td></tr>
+      </table>
+      <div class="pega">"Em-ordem dá ordem crescente" é verdade, mas não explica a degeneração (a causa é a ordem de inserção sem balanceamento). 40 30 50 25 35 45 60 é o percurso por níveis, não a pré-ordem. Reinserir na em-ordem recria a árvore degenerada.</div>
+    </section>
+
+    <section class="sub" id="t01-inf-hash" data-titulo="Hash: colisões e fator de carga">
+      <p>h(k) leva a chave a um índice de um vetor de m posições; fator de carga α = n/m. Boa função + α estável → busca e inserção Θ(1) <b>em média</b>.</p>
+      <figure><img src="img/t01-hash.png" alt="Chaves passam pela função hash e vão para índices da tabela"><figcaption>Fonte: slides do Squad 11 (Resumo: Complexidade de algoritmos), p. 14</figcaption></figure>
+      <table>
+        <tr><th>Estratégia</th><th>Onde ficam os colididos</th><th>Pior caso</th></tr>
+        <tr><td>Encadeamento</td><td>listas encadeadas externas, uma por índice</td><td>Θ(n): todas no mesmo índice</td></tr>
+        <tr><td>Endereçamento aberto</td><td>no próprio vetor; novo índice por sondagem linear, quadrática ou duplo hashing</td><td>Θ(n): a inserção percorre a tabela</td></tr>
+      </table>
+      <div class="pega">Sondagem é do endereçamento aberto, não do encadeamento. Nenhuma das duas é "sempre O(1)".</div>
+    </section>
+
+  </section>
+</section>

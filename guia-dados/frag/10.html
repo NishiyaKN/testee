@@ -1,0 +1,251 @@
+<section class="topico" id="t10" data-titulo="10 · Teoria da Computação">
+
+  <section class="sub" id="t10-conjuntos" data-titulo="Conjuntos e relações">
+    <p class="cai">Questões reais: quiz nº 66, 72 · slides Q1, apostila Q12</p>
+    <ul>
+      <li><b>∅ ⊆ A para qualquer A</b>: ∅ não tem elemento que possa ficar fora de A. Também A ⊆ A. Mas ∅ ∈ A só vale se ∅ for elemento de A.</li>
+      <li><b>∅ = {}</b> tem 0 elementos. <b>{∅}</b> tem 1 elemento, que é o próprio vazio. Logo <b>{∅} ≠ {}</b>, e valem ∅ ∈ {∅} e ∅ ⊆ {∅}.</li>
+      <li>∈ liga elemento a conjunto e ⊆ liga conjunto a conjunto: 1 ∈ {1,2} e {1} ⊆ {1,2}, mas {1} ∉ {1,2}.</li>
+      <li><b>Complemento:</b> A' = U − A, ou seja, o que está no universo e falta em A. Com U = {1,2,3,4} e A = {1,4}, A' = {2,3}. Sem U definido, não dá para listar A'.</li>
+    </ul>
+    <div class="tw"><table>
+      <tr><th>A = {1,2,3}, B = {2,3,4}</th><th>Resultado</th></tr>
+      <tr><td>A ∪ B (em A ou em B)</td><td>{1,2,3,4}</td></tr>
+      <tr><td>A ∩ B (nos dois)</td><td>{2,3}</td></tr>
+      <tr><td>A − B (em A e não em B)</td><td>{1}</td></tr>
+      <tr><td>B − A</td><td>{4}</td></tr>
+    </table></div>
+    <div class="pega">A − B ≠ B − A, porque a diferença depende da ordem. União e interseção são comutativas.</div>
+    <h5>Propriedades de uma relação R ⊆ A × A</h5>
+    <div class="tw"><table>
+      <tr><th>Propriedade</th><th>Condição</th></tr>
+      <tr><td>Reflexiva</td><td>(x,x) ∈ R para <b>todo</b> x ∈ A</td></tr>
+      <tr><td>Simétrica</td><td>(x,y) ∈ R ⇒ (y,x) ∈ R</td></tr>
+      <tr><td>Antissimétrica</td><td>(x,y) ∈ R e (y,x) ∈ R ⇒ x = y</td></tr>
+      <tr><td>Transitiva</td><td>(x,y) ∈ R e (y,z) ∈ R ⇒ (x,z) ∈ R</td></tr>
+    </table></div>
+    <div class="pega">"R é simétrica quando todo par tem x = y" é <b>falso</b>: essa condição descreve uma relação contida na identidade (só pares (x,x)), não a simetria. {(1,2),(2,1)} é simétrica e tem 1 ≠ 2.</div>
+    <p><b>Exemplo do material:</b> A = {1,2,3} e R = {(1,1),(2,2),(3,3),(1,2),(2,1)}.</p>
+    <ul>
+      <li>Reflexiva: <b>sim</b>, porque contém (1,1), (2,2) e (3,3).</li>
+      <li>Simétrica: <b>sim</b>, porque (1,2) e (2,1) aparecem juntos e cada (x,x) é o próprio inverso.</li>
+      <li>Antissimétrica: <b>não</b>, porque (1,2) e (2,1) estão em R com 1 ≠ 2.</li>
+      <li>Transitiva: <b>sim</b>, porque (1,2),(2,1) ⇒ (1,1) ∈ R e (2,1),(1,2) ⇒ (2,2) ∈ R. Logo R é uma relação de equivalência.</li>
+    </ul>
+    <div class="chave">Antissimétrica não quer dizer "não simétrica": uma relação só com pares (x,x) é simétrica <b>e</b> antissimétrica. Para a transitividade, confira <b>todas</b> as cadeias, inclusive as de ida e volta.</div>
+  </section>
+
+  <section class="sub" id="t10-chomsky" data-titulo="Gramáticas e Hierarquia de Chomsky">
+    <p class="cai">Questões reais: quiz nº 67, 71 · slides Q2, Q6</p>
+    <p>Uma gramática é G = (V, Σ, P, S): V são as variáveis (não terminais), Σ os terminais, P as produções e S o símbolo inicial. O tipo da linguagem depende da forma das regras, e cada tipo tem um reconhecedor <b>exato</b>.</p>
+    <div class="tw"><table>
+      <tr><th>Tipo · linguagem (exemplos)</th><th>Gramática</th><th>Reconhecedor exato</th></tr>
+      <tr><td><b>3 · Regulares</b> (ab*a, a*b*, (01)*)</td><td>regular: A → aB | a | ε; equivale a expressão regular</td><td>autômato finito (AFD ou AFND)</td></tr>
+      <tr><td><b>2 · Livres de contexto</b> (aⁿbⁿ, #a = #b, parênteses)</td><td>V → w: <b>um único</b> não terminal à esquerda, w ∈ (V ∪ Σ)*</td><td>autômato de pilha <b>não determinístico</b></td></tr>
+      <tr><td><b>1 · Sensíveis ao contexto</b> (aⁿbⁿcⁿ)</td><td>α → β com |α| ≤ |β|</td><td>autômato linearmente limitado (LBA, "MT com limite linear")</td></tr>
+      <tr><td><b>0 · Recursivamente enumeráveis</b> (HALT)</td><td>irrestrita: α → β</td><td>Máquina de Turing</td></tr>
+    </table></div>
+    <figure><img src="img/t10-chomsky.png" alt="Hierarquia de Chomsky em níveis encaixados: Tipo 3 no centro, depois Tipo 2, Tipo 1 e Tipo 0 por fora"><figcaption>Fonte: Material de Estudos - Teoria da Computação.pdf, p. 21</figcaption></figure>
+    <div class="chave">Regulares ⊂ LLC ⊂ Sensíveis ao contexto ⊂ Recursivas (decidíveis) ⊂ Recursivamente enumeráveis. O Tipo 3 é o núcleo, o nível mais restrito, e o poder cresce para fora. Associação: Tipo 3 ↔ AF · Tipo 2 ↔ AP não determinístico · Tipo 1 ↔ LBA · Tipo 0 ↔ MT.</div>
+    <div class="pega">Os distratores trocam os níveis: AP para as regulares e AF para as LLC, LBA para as regulares, AF para as sensíveis ao contexto, MT para as LLC e AP para o Tipo 0. A MT também reconhece LLC, mas o reconhecedor <b>exato</b> do Tipo 2 é o AP. O slide chama o reconhecedor do Tipo 0 de "MT Universal". O mais rigoroso seria "alguma MT" (a Universal é a MT que simula outras), mas é essa a opção que corresponde ao Tipo 0.</div>
+    <h5>Exemplo: L = { w ∈ {a,b}* | #a = #b }</h5>
+    <ul>
+      <li><b>Não é regular.</b> É preciso guardar o saldo #a − #b, que cresce sem limite, e um AFD tem memória finita. Alternar entre "dois estados de paridade" só diz se uma contagem é par ou ímpar e não compara #a com #b. Pelo lema do bombeamento, aᵖbᵖ bombeado no bloco de a's sai de L.</li>
+      <li><b>É Tipo 2.</b> S → aSbS | bSaS | ε tem um único não terminal à esquerda em cada regra.</li>
+      <li><b>Existe GLC não ambígua para L:</b> S → aBS | bAS | ε; A → a | bAA; B → b | aBB. Ela corta a palavra no primeiro ponto em que o saldo volta a zero.</li>
+    </ul>
+    <div class="pega">A ambiguidade é da <b>gramática</b>. S → aSbS | bSaS | ε é ambígua (abab tem 2 árvores de derivação), mas isso não torna L ambígua. Uma linguagem só é <b>inerentemente</b> ambígua se <b>todas</b> as suas GLCs forem ambíguas, e L não é, embora o texto-base fale em "problemas inerentes de ambiguidade". No slide a regra do Tipo 2 saiu truncada como "w(V)*"; leia w ∈ (V ∪ Σ)*.</div>
+  </section>
+
+  <section class="sub" id="t10-af" data-titulo="Autômatos finitos e seus limites">
+    <p class="cai">Questões reais: quiz nº 67, 68 · slides Q2 (afirmativa I), Q3</p>
+    <p>Um AF é M = (Q, Σ, δ, q₀, F). A única memória são os estados, que existem em número <b>fixo</b>. A palavra é aceita se toda a entrada for consumida e o autômato terminar em um estado de F. AFD, AFND e expressões regulares descrevem a mesma classe: as linguagens <b>regulares</b> (Tipo 3).</p>
+    <div class="tw"><table>
+      <tr><th>O AFD consegue (informação finita)</th><th>O AFD não consegue (informação ilimitada)</th></tr>
+      <tr><td>paridade da quantidade de a's (2 estados); os últimos k símbolos; saber se "aa" já apareceu; padrões de ER como <b>ab*a</b> ou a*b*</td><td>manter um contador sem limite; comparar duas quantidades, como em <b>aⁿbⁿ</b> e #a = #b; guardar uma palavra longa para comparar depois (wwᴿ)</td></tr>
+    </table></div>
+    <figure><img src="img/t10-af-aba.png" alt="AF: q0 lê a e vai a q1; q1 tem laço em b; q1 lê a e vai a q2, que é final"><figcaption>Fonte: Teoria da Computação - Revisão ENADE.pdf, p. 27 (este AF reconhece exatamente ab*a)</figcaption></figure>
+    <ul>
+      <li><b>ab*a</b> é uma expressão regular: o b* aceita qualquer quantidade de b <b>sem compará-la com nada</b>. Um AFD resolve, sem memória auxiliar. Rejeitar mensagens que <b>contêm</b> ab*a também é regular, porque as regulares são fechadas sob complemento e interseção.</li>
+      <li><b>aⁿbⁿ com n qualquer</b> não é regular. Com k estados, depois de ler mais de k a's algum estado se repete (casa dos pombos) e o AFD passa a confundir quantidades diferentes de a. É preciso uma <b>pilha</b> (LLC, Tipo 2).</li>
+      <li>a*b* só exige a ordem e é regular. aⁿbⁿ exige a ordem e a mesma quantidade, e não é regular.</li>
+    </ul>
+    <div class="tw"><table>
+      <tr><th>Requisito</th><th>Modelo mínimo</th></tr>
+      <tr><td>padrão fixo ou ER (ab*a, a*b*)</td><td>AFD</td></tr>
+      <tr><td>comparar 2 contagens (aⁿbⁿ, #a = #b, aninhamento)</td><td>autômato de pilha</td></tr>
+      <tr><td>comparar 3 contagens (aⁿbⁿcⁿ)</td><td>Máquina de Turing (basta um LBA)</td></tr>
+    </table></div>
+    <div class="pega">"Basta aumentar o número de estados" é falso: mais estados só contam até um limite fixo, e para n indeterminado seriam necessários infinitos estados. Também é falso dizer que ab*a "exige contagem" ou exige MT, porque ela é regular. E aⁿbⁿ não pode ficar no AFD. Se a opção disser que ab*a cabe "no AFD atual", entenda "num AFD": o autômato precisa ser ampliado, mas continua sendo um AF.</div>
+  </section>
+
+  <section class="sub" id="t10-ap" data-titulo="Autômatos de pilha e linguagens livres de contexto">
+    <p class="cai">Questões reais: quiz nº 69, 70 · slides Q4, Q5 (afirmativa III)</p>
+    <p>O AP é um AF com uma <b>pilha LIFO</b> (o último a entrar é o primeiro a sair). É uma 7-upla (Q, Σ, Γ, δ, q₀, Z₀, F), em que Γ é o alfabeto da pilha e Z₀ é o marcador de fundo. A pilha é ilimitada, mas só o <b>topo</b> é acessível. O <b>AP não determinístico reconhece exatamente as LLC</b>, que são as linguagens das gramáticas livres de contexto.</p>
+    <h5>Delimitadores aninhados: {[[]]}, (()())</h5>
+    <ul>
+      <li>Ao ler uma abertura ({ ou [), faz <b>push</b> desse símbolo.</li>
+      <li>Ao ler um fechamento, o topo tem de ser a abertura correspondente, e então faz <b>pop</b>. Se o topo for outro símbolo ou só Z₀, não há transição e a palavra é rejeitada (ex.: ({[)]} e ())).</li>
+      <li>Se a entrada acabar com Z₀ no topo, aceita. Se sobrar abertura na pilha, rejeita (ex.: (()).</li>
+    </ul>
+    <figure><img src="img/t10-ap-parenteses.png" alt="AP de parênteses balanceados: laço em q0 com (,Z;PZ e (,P;PP e ),P;λ; transição λ,Z;Z de q0 para q1 final"><figcaption>Fonte: Material de Estudos - Teoria da Computação.pdf, p. 40</figcaption></figure>
+    <div class="chave">Aninhamento e balanceamento ⇒ LLC (Tipo 2) ⇒ pilha. A pilha consegue validar estruturas aninhadas <b>porque</b> elas formam LLC, cujo reconhecedor exato é o AP. A equivalência AP ↔ LLC é a justificativa do mecanismo push/pop, e não um fato solto.</div>
+    <div class="pega">Não negue a equivalência AP ↔ LLC nem o mecanismo push/pop, e não diga que um fato "não justifica" o outro. Delimitadores balanceados formam até uma LLC <b>determinística</b> (um APD também resolve), mas a equivalência com <b>todas</b> as LLC é do AP <b>não</b> determinístico. No AP, ao contrário do AF, o não determinismo aumenta o poder.</div>
+    <h5>Limite: o AP compara dois grupos, não três</h5>
+    <p>Em aⁿbⁿcⁿ a pilha guarda n (um A por a). Para conferir que a = b é preciso desempilhar, e ao fim dos b a pilha já voltou a Z₀: n se perdeu e não sobra nada para comparar com os c.</p>
+    <figure><img src="img/t10-ap-pilha-anbncn.png" alt="Pilha ao processar aabbcc: empilha A por a, desempilha por b, e na fase dos c não resta nada para comparar"><figcaption>Fonte: Material de Estudos - Teoria da Computação.pdf, p. 42</figcaption></figure>
+    <div class="tw"><table>
+      <tr><th>Linguagem</th><th>Um AP reconhece?</th></tr>
+      <tr><td>aⁿbⁿ, aⁿb²ⁿ, aⁿbᵐcⁿ, aⁿbᵐ (m ≥ n)</td><td>Sim: cada uma compara só 2 quantidades</td></tr>
+      <tr><td>aⁿbⁿcⁿ</td><td><b>Não</b>, nem APD nem APN. Não é LLC: é sensível ao contexto (Tipo 1) e exige MT</td></tr>
+    </table></div>
+  </section>
+
+  <section class="sub" id="t10-mt" data-titulo="Máquina de Turing: aⁿbⁿcⁿ passo a passo">
+    <p class="cai">Questões reais: quiz nº 70 · slides Q5</p>
+    <p>MT = (Q, Σ, Γ, δ, q₀, F), com δ: Q × Γ → Q × Γ × {L, R}. Cada rótulo diz "lido → escrito, movimento" (no slide: "lido/escrito, D ou E", com B = branco).</p>
+    <div class="tw"><table>
+      <tr><th>Resultado</th><th>O que acontece</th></tr>
+      <tr><td>Aceitar</td><td>a MT entra em estado de aceitação e para</td></tr>
+      <tr><td>Rejeitar</td><td>a MT <b>para</b> sem aceitar, o que inclui o caso em que <b>não há transição</b> para (estado, símbolo)</td></tr>
+      <tr><td>Loop</td><td>a MT nunca para</td></tr>
+    </table></div>
+    <p><b>Estratégia:</b> a cada rodada, q₀ marca um a como X, q₁ marca o 1º b livre como Y e q₂ marca o 1º c livre como Z. Depois q₃ volta para a esquerda até o X e devolve o controle a q₀. Quando q₀ lê Y, os a's acabaram: q₄ confere que só restam Y e Z até o branco e aceita.</p>
+    <figure><img src="img/t10-mt-anbncn.png" alt="Diagrama da MT para aⁿbⁿcⁿ com estados q0 a q4 e qacc"><figcaption>Fonte: Material de Estudos - Teoria da Computação.pdf, p. 51</figcaption></figure>
+    <p><b>Simulação de aabbcc</b> (a cabeça está entre colchetes):</p>
+    <div class="tw"><table>
+      <tr><th>Momento</th><th>Estado e fita</th></tr>
+      <tr><td>início</td><td>q₀ [a]abbcc</td></tr>
+      <tr><td>marcou o 1º a, b e c</td><td>q₃ XaY[b]Zc (voltando)</td></tr>
+      <tr><td>fim do 1º ciclo (q₃ lê X e vai a q₀)</td><td>q₀ X[a]YbZc: fita <b>XaYbZc</b>, cabeça no 2º a, estado <b>q₀</b></td></tr>
+      <tr><td>fim do 2º ciclo</td><td>q₀ XX[Y]YZZ</td></tr>
+      <tr><td>q₀ lê Y e vai a q₄, que percorre YZZ</td><td>q₄ XXYYZZ[B]</td></tr>
+      <tr><td>q₄ lê o branco</td><td><b>qf: aceita</b> (23 passos)</td></tr>
+    </table></div>
+    <div class="pega">"Entra em loop porque q₁ não tem transição para X" está errado por dois motivos. Depois do retorno a cabeça fica no 2º a <b>em q₀</b>, então q₁ nunca lê X. E falta de transição faz a MT <b>parar e rejeitar</b>, não entrar em loop. Por isso uma opção "todas corretas" também falha.</div>
+    <ul>
+      <li>L(M) = {aⁿbⁿcⁿ} compara três quantidades, e por isso <b>nenhum</b> AP, determinístico ou não, a reconhece. A MT <b>decide</b> essa linguagem, porque sempre para.</li>
+      <li>Palavras rejeitadas: em <b>abcc</b>, q₄ lê c e não tem transição. Em <b>aabc</b>, na 2ª rodada q₁ lê Z e não tem transição.</li>
+      <li>Versões: a MT do slide (D/E, B, qf) não tem transição de q₀ com B, então rejeita ε (n ≥ 1). A da apostila (R/L, ␣, qacc) tem q₀: ␣ → ␣, R (qacc) e aceita n ≥ 0. Com aabbcc as duas se comportam igual.</li>
+    </ul>
+  </section>
+
+  <section class="sub" id="t10-inf" data-titulo="Tópicos para as questões inferidas">
+
+    <section class="sub" id="t10-inf-conjuntos" data-titulo="Pertinência, conjunto das partes e produto cartesiano">
+      <ul>
+        <li>Com A = {1,2,3}: 2 ∈ A e {1,2} ⊆ A, mas {1} ∉ A (o certo é {1} ⊆ A). A ordem e a repetição não importam: {3,2,1,1} = A.</li>
+        <li>|P(A)| = 2ⁿ, e ∅ e o próprio A sempre estão em P(A). Para A = {1,2,3}, P(A) tem 8 subconjuntos.</li>
+        <li>A × B = {(a,b) | a ∈ A, b ∈ B} e |A × B| = |A|·|B|. No par ordenado a ordem importa: com A = {1,2} e B = {a,b}, (a,1) ∈ B × A e (a,1) ∉ A × B.</li>
+        <li>Pegadinhas de transitividade do slide 11: {(1,1),(1,2),(2,3)} é antissimétrica, mas <b>não</b> transitiva, porque falta (1,3). {(1,2),(2,1),(3,3)} é simétrica, mas <b>não</b> transitiva, porque faltam (1,1) e (2,2).</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t10-inf-palavras" data-titulo="Palavras e operações sobre linguagens">
+      <ul>
+        <li>Uma palavra não é conjunto: a ordem e a repetição importam (ab ≠ ba). A concatenação não é comutativa (abc·de = abcde, mas de·abc = deabc). Valem |uv| = |u| + |v|, |wⁿ| = n·|w| e <b>w⁰ = ε</b>.</li>
+        <li><b>ε</b> é uma palavra (|ε| = 0 e wε = w). <b>∅</b> é uma linguagem sem palavras. Por isso {ε} ≠ ∅.</li>
+        <li>Σ* reúne todas as palavras finitas sobre Σ, incluindo ε. Toda linguagem satisfaz L ⊆ Σ*, e Lᶜ = Σ* − L.</li>
+        <li>L⁰ = {ε} e L² = LL. Com L = {a,b}, L² = {aa, ab, ba, bb}.</li>
+        <li><b>L* = L⁰ ∪ L¹ ∪ L² ∪ …</b> (zero ou mais concatenações) sempre contém ε e não é apenas {ε, a, b}: para L = {a,b} é infinito. Até ∅* = {ε}. <b>L⁺ = L¹ ∪ L² ∪ …</b> exige pelo menos uma. Se ε ∉ L, então L* = L⁺ ∪ {ε}.</li>
+      </ul>
+      <div class="pega">O slide define L⁺ como "L sem ε", o que está errado: se ε ∈ L, então ε ∈ L⁺.</div>
+    </section>
+
+    <section class="sub" id="t10-inf-gramaticas" data-titulo="Gramáticas: derivação e L(G)">
+      <ul>
+        <li>Em G = (V, Σ, P, S), valem V ∩ Σ = ∅ e S ∈ V. A derivação termina quando sobram só terminais, e L(G) = { w ∈ Σ* | S ⇒* w }.</li>
+        <li>Formas intermediárias como 01S ou aSb contêm variáveis e por isso <b>não</b> são palavras da linguagem.</li>
+        <li>A gramática S → 0A | ε; A → 1S gera (01)* = {ε, 01, 0101, …}, por exemplo S ⇒ 0A ⇒ 01S ⇒ 010A ⇒ 0101S ⇒ 0101. A palavra 0110 não pertence (tem "11"), embora tenha #0 = #1. É uma gramática regular.</li>
+        <li>A gramática S → aSb | ε gera aⁿbⁿ, por exemplo S ⇒ aSb ⇒ aaSbb ⇒ aaaSbbb ⇒ aaabbb. É livre de contexto e não regular.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t10-inf-er" data-titulo="Expressões regulares">
+      <ul>
+        <li>Os operadores são: | (alternativa); justaposição (concatenação); * (zero ou mais); + (uma ou mais); () (agrupamento).</li>
+        <li>a∅ = ∅, porque concatenar com a linguagem vazia não gera nada. aε = a, e a|ε = {a, ε}. a+ = aa*. A expressão (ab)* repete o <b>bloco</b> ab e gera ε, ab, abab, …; aabb não pertence.</li>
+        <li>Em <b>(a|b)*(01|10)+</b>, o 1º bloco pode ser vazio e o 2º exige pelo menos um par exato 01 ou 10. Para testar, decomponha a palavra bloco a bloco.</li>
+      </ul>
+      <div class="tw"><table>
+        <tr><th>Aceitas</th><th>Rejeitadas</th></tr>
+        <tr><td>01, 10, a01, bb10, 1010, ab0110, ba1010, b1001</td><td>ε (falta o par), aab (não termina em par), 001, a11 (11 não é par válido)</td></tr>
+      </table></div>
+    </section>
+
+    <section class="sub" id="t10-inf-af" data-titulo="AF: 5-upla, AFD completo e execução">
+      <ul>
+        <li>Na 5-upla (Q, Σ, δ, q₀, F), q₀ ∈ Q e F ⊆ Q. Um AFD <b>completo</b> tem exatamente uma transição para cada par de Q × Σ (δ: Q × Σ → Q). No desenho parcial do slide 27 faltam (q₀,b), (q₂,a) e (q₂,b), e a falta de transição significa rejeição.</li>
+        <li>O AF do slide 27 reconhece ab*a: abba é aceita, e aab é rejeitada, porque q₂ lê b e não tem transição, mesmo tendo passado por q₂.</li>
+        <li>O AFD "contém aa" da figura tem δ(q₁,b) = q₀ (ler b "zera" a busca) e laço em a e b em q₂. Com babaab a sequência é q₀ q₀ q₁ q₀ q₁ q₂ q₂ e a palavra é aceita. bbb, abab e baba são rejeitadas.</li>
+        <li>O AF não para ao atingir um estado final: ele lê a entrada toda, e só o estado em que termina importa.</li>
+      </ul>
+      <figure><img src="img/t10-afd-aa.png" alt="AFD que aceita palavras contendo aa: q0 laço b, q0 a para q1, q1 b volta a q0, q1 a para q2, q2 laço a,b final"><figcaption>Fonte: Material de Estudos - Teoria da Computação.pdf, p. 28</figcaption></figure>
+    </section>
+
+    <section class="sub" id="t10-inf-afnd" data-titulo="AFD × AFND e construção dos subconjuntos">
+      <ul>
+        <li>No AFND um par (estado, símbolo) pode ter zero, uma ou várias transições: δ: Q × Σ → P(Q), às vezes com transições ε. A palavra é aceita se <b>pelo menos um</b> caminho consumir toda a entrada e terminar em F. Os caminhos que travam não impedem a aceitação.</li>
+        <li><b>AFD ≡ AFND</b>: os dois reconhecem exatamente as linguagens regulares. O não determinismo dá compacidade, não poder.</li>
+        <li>Na construção dos subconjuntos, cada estado do AFD é um <b>conjunto</b> de estados do AFND, e é final se contém algum estado final. O AFD pode ter <b>até</b> 2ⁿ estados, mas esse é um limite, não uma obrigação. Exemplo: o AFND com laço 0,1 em p, p –0→ q e q –1→ r, lendo 1001, passa por {p} → {p} → {p,q} → {p,q} → {p,r} e aceita. O AFD equivalente tem só 3 estados alcançáveis, e L = (0|1)*01.</li>
+      </ul>
+      <figure><img src="img/t10-afd-afnd.png" alt="AFD com uma única escolha por estado e símbolo; AFND em que o mesmo símbolo leva a mais de um estado"><figcaption>Fonte: Material de Estudos - Teoria da Computação.pdf, p. 30</figcaption></figure>
+    </section>
+
+    <section class="sub" id="t10-inf-ap" data-titulo="AP: definição, transições e aⁿbⁿ">
+      <ul>
+        <li>Σ (entrada) ≠ Γ (pilha: A, P, Z₀). Z₀ ∈ Γ é colocado no início e marca o fundo. Na apostila o topo fica à esquerda.</li>
+        <li>Partindo de Z₀, a sequência push A, push B, pop, push C, push A, pop deixa a pilha como <b>CAZ₀</b>.</li>
+        <li>Na notação "entrada, topo → substituição", a cadeia da direita substitui o topo. a, Z₀ → AZ₀ é push. b, A → ε é pop (remove só o topo). ε, A → A não consome entrada e mantém o topo. a, A → AAA acrescenta dois A.</li>
+        <li>O AP da figura reconhece aⁿbⁿ com <b>n ≥ 1</b>. aaabbb é aceita: a pilha fica AAAZ, cada b tira um A e λ, Z; Z leva a q₃. aab é rejeitada porque sobra um A. abb é rejeitada porque o 2º b encontra Z no topo. ba é rejeitada. ε também é rejeitada; para aceitá-la seria preciso a transição λ, Z; Z de q₁ para q₃.</li>
+      </ul>
+      <figure><img src="img/t10-ap-anbn.png" alt="AP para aⁿbⁿ com estados q0 a q3"><figcaption>Fonte: Material de Estudos - Teoria da Computação.pdf, p. 38</figcaption></figure>
+    </section>
+
+    <section class="sub" id="t10-inf-ap-construcao" data-titulo="Construindo AP: aⁿbᵐcⁿ, aⁿbᵐ e aⁿb²ⁿ">
+      <ul>
+        <li>aⁿbᵐcⁿ: empilha um símbolo por a, lê os b sem mexer na pilha e desempilha um por c.</li>
+        <li>aⁿbᵐ com m ≥ n: quando a pilha volta a Z₀, os b excedentes são lidos com b, Z₀ → Z₀.</li>
+        <li>aⁿbⁿcⁿ não é reconhecida por AP: uma segunda pilha resolveria, mas aí já não é um AP, e guardar n nos estados não funciona (são finitos).</li>
+        <li>aⁿb²ⁿ: empilha <b>dois</b> A por a (a, Z₀ → AAZ₀ e a, A → AAA) e desempilha um por b. A transição ε, Z₀ → Z₀ leva ao estado final, e a que sai de q₀ aceita n = 0. Depois de ler aa em aabbbb a pilha é AAAAZ₀, e a palavra é aceita. aabbb é rejeitada (sobra A) e abbb também (o 3º b encontra Z₀).</li>
+        <li>Empilhar um por a e desempilhar dois por b reconhece a²ⁿbⁿ (b = a/2), e não aⁿb²ⁿ. Empilhar um e desempilhar um reconhece aⁿbⁿ. Rejeitar é não ter transição aplicável; não existe estado de erro.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t10-inf-mt" data-titulo="MT: definição, loop e decidir × reconhecer">
+      <ul>
+        <li>A MT tem controle finito, fita ilimitada e cabeça que se move para L ou R. Σ ⊆ Γ, e o branco ␣ ∈ Γ, mas ␣ ∉ Σ. Γ também inclui marcas como X, Y e Z. A MT <b>não tem Z₀</b>. Em cada passo ela lê, escreve, move a cabeça e muda de estado.</li>
+        <li>Exemplo de loop: δ(q,a) = (q,a,R) e δ(q,␣) = (q,␣,R). A máquina anda para a direita para sempre, então ela não "rejeita".</li>
+        <li><b>Reconhecer</b> L é aceitar exatamente L; fora de L a máquina pode rejeitar ou entrar em loop (classe RE). <b>Decidir</b> é aceitar, rejeitar e sempre parar (recursivas). Decidível ⊂ reconhecível.</li>
+      </ul>
+      <div class="tw"><table>
+        <tr><th>Modelo</th><th>Tupla e memória</th><th>Reconhece</th></tr>
+        <tr><td>AF</td><td>5-upla; só os estados</td><td>regulares</td></tr>
+        <tr><td>AP</td><td>7-upla (+Γ, Z₀); pilha com acesso só ao topo</td><td>LLC</td></tr>
+        <tr><td>MT</td><td>6-upla (Γ = fita, sem Z₀); fita lida e escrita nos dois sentidos</td><td>RE (decide as recursivas)</td></tr>
+      </table></div>
+      <figure><img src="img/t10-mt-esquema.png" alt="Esquema da MT: controle finito, cabeça que lê e escreve e se move para L ou R, fita com brancos"><figcaption>Fonte: Material de Estudos - Teoria da Computação.pdf, p. 48</figcaption></figure>
+    </section>
+
+    <section class="sub" id="t10-inf-church" data-titulo="Variantes, Tese de Church-Turing e MT Universal">
+      <ul>
+        <li>As variantes da MT (várias fitas, fita bidimensional, cabeça que pode ficar parada, não determinismo, fita infinita só à direita) têm o <b>mesmo poder</b> do modelo básico; muda só a eficiência.</li>
+        <li>O cálculo lambda, as funções recursivas e linguagens como C, Java e Python são equivalentes à MT.</li>
+        <li><b>Church-Turing é tese, não teorema</b>: diz que a noção intuitiva de algoritmo coincide com o que uma MT executa, e por isso não pode ser demonstrada.</li>
+        <li>A <b>MT Universal</b> recebe ⟨M⟩ e w e simula M sobre w. Ela antecipa o computador de programa armazenado, os interpretadores e as máquinas virtuais.</li>
+        <li>Turing propôs a MT em 1936, ao responder negativamente ao Entscheidungsproblem de Hilbert. O número de passos de uma MT é a base das classes P e NP, que tratam de eficiência e não de computabilidade.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t10-inf-parada" data-titulo="Problema da parada e indecidibilidade">
+      <ul>
+        <li>HALT = { ⟨M, w⟩ | M para com a entrada w } é <b>reconhecível</b>: basta simular M e aceitar se ela parar. Mas é <b>não decidível</b>: se M entra em loop, a simulação também não termina, e não há um "não" garantido. Por isso juízes online usam limite de tempo.</li>
+        <li>Ordem da prova por contradição: (1) supõe-se uma MT H que decide HALT; (2) constrói-se D, que roda H sobre ⟨M, ⟨M⟩⟩ e faz o oposto; (3) roda-se D sobre ⟨D⟩; (4) os dois casos levam a contradição; (5) logo H não existe.</li>
+        <li>Há mais linguagens (não enumeráveis) do que MTs (enumeráveis), então existem linguagens que nem são reconhecíveis.</li>
+        <li>A indecidibilidade se espalha por <b>redução</b>: decidir se dois programas são equivalentes também é impossível. O <b>Teorema de Rice</b> diz que toda propriedade não trivial da linguagem reconhecida por uma MT é indecidível. Linguagens de programação usuais têm o mesmo poder da MT, então mais memória não resolve.</li>
+      </ul>
+      <div class="pega">"Indecidível" não quer dizer "nenhum programa pode ser analisado". Quer dizer que não existe um algoritmo <b>geral</b> que acerte em todos os casos; programas específicos, como um sem laços, podem ser analisados. Indecidível também não é o mesmo que não reconhecível.</div>
+    </section>
+
+  </section>
+</section>
