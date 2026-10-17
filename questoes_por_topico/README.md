@@ -1,6 +1,6 @@
 # Banco de Questões: Simulado ENADE 2026 (Tópicos Avançados, Ciência da Computação, USCS)
 
-Este banco reúne todas as perguntas e respostas encontradas nos 25 PDFs do repositório, separadas por tópico. Para cada questão há:
+Este banco reúne todas as perguntas e respostas encontradas nos materiais do repositório (27 arquivos), separadas por tópico. Para cada questão há:
 
 - o enunciado transcrito na íntegra (situação-problema, dados de suporte e comando);
 - as alternativas e o gabarito;
@@ -8,22 +8,26 @@ Este banco reúne todas as perguntas e respostas encontradas nos 25 PDFs do repo
 
 Os gabaritos foram conferidos de forma independente: cálculos refeitos e autômatos, algoritmos e códigos simulados. As páginas que são só imagem foram renderizadas e lidas.
 
+> **Também neste repositório:**
+> - [`../questoes_inferidas/`](../questoes_inferidas/README.md): questões **inferidas** para os subtópicos sem questão conhecida (não constam no material);
+> - [`../treino-enade-2026.html`](../treino-enade-2026.html): quiz interativo com as reais e as inferidas (abra no navegador).
+
 > Contexto (Plano de Ações e Estrutura de Questões): cada squad devia (1) investigar o tema, (2) preparar slides e (3) preparar questões no padrão ENADE. O Simulado 1 vale como N1 de Tópicos Avançados, e as questões do simulado devem ser quase iguais às criadas pelos squads.
 
 ---
 
 ## 1. Checagem: todos os tópicos do cronograma têm material no repositório?
 
-Os 11 tópicos do cronograma (aulas 5 a 9) têm pelo menos um arquivo enviado. **Nenhum tópico ficou sem material.** Mas há lacunas em três tópicos (⚠️).
+Os 11 tópicos do cronograma (aulas 5 a 9) têm pelo menos um arquivo enviado. **Nenhum tópico ficou sem material.** Depois do segundo envio (slides de Complexidade e caderno de SO), restam só as lacunas de Redes e Segurança descritas abaixo.
 
 | # | Tópico (aula) | Squad | Arquivos no repositório | Slides | Material explicativo | Questões ENADE | Situação |
 |---|---|---|---|:-:|:-:|:-:|---|
-| 1 | Complexidade de Algoritmos (02/09) | 11 | `Manual - Complexidade de Algoritmos.pdf` | ❌ | ✅ | ❌ | ⚠️ **Incompleto**: só o manual, sem slides e sem questões |
+| 1 | Complexidade de Algoritmos (02/09) | 11 | `Manual - Complexidade de Algoritmos.pdf`, `Resumo_ Complexidade de algoritmos (1).pdf` (slides, enviado depois) | ✅ | ✅ | ✅ 6 | ✅ Completo (as 6 questões não têm gabarito: resolvidas por nós) |
 | 2 | Estruturas de Dados (02/09) | 9 | `Material_Estruturas_de_Dados.pdf`, `Questoes_ENADE_Estruturas_de_Dados.pdf`, `Apresentacao_Questoes_ENADE (1).pdf` | ✅ | ✅ | ✅ 6 | ✅ Completo |
 | 3 | Engenharia de Software (09/09) | 8 | `ENGENHARIA DE SOFTWARE.pdf` (slides), `APOSTILA DE ESTUDO PARA O ENADE SOBRE ENGENHARIA DE SOFTWARE.pdf` | ✅ | ✅ | ✅ 4 | ✅ Completo |
 | 4 | Orientação a Objetos (09/09) | 10 | `Apresentação Orientacao a Objetos.pdf`, `Material sobre Orientação a Objetos.pdf` | ✅ | ✅ | ✅ 6 | ✅ Completo |
 | 5 | Arquitetura de Computadores (16/09) | 5 | `Apresentação Arquitetura de Computadores.pdf`, `Revisão Arquitetura de Computadores-1.pdf` | ✅ | ✅ | ✅ 3 | ✅ Completo (só 3 questões) |
-| 6 | Sistemas Operacionais (16/09) | 6 | `Slides.pdf` (slides do SO), `SISTEMAS_OPERACIONAIS - MATERIAL_EXPLICATIVO.pdf`, `SISTEMAS_OPERACIONAIS - GABARITO.pdf` | ✅ | ✅ | ⚠️ 12 | ⚠️ **Falta o caderno de questões** (ver abaixo) |
+| 6 | Sistemas Operacionais (16/09) | 6 | `Slides.pdf` (slides do SO), `SISTEMAS_OPERACIONAIS - MATERIAL_EXPLICATIVO.pdf`, `SISTEMAS_OPERACIONAIS - GABARITO.pdf`, `SISTEMAS_OPERACIONAIS - QUESTOES.docx` (caderno, enviado depois) | ✅ | ✅ | ✅ 12 | ✅ Completo |
 | 7 | Redes de Computadores (23/09) | 1 | `Preparatorio ENADE 2026 - Redes de Computadores.pdf` (slides, todo em imagem), `Manual de Referencia Redes de Computadores.pdf` | ✅ | ✅ | ✅ 5 + 9 | ⚠️ **Provável falta de questões** (ver abaixo) |
 | 8 | Segurança da Informação (23/09) | 4 | `Aula Enade - Segurança da Informação.pdf`, `Material Completo - Segurança da Informação.pdf` | ✅ | ✅ | ✅ 4 + 4 do ENADE | ✅ Completo (as 4 do ENADE estão só resumidas) |
 | 9 | Teoria dos Grafos (30/09) | 2 | `Teoria dos Grafos.pdf` (slides), `TEORIA_DOS_GRAFOS - MATERIAL EXPLICATIVO.pdf` | ✅ | ✅ | ✅ 4 | ✅ Completo |
@@ -32,12 +36,10 @@ Os 11 tópicos do cronograma (aulas 5 a 9) têm pelo menos um arquivo enviado. *
 
 Arquivos de contexto (não pertencem a nenhum tópico): `Plano de Ações - ENADE - Computação - 2026.pdf` e `Estrutura de Questões sob o padrão do ENADE.pdf`. Este último traz duas questões-exemplo do professor, uma de Complexidade (busca binária) e uma de Engenharia de Software (padrão Observer). Elas também foram incluídas.
 
-### O que está faltando (vale pedir aos squads/professor)
+### O que ainda falta
 
-1. **Complexidade de Algoritmos (Squad 11).** O único arquivo é um manual teórico de 15 páginas, sem nenhuma questão, exercício ou gabarito. **Faltam os slides e as questões do Squad 11.** O arquivo do tópico traz a questão-exemplo do professor e os pontos do manual com mais chance de virar questão.
-2. **Sistemas Operacionais (Squad 6).** A apostila manda "consultar o caderno de questões, questões 1 a 12", mas **o caderno não está no repositório**. O `GABARITO.pdf` traz o tipo de cada questão, o texto literal das alternativas e a justificativa de cada uma, mas não os enunciados.
-   - 5 das 12 questões (Q2, Q5, Q7, Q8 e Q12) têm enunciado completo, porque também aparecem nos `Slides.pdf`.
-   - As outras 7 tiveram o enunciado **reconstruído** a partir do gabarito, e isso está marcado no arquivo.
+1. ~~**Complexidade de Algoritmos (Squad 11):** faltavam os slides e as questões.~~ **Resolvido:** os slides chegaram com 6 questões, sem gabarito (resolvidas por nós).
+2. ~~**Sistemas Operacionais (Squad 6):** faltava o caderno de questões.~~ **Resolvido:** o caderno chegou, e as 12 questões agora estão com o texto literal.
 3. **Redes de Computadores (Squad 1).** Nos slides, as questões se chamam "Questão 1, 5, 6, 8 e 11". **As questões 2, 3, 4, 7, 9 e 10 não aparecem**, então pode existir um banco maior do Squad 1 que não foi enviado. O Manual tem outras 9 questões comentadas, todas registradas.
 4. **Segurança da Informação.** As 4 questões oficiais do ENADE (2017 Q15 e Q16; 2021 Q12 e Q24) aparecem na apostila **resumidas**, com o tema, as afirmativas, o julgamento de cada uma e o gabarito, mas sem o texto completo da prova. O texto completo está nas provas publicadas pelo Inep.
 
@@ -47,7 +49,7 @@ Arquivos de contexto (não pertencem a nenhum tópico): `Plano de Ações - ENAD
 
 | Arquivo | Questões objetivas (padrão ENADE) | Outros itens (exercícios/discursivas, com resposta) |
 |---|---|---|
-| [01_Complexidade_de_Algoritmos.md](01_Complexidade_de_Algoritmos.md) | 1 (questão-exemplo do professor) | Lista de pontos cobráveis do manual |
+| [01_Complexidade_de_Algoritmos.md](01_Complexidade_de_Algoritmos.md) | 6 dos slides + 1 do professor | Lista de pontos cobráveis do manual |
 | [02_Estruturas_de_Dados.md](02_Estruturas_de_Dados.md) | 6 | — |
 | [03_Engenharia_de_Software.md](03_Engenharia_de_Software.md) | 4 + 1 do professor | 1 exercício (caso de uso do caixa eletrônico) |
 | [04_Orientacao_a_Objetos.md](04_Orientacao_a_Objetos.md) | 6 | 4 atividades da apostila (Q7–Q10) |
@@ -58,7 +60,7 @@ Arquivos de contexto (não pertencem a nenhum tópico): `Plano de Ações - ENAD
 | [09_Teoria_dos_Grafos.md](09_Teoria_dos_Grafos.md) | 4 | 5 discursivas/exemplos resolvidos (Q5–Q9) |
 | [10_Teoria_da_Computacao.md](10_Teoria_da_Computacao.md) | 6 + 1 V/F da apostila | 35 questões de fixação da apostila |
 | [11_Compiladores.md](11_Compiladores.md) | 5 | — |
-| **Total** | **71** | **59** |
+| **Total** | **77** | **59** |
 
 Legenda usada nos arquivos: ✅ correta · ❌ incorreta · ⚠️ ponto de atenção (gabarito discutível, ambiguidade ou versões diferentes).
 
@@ -91,8 +93,16 @@ Legenda usada nos arquivos: ✅ correta · ❌ incorreta · ⚠️ ponto de aten
 > "O que marcar" resume o **conteúdo** da alternativa correta. A explicação completa (com o porquê de cada distrator) está no arquivo de cada tópico.
 
 ### 1. Complexidade de Algoritmos
+> As 6 questões dos slides não têm gabarito no material: as respostas abaixo foram resolvidas por nós (e coincidem com os estudos de caso do manual).
+
 | Q | Assunto | Tipo | Gab. | O que marcar |
 |---|---|---|:-:|---|
+| 1 | n² = O(n log n)? | Asserção-razão (4 alternativas) | **D** | **I e II falsas**: n² não é O(n log n), e n log n não domina n² |
+| 2 | Busca sequencial com sentinela (Modelo de Knuth) | Afirmativas múltiplas | **D** | **I, II e III**: pior caso n·c₂ no teste do laço, T(n) = c₁ + n·c₂ + (n−1)·c₃ + c₄ + c₆ = Θ(n), melhor caso Θ(1) |
+| 3 | Ordenar 5 funções de custo | Ordenação | **A** | **II – I – IV – III – V**: Θ(log n), Θ(n), Θ(n log n), Θ(n²), Θ(2ⁿ) |
+| 4 | Laço com i /= 2 e laço interno até i | Resposta única | **A** | n + n/2 + … + 1 = **2n − 1** → **Θ(n)** (não é n log n) |
+| 5 | Teorema Mestre: 4T(n/2)+Θ(n) × 2T(n/2)+Θ(n²) | Resposta única | **A** | **Ambas Θ(n²)** (Caso 1 e Caso 3) |
+| 6 | Top-k: Merge Sort × Min-Heap × Hash+Heapsort | Afirmativa negativa (INCORRETA) | **C** | A INCORRETA diz que o Heapsort ordena em **O(n)**: o certo é O(n log n) |
 | QP | Busca binária em 1.048.576 IDs (pior caso) | Resposta única | **C** | **20 comparações** (2²⁰ = 1.048.576 → log₂ n = 20). Distratores: n (busca linear), n/2, 10 (log₁₀) |
 
 ### 2. Estruturas de Dados
