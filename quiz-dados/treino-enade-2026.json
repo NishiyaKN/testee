@@ -10,7 +10,7 @@
   {
    "id": "reais",
    "nome": "Questões reais dos squads (todos os tópicos)",
-   "desc": "As 82 questões reais dos materiais, em ordem de tópico. Em SO entram o caderno e a versão dos slides (letras mudam). Complexidade Q1–Q6 não têm gabarito no material: respostas resolvidas por nós."
+   "desc": "As 77 questões reais dos materiais, em ordem de tópico (em SO, as 12 do caderno de questões/gabarito). Complexidade Q1–Q6 não têm gabarito no material: respostas resolvidas por nós."
   },
   {
    "id": "cx-inf",
@@ -611,7 +611,6 @@
    "temas": [
     "SO: Modos de acesso, interrupções e chamadas de sistema"
    ],
-   "nota": "Nos slides (questão 1) a mesma sequência V – F – V – F é a alternativa A. Decore o conteúdo, não a letra.",
    "ref": "29 · SO, caderno: Q2"
   },
   {
@@ -669,7 +668,7 @@
    "temas": [
     "SO: Exclusão mútua e deadlock"
    ],
-   "nota": "Nos slides (questão 2) a letra também é D. Remédio típico (ENADE 2017): ordem global de aquisição dos locks, quebrando a espera circular.",
+   "nota": "Remédio típico (ENADE 2017): ordem global de aquisição dos locks, quebrando a espera circular.",
    "ref": "32 · SO, caderno: Q5"
   },
   {
@@ -707,7 +706,6 @@
    "temas": [
     "SO: Alocação contígua e fragmentação"
    ],
-   "nota": "Nos slides (questão 3) B e C trocam de lugar e \"300 KB + externa\" é a alternativa B. Decore o conteúdo, não a letra.",
    "ref": "34 · SO, caderno: Q7"
   },
   {
@@ -726,7 +724,6 @@
    "temas": [
     "SO: Memória virtual (substituição, TLB e thrashing)"
    ],
-   "nota": "Nos slides (questão 4) a correta também é A, mas B, C e D são outros distratores (9-9-6, 9-8-7 e 10-8-6).",
    "ref": "35 · SO, caderno: Q8"
   },
   {
@@ -803,110 +800,12 @@
    "temas": [
     "SO: E/S, spooling, cache e permissões"
    ],
-   "nota": "Nos slides (questão 5) a letra também é E.",
    "ref": "39 · SO, caderno: Q12"
   },
   {
    "set": "reais",
    "num": 40,
-   "ref": "40 · SO, versão dos slides: 1 (= Q2 do caderno)",
-   "tipo": "mc",
-   "enunciado": "(Squad 6 · Slides · Questão 1 · Alternativas constantes — V/F)\n\n**SITUAÇÃO-PROBLEMA**\n\nUma aplicação de terceiros tentou escrever diretamente no registrador de controle da controladora de disco e foi encerrada pelo sistema operacional com erro de violação de acesso. A equipe revisita então os mecanismos de proteção por modo de acesso.\n\n**COMANDO**\n\nAnalise as afirmações a seguir sobre modo de acesso e transferência de controle ao núcleo, identificando-as como Verdadeiras (V) ou Falsas (F).\n\n( ) A instrução que desabilita interrupções é privilegiada; se um processo em modo usuário tentar executá-la, o hardware gera uma exceção e passa o controle ao núcleo.\n\n( ) A interrupção é um evento síncrono, provocado pela instrução em execução, como uma divisão por zero ou um acesso a endereço inválido.\n\n( ) A chamada de sistema é o mecanismo pelo qual um processo pede um serviço ao núcleo, trocando de modo usuário para modo kernel por meio de um trap.\n\n( ) A API é sinônimo de chamada de sistema, pois toda função de biblioteca corresponde a uma única syscall executada em modo kernel.\n\nAssinale a alternativa com a sequência correta.",
-   "alternativas": [
-    "V – F – V – F",
-    "V – V – F – F",
-    "F – V – V – V",
-    "V – F – F – V"
-   ],
-   "correta": "A",
-   "justificativa": "1ª V: instrução privilegiada em modo usuário gera exceção. 2ª F: isso descreve a exceção (síncrona); a interrupção é assíncrona, vinda de dispositivo. 3ª V: a syscall troca para modo kernel via trap. 4ª F: a API roda em modo usuário; strlen não gera syscall e fopen gera várias.",
-   "temas": [
-    "SO: Modos de acesso, interrupções e chamadas de sistema"
-   ],
-   "nota": "Na Q2 do caderno (versão oficial, igual ao gabarito) a mesma sequência V – F – V – F é a letra D; aqui é a A. Decore o conteúdo, não a letra."
-  },
-  {
-   "set": "reais",
-   "num": 41,
-   "ref": "41 · SO, versão dos slides: 2 (= Q5 do caderno)",
-   "tipo": "mc",
-   "enunciado": "(Squad 6 · Slides · Questão 2 · Asserção-razão)\n\n**SITUAÇÃO-PROBLEMA**\n\nUm sistema de reservas protege a agenda de salas com o mutex A e o cadastro de participantes com o mutex B. A rotina de criação adquire A e, ainda de posse dele, pede B; a de cancelamento adquire B e pede A. Todas as regiões críticas estão corretamente delimitadas. Em produção, sob carga, as duas rotinas travam indefinidamente.\n\n**COMANDO**\n\nAvalie as asserções a seguir e a relação proposta entre elas.\n\nI. O uso correto de semáforos binários (mutexes) em torno de todas as regiões críticas do sistema descrito é suficiente para garantir que ele não entre em deadlock,\n\n**PORQUE**\n\nII. a exclusão mútua assegurada pelos semáforos impede que dois fluxos acessem simultaneamente a mesma estrutura compartilhada, eliminando as condições de corrida.\n\nA respeito dessas asserções, assinale a opção correta.",
-   "alternativas": [
-    "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I.",
-    "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I.",
-    "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa.",
-    "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira.",
-    "As asserções I e II são proposições falsas."
-   ],
-   "correta": "D",
-   "justificativa": "I é falsa: exclusão mútua é a 1ª condição de Coffman; com posse e espera, não preempção e espera circular (A e B em ordens opostas), o sistema trava mesmo com mutexes corretos. II é verdadeira: o mutex evita condição de corrida, outro problema.",
-   "temas": [
-    "SO: Exclusão mútua e deadlock"
-   ],
-   "nota": "Mesma questão da Q5 do caderno, com enunciado resumido; letra D nas duas versões."
-  },
-  {
-   "set": "reais",
-   "num": 42,
-   "ref": "42 · SO, versão dos slides: 3 (= Q7 do caderno)",
-   "tipo": "mc",
-   "enunciado": "(Squad 6 · Slides · Questão 3 · Resposta única)\n\n**SITUAÇÃO-PROBLEMA**\n\nUm sistema embarcado usa partições variáveis com alocação contígua. O mapa de áreas livres apresenta, em ordem crescente de endereço, blocos de 100 KB, 500 KB, 200 KB, 300 KB e 600 KB. Chega a requisição de um processo que precisa de 212 KB contíguos.\n\n**COMANDO**\n\nConsiderando o funcionamento das estratégias de alocação e os tipos de fragmentação, assinale a alternativa que indica corretamente a área escolhida pela estratégia best-fit e o tipo de fragmentação característico desse esquema de gerenciamento.",
-   "alternativas": [
-    "A área de 500 KB; a fragmentação característica é a interna, pois sobra espaço não utilizado dentro da partição alocada ao processo.",
-    "A área de 300 KB; a fragmentação característica é a externa, pois restam lacunas livres pequenas e dispersas, incapazes de atender a novos pedidos.",
-    "A área de 300 KB; a fragmentação característica é a interna, pois a partição tem tamanho predefinido e sempre maior que o do processo.",
-    "A área de 600 KB; a fragmentação característica é a externa, pois a maior lacuna disponível é subdividida a cada nova alocação realizada."
-   ],
-   "correta": "B",
-   "justificativa": "O best-fit escolhe a menor área que cabe 212 KB: entre 500, 300 e 600, a de 300 KB (resto 88). Partições variáveis deixam lacunas dispersas fora das partições = fragmentação externa. A C acerta a área, mas a interna é de partições fixas; 500 KB é o first-fit e 600 KB, o worst-fit.",
-   "temas": [
-    "SO: Alocação contígua e fragmentação"
-   ],
-   "nota": "Na Q7 do caderno (versão oficial) \"300 KB + externa\" é a letra C; nos slides B e C trocam de lugar e a correta é a B. Decore o conteúdo, não a letra."
-  },
-  {
-   "set": "reais",
-   "num": 43,
-   "ref": "43 · SO, versão dos slides: 4 (= Q8 do caderno)",
-   "tipo": "mc",
-   "enunciado": "(Squad 6 · Slides · Questão 4 · Resposta única com cálculo aplicado)\n\n**SITUAÇÃO-PROBLEMA**\n\nA arquiteta de um sistema operacional para dispositivos de borda precisa escolher a política de substituição de páginas. Para fundamentar a decisão, simula três algoritmos sobre a mesma carga, com três quadros e memória inicialmente vazia.\n\n**DADOS DE SUPORTE**\n\nCadeia de referências a páginas utilizada na simulação:\n\n7 · 0 · 1 · 2 · 0 · 3 · 0 · 4 · 2 · 3\n\nNúmero de quadros disponíveis: 3. Memória inicialmente vazia (todas as faltas iniciais devem ser contabilizadas).\n\n**COMANDO**\n\nAo simular os algoritmos FIFO, LRU e Ótimo sobre a cadeia de referências apresentada, qual é o número de faltas de página produzido por cada um deles, respectivamente, e qual conclusão de projeto se sustenta a partir do resultado?",
-   "alternativas": [
-    "9, 8 e 6 faltas; o algoritmo Ótimo serve apenas como referência teórica de desempenho, e o LRU é a política implementável mais próxima dele.",
-    "9, 9 e 6 faltas; FIFO e LRU produzem o mesmo resultado nesta cadeia, e a escolha entre eles deve recair sobre o de menor custo de implementação.",
-    "9, 8 e 7 faltas; o Ótimo não elimina as faltas de partida a frio e, por isso, fica apenas uma falta abaixo do LRU nesta simulação.",
-    "10, 8 e 6 faltas; o FIFO penaliza as páginas mais antigas mesmo quando reutilizadas, gerando uma falta a mais que o LRU nas referências repetidas."
-   ],
-   "correta": "A",
-   "justificativa": "FIFO 9 (só o 0 da 5ª ref. é acerto), LRU 8 (acertos nos 0 da 5ª e da 7ª), Ótimo 6 (acertos em 0, 0, 2 e 3). A B trata o LRU como FIFO (na 6ª ref. ele tira a 1, não a 0); a C simula mal o Ótimo (tira a 2 em vez da 1); a D conta como falta a 5ª ref., que é acerto.",
-   "temas": [
-    "SO: Memória virtual (substituição, TLB e thrashing)"
-   ],
-   "nota": "Na Q8 do caderno a correta também é A, mas os distratores são outros (9-9-8, 6-5-3 e 15-13-9). Decore o conteúdo, não a letra."
-  },
-  {
-   "set": "reais",
-   "num": 44,
-   "ref": "44 · SO, versão dos slides: 5 (= Q12 do caderno)",
-   "tipo": "mc",
-   "enunciado": "(Squad 6 · Slides · Questão 5 · Afirmativa negativa)\n\n**SITUAÇÃO-PROBLEMA**\n\nAo revisar a configuração de um servidor que acumula as funções de arquivo e de impressão, um administrador redige as premissas que orientaram suas decisões sobre o subsistema de entrada e saída. A equipe de arquitetura precisa identificar premissas equivocadas antes de aprovar o documento.\n\n**COMANDO**\n\nConsiderando o funcionamento do subsistema de entrada e saída e os mecanismos de proteção de recursos, assinale a alternativa que apresenta uma afirmação INCORRETA.",
-   "alternativas": [
-    "Na E/S por acesso direto à memória (DMA), o controlador transfere blocos inteiros entre o dispositivo e a memória principal e interrompe o processador apenas ao final da transferência, reduzindo a sobrecarga da CPU em relação à E/S por interrupção.",
-    "O spooling desacopla a aplicação do dispositivo ao gravar a saída em uma área intermediária em disco, permitindo que vários processos submetam trabalhos simultaneamente enquanto um processo servidor os envia à impressora, um de cada vez.",
-    "O buffer cache mantém em memória principal blocos de disco recentemente acessados e aproveita o princípio da localidade de referência para reduzir o número de acessos físicos ao dispositivo.",
-    "Em sistemas Linux, as permissões de leitura, escrita e execução aplicadas ao proprietário, ao grupo e aos demais usuários são verificadas pelo núcleo, e o bit de execução em um diretório controla a possibilidade de atravessá-lo para alcançar seu conteúdo.",
-    "Na E/S programada por polling, o processador delega ao controlador o controle completo da transferência e permanece livre para executar outros processos, sendo por isso a técnica mais eficiente para dispositivos de alta taxa de transferência."
-   ],
-   "correta": "E",
-   "justificativa": "A E é a INCORRETA: no polling a CPU fica em espera ocupada, testando o registrador de status e movendo os dados byte a byte; é a técnica de maior sobrecarga. O texto da E descreve o DMA. A, B, C e D estão corretas.",
-   "temas": [
-    "SO: E/S, spooling, cache e permissões"
-   ],
-   "nota": "Mesma questão da Q12 do caderno, com enunciado resumido; letra E nas duas versões."
-  },
-  {
-   "set": "reais",
-   "num": 45,
-   "ref": "45 · Redes, slides: Questão 1 dos slides",
+   "ref": "40 · Redes, slides: Questão 1 dos slides",
    "tipo": "mc",
    "enunciado": "(Squad 1 · Slides · Questão 1 · Interpretação)\n\n**DADO DE SUPORTE (TEXTO-BASE)**\n\n\"Os switches segmentam a rede em múltiplos domínios de colisão, estabelecendo um domínio de colisão individual por porta. [...] Diferentemente dos hubs e repetidores, que operam na camada física encaminhando bits para todas as interfaces simultaneamente, um switch opera na camada de enlace filtrando e encaminhando quadros (frames) baseando-se no endereço MAC de destino impresso no cabeçalho. Já os roteadores vão além: operando na camada de rede, eles limitam não apenas os domínios de colisão, mas também os domínios de broadcast, delimitando fronteiras de sub-redes lógicas.\"\n(Fonte: KUROSE, James F.; ROSS, Keith W. Redes de Computadores e a Internet: Uma Abordagem Top-Down. 6ª ed. São Paulo: Pearson Education do Brasil, 2013. p. 331-334. Adaptado.)\n\n**SITUAÇÃO-PROBLEMA**\n\nConsidere a infraestrutura de rede do laboratório de pesquisas de uma universidade. Atualmente, 50 estações de trabalho estão interconectadas a um único equipamento central \"X\". O monitoramento de desempenho constatou uma drástica degradação na rede: a taxa de colisões de quadros (acionando constantemente o algoritmo de recuo exponencial do CSMA/CD) chegou a 45% do tráfego total. Preocupada, a direção administrativa sugeriu trocar o equipamento \"X\" por um \"Hub Enterprise Class 1000BASE-T\" de uma marca famosa, acreditando intuitivamente que a compra do equipamento mais rápido e caro resolveria o gargalo, independentemente de sua arquitetura lógica. Como requisito técnico inegociável, o administrador de redes definiu que todas as estações de trabalho devem obrigatoriamente permanecer na mesma sub-rede lógica IP (ou seja, no mesmo domínio de broadcast) para não quebrar a comunicação de um software de simulação científica utilizado no laboratório.\n\n**COMANDO**\n\nCom base no texto de apoio, nos preceitos de arquitetura do Modelo de Referência OSI e exigindo rigor técnico na escolha que rejeite argumentos puramente comerciais, analise o cenário apresentado e avalie qual é a decisão de projeto tecnicamente adequada para substituir o equipamento \"X\":",
    "alternativas": [
@@ -924,8 +823,8 @@
   },
   {
    "set": "reais",
-   "num": 46,
-   "ref": "46 · Redes, slides: Questão 5 dos slides",
+   "num": 41,
+   "ref": "41 · Redes, slides: Questão 5 dos slides",
    "tipo": "mc",
    "enunciado": "(Squad 1 · Slides · Questão 5 · Associação)\n\n**DADO DE SUPORTE (TEXTO-BASE)**\n\n\"À medida que um pacote desce pelas camadas da pilha de protocolos do nó emissor, cada camada adiciona seu próprio cabeçalho ao pacote recebido da camada superior, um processo estrutural conhecido como encapsulamento. [...] A carga útil (payload) de uma camada inferior consiste invariavelmente no pacote inteiro (cabeçalho e dados embutidos) repassado pela camada imediatamente superior. Na recepção, ocorre o processo inverso de desencapsulamento.\" (KUROSE & ROSS, 2013, p. 34-36. Adaptado.)\n\n**SITUAÇÃO-PROBLEMA**\n\nUm analista de segurança da informação está investigando um incidente de vazamento de dados. Ele utiliza um analisador de protocolos (Wireshark) para destrinchar uma requisição HTTP POST interceptada que carrega credenciais em texto claro. Para mapear com precisão onde cada informação trafegou e como ela foi empacotada pelo sistema operacional do invasor, o analista precisa reconstruir mentalmente o percurso de encapsulamento dessa requisição, associando corretamente a ação de inserção de cabeçalhos e as Unidades de Dados de Protocolo (PDUs) às respectivas camadas do modelo TCP/IP.\n\n| Coluna 1: Camadas TCP/IP | Coluna 2: Ações / PDUs |\n|---|---|\n| 1. Camada de Aplicação | ( ) Anexa o cabeçalho contendo as portas lógicas para garantir o multiplexamento de processos da máquina, formando a PDU chamada Segmento. |\n| 2. Camada de Transporte | ( ) Gera a carga útil original, englobando os dados de formulário e o cabeçalho HTTP POST, formando a PDU conhecida como Mensagem. |\n| 3. Camada de Internet (ou Rede) | ( ) Insere os endereços físicos (MAC) e o trailer de verificação de erros (FCS), encapsulando os dados na PDU denominada Quadro (Frame). |\n| 4. Camada de Acesso à Rede (ou Enlace/Física) | ( ) Adiciona o cabeçalho contendo endereços IP lógicos (origem e destino) para roteamento, formando a PDU chamada Datagrama. |\n\n**COMANDO**\n\nAplicando seus conhecimentos sobre encapsulamento e exigindo rigor para não confundir as funções por semelhança de nomenclatura entre os modelos OSI e TCP/IP, assinale a alternativa que apresenta a sequência correta de associação de cima para baixo:",
    "alternativas": [
@@ -943,8 +842,8 @@
   },
   {
    "set": "reais",
-   "num": 47,
-   "ref": "47 · Redes, slides: Questão 6 dos slides",
+   "num": 42,
+   "ref": "42 · Redes, slides: Questão 6 dos slides",
    "tipo": "mc",
    "enunciado": "(Squad 1 · Slides · Questão 6 · Alternativas constantes V/F)\n\n**DADO DE SUPORTE (TEXTO-BASE)**\n\n\"O uso de sub-redes (subnetting) permite que um único bloco de endereços IP seja dividido em redes lógicas menores, otimizando o espaço de endereçamento. Para o roteamento entre essas redes, protocolos de estado de enlace (como o OSPF) constroem um mapa topológico completo usando algoritmos de caminho mais curto baseados em métricas de custo (frequentemente associadas à largura de banda), enquanto protocolos de vetor de distâncias (como o RIP clássico) operam iterativamente baseando-se em métricas simples, como a contagem de saltos.\" (KUROSE & ROSS, 2013, p. 245-255. Adaptado.)\n\n**SITUAÇÃO-PROBLEMA**\n\nUm engenheiro de redes recebeu o bloco de endereços IP 192.168.50.0/24 para planejar a infraestrutura de uma organização departamental. O projeto exige a criação de 4 sub-redes iguais e a interligação dessas redes através de roteadores conectados por enlaces com diferentes capacidades de transmissão (10 Mbps, 100 Mbps e 1 Gbps). Durante a revisão do projeto técnico, o estagiário da equipe apresentou quatro afirmações sobre o endereçamento planejado e o protocolo de roteamento a ser adotado.\n\n( ) I. Ao aplicar a máscara de sub-rede /26 (255.255.255.192) ao bloco original, a primeira sub-rede gerada (192.168.50.0) disponibilizará exatos 64 endereços IP válidos para atribuição aos computadores (hosts) dos usuários.\n\n( ) II. Se uma impressora na segunda sub-rede for configurada com o endereço IP 192.168.50.75/26, o endereço IP de destino utilizado para envio de quadros em broadcast restritos exclusivamente à sua sub-rede será o 192.168.50.127.\n\n( ) III. O protocolo RIP (Routing Information Protocol) é o mais recomendado para a topologia de enlaces variáveis descrita, pois seu algoritmo nativo calcula a melhor rota considerando a velocidade (largura de banda) das conexões, otimizando a latência.\n\n( ) IV. Caso a equipe adote o protocolo OSPF, todos os roteadores pertencentes a uma mesma área lógica deverão convergir até possuírem um banco de dados de estado de enlace (LSDB) idêntico, a partir do qual calcularão as rotas.\n\n**COMANDO**\n\nAplicando rigor matemático e técnico sobre a arquitetura de protocolos, analise as afirmações do estagiário e classifique cada uma delas como Verdadeira (V) ou Falsa (F): Assinale a alternativa que apresenta a sequência correta de classificação, lida de cima para baixo:",
    "alternativas": [
@@ -963,8 +862,8 @@
   },
   {
    "set": "reais",
-   "num": 48,
-   "ref": "48 · Redes, slides: Questão 8 dos slides",
+   "num": 43,
+   "ref": "43 · Redes, slides: Questão 8 dos slides",
    "tipo": "mc",
    "enunciado": "(Squad 1 · Slides · Questão 8 · Associação)\n\n**DADO DE SUPORTE (TEXTO-BASE)**\n\n\"Devido à natureza de difusão de seu meio físico, as redes sem fio são inerentemente mais suscetíveis a interceptações, injeção de pacotes e falsificação de identidade do que as redes cabeadas. Para proteger o ambiente corporativo, arquitetos de rede devem implementar mecanismos de defesa em profundidade: protocolos rigorosos de criptografia garantem a confidencialidade dos dados em trânsito; o controle de acesso baseado em porta (port-based) valida a identidade dos usuários de forma centralizada; enquanto sensores e sistemas de monitoramento contínuo varrem o espectro de radiofrequência para detectar anomalias físicas e operacionais.\" (STALLINGS, William, 2014, p. 412-416. Adaptado.)\n\n**SITUAÇÃO-PROBLEMA**\n\nApós uma auditoria de segurança na infraestrutura wireless de uma grande corporação, a equipe de TI elaborou um relatório com quatro vulnerabilidades críticas e incidentes ocorridos no último semestre. Como engenheiro de redes responsável, você precisa aprovar o plano de ação, correlacionando rigorosamente cada risco identificado com a tecnologia de mitigação técnica apropriada para resolvê-lo.\n\n**Coluna 1: Ameaças / Vulnerabilidades Relatadas**\n1. Interceptação passiva: Leitura não autorizada do conteúdo dos quadros de dados (payload) transmitidos pelo ar por usuários legítimos.\n2. Ponto de Acesso Clandestino (Rogue AP): Instalação de um roteador doméstico por um funcionário em uma porta de rede cabeada da empresa para criar um acesso Wi-Fi próprio e invisível à TI.\n3. Vazamento de credencial global: Ex-colaboradores acessando o estacionamento e conectando-se à rede porque a empresa utiliza uma única senha de rede compartilhada (PSK).\n4. Ataque de Deautenticação: Invasor injetando pacotes falsos de controle na rede, fingindo ser o Ponto de Acesso, para forçar a desconexão repetida de usuários legítimos.\n\n**Coluna 2: Mecanismos de Proteção e Contramedidas**\n\n- ( ) Adoção do padrão IEEE 802.1X integrado a um servidor RADIUS para fornecer credenciais exclusivas.\n- ( ) Implementação do protocolo AES-CCMP (padrão no WPA2/WPA3) para a carga útil (payload) dos quadros.\n- ( ) Ativação do recurso PMF (Protected Management Frames, padrão IEEE 802.11w) na controladora.\n- ( ) Implantação de um WIPS (Wireless Intrusion Prevention System) nos Pontos de Acesso em modo monitor.\n\n**COMANDO**\n\nExigindo rigor técnico ao associar a contramedida correta ao vetor do ataque, assinale a alternativa que apresenta a sequência correta de associação da Coluna 2, lida de cima para baixo:",
    "alternativas": [
@@ -982,8 +881,8 @@
   },
   {
    "set": "reais",
-   "num": 49,
-   "ref": "49 · Redes, slides: Questão 11 dos slides",
+   "num": 44,
+   "ref": "44 · Redes, slides: Questão 11 dos slides",
    "tipo": "mc",
    "enunciado": "(Squad 1 · Slides · Questão 11 · Afirmativas múltiplas)\n\n**DADO DE SUPORTE (TEXTO-BASE)**\n\n\"O UDP tira proveito da ausência de mecanismos de estabelecimento de conexão e de manutenção de estado para transmitir dados de forma ágil, transferindo o controle para a camada de aplicação quando necessário. Já o TCP fornece um serviço de transferência de dados confiável e orientado à conexão, garantindo a entrega exata, em ordem, e implementando mecanismos complexos de controle de fluxo e de congestionamento. Contudo, essa confiabilidade ocorre à custa de uma maior sobrecarga (overhead) e de atrasos pontuais impostos pelas retransmissões.\" (KUROSE & ROSS, 2013, p. 153-155. Adaptado.)\n\n**SITUAÇÃO-PROBLEMA**\n\nUma startup de desenvolvimento de software está projetando a arquitetura de rede para três novos produtos: um aplicativo de transferência segura de arquivos corporativos, um jogo on-line de tiro em primeira pessoa (FPS) competitivo, e um sistema de streaming de vídeo ao vivo (tempo real). Durante a reunião de engenharia de software, a equipe precisou julgar as características dos protocolos de transporte para definir qual utilizar em cada aplicação.\n\nI. Para a transferência de arquivos, o uso do TCP é essencial, pois a aplicação não tolera a corrupção ou perda de bytes, dependendo dos números de sequência e das confirmações (ACKs) do TCP para garantir a remontagem íntegra dos dados no destino.\n\nII. No desenvolvimento do jogo on-line (FPS), o TCP deve ser escolhido obrigatoriamente porque o seu mecanismo de controle de congestionamento estabiliza o envio de dados na rede, reduzindo a latência (ping) e evitando engasgos (lag) na partida.\n\nIII. No streaming de vídeo ao vivo, o UDP é frequentemente preferido, pois a perda ocasional de pacotes (gerando uma leve falha visual passageira) é mais tolerável do que o atraso na reprodução causado pelas retransmissões obrigatórias do TCP.\n\nIV. Em redes com alta taxa de perda de pacotes no meio físico (como redes sem fio ruidosas), o TCP sempre apresentará maior velocidade e eficiência que o UDP, pois ele recupera os dados perdidos sem alterar a sua taxa de transmissão.\n\n**COMANDO**\n\nAnalisando e avaliando rigorosamente a veracidade das características técnicas de funcionamento da camada de transporte para aplicações do mundo real, assinale a alternativa correta:",
    "alternativas": [
@@ -1001,7 +900,7 @@
   },
   {
    "set": "reais",
-   "num": 50,
+   "num": 45,
    "tipo": "mc",
    "enunciado": "(Squad 1 · Manual de Referência, p. 10 · Questão comentada · Resposta única)\n\nUm técnico percebe que dois computadores da mesma sala não se comunicam. O LED da placa de rede de um deles está apagado. Em seguida, após trocar o cabo, os computadores se enxergam, mas o navegador ainda não abre um site pelo nome, apenas pelo endereço IP. Assinale a alternativa que indica, respectivamente, as camadas OSI dos dois problemas.",
    "alternativas": [
@@ -1016,11 +915,11 @@
    "temas": [
     "Redes: Modelos OSI e TCP/IP e encapsulamento"
    ],
-   "ref": "50 · Redes, manual: Q6"
+   "ref": "45 · Redes, manual: Q6"
   },
   {
    "set": "reais",
-   "num": 51,
+   "num": 46,
    "tipo": "mc",
    "enunciado": "(Squad 1 · Manual de Referência, p. 14 · Questão comentada · Resposta única, com cálculo)\n\nUma aplicação envia 200 bytes de dados usando UDP sobre IPv4 sem opções, em um enlace Ethernet. Considerando os cabeçalhos de transporte, de rede e de enlace (14 bytes), além do trailer FCS (4 bytes), o tamanho do quadro e a porcentagem de sobrecarga são, aproximadamente:",
    "alternativas": [
@@ -1036,11 +935,11 @@
     "Redes: Modelos OSI e TCP/IP e encapsulamento"
    ],
    "nota": "A sobrecarga é sobre o quadro inteiro (46/246). Uma versão alterada pode pedir sobre os dados (46/200 = 23%), a eficiência (200/246 ≈ 81,3%) ou incluir preâmbulo/SFD e IFG, como no Estudo de Caso E2.",
-   "ref": "51 · Redes, manual: Q7"
+   "ref": "46 · Redes, manual: Q7"
   },
   {
    "set": "reais",
-   "num": 52,
+   "num": 47,
    "tipo": "mc",
    "enunciado": "(Squad 1 · Manual de Referência, p. 19 · Questão comentada · Afirmativa incompleta)\n\nUma rede local com 40 computadores ligados a hubs apresenta lentidão nos horários de pico. O administrador substitui os hubs por switches, sem alterar mais nada. Sobre o efeito dessa troca, é correto afirmar que:",
    "alternativas": [
@@ -1055,11 +954,11 @@
    "temas": [
     "Redes: Equipamentos, topologias, domínios e VLANs"
    ],
-   "ref": "52 · Redes, manual: Q8"
+   "ref": "47 · Redes, manual: Q8"
   },
   {
    "set": "reais",
-   "num": 53,
+   "num": 48,
    "tipo": "mc",
    "enunciado": "(Squad 1 · Manual de Referência, p. 26 · Questão comentada · Resposta única, com cálculo)\n\nUm administrador precisa dividir a rede 10.20.0.0/16 de forma que cada sub-rede comporte pelo menos 500 hosts, maximizando o número de sub-redes. Qual máscara deve ser usada e quantas sub-redes serão obtidas?",
    "alternativas": [
@@ -1074,11 +973,11 @@
    "temas": [
     "Redes: Endereçamento IPv4/IPv6, sub-redes e CIDR"
    ],
-   "ref": "53 · Redes, manual: Q9"
+   "ref": "48 · Redes, manual: Q9"
   },
   {
    "set": "reais",
-   "num": 54,
+   "num": 49,
    "tipo": "mc",
    "enunciado": "(Squad 1 · Manual de Referência, p. 32 · Questão comentada · Resposta única)\n\nUm roteador possui as seguintes rotas: 10.0.0.0/8 → R1; 10.1.0.0/16 → R2; 10.1.2.0/24 → R3; 0.0.0.0/0 → R4. Os pacotes destinados a 10.1.2.9, 10.1.5.7 e 172.16.0.1 serão enviados, respectivamente, para:",
    "alternativas": [
@@ -1093,11 +992,11 @@
    "temas": [
     "Redes: Roteamento (prefixo mais longo, OSPF/RIP, BGP)"
    ],
-   "ref": "54 · Redes, manual: Q10"
+   "ref": "49 · Redes, manual: Q10"
   },
   {
    "set": "reais",
-   "num": 55,
+   "num": 50,
    "tipo": "mc",
    "enunciado": "(Squad 1 · Manual de Referência, p. 38 · Questão comentada · Resposta única)\n\nUma conexão TCP opera com cwnd = 20 MSS e ssthresh = 32 MSS quando o transmissor detecta um *timeout*. Considerando o TCP Reno, após o evento os valores de cwnd e ssthresh serão, respectivamente:",
    "alternativas": [
@@ -1113,11 +1012,11 @@
     "Redes: Transporte (TCP e UDP)"
    ],
    "nota": "No Reno estrito do Kurose, após 3 ACKs duplicados a cwnd vai a ssthresh + 3 (13 MSS) na recuperação rápida e só depois a 10; o Manual simplifica para \"cai pela metade\".",
-   "ref": "55 · Redes, manual: Q11"
+   "ref": "50 · Redes, manual: Q11"
   },
   {
    "set": "reais",
-   "num": 56,
+   "num": 51,
    "tipo": "mc",
    "enunciado": "(Squad 1 · Manual de Referência, p. 44 · Questão comentada · Afirmativas múltiplas)\n\nSobre protocolos da camada de aplicação, avalie as afirmações:\n\nI. O HTTP é um protocolo sem estado; por isso, aplicações web usam cookies para manter sessões de usuário.\n\nII. O FTP envia comandos e dados pela mesma conexão TCP, na porta 21.\n\nIII. Consultas DNS normalmente usam UDP porque são pequenas e o custo de estabelecer conexão seria proporcionalmente alto.\n\nIV. O SMTP é usado tanto para enviar quanto para ler mensagens da caixa postal do destinatário.\n\nÉ correto apenas o que se afirma em:",
    "alternativas": [
@@ -1132,11 +1031,11 @@
    "temas": [
     "Redes: Camada de aplicação (HTTP, DNS, e-mail, DHCP)"
    ],
-   "ref": "56 · Redes, manual: Q12"
+   "ref": "51 · Redes, manual: Q12"
   },
   {
    "set": "reais",
-   "num": 57,
+   "num": 52,
    "tipo": "mc",
    "enunciado": "(Squad 1 · Manual de Referência, p. 50 · Questão comentada · Resposta única)\n\nUma empresa deseja que seus funcionários acessem, a partir de casa, um sistema interno que não está exposto à Internet, com garantia de confidencialidade e autenticação. Qual solução atende melhor a esse requisito?",
    "alternativas": [
@@ -1151,11 +1050,11 @@
    "temas": [
     "Redes: Segurança (criptografia, firewall, VPN, Wi-Fi)"
    ],
-   "ref": "57 · Redes, manual: Q13"
+   "ref": "52 · Redes, manual: Q13"
   },
   {
    "set": "reais",
-   "num": 58,
+   "num": 53,
    "tipo": "mc",
    "enunciado": "(Squad 1 · Manual de Referência, p. 58 · Questão comentada · Resposta única)\n\nUma prefeitura quer instalar centenas de sensores de nível de rio espalhados por vários quilômetros, alimentados por bateria, que enviam uma leitura de poucos bytes a cada 5 minutos. A combinação de tecnologias mais adequada é:",
    "alternativas": [
@@ -1170,11 +1069,11 @@
    "temas": [
     "Redes: Sem fio, celular, SDN, nuvem e IoT"
    ],
-   "ref": "58 · Redes, manual: Q14"
+   "ref": "53 · Redes, manual: Q14"
   },
   {
    "set": "reais",
-   "num": 59,
+   "num": 54,
    "tipo": "mc",
    "enunciado": "(Squad 4 · Questão 1)\n\nUm hospital de grande porte modernizou sua infraestrutura de tecnologia implementando um sistema de Prontuário Eletrônico do Paciente (PEP). A arquitetura de segurança da informação adotada engloba controle de acesso baseado em papéis (RBAC), criptografia simétrica (AES-256) para dados em repouso, assinaturas digitais baseadas em infraestrutura de chave pública (ICP) com certificados X.509 para prescrições, além de replicação de servidores para alta disponibilidade.\n\nDurante uma auditoria de conformidade com a ISO/IEC 27001 e a LGPD, foram registradas as seguintes ocorrências:\n\n**I.** Um técnico de enfermagem utilizou temporariamente as credenciais de acesso de um médico plantonista — obtidas por negligência na guarda de senha — para visualizar históricos clínicos de pacientes alocados em alas sob a responsabilidade de outra equipe, sem que o sistema disparasse alertas de desvio de perfil, embora o acesso tenha sido registrado em log.\n\n**II.** Um ataque de negação de serviço distribuído (DDoS) exauriu os recursos da infraestrutura de borda, tornando o PEP inacessível por 45 minutos nas unidades de terapia intensiva e violando o Acordo de Nível de Serviço (SLA) de continuidade operacional.\n\n**III.** Uma prescrição digital foi assinada com a chave privada de um médico, mas, devido a uma vulnerabilidade na função de hash subjacente (geradora de colisões), um atacante conseguiu alterar o conteúdo do arquivo prescrito sem que a verificação da assinatura digital pela farmácia apontasse falha.\n\n**IV.** Um administrador de banco de dados mal-intencionado alterou diretamente os registros de um diagnóstico sensível na tabela transacional; contudo, visto que o armazenamento utilizava criptografia simétrica convencional (AES-256) voltada exclusivamente à confidencialidade, a adulteração passou despercebida pelos mecanismos de verificação de integridade.\n\nConsiderando os conceitos fundamentais da Segurança da Informação, avalie as afirmativas a seguir:\n\n**I.** A ocorrência I evidencia uma falha grave de *confidencialidade* e de controle de acesso, comprometendo também a confiabilidade da autoria devido ao compartilhamento inadequado de credenciais.\n\n**II.** A ocorrência II caracteriza uma violação direta da propriedade de *disponibilidade*, essencial em ambientes críticos de saúde onde a demora na informação pode colocar vidas em risco.\n\n**III.** A ocorrência III ilustra um comprometimento da *integridade*, demonstrando que a fragilidade na função matemática de *hash* que alimenta a assinatura digital pode quebrar a garantia de imutabilidade do documento.\n\n**IV.** A ocorrência IV reforça que cifras simétricas tradicionais focadas na *confidencialidade* (como o AES em modos básicos) não garantem, por si sós, a *integridade* dos dados contra modificações não autorizadas.\n\nÉ correto o que se afirma em:",
    "alternativas": [
@@ -1191,11 +1090,11 @@
     "Seg: Criptografia, hash e assinatura digital"
    ],
    "nota": "A afirmativa n comenta a ocorrência n (mesma numeração I–IV). Na IV o autor é um insider com as chaves, que passaria até pelo AES-GCM; como afirmação geral, a IV continua correta.",
-   "ref": "59 · Segurança, slides: Q1"
+   "ref": "54 · Segurança, slides: Q1"
   },
   {
    "set": "reais",
-   "num": 60,
+   "num": 55,
    "tipo": "mc",
    "enunciado": "(Squad 4 · Questão 2)\n\nUm grande conglomerado hospitalar está estruturando sua nova plataforma digital de telemedicina e gestão de prontuários eletrônicos em nuvem. A arquitetura exige que o sistema atenda simultaneamente a três pilares rigorosos:\n\n**1. Dados em Repouso:** Armazenamento massivo de exames de imagem de alta resolução e prontuários volumosos em bancos de dados relacionais, exigindo alta performance de leitura/escrita e proteção robusta contra vazamentos.\n**2. Dados em Trânsito:** Comunicação síncrona, de baixíssima latência e criptografada entre os aplicativos móveis dos médicos em campo e a infraestrutura central de servidores via internet aberta.\n**3. Integridade e Autenticidade Transacional:** Assinatura digital de prescrições médicas de alta complexidade com validade jurídica perante órgãos reguladores (ICP-Brasil).\n\nA equipe de arquitetura de segurança da informação foi encarregada de selecionar os mecanismos criptográficos ideais para cumprir os requisitos de desempenho, confidencialidade, integridade e conformidade regulatória.\n\nConsiderando as propriedades matemáticas e operacionais dos algoritmos e protocolos de segurança, qual é a combinação de mecanismos técnica e arquiteturalmente mais adequada?",
    "alternativas": [
@@ -1211,11 +1110,11 @@
     "Seg: Criptografia, hash e assinatura digital"
    ],
    "nota": "A B não trata o pilar 3 (assinatura com certificado ICP-Brasil), mas é a única sem erro técnico. Se a prova trouxer uma alternativa com AES-GCM + TLS + assinatura ICP-Brasil, essa será a mais completa.",
-   "ref": "60 · Segurança, slides: Q2"
+   "ref": "55 · Segurança, slides: Q2"
   },
   {
    "set": "reais",
-   "num": 61,
+   "num": 56,
    "tipo": "mc",
    "enunciado": "(Squad 4 · Questão 3 · Asserção-razão)\n\nEm uma rede corporativa legada, o setor de segurança da informação identificou vulnerabilidades críticas na Camada de Enlace (Camada 2 do modelo OSI), permitindo que agentes maliciosos executem ataques de envenenamento de cache para desviar o fluxo de pacotes de dados. Para mitigar o impacto dessa exposição sem paralisar as operações, a equipe arquitetou contramedidas baseadas em criptografia de sessão e validação estrita de certificados.\n\nConsiderando esse cenário técnico de defesa em profundidade e os protocolos envolvidos, avalie as asserções a seguir e a relação proposta entre elas:\n\n**I.** A implementação rigorosa do protocolo TLS (Transport Layer Security) com validação mandatória de certificados e políticas de HSTS (HTTP Strict Transport Security) protege a confidencialidade e a integridade dos dados trafegados contra interceptações ativas, mesmo que o atacante tenha obtido sucesso em redirecionar o tráfego da rede local, embora o TLS não corrija a falha estrutural do protocolo ARP.\n\n**PORQUE**\n\n**II.** O protocolo ARP (Address Resolution Protocol) carece de mecanismos nativos de autenticação, integridade ou criptografia na Camada 2, aceitando cegamente respostas e pacotes Gratuitous ARP não solicitados, o que corrompe as tabelas de mapeamento IP-MAC dos dispositivos e viabiliza a criação furtiva de cenários de Homem no Meio (Man-in-the-Middle).\n\nA respeito dessas asserções, assinale a opção correta:",
    "alternativas": [
@@ -1231,11 +1130,11 @@
     "Seg: Ataques de rede, ARP spoofing e TLS"
    ],
    "nota": "Relação discutível: a II explica por que o TLS é necessário, não por que ele é eficaz; numa leitura estrita, a B seria defensável. O gabarito do squad é A.",
-   "ref": "61 · Segurança, slides: Q3"
+   "ref": "56 · Segurança, slides: Q3"
   },
   {
    "set": "reais",
-   "num": 62,
+   "num": 57,
    "tipo": "mc",
    "enunciado": "(Squad 4 · Questão 4)\n\nUma holding corporativa do setor de saúde e biotecnologia está estruturando um ambicioso projeto de Big Data e inteligência artificial para o desenvolvimento de modelos preditivos voltados a diagnósticos precoces. Para mitigar riscos regulatórios perante a Autoridade Nacional de Proteção de Dados (ANPD) e garantir a conformidade com a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018), o comitê de governança e conformidade jurídica foi acionado para orientar a equipe de engenharia de dados sobre o ciclo de vida, a taxonomia e as técnicas de tratamento das informações dos pacientes.\n\nConsiderando os conceitos dogmáticos e legais estabelecidos pela LGPD, avalie as afirmativas a seguir:\n\n**I.** Dados pessoais relativos à saúde humana e dados biométricos vinculados a uma pessoa natural identificada ou identificável recebem a qualificação jurídica de **dados pessoais sensíveis**, exigindo, por regra geral, o cumprimento de hipóteses legais mais restritivas para o seu tratamento e vedando o seu uso discriminatório.\n\n**II.** A técnica de **pseudonimização** consiste no tratamento por meio do qual um dado perde a possibilidade de associação, direta ou indireta, a um indivíduo, fazendo com que, imediatamente após a sua aplicação, o conjunto de dados deixe irrevogavelmente de ser considerado dado pessoal para todos os efeitos legais da LGPD.\n\n**III.** Para que se configure a **anonimização** efetiva sob a ótica legal da LGPD, o processo deve ser irreversível, considerando o uso de meios técnicos disponíveis e razoáveis na ocasião do tratamento; caso a associação com a pessoa possa ser restabelecida por meios lógicos ou tecnológicos viáveis, o dado permanece juridicamente classificado como pessoal.\n\n**IV.** O conceito legal de **tratamento** de dados pessoais possui acepção ampla, abrangendo qualquer operação realizada com dados pessoais, tais como a coleta, produção, recepção, classificação, utilização, acesso, reprodução, transmissão, distribuição, processamento, arquivamento, armazenamento, eliminação ou modificação.\n\nÉ correto o que se afirma em:",
    "alternativas": [
@@ -1251,11 +1150,11 @@
     "Seg: LGPD e privacidade"
    ],
    "nota": "O gabarito do slide cita errado o art. 12 (\"esforço desproporcional\"). A lei diz que o dado continua pessoal se a anonimização puder ser revertida com esforços razoáveis.",
-   "ref": "62 · Segurança, slides: Q4"
+   "ref": "57 · Segurança, slides: Q4"
   },
   {
    "set": "reais",
-   "num": 63,
+   "num": 58,
    "tipo": "multi",
    "enunciado": "(ENADE 2017 · Questão 15 · resumida na apostila)\n\nTema: ataque de homem no meio por ARP spoofing em rede Wi-Fi.\n\nA apostila reproduz a questão de forma resumida: só o tema e as afirmações, sem o texto-base completo e sem as alternativas A–E da prova. Marque **todas** as afirmações verdadeiras.",
    "alternativas": [
@@ -1274,11 +1173,11 @@
     "Seg: Ataques de rede, ARP spoofing e TLS"
    ],
    "nota": "Gabarito oficial do Inep: D (I, III e IV). A apostila traz a questão resumida; a IV é verdadeira \"no contexto da questão\".",
-   "ref": "63 · Segurança, ENADE: Q5"
+   "ref": "58 · Segurança, ENADE: Q5"
   },
   {
    "set": "reais",
-   "num": 64,
+   "num": 59,
    "tipo": "mc",
    "enunciado": "(ENADE 2017 · Questão 16 · resumida na apostila)\n\nTema: fator humano, engenharia social e ética.\n\nA apostila reproduz a questão de forma resumida, sem o texto-base completo. Avalie as afirmações a seguir.\n\nI. Organizações permanecem vulneráveis diante do fator humano.\nII. Segurança da Informação é processo, não produto.\nIII. Ética profissional é relevante.\n\nÉ correto o que se afirma em",
    "alternativas": [
@@ -1294,11 +1193,11 @@
     "Seg: Governança, fator humano e ética"
    ],
    "nota": "Gabarito oficial do Inep: E (I, II e III). As alternativas A–D foram montadas no formato padrão do ENADE, porque a apostila não as traz. Numa versão alterada, desconfie de absolutos como \"o humano é sempre o elo mais fraco\".",
-   "ref": "64 · Segurança, ENADE: Q6"
+   "ref": "59 · Segurança, ENADE: Q6"
   },
   {
    "set": "reais",
-   "num": 65,
+   "num": 60,
    "tipo": "multi",
    "enunciado": "(ENADE 2021 · Questão 12 · resumida na apostila)\n\nTema: LGPD.\n\nA apostila reproduz a questão de forma resumida: só o tema e as afirmações, sem o texto-base completo e sem as alternativas A–E da prova. Marque **todas** as afirmações verdadeiras.",
    "alternativas": [
@@ -1316,11 +1215,11 @@
     "Seg: LGPD e privacidade"
    ],
    "nota": "Gabarito oficial do Inep: B (I e III). A apostila traz a questão resumida.",
-   "ref": "65 · Segurança, ENADE: Q7"
+   "ref": "60 · Segurança, ENADE: Q7"
   },
   {
    "set": "reais",
-   "num": 66,
+   "num": 61,
    "tipo": "multi",
    "enunciado": "(ENADE 2021 · Questão 24 · resumida na apostila)\n\nTema: criptografia de ponta a ponta.\n\nA apostila reproduz a questão de forma resumida: só o tema e as afirmações, sem o texto-base completo e sem as alternativas A–E da prova. Marque **todas** as afirmações verdadeiras.",
    "alternativas": [
@@ -1339,11 +1238,11 @@
     "Seg: Criptografia, hash e assinatura digital"
    ],
    "nota": "Gabarito oficial do Inep: E (I, II e IV). A apostila traz a questão resumida; a II é verdadeira \"no contexto\" e a IV \"com ressalva\": contra atacante ativo, o hash precisa de MAC ou assinatura.",
-   "ref": "66 · Segurança, ENADE: Q8"
+   "ref": "61 · Segurança, ENADE: Q8"
   },
   {
    "set": "reais",
-   "num": 67,
+   "num": 62,
    "tipo": "mc",
    "enunciado": "(Squad 2 · Questão 1)\n\n**SITUAÇÃO-PROBLEMA**\n\nUma equipe de desenvolvimento está modelando uma rede de comunicação entre diferentes pontos de uma infraestrutura computacional. Para representar a rede, foi utilizado um grafo não direcionado G=(V,E), no qual os vértices representam os pontos da rede e as arestas representam as conexões entre eles.\nDurante a análise da representação, a equipe identificou que o grafo possui 10 vértices e 15 arestas. Além disso, após reorganizar visualmente os vértices e as arestas, foi identificada uma subdivisão de K3,3 na estrutura do grafo.\n\n**COMANDO**\n\nConsiderando os conceitos de grau dos vértices, Handshake Lemma e planaridade, analise a situação apresentada e assinale a alternativa que apresenta a conclusão correta.",
    "alternativas": [
@@ -1359,11 +1258,11 @@
     "Grafos: Planaridade, Euler e Kuratowski"
    ],
    "nota": "Versão alterada provável: usar 15 ≤ 3·10 − 6 = 24 como prova de planaridade. É só condição necessária; quem decide é a subdivisão de K3,3.",
-   "ref": "67 · Grafos, slides: Q1"
+   "ref": "62 · Grafos, slides: Q1"
   },
   {
    "set": "reais",
-   "num": 68,
+   "num": 63,
    "tipo": "mc",
    "enunciado": "(Squad 2 · Questão 2 · Verdadeiro ou falso)\n\n**SITUAÇÃO-PROBLEMA**\n\nUma equipe de engenharia de software está projetando o módulo de conexões e rotas de uma aplicação. O sistema precisa armazenar e manipular um grafo na memória, onde as interseções representam vértices e as rotas representam arestas direcionadas. Diante da preocupação com a alocação de memória e com a velocidade de acesso às conexões, a equipe analisa a adoção de Matrizes de Adjacência ou Listas de Adjacência.\n\n**COMANDO**\n\nAnalise as afirmações a seguir sobre as estruturas de representação computacional de grafos e a tomada de decisão da equipe, identificando-as como Verdadeiras (V) ou Falsas (F):\n\n( ) A Matriz de Adjacência aloca uma tabela com dimensão fixa proporcional a V x V (onde V é o número de vértices), reservando espaço na memória para todas as conexões possíveis, existam elas ou não.\n\n( ) Em grafos direcionados, a Matriz de Adjacência é naturalmente simétrica, de modo que a posição (Linha A, Coluna B) terá sempre o mesmo valor que a posição (Linha B, Coluna A).\n\n( ) A Lista de Adjacência é mais eficiente em termos de armazenamento quando o grafo é esparso (possui poucas conexões em relação ao número de vértices), pois guarda apenas os vértices vizinhos com os quais realmente existe conexão.\n\n( ) A verificação direta da existência de uma conexão entre dois vértices específicos é operacionalmente mais rápida em uma Lista de Adjacência do que em uma Matriz de Adjacência, pois a lista permite acesso indexado direto em tempo constante O(1).\n\nAssinale a alternativa com a sequência correta.",
    "alternativas": [
@@ -1377,11 +1276,11 @@
    "temas": [
     "Grafos: Matriz e lista de adjacência"
    ],
-   "ref": "68 · Grafos, slides: Q2"
+   "ref": "63 · Grafos, slides: Q2"
   },
   {
    "set": "reais",
-   "num": 69,
+   "num": 64,
    "tipo": "mc",
    "enunciado": "(Squad 2 · Questão 3 · Asserção-razão)\n\n**SITUAÇÃO-PROBLEMA**\n\nUma empresa de transporte deseja analisar uma rede de estações representada por um grafo não ponderado, no qual cada vértice representa uma estação e cada aresta representa uma conexão direta entre duas estações.\nPara determinar a menor quantidade de conexões necessárias para chegar de uma estação de origem S até uma estação de destino T, um analista decide utilizar o algoritmo Breadth-First Search (BFS).\n\n**COMANDO**\n\nConsiderando o funcionamento da BFS em grafos não ponderados, analise as asserções a seguir.\n\nI. A BFS pode ser utilizada para determinar um caminho entre S e T que contenha o menor número possível de arestas.\n\nPORQUE\n\nII. Durante sua execução, a BFS visita os vértices em níveis de distância crescente a partir da origem, utilizando uma fila para garantir que os vértices descobertos em uma determinada distância sejam processados antes dos vértices de distâncias maiores.\n\nAssinale a alternativa correta.",
    "alternativas": [
@@ -1396,11 +1295,11 @@
     "Grafos: DFS, BFS e aplicações"
    ],
    "nota": "Versão alterada provável: se falar em grafo ponderado ou \"menor custo\", a I fica falsa (aí o certo é Dijkstra ou Bellman-Ford).",
-   "ref": "69 · Grafos, slides: Q3"
+   "ref": "64 · Grafos, slides: Q3"
   },
   {
    "set": "reais",
-   "num": 70,
+   "num": 65,
    "tipo": "mc",
    "enunciado": "(Squad 2 · Questão 4 · Associação)\n\n**SITUAÇÃO-PROBLEMA**\n\nUma equipe de engenharia de software está arquitetando a infraestrutura de rede para um ecossistema de microsserviços em nuvem, semelhante a ambientes AWS com contêineres Docker. Durante o planejamento, os engenheiros de backend identificaram três desafios distintos de otimização de rede que precisam ser resolvidos de forma automatizada:\n\n- **Desafio 1:** Encontrar a rota de menor latência (tempo de resposta) entre o API Gateway (nó de origem) e todos os outros microsserviços da rede. Sabe-se que todos os links possuem latência estritamente positiva.\n- **Desafio 2:** Calcular o custo de roteamento de sincronização de um banco de dados relacional distribuído. Devido a acordos de tráfego com provedores, alguns links geram \"créditos\" de banda, operando efetivamente como arestas de peso negativo. É necessário encontrar o menor custo a partir do nó primário e garantir que não existam ciclos de retroalimentação infinita (ciclos negativos).\n- **Desafio 3:** Interligar fisicamente todos os servidores de um novo data center com cabos de fibra óptica. O objetivo não é a velocidade entre dois pontos específicos, mas sim garantir que todos os servidores estejam conectados na mesma rede gastando o mínimo possível em metros de cabo.\n\n**COMANDO**\n\nConsiderando os algoritmos clássicos de otimização em Teoria dos Grafos, assinale a alternativa que indica a escolha tecnicamente correta para resolver os Desafios 1, 2 e 3, respectivamente.",
    "alternativas": [
@@ -1416,11 +1315,11 @@
     "Grafos: Árvore geradora mínima (Prim)"
    ],
    "nota": "Se uma versão alterada trouxer Kruskal no Desafio 3, também vale: é problema de AGM.",
-   "ref": "70 · Grafos, slides: Q4"
+   "ref": "65 · Grafos, slides: Q4"
   },
   {
    "set": "reais",
-   "num": 71,
+   "num": 66,
    "tipo": "mc",
    "enunciado": "(Squad 3 · Questão 1 · V/F com sequência)\n\n**TEXTO-BASE**\n\n\"Na Teoria dos Conjuntos e Relações Binárias, a rigorosa formalização matemática de elementos, subconjuntos e propriedades constitui a base fundamental para a modelagem do espaço de estados em computação.\"\n\n**SITUAÇÃO-PROBLEMA**\n\nNo estudo sobre um conjunto A = {1, 2, 3}, um estudante precisa avaliar o comportamento formal de diferentes relações e operações com conjuntos para validar a modelagem de um banco de dados relacional.\n\nAnalise as afirmações (V ou F):\n\n( ) 1. O vazio ∅ é subconjunto de qualquer A (∅ ⊆ A). Mas a relação entre o vazio e o conjunto que o contém é de diferença: {∅} ≠ {}.\n\n( ) 2. Seja U = {1, 2, 3, 4} o universo e A = {1, 4}. O complemento de A, dado por A' = U − A, resulta no conjunto {2, 3}.\n\n( ) 3. Uma relação R definida em A é dita simétrica quando, para todo (x, y) ∈ R, obrigatoriamente se tem x = y.\n\n( ) 4. Uma relação R em A é transitiva quando a ocorrência de (x, y) ∈ R e (y, z) ∈ R implica necessariamente que (x, z) ∈ R.\n\nSequência correta de cima para baixo:",
    "alternativas": [
@@ -1435,11 +1334,11 @@
     "TC: Conjuntos e relações"
    ],
    "nota": "No slide os 4 itens estão numa grade 2×2, lida linha a linha; na prova a ordem pode mudar: julgue cada item pelo conteúdo. Só 4 alternativas (A–D).",
-   "ref": "71 · Teoria da Computação, slides: Q1"
+   "ref": "66 · Teoria da Computação, slides: Q1"
   },
   {
    "set": "reais",
-   "num": 72,
+   "num": 67,
    "tipo": "mc",
    "enunciado": "(Squad 3 · Questão 2 · Afirmativas múltiplas)\n\n**TEXTO-BASE**\n\nA Hierarquia de Chomsky classifica as linguagens formais segundo a restrição de suas regras gramaticais. Linguagens que exigem a verificação de propriedades não locais ou contagens dependentes ultrapassam os limites do modelo regular, exigindo gramáticas mais expressivas ou gerando problemas inerentes de ambiguidade sintática.\n\n**SITUAÇÃO-PROBLEMA**\n\nUm estudante propôs a caracterização da linguagem L = { w ∈ {a,b}* | o número de 'a' em w é igual ao de 'b' } a fim de classificá-la formalmente. Para isso, ele elaborou as seguintes afirmações abaixo.\n\nAvalie as afirmações do estudante:\n\nI. A linguagem L pode ser reconhecida por um Autômato Finito Determinístico, pois basta alternar entre dois estados de contagem de paridade.\n\nII. A linguagem L pertence à classe do Tipo 2 da Hierarquia de Chomsky, podendo ser gerada por regras de produção da forma V → w, onde V é um único símbolo não terminal e w ∈ (V ∪ Σ)*.\n\nIII. Existe uma Gramática Livre de Contexto G = (V, Σ, R, S) não ambígua que gera a linguagem L.\n\nAssinale a opção correta:",
    "alternativas": [
@@ -1455,11 +1354,11 @@
     "TC: Linguagens não regulares (limites do AFD)"
    ],
    "nota": "No slide a notação da afirmativa II saiu truncada; o correto é w ∈ (V ∪ Σ)*, qualquer cadeia de variáveis e terminais. Apesar do texto-base, L não é inerentemente ambígua: a ambiguidade é da gramática.",
-   "ref": "72 · Teoria da Computação, slides: Q2"
+   "ref": "67 · Teoria da Computação, slides: Q2"
   },
   {
    "set": "reais",
-   "num": 73,
+   "num": 68,
    "tipo": "mc",
    "enunciado": "(Squad 3 · Questão 3 · Resposta única)\n\n**TEXTO-BASE**\n\nOs Autômatos Finitos Determinísticos (AFD) são modelos computacionais sem memória auxiliar, cujo poder de reconhecimento se limita às Linguagens Regulares. Qualquer validação sintática que exija armazenamento e comparação de contagens arbitrárias não pode ser resolvida exclusivamente por variações na quantidade finita de estados de um AFD.\n\n**SITUAÇÃO-PROBLEMA**\n\nUm engenheiro projetou um protocolo (handshake) com um AFD de 8 estados. Durante a validação, pediram-lhe duas novas funcionalidades:\n\n- **Funcionalidade X:** Garantir que o protocolo rejeite mensagens com cabeçalho contendo sequências de controle malformadas do tipo **ab*a** (um símbolo a, seguido de zero ou mais símbolos b, finalizado por um símbolo a).\n- **Funcionalidade Y:** Garantir que o protocolo verifique se o número total de pacotes de dados enviados (**a**) é igual ao número total de confirmações de recebimento (**b**) recebidas ao longo de uma sessão de tamanho indeterminado, ou seja, validar palavras da forma **aⁿbⁿ** para qualquer **n ≥ 0**.\n\n**COMANDO**\n\nConsiderando as limitações teóricas dos Autômatos Finitos e exigindo rigor técnico na modelagem, analise o cenário apresentado e avalie qual é a conclusão correta em relação às funcionalidades X e Y:",
    "alternativas": [
@@ -1475,11 +1374,11 @@
     "TC: Autômatos finitos (AFD e AFND)"
    ],
    "nota": "“Diretamente pelo AFD atual” é impreciso (o AFD de 8 estados teria de ser modificado), mas o ponto cobrado é que um AFD basta para X. Só 4 alternativas.",
-   "ref": "73 · Teoria da Computação, slides: Q3"
+   "ref": "68 · Teoria da Computação, slides: Q3"
   },
   {
    "set": "reais",
-   "num": 74,
+   "num": 69,
    "tipo": "mc",
    "enunciado": "(Squad 3 · Questão 4 · Asserção-razão)\n\n**TEXTO-BASE**\n\n\"Autômatos de Pilha associam um controle finito de estados a uma estrutura de memória do tipo LIFO (Last In, First Out). Essa arquitetura permite o reconhecimento das Linguagens Livres de Contexto, essenciais para a verificação de estruturas aninhadas e balanceamento sintático em linguagens de programação e formatos de dados.\"\n\n**SITUAÇÃO-PROBLEMA**\n\nUma equipe desenvolve o parser de um formato JSON-like que exige:\n1. Todo { tem um }.\n2. Todo [ tem um ].\n3. Delimitadores podem ser aninhados (ex.: {[[]]}), respeitando a ordem LIFO (o último aberto é o primeiro fechado).\n\nAvalie as asserções a seguir e a relação proposta entre elas:\n\nI. O módulo validador de delimitadores aninhados pode ser implementado por meio de um Autômato de Pilha Não Determinístico, pois a memória de pilha permite empilhar os símbolos de abertura ({ ou [) e desempilhá-los na ordem inversa conforme os símbolos de fechamento correspondentes são lidos.\n\nPORQUE\n\nII. O Autômato de Pilha é o modelo computacional exato que reconhece a classe das Linguagens Livres de Contexto, permitindo tratar dependências com memória ilimitada sob a regra LIFO, o que o torna ideal para a validação de parênteses, chaves e colchetes balanceados.\n\nA respeito dessas asserções, assinale a opção correta:",
    "alternativas": [
@@ -1494,11 +1393,11 @@
     "TC: Autômatos de pilha"
    ],
    "nota": "Só 4 alternativas (falta “ambas falsas”). Delimitadores balanceados também cabem num AP determinístico; a equivalência exata com as LLC vale para o AP não determinístico.",
-   "ref": "74 · Teoria da Computação, slides: Q4"
+   "ref": "69 · Teoria da Computação, slides: Q4"
   },
   {
    "set": "reais",
-   "num": 75,
+   "num": 70,
    "tipo": "mc",
    "enunciado": "(Squad 3 · Questão 5 · Afirmativas múltiplas)\n\n**TEXTO-BASE**\n\n\"Uma Máquina de Turing de Fita Única é formalizada como uma 6-tupla M=(Q, Σ, Γ, δ, q0, F). A função de transição determina o determinismo da execução, modificando o símbolo da fita e deslocando a cabeça de leitura/escrita. Estruturas sintáticas que exigem verificação de contagens cruzadas do tipo aⁿbⁿcⁿ excedem a capacidade de Autômatos de Pilha, exigindo o poder computacional irrestrito de uma Máquina de Turing\"\n\n**SITUAÇÃO-PROBLEMA**\n\nUm analista de sistemas está a projetar um reconhecedor para a linguagem dependente do contexto L = { aⁿbⁿcⁿ | n ≥ 1} sobre o alfabeto Σ = {a,b,c}. O diagrama a seguir representa o autômato de controle da Máquina de Turing M modelada para esta tarefa:\n\n(Diagrama de estados, aqui em tabela. Estado inicial q0; qf é o estado de aceitação. Coluna = símbolo lido; célula = símbolo escrito, direção, próximo estado; — = não há transição.)\n\n| Estado | a | b | c | X | Y | Z | B |\n|---|---|---|---|---|---|---|---|\n| q0 | X, D, q1 | — | — | — | Y, D, q4 | — | — |\n| q1 | a, D, q1 | Y, D, q2 | — | — | Y, D, q1 | — | — |\n| q2 | — | b, D, q2 | Z, E, q3 | — | — | Z, D, q2 | — |\n| q3 | a, E, q3 | b, E, q3 | — | X, D, q0 | Y, E, q3 | Z, E, q3 | — |\n| q4 | — | — | — | — | Y, D, q4 | Z, D, q4 | B, D, qf |\n| qf | (aceitação) | | | | | | |\n\n**Observação:** As transições seguem o formato \"SímboloLido / SímboloEscrito, Direção\", onde D representa deslocamento para a direita e E para a esquerda. O símbolo B representa Branco ou Blank. Considere que a fita de M é inicializada com a palavra \"aabbcc\" seguida de infinitos símbolos brancos B, e que a cabeça de leitura encontra-se posicionada no primeiro caractere 'a'.\n\n**COMANDO**\n\nCom base no funcionamento da Máquina de Turing M, avalie as afirmações a seguir:\n\nI. Após a primeira transição de retorno ao estado q0 (conclusão do primeiro ciclo completo), a fita conterá a sequência \"XaYbZc\".\n\nII. Na entrada \"aabbcc\", a máquina M entrará em ciclo infinito (loop) ao tentar processar o segundo símbolo 'a', pois não há transição definida para o caractere 'X' no estado q1.\n\nIII. A linguagem reconhecida por M não pode ser reconhecida por nenhum Autômato de Pilha Determinístico ou Não Determinístico.\n\nIV. A máquina M aceitará com sucesso a palavra \"aabbcc\", terminando a sua execução no estado final de aceitação qf.\n\nÉ correto apenas o que se afirma em:",
    "alternativas": [
@@ -1513,11 +1412,11 @@
     "TC: Máquinas de Turing"
    ],
    "nota": "Mesma MT da apostila (Seção 2.3), que usa R/L, ␣ e qacc e também aceita ε (n ≥ 0). No slide a A está escrita “I e ll” e a C diz “Todas as alternativas” (leia-se afirmativas). Só 4 alternativas.",
-   "ref": "75 · Teoria da Computação, slides: Q5"
+   "ref": "70 · Teoria da Computação, slides: Q5"
   },
   {
    "set": "reais",
-   "num": 76,
+   "num": 71,
    "tipo": "mc",
    "enunciado": "(Squad 3 · Questão 6 · Associação de colunas)\n\n**DADO DE SUPORTE (TEXTO-BASE)**\n\n\"A Hierarquia de Chomsky organiza as linguagens formais em quatro níveis de complexidade sintática (Tipo 3, Tipo 2, Tipo 1 e Tipo 0), estabelecendo uma correspondência biunívoca entre a gramática geradora e a classe do autômato reconhecedor associado.\"\n\n**SITUAÇÃO-PROBLEMA**\n\nUm arquiteto de linguagens de programação precisa selecionar o modelo de autômato adequado para cada etapa do processamento de um compilador, correlacionando os níveis da Hierarquia de Chomsky aos seus respectivos modelos computacionais.\n\n**COMANDO**\n\nRelacione a classe de linguagem da Coluna 1 ao seu respectivo autômato/reconhecedor exato na Coluna 2:\n\n| Coluna 1 (Classe da Linguagem) | Coluna 2 (Modelo Reconhecedor) |\n|---|---|\n| (1) Linguagens Regulares (Tipo 3) | (A) Autômato de Pilha Não Determinístico |\n| (2) Linguagens Livres de Contexto (Tipo 2) | (B) Máquina de Turing com Limite Linear (LBA) |\n| (3) Linguagens Sensíveis ao Contexto (Tipo 1) | (C) Autômato Finito (Determinístico ou Não) |\n| (4) Linguagens Recursivamente Enumeráveis (Tipo 0) | (D) Máquina de Turing Universal |\n\nAssinale a opção que apresenta a associação correta:",
    "alternativas": [
@@ -1532,11 +1431,11 @@
     "TC: Gramáticas e Hierarquia de Chomsky"
    ],
    "nota": "As letras da Coluna 2 coincidem com as das alternativas: não confunda “4-D” com a alternativa D. “MT Universal” é impreciso: o Tipo 0 é o das linguagens reconhecidas por alguma MT.",
-   "ref": "76 · Teoria da Computação, slides: Q6"
+   "ref": "71 · Teoria da Computação, slides: Q6"
   },
   {
    "set": "reais",
-   "num": 77,
+   "num": 72,
    "tipo": "multi",
    "enunciado": "(Apostila de TC · Unidade 1 · Questão estilo ENADE)\n\nConsidere os conjuntos A = {1,2,3}, B = {2,3,4} e a relação R = {(1,1),(2,2),(3,3),(1,2),(2,1)} definida sobre A. Analise as afirmações.\n\n(No material, cada afirmação é julgada como V ou F, sem alternativas. Aqui, **marque todas as verdadeiras**.)",
    "alternativas": [
@@ -1559,11 +1458,11 @@
     "TC: Conjuntos e relações"
    ],
    "nota": "Gabarito do material (V/F): V, V, V, V, V, F; só “antissimétrica” é falsa. Variações prováveis: A − B = {1, 4} (falsa) ou “R é transitiva” (verdadeira).",
-   "ref": "77 · Teoria da Computação, apostila: Q12"
+   "ref": "72 · Teoria da Computação, apostila: Q12"
   },
   {
    "set": "reais",
-   "num": 78,
+   "num": 73,
    "tipo": "mc",
    "enunciado": "(Squad 7 · Questão 1)\n\nUma equipe de desenvolvimento está implementando o analisador léxico de uma nova linguagem de programação. A especificação da linguagem determina que os identificadores sejam reconhecidos pela seguinte regra:\n\n```\nIDENTIFICADOR → letra (letra | dígito)*\n```\n\nDurante os testes, o analisador reconheceu corretamente nomes como valor, resultado e contador1. Entretanto, também classificou os lexemas if, while e return como identificadores, embora eles estejam definidos como palavras reservadas da linguagem.\n\nPara facilitar a manutenção do compilador, a equipe mantém as palavras reservadas em uma tabela própria, permitindo que novas palavras sejam adicionadas sem modificar a regra geral de formação dos identificadores.\n\nA equipe precisa identificar a causa da classificação incorreta e definir uma estratégia de reconhecimento que diferencie os identificadores comuns das palavras reservadas.\n\n**DADOS DE SUPORTE**\n\n**Tabela 1 – Palavras reservadas definidas pela linguagem**\n\n| Lexema | Token definido |\n|---|---|\n| if | KW_IF |\n| while | KW_WHILE |\n| return | KW_RETURN |\n\nRegra geral de reconhecimento de identificadores:\n\n```\nIDENTIFICADOR → letra (letra | dígito)*\n```\n\nDurante um teste, foi processado o trecho:\n\n```c\nif (contador1 >= 10)\n    return resultado;\n```\n\n**Tabela 2 – Saída produzida pelo analisador léxico**\n\n| Lexema | Token produzido |\n|---|---|\n| if | IDENTIFICADOR |\n| ( | ABRE_PARENTESE |\n| contador1 | IDENTIFICADOR |\n| >= | OPERADOR_RELACIONAL |\n| 10 | NUMERO |\n| ) | FECHA_PARENTESE |\n| return | IDENTIFICADOR |\n| resultado | IDENTIFICADOR |\n| ; | PONTO_E_VIRGULA |\n\n**Considerando a regra de formação de identificadores, a tabela de palavras reservadas e a saída produzida pelo analisador léxico, assinale a alternativa que identifica corretamente a causa da classificação inadequada de if e return e apresenta uma estratégia adequada para corrigir o reconhecimento desses lexemas.**",
    "alternativas": [
@@ -1578,11 +1477,11 @@
     "Comp: Análise léxica"
    ],
    "nota": "Variação provável: em Flex/Lex, o mesmo efeito vem de declarar as regras das palavras reservadas antes da regra de ID.",
-   "ref": "78 · Compiladores, slides: Q1"
+   "ref": "73 · Compiladores, slides: Q1"
   },
   {
    "set": "reais",
-   "num": 79,
+   "num": 74,
    "tipo": "mc",
    "enunciado": "(Squad 7 · Questão 2)\n\nUma equipe de desenvolvimento está implementando o analisador sintático (parser) de uma nova linguagem destinada à automação de processos. A especificação da linguagem permite chamadas de funções com um ou mais argumentos, separados por vírgulas.\n\nDurante os testes, o analisador léxico reconheceu corretamente todos os elementos do código. Entretanto, o parser rejeitou uma chamada de função ao encontrar a primeira vírgula entre os argumentos. A equipe precisa verificar se a falha está na sequência de tokens produzida ou nas regras da gramática e definir uma correção que não limite a quantidade de argumentos permitidos.\n\n**DADOS DE SUPORTE**\n\n**Trecho de código analisado**\n\n```c\nregistrarVenda(cliente, total, 10);\n```\n\n**Gramática utilizada pelo parser**\n\n```\n<chamada>   → IDENTIFICADOR '(' <argumento> ')' ';'\n<argumento> → IDENTIFICADOR | NUMERO\n```\n\n**Sequência de tokens produzida pelo analisador léxico**\n\n| Lexema | Token produzido |\n|---|---|\n| registrarVenda | IDENTIFICADOR |\n| ( | ABRE_PARENTESE |\n| cliente | IDENTIFICADOR |\n| , | VIRGULA |\n| total | IDENTIFICADOR |\n| , | VIRGULA |\n| 10 | NUMERO |\n| ) | FECHA_PARENTESE |\n| ; | PONTO_E_VIRGULA |\n\n**Considerando o trecho de código, a sequência de tokens e as produções da gramática, analise a causa do erro sintático e assinale a alternativa que identifica corretamente a limitação da gramática e apresenta uma alteração capaz de reconhecer chamadas com um ou mais argumentos separados por vírgulas.**",
    "alternativas": [
@@ -1597,11 +1496,11 @@
     "Comp: Análise sintática e GLC"
    ],
    "nota": "Em parser descendente (LL), a forma equivalente usa recursão à direita: `<lista> → <argumento> | <argumento> ',' <lista>`.",
-   "ref": "79 · Compiladores, slides: Q2"
+   "ref": "74 · Compiladores, slides: Q2"
   },
   {
    "set": "reais",
-   "num": 80,
+   "num": 75,
    "tipo": "mc",
    "enunciado": "(Squad 7 · Questão 3)\n\nUma equipe de desenvolvimento está testando o compilador de uma linguagem estaticamente tipada utilizada em um sistema de automação comercial. O trecho abaixo foi aceito pelas etapas de análise léxica e sintática, mas a análise semântica identificou uma inconsistência na expressão atribuída à variável quantidade.\n\nA linguagem não realiza conversão implícita entre texto e inteiro em operações aritméticas. Quando um valor textual representa um número e precisa participar de uma operação numérica, a especificação exige o uso explícito da função de conversão paraInteiro(texto). A equipe precisa diagnosticar a inconsistência e indicar uma correção compatível com essas regras.\n\n**DADOS DE SUPORTE**\n\n**Trecho de código analisado**\n\n```\ninteiro quantidade = 10;\ntexto produto = \"25\";\nquantidade = produto - 5;\n```\n\n**Tabela de símbolos**\n\n| Identificador | Tipo declarado |\n|---|---|\n| quantidade | inteiro |\n| produto | texto |\n\n**Regras semânticas relevantes da linguagem**\n\n1. O operador de subtração (-) exige operandos do tipo inteiro.\n2. Uma variável inteira só pode receber uma expressão cujo resultado seja inteiro.\n3. A conversão de texto numérico para inteiro deve ser explícita por meio de paraInteiro(texto).\n\n**Considerando o trecho de código, a tabela de símbolos e as regras semânticas apresentadas, analise a inconsistência e assinale a alternativa que identifica corretamente o erro e propõe uma correção que torne o trecho semanticamente válido.**",
    "alternativas": [
@@ -1615,11 +1514,11 @@
    "temas": [
     "Comp: Análise semântica e tabela de símbolos"
    ],
-   "ref": "80 · Compiladores, slides: Q3"
+   "ref": "75 · Compiladores, slides: Q3"
   },
   {
    "set": "reais",
-   "num": 81,
+   "num": 76,
    "tipo": "mc",
    "enunciado": "(Squad 7 · Questão 4)\n\nUma equipe está implementando o back-end de um compilador para um processador simples que dispõe de apenas dois registradores físicos de uso geral, R1 e R2. A representação intermediária do programa utiliza temporários virtuais sem essa limitação, mas a etapa de geração de código precisa produzir uma sequência válida para a arquitetura de destino.\n\nDurante a tradução, os dois resultados intermediários t1 e t2 precisam ser preservados até a multiplicação final. Como não há registradores físicos suficientes para manter simultaneamente todos os valores necessários, a arquitetura permite armazenar temporariamente um valor na posição de memória TEMP.\n\n**DADOS DE SUPORTE**\n\n**Representação intermediária**\n\n```\nt1 = a + b\nt2 = c + d\nt3 = t1 * t2\nresultado = t3\n```\n\n**Instruções disponíveis na arquitetura**\n\n| Instrução | Efeito |\n|---|---|\n| LOAD Rn, X | Rn <- valor de X |\n| STORE X, Rn | X <- valor de Rn |\n| ADD Rd, Rs | Rd <- Rd + Rs |\n| MUL Rd, Rs | Rd <- Rd * Rs |\n\n**Restrições:** somente R1 e R2 existem como registradores físicos; qualquer uso de R3 é inválido. A posição TEMP pode ser utilizada para spill temporário em memória.\n\n**Considerando a representação intermediária, o conjunto de instruções e as restrições da arquitetura, avalie as estratégias abaixo e assinale a sequência que preserva corretamente a semântica do programa e utiliza apenas os recursos disponíveis no processador.**",
    "alternativas": [
@@ -1634,11 +1533,11 @@
     "Comp: Geração de código e registradores"
    ],
    "nota": "Versão alterada provável: outra expressão, outra quantidade de registradores ou SUB no lugar de MUL. Confira registradores usados, valor vivo sobrescrito e operação final.",
-   "ref": "81 · Compiladores, slides: Q4"
+   "ref": "76 · Compiladores, slides: Q4"
   },
   {
    "set": "reais",
-   "num": 82,
+   "num": 77,
    "tipo": "mc",
    "enunciado": "(Squad 7 · Questão 5)\n\nUma equipe está desenvolvendo o parser de uma linguagem para expressões aritméticas. Durante a geração do analisador sintático, a gramática abaixo produz conflitos porque uma mesma expressão pode admitir diferentes árvores sintáticas. O problema tornou-se evidente ao testar a expressão a + b * c - d.\n\nA especificação da linguagem estabelece que multiplicação possui precedência maior que adição e subtração, enquanto adição e subtração têm a mesma precedência e são associativas à esquerda. A equipe precisa escolher a interpretação correta e uma estratégia de configuração do parser que elimine o conflito de acordo com essas regras.\n\n**DADOS DE SUPORTE**\n\n**Gramática utilizada**\n\n```\nexpr -> expr '+' expr\n      | expr '-' expr\n      | expr '*' expr\n      | ID\n```\n\n**Precedência e associatividade definidas pela linguagem**\n\n| Operadores | Precedência | Associatividade |\n|---|---|---|\n| + - | menor | esquerda |\n| * | maior | esquerda |\n\n**Interpretações possíveis para a expressão**\n\nI. ((a + b) * c) - d\nII. (a + (b * c)) - d\nIII. a + (b * (c - d))\n\n**Considerando a gramática, as regras de precedência e associatividade e as interpretações apresentadas, avalie o conflito e assinale a alternativa que identifica corretamente a ambiguidade, seleciona a interpretação prevista pela linguagem e apresenta uma estratégia adequada para configurar o parser.**",
    "alternativas": [
@@ -1653,7 +1552,7 @@
     "Comp: Ambiguidade, precedência e associatividade"
    ],
    "nota": "Versão alterada provável: outra expressão, uso de %right ou a gramática reescrita em níveis (expr/termo/fator).",
-   "ref": "82 · Compiladores, slides: Q5"
+   "ref": "77 · Compiladores, slides: Q5"
   },
   {
    "set": "cx-inf",
