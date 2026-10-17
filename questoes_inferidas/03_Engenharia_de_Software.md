@@ -718,3 +718,307 @@ Segundo os princípios do Guia PMBOK (8ª edição), as atitudes de Ana correspo
 **⚠️ Atenção:** se a prova copiar a tabela dos slides com o erro, siga a **descrição**: "ambiental, econômica e social" é **sustentabilidade**.
 
 ---
+
+## I16 — Pilares da POO
+**Subtópico coberto:** 5.1, POO: abstração, encapsulamento, herança e polimorfismo, e POO × programação estruturada (apostila p. 49–54)
+**Por que é provável:** a seção tem 6 páginas com exemplos fixos (getters/setters, televisão, Eletrodoméstico.Ligar(), herança múltipla em C++) e uma comparação de desempenho com a programação estruturada que contraria o senso comum. É material bom para afirmativas com pegadinha.
+**Prioridade:** Média
+**Tipo ENADE:** Afirmativas múltiplas (I–IV)
+
+**Enunciado:**
+Uma empresa que mantém um sistema legado em linguagem C decidiu reescrever seu módulo de cadastro de eletrodomésticos em uma linguagem orientada a objetos. Para isso, a equipe modelou a classe genérica `Eletrodomestico`, com o método `Ligar()`, e as classes filhas `Televisao` e `Geladeira`. Os atributos de cada classe foram declarados como privados. Sobre os pilares da Programação Orientada a Objetos e sua comparação com a programação estruturada, avalie as afirmações a seguir.
+
+I. Ao declarar os atributos como privados e permitir o acesso apenas por métodos getters e setters, a equipe aplica o encapsulamento, que esconde as propriedades do objeto e cria uma espécie de "caixa preta".
+
+II. Ao reescrever o método `Ligar()` em `Televisao` e em `Geladeira`, que não são ligadas da mesma forma, a equipe aplica o polimorfismo, que consiste na alteração do funcionamento interno de um método herdado da classe pai.
+
+III. A herança múltipla, presente em C++, foi amplamente adotada pelas linguagens mais modernas, como C# e Java, porque elimina os problemas da herança simples.
+
+IV. A programação orientada a objetos tem execução mais rápida que a estruturada, já que as classes eliminam os desvios do fluxo de execução, e por isso é a mais indicada para sistemas embarcados com hardware limitado.
+
+É correto o que se afirma em:
+
+**Julgamento das afirmativas:**
+- **I — Verdadeira.** A maior parte das linguagens OO implementa o encapsulamento com "propriedades privadas, ligadas a métodos especiais chamados getters e setters" (p. 51).
+- **II — Verdadeira.** É o exemplo literal da apostila (p. 52–53): o polimorfismo é "a alteração do funcionamento interno de um método herdado de um objeto pai".
+- **III — Falsa.** A apostila diz o contrário: "Devido a problemas, essa prática [herança múltipla] não foi difundida em linguagens mais modernas, que utilizam outras artimanhas para criar uma espécie de herança múltipla" (p. 52).
+- **IV — Falsa.** Segundo a apostila, a programação **estruturada**, quando bem feita, tem desempenho **superior**, por ser sequencial e com menos desvios. A **POO** é mais lenta, "o grande motivo por trás da preferência pela linguagem C em hardware limitado, como sistemas embarcados" (p. 50 e 54).
+
+**Alternativas:**
+- **A)** I e II, apenas.
+- **B)** I e III, apenas.
+- **C)** II e IV, apenas.
+- **D)** I, II e IV, apenas.
+- **E)** II, III e IV, apenas.
+
+**Gabarito: A**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ✅** — Só I e II são verdadeiras.
+- **B) ❌** — Inclui a III. A herança múltipla **não** se difundiu.
+- **C) ❌** — Inclui a IV, que inverte o argumento de desempenho, e omite a I.
+- **D) ❌** — Inclui a IV.
+- **E) ❌** — Inclui III e IV, ambas falsas.
+
+**Base no material:** p. 49–54. Abstração: identidade, propriedades e métodos, como no exemplo "Cachorro". Encapsulamento: caixa preta, getters/setters, botão da TV. Herança: direta × indireta, herança múltipla em C++, classe `object` em C#. Polimorfismo: `virtual`/`override` em C# e `@Override` em Java. Vantagens: reúso, leitura, manutenção e bibliotecas. Desvantagem: execução mais lenta.
+**Conceito-chave para a prova:** **Abstração** = identidade + propriedades + métodos. **Encapsulamento** = esconder dados (privado + getters/setters). **Herança** = reúso, que pode ser direta (pai) ou indireta (avô). **Polimorfismo** = reescrever (sobrescrever) um método herdado. Segundo a apostila, a estruturada é **mais rápida** e a POO tem **mais reúso e manutenção**.
+
+---
+
+## I17 — SOLID: identificação dos princípios
+**Subtópico coberto:** 5.2, SOLID (apostila p. 55–57)
+**Por que é provável:** cada um dos 5 princípios tem "Definição / O Problema / Exemplo Prático / A Solução", em formato de estudo de caso. O arquivo de questões conhecidas aponta o SOLID como primeiro tema sem questão, e o tema é clássico no ENADE.
+**Prioridade:** Alta
+**Tipo ENADE:** Resposta única ("respectivamente")
+
+**Enunciado:**
+Durante uma revisão de código de um sistema de e-commerce, o arquiteto de software encontrou quatro problemas de design:
+
+I. A classe `GerenciadorDePedidos` calcula o total do pedido, aplica descontos, gera o recibo em PDF e salva os dados no banco. Qualquer mudança na regra de desconto tem quebrado a geração do recibo.
+
+II. A classe `Pinguim` herda de `Ave`, mas seu método `voar()` lança `NotImplementedException`. Quando o sistema percorre uma lista de aves e manda todas voarem, a aplicação quebra ao chegar no pinguim.
+
+III. A interface `IMaquinaTrabalho` exige os métodos `imprimir()`, `escanear()` e `enviarFax()`, o que obriga a classe `ImpressoraBasica` a deixar dois deles vazios.
+
+IV. A classe `ProcessadorDePagamento` tem um grande bloco `switch/case` por tipo de pagamento, e a inclusão do Pix vai obrigar a alterar essa classe, já testada e em produção.
+
+Os problemas I, II, III e IV representam, respectivamente, violações dos princípios:
+
+**Alternativas:**
+- **A)** Responsabilidade Única (SRP); Segregação de Interfaces (ISP); Substituição de Liskov (LSP); Inversão de Dependência (DIP).
+- **B)** Aberto/Fechado (OCP); Substituição de Liskov (LSP); Segregação de Interfaces (ISP); Responsabilidade Única (SRP).
+- **C)** Responsabilidade Única (SRP); Substituição de Liskov (LSP); Segregação de Interfaces (ISP); Aberto/Fechado (OCP).
+- **D)** Responsabilidade Única (SRP); Inversão de Dependência (DIP); Segregação de Interfaces (ISP); Aberto/Fechado (OCP).
+- **E)** Segregação de Interfaces (ISP); Substituição de Liskov (LSP); Responsabilidade Única (SRP); Aberto/Fechado (OCP).
+
+**Gabarito: C**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Troca LSP e ISP. O switch/case que precisa ser modificado viola o **OCP**, não o DIP.
+- **B) ❌** — Inverte SRP e OCP. A "Classe Deus" com múltiplas funções (I) viola o **SRP**, e o switch/case (IV) viola o **OCP**.
+- **C) ✅** — I: **SRP**, porque a classe tem mais de um motivo para mudar ("God Class"). II: **LSP**, porque a subclasse não pode substituir a superclasse sem quebrar o programa. III: **ISP**, interface "gorda" que obriga a implementar métodos não usados. IV: **OCP**, porque a classe deveria estar aberta para extensão (nova classe `PagamentoPix`) e fechada para modificação (p. 55–56).
+- **D) ❌** — O pinguim não é problema de dependência de módulos de baixo nível. É herança mal utilizada (LSP).
+- **E) ❌** — Troca ISP e SRP entre I e III.
+
+**Base no material:** p. 55–56. Soluções da apostila: dividir em `CalculadoraDePedidos`, `GeradorDeReciboPdf` e `PedidoRepository` (SRP); criar `AveQueVoa` e `AveQueNada` (LSP); separar `IImpressora`, `IEscaner` e `IFax` (ISP); criar a interface `MetodoDePagamento` com `processar()` e uma classe por meio de pagamento (OCP, via polimorfismo).
+**Conceito-chave para a prova:** **S** = um motivo para mudar. **O** = estender sem modificar. **L** = a subclasse substitui a base sem surpresas. **I** = várias interfaces pequenas em vez de uma "gorda". **D** = depender de abstrações, não de implementações concretas. Os princípios foram formulados por Robert C. Martin (Uncle Bob). Custo: mais arquivos e pastas. Ganho: manutenção, escalabilidade e refatoração segura.
+
+---
+
+## I18 — SOLID: inversão de dependência em código
+**Subtópico coberto:** 5.2, SOLID, princípio D (DIP) e injeção de dependência (apostila p. 57)
+**Por que é provável:** a apostila descreve um caso concreto e codificável (`new MySQLConnection()` dentro de `ServicoDeUsuario`, migração para PostgreSQL, `IUsuarioRepository` injetada via construtor). Questões ENADE costumam trazer o trecho de código como dado de suporte.
+**Prioridade:** Alta
+**Tipo ENADE:** Afirmativas múltiplas (I–IV), com código
+
+**Enunciado:**
+Uma empresa de SaaS pretende migrar o banco de dados de sua plataforma de MySQL para PostgreSQL. Ao analisar o código, a equipe encontrou a classe a seguir, responsável pelas regras de negócio do cadastro de usuários:
+
+```java
+public class ServicoDeUsuario {
+
+    public void cadastrar(Usuario usuario) {
+        // ... validações e regras de negócio do cadastro ...
+        MySQLConnection conexao = new MySQLConnection("localhost", 3306);
+        conexao.executar("INSERT INTO usuarios (nome, email) VALUES (?, ?)",
+                         usuario.getNome(), usuario.getEmail());
+    }
+}
+```
+
+Com base nos princípios SOLID, avalie as afirmações a seguir.
+
+I. O código viola o Princípio da Inversão de Dependência (DIP), pois um módulo de alto nível, que contém regras de negócio, instancia diretamente um detalhe de infraestrutura de baixo nível, em vez de depender de uma abstração.
+
+II. Uma refatoração adequada é fazer `ServicoDeUsuario` depender de uma interface `IUsuarioRepository` e receber a implementação concreta (por exemplo, `MySQLUsuarioRepository`) pelo construtor, por meio de injeção de dependência.
+
+III. Mesmo após a refatoração descrita em II, a migração para PostgreSQL ainda exigiria reescrever `ServicoDeUsuario`, pois o serviço precisa saber qual banco de dados está sendo utilizado.
+
+IV. Além de facilitar a troca de tecnologia, a refatoração descrita em II permite testar `ServicoDeUsuario` isoladamente, injetando uma implementação simulada de `IUsuarioRepository` no lugar do banco real.
+
+É correto o que se afirma em:
+
+**Julgamento das afirmativas:**
+- **I — Verdadeira.** É o "Problema" descrito na apostila: alto acoplamento, em que a regra de negócio instancia ferramentas de infraestrutura e fica "dependente de uma tecnologia específica" (p. 57).
+- **II — Verdadeira.** É a "Solução" da apostila: injeção de dependência, com a implementação concreta passada via construtor.
+- **III — Falsa.** Depois da refatoração, "o serviço passa a desconhecer qual banco está sendo usado, focando apenas nas regras de negócio". Basta criar `PostgreSQLUsuarioRepository` e injetá-la. `ServicoDeUsuario` não muda, e a mudança também atende ao OCP.
+- **IV — Verdadeira.** A apostila diz que a classe acoplada fica "quase impossível de testar isoladamente". Com a abstração, é possível injetar um mock ou stub, técnica citada também na p. 58 para testar camadas isoladamente.
+
+**Alternativas:**
+- **A)** I, apenas.
+- **B)** I e III, apenas.
+- **C)** II e III, apenas.
+- **D)** II, III e IV, apenas.
+- **E)** I, II e IV, apenas.
+
+**Gabarito: E**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Omite II e IV, também verdadeiras.
+- **B) ❌** — Inclui a III, que nega o objetivo da refatoração.
+- **C) ❌** — Inclui a III e omite I e IV.
+- **D) ❌** — Inclui a III e omite a I.
+- **E) ✅** — I, II e IV são verdadeiras. A III é falsa.
+
+**Base no material:** apostila p. 57: "Módulos de alto nível não devem depender de módulos de baixo nível. Ambos devem depender de abstrações... detalhes devem depender de abstrações"; "Se a empresa migrar para PostgreSQL, a classe ServicoDeUsuario inteira precisará ser reescrita"; "A implementação concreta (como MySQLUsuarioRepository) é injetada (passada via construtor...)".
+**Conceito-chave para a prova:** `new ClasseConcreta()` de infraestrutura dentro de uma regra de negócio é sinal de **violação do DIP**. A correção é **interface + injeção de dependência** (pelo construtor). O DIP **não** é a mesma coisa que injeção de dependência: o DIP é o princípio, e a injeção é a técnica que o implementa.
+
+---
+
+## I19 — Arquitetura em camadas
+**Subtópico coberto:** 5.3, Arquitetura em camadas (apostila p. 57–59)
+**Por que é provável:** a seção lista as 4 camadas lógicas, 4 configurações físicas e vantagens × desvantagens. Esse formato dá afirmativas verdadeiras e falsas com facilidade.
+**Prioridade:** Média
+**Tipo ENADE:** Afirmativas múltiplas (I–IV)
+
+**Enunciado:**
+Uma cooperativa de crédito está reestruturando o sistema de concessão de empréstimos, que hoje é um único bloco de código. A equipe propôs organizá-lo em quatro camadas lógicas: Apresentação (UI/Web/API), Aplicação/Serviço, Domínio/Negócio e Infraestrutura/Acesso a dados. Sobre essa arquitetura, avalie as afirmações a seguir.
+
+I. A regra "cooperados com mais de cinco anos de associação têm taxa de juros reduzida" deve ficar na camada de Domínio/Negócio, e a comunicação com o banco de dados PostgreSQL deve ficar na camada de Infraestrutura/Acesso a dados.
+
+II. Manter todas as camadas lógicas em um único processo (monolito) facilita implantar, testar e depurar, mas é pouco escalável e pode resultar em um sistema difícil de manter.
+
+III. A arquitetura em camadas melhora a testabilidade, pois os componentes de uma camada podem ser testados isoladamente com mocks e stubs das outras camadas.
+
+IV. Por isolar responsabilidades, a arquitetura em camadas elimina o overhead de chamadas entre camadas e facilita as mudanças transversais, como auditoria e rastreamento, que passam a afetar uma única camada.
+
+É correto o que se afirma em:
+
+**Julgamento das afirmativas:**
+- **I — Verdadeira.** O Domínio contém "regras de negócio puras, entidades, serviços de domínio". A Infraestrutura cuida da "comunicação com banco de dados, serviços externos, armazenamento" (p. 57–58).
+- **II — Verdadeira.** Configuração física 1 da apostila: "simples de implantar, testar e depurar, mas é pouco escalável. Pode virar um monólito difícil de manter" (p. 58).
+- **III — Verdadeira.** Vantagem citada na p. 58.
+- **IV — Falsa.** As duas partes estão nas **desvantagens** da apostila: "pode haver overhead de chamadas entre camadas" e "dificuldades em mudanças transversais (ex.: rastreamento, auditoria)", porque essas alterações atravessam várias camadas (p. 59).
+
+**Alternativas:**
+- **A)** I e IV, apenas.
+- **B)** I, II e III, apenas.
+- **C)** I, II e IV, apenas.
+- **D)** II, III e IV, apenas.
+- **E)** I, II, III e IV.
+
+**Gabarito: B**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Inclui a IV e omite II e III.
+- **B) ✅** — I, II e III são verdadeiras. A IV inverte duas desvantagens.
+- **C) ❌** — Inclui a IV.
+- **D) ❌** — Inclui a IV e omite a I.
+- **E) ❌** — A IV é falsa.
+
+**Base no material:** p. 57–59. Camadas lógicas. Configurações físicas: monolito, múltiplos processos, microsserviços e camadas combinadas (serverless/JAMstack). Vantagens: separação de responsabilidades, reúso, testabilidade, manutenção e escalabilidade organizacional. Desvantagens: overhead, rigidez, mudanças transversais e exigência de planejamento.
+**Conceito-chave para a prova:** a camada de **Aplicação/Serviço orquestra** a lógica entre apresentação e domínio, e o **Domínio** guarda as **regras puras**. Camadas **lógicas** não são camadas **físicas**: as mesmas camadas podem rodar num monolito ou em serviços distribuídos. Desvantagens que caem: **overhead** entre camadas e dificuldade com **mudanças transversais**.
+
+---
+
+## I20 — Cliente-servidor e microsserviços
+**Subtópico coberto:** 5.4, Cliente-servidor e microsserviços (apostila p. 59–61; numerada "5.3" por erro no corpo da apostila)
+**Por que é provável:** a apostila traz o exemplo da Black Friday, do serviço de Recomendações que trava, do banco de dados por serviço ("regra de ouro") e do API Gateway. É um cenário pronto para questão.
+**Prioridade:** Média
+**Tipo ENADE:** Resposta única
+
+**Enunciado:**
+Um e-commerce migrou seu servidor monolítico, um único bloco de código com login, catálogo, carrinho, pagamento e recomendações ligados a um único banco de dados, para uma arquitetura de microsserviços. Agora, cada serviço tem seu próprio banco de dados, e o aplicativo do cliente envia todas as requisições a um API Gateway. Durante a Black Friday, o tráfego nos serviços de Carrinho e Pagamento aumentou dez vezes e, no pico, o serviço de Recomendações travou. Considerando as características da arquitetura de microsserviços, assinale a alternativa correta.
+
+**Alternativas:**
+- **A)** É possível escalar apenas os serviços de Carrinho e Pagamento, e o cliente ainda consegue finalizar a compra, pois a falha do serviço de Recomendações não afeta o serviço de Checkout.
+- **B)** Toda a aplicação precisa ser escalada em conjunto, pois, na arquitetura de microsserviços, todos os serviços compartilham um único banco de dados central.
+- **C)** Como os microsserviços substituem o modelo cliente-servidor, o aplicativo do usuário deixa de atuar como cliente e passa a processar as regras de negócio localmente.
+- **D)** A falha do serviço de Recomendações deixa todos os clientes inoperantes, já que cada requisição precisa passar por todos os microsserviços antes de retornar.
+- **E)** A tolerância a falhas só é obtida se todos os serviços forem escritos na mesma linguagem e usarem o mesmo SGBD, garantindo padronização tecnológica.
+
+**Gabarito: A**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ✅** — É a **escalabilidade isolada** ("você não precisa escalar o sistema inteiro, apenas multiplica os servidores do serviço de 'Pagamento' e 'Carrinho'") e a **tolerância a falhas** ("Se o microsserviço de 'Recomendações' travar, o usuário ainda consegue finalizar a compra") descritas na p. 61.
+- **B) ❌** — Contradiz a "regra de ouro": cada microsserviço tem **banco de dados independente**.
+- **C) ❌** — "Os microsserviços não substituem a ideia de cliente-servidor; eles revolucionam a forma como o Servidor é construído" (p. 60). O celular continua sendo o cliente.
+- **D) ❌** — Esse comportamento ("sistema fora do ar") é do servidor **monolítico**. No modelo novo, o API Gateway roteia cada pedido só para o microsserviço específico.
+- **E) ❌** — Microsserviços permitem **independência tecnológica** (Pagamento em Java com Oracle, Recomendações em Python com MongoDB, p. 61).
+
+**Base no material:** p. 59–61 (cliente, servidor, monolito, microsserviços, vantagens, "ponto-chave da evolução": API Gateway como maestro).
+**Conceito-chave para a prova:** cliente-servidor define **quem pede e quem responde**. Microsserviços definem **como o servidor é construído por dentro**, e todo sistema de microsserviços continua sendo cliente-servidor. Vantagens: **escalabilidade isolada, tolerância a falhas e independência tecnológica**. Regra de ouro: **um banco por serviço**. O ponto de entrada é o **API Gateway**. Custo, segundo a p. 58: orquestração, observabilidade e versionamento mais complexos.
+
+---
+
+## I21 — Padrões GoF: famílias e exemplos
+**Subtópico coberto:** 5.5, Design Patterns e GoF (apostila p. 62–63). A QP do professor cobre só o Observer.
+**Por que é provável:** a apostila traz as 3 famílias e os 23 padrões, os 4 elementos obrigatórios e três exemplos práticos (Factory Method, Adapter, Strategy) que a QP não usa. O exemplo de frete por Correios ou Transportadora é um cenário pronto.
+**Prioridade:** Média
+**Tipo ENADE:** Resposta única ("respectivamente")
+
+**Enunciado:**
+A equipe de um marketplace precisa resolver três problemas de projeto orientado a objetos:
+
+1. O cálculo do frete deve alternar, em tempo de execução, entre as regras dos Correios e de uma transportadora, cada uma encapsulada como um algoritmo intercambiável.
+2. É preciso integrar uma API externa e legada de antifraude, cuja interface é incompatível com a esperada pela aplicação, sem refatorações drásticas.
+3. A criação dos objetos de pagamento (Cartão ou Pix) deve ser delegada a subclasses ou fábricas concretas, para que o código cliente não fique acoplado às implementações e não precise de múltiplos blocos if/switch.
+
+Considerando o catálogo de 23 padrões da Gang of Four (GoF), os padrões indicados para os problemas 1, 2 e 3 e as famílias a que pertencem são, respectivamente:
+
+**Alternativas:**
+- **A)** Strategy (criacional); Facade (estrutural); Singleton (criacional).
+- **B)** Observer (comportamental); Adapter (estrutural); Abstract Factory (estrutural).
+- **C)** Template Method (estrutural); Proxy (comportamental); Factory Method (criacional).
+- **D)** Strategy (comportamental); Adapter (estrutural); Factory Method (criacional).
+- **E)** Strategy (comportamental); Bridge (criacional); Builder (comportamental).
+
+**Gabarito: D**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — O Strategy é **comportamental**, não criacional. O Facade simplifica o acesso a um subsistema e não converte uma interface incompatível. O Singleton garante instância única e não resolve a escolha da classe a instanciar.
+- **B) ❌** — O Observer notifica dependentes de uma mudança de estado e não troca algoritmos. O Abstract Factory é **criacional**, não estrutural.
+- **C) ❌** — Erra as famílias: o Template Method é comportamental e o Proxy é estrutural. Também erra os padrões dos problemas 1 e 2.
+- **D) ✅** — **Strategy** (comportamental) encapsula uma família de algoritmos intercambiáveis, como o frete. **Adapter** (estrutural) converte a interface de uma API externa ou legada. **Factory Method** (criacional) encapsula a criação de objetos em subclasses ou fábricas e evita if/switch (p. 63).
+- **E) ❌** — O Bridge é **estrutural** e não é a solução clássica para integrar interface incompatível. O Builder é **criacional**.
+
+**Base no material:** p. 62–63. Origem: Christopher Alexander (1977), Beck e Cunningham (1987), GoF (1994). Elementos: nome, problema, solução e consequências. Famílias: criacionais (Abstract Factory, Builder, Factory Method, Prototype, Singleton), estruturais (Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy) e comportamentais (Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor).
+**Conceito-chave para a prova:** a família se descobre pelo **verbo**. **Criar** objetos = criacional (5). **Compor e estruturar** classes e objetos = estrutural (7). **Distribuir responsabilidades e comunicação** = comportamental (11). Um padrão de projeto "não representa código pronto ou bibliotecas", e sim um **modelo genérico** de solução. Observer, Composite, Interpreter, Mediator e Proxy também funcionam como **táticas arquiteturais** (p. 63).
+
+---
+
+## I22 — ADR e trade-offs
+**Subtópico coberto:** 5.6, Architecture Decision Records (ADR) e análise de trade-offs (apostila p. 64–65)
+**Por que é provável:** a seção traz regras pontuais e cobráveis: append-only, superseding, estrutura título/data/status/contexto/decisão/consequências, Y-Statement e a "Primeira Lei da Arquitetura".
+**Prioridade:** Média
+**Tipo ENADE:** Afirmativas múltiplas (I–IV)
+
+**Enunciado:**
+Uma equipe de arquitetura decidiu adotar um cache distribuído para reduzir a latência do catálogo de produtos e registrou a decisão no documento "ADR-007 — Adoção de cache distribuído", armazenado no diretório `doc/adr` do repositório. Seis meses depois, uma mudança no volume de acessos exigiu rever essa decisão. Sobre Architecture Decision Records (ADR) e análise de trade-offs, avalie as afirmações a seguir.
+
+I. Uma ADR típica tem título numerado sequencialmente, data e status (proposto, aceito, rejeitado ou substituído), contexto, decisão com as alternativas consideradas e descartadas, e consequências ou trade-offs, incluindo os débitos técnicos conscientemente aceitos.
+
+II. Como a decisão mudou, a equipe deve editar o próprio ADR-007 para refletir a nova escolha, mantendo um único registro sempre atualizado e evitando duplicidade de documentos.
+
+III. Pela Primeira Lei da Arquitetura de Software, não existem soluções perfeitas, apenas trade-offs. Por exemplo, adicionar camadas de abstração eleva a modificabilidade e a modularidade, mas introduz overhead de comunicação e aumenta a latência.
+
+IV. O formato Y-Statement padroniza a escrita sintética da decisão: "No contexto de [sistema], enfrentando [problema], decidimos por [decisão] (e não [alternativas descartadas]) para alcançar [resultado], aceitando que [trade-offs]".
+
+É correto o que se afirma em:
+
+**Julgamento das afirmativas:**
+- **I — Verdadeira.** É a "Estrutura Básica de uma ADR" (p. 64).
+- **II — Falsa.** O repositório de ADRs é **append-only**, um histórico imutável. "Registros aceitos não devem ser editados posteriormente". A equipe deve criar um **novo** ADR que **substitui (supersedes)** o ADR-007, com link entre os dois, preservando a rastreabilidade histórica (p. 64).
+- **III — Verdadeira.** É o trade-off "Desempenho vs. Modificabilidade" da p. 65.
+- **IV — Verdadeira.** É o modelo Y-Statement da p. 65.
+
+**Alternativas:**
+- **A)** I e II, apenas.
+- **B)** II e III, apenas.
+- **C)** I, III e IV, apenas.
+- **D)** II, III e IV, apenas.
+- **E)** I, II, III e IV.
+
+**Gabarito: C**
+
+**Por que cada alternativa está certa ou errada:**
+- **A) ❌** — Inclui a II (falsa) e omite III e IV.
+- **B) ❌** — Inclui a II e omite I e IV.
+- **C) ✅** — I, III e IV são verdadeiras. A II viola o princípio append-only.
+- **D) ❌** — Inclui a II e omite a I.
+- **E) ❌** — A II é falsa.
+
+**Base no material:** p. 64–65. ADR proposto por Michael Nygard (2011). Modelo Debt-Aware. Princípio append-only. Superseding. Y-Statement e Decision Story. Trade-offs: desempenho × modificabilidade, desempenho × disponibilidade (replicação) e o Proxy como resolvedor de conflito (carregamento sob demanda).
+**Conceito-chave para a prova:** **ADR não se edita, se substitui** (novo ADR com status "Substituído" no antigo e link entre os dois). "Não existem soluções perfeitas em arquitetura, apenas **trade-offs**". Ganhar modificabilidade custa desempenho, e ganhar disponibilidade (replicação) custa recursos.
+
+---
