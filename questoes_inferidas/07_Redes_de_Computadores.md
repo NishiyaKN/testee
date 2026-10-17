@@ -752,7 +752,7 @@ Considere o grafo da Figura 9 do Manual, não direcionado, com os custos: u–v 
 | Passo | N' | D(y),p | D(w),p | D(x),p | D(u),p | D(v),p |
 |---|---|---|---|---|---|---|
 | 0 | z | **2,z** | 5,z | ∞ | ∞ | ∞ |
-| 1 | zy | – | 3,y | 3,y | ∞ | ∞ |
+| 1 | zy | – | **3,y** | 3,y | ∞ | ∞ |
 | 2 | zyw | – | – | **3,y** | 8,w | 6,w |
 | 3 | zywx | – | – | – | **4,x** | 5,x |
 | 4 | zywxu | – | – | – | – | **5,x** |
