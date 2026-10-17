@@ -11,6 +11,7 @@ Os gabaritos foram conferidos de forma independente: cálculos refeitos e autôm
 > **Também neste repositório:**
 > - [`../questoes_inferidas/`](../questoes_inferidas/README.md): questões **inferidas** para os subtópicos sem questão conhecida (não constam no material);
 > - [`../treino-enade-2026.html`](../treino-enade-2026.html): quiz interativo com as reais e as inferidas (abra no navegador).
+> - [`../guia-estudos-enade-2026.html`](../guia-estudos-enade-2026.html): guia de estudos resumido por tópico, com menu em árvore e feito para o celular.
 
 > Contexto (Plano de Ações e Estrutura de Questões): cada squad devia (1) investigar o tema, (2) preparar slides e (3) preparar questões no padrão ENADE. O Simulado 1 vale como N1 de Tópicos Avançados, e as questões do simulado devem ser quase iguais às criadas pelos squads.
 

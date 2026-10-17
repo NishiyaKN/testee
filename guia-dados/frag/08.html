@@ -1,0 +1,345 @@
+<section class="topico" id="t08" data-titulo="08 · Segurança da Informação">
+
+  <section class="sub" id="t08-principios" data-titulo="Princípios: CID, autenticidade, responsabilização e não repúdio">
+    <p class="cai">Questões reais: quiz nº 54 · slides Q1</p>
+    <table>
+      <tr><th>Princípio: pergunta de diagnóstico</th><th>Falha típica (prontuário)</th></tr>
+      <tr><td><b>Confidencialidade</b>: só pessoas e sistemas autorizados acessam?</td><td>Funcionário sem autorização consulta o prontuário</td></tr>
+      <tr><td><b>Integridade</b>: dá para detectar ou impedir alteração indevida? (slide: "os dados permanecem corretos?")</td><td>Diagnóstico alterado sem ser percebido</td></tr>
+      <tr><td><b>Disponibilidade</b>: está acessível quando necessário?</td><td>Sistema não abre (DDoS derruba o PEP da UTI)</td></tr>
+      <tr><td><b>Autenticidade</b>: identidade e origem são genuínas?</td><td>Site falso se passa pelo portal do hospital</td></tr>
+      <tr><td><b>Responsabilização</b> (só na apostila): dá para atribuir a ação a uma entidade?</td><td>Log mostra a conta, não a pessoa que agiu</td></tr>
+      <tr><td><b>Não repúdio</b>: há evidência que impeça negar a ação?</td><td>Médico nega ter assinado a receita digital</td></tr>
+    </table>
+    <figure><img src="img/t08-cid.png" alt="Triângulo CID: confidencialidade (acesso só por autorizados), integridade (exatidão e completude), disponibilidade (acesso quando necessário), com o valor da informação no centro"><figcaption>Fonte: Material Completo - Segurança da Informação.pdf, p. 5</figcaption></figure>
+    <ul>
+      <li><b>Credencial emprestada</b> (técnico usa a senha do médico para ver pacientes de outra equipe): acesso por pessoa não autorizada quebra a <b>confidencialidade</b> e o controle de acesso (o RBAC foi contornado). Como o log grava a conta do médico, a auditoria não liga a ação ao agente real, o que compromete também a <b>autenticidade e o não repúdio</b>.</li>
+      <li><b>DDoS</b> que deixa o sistema inacessível viola a <b>disponibilidade</b>. Replicar servidores não basta contra a exaustão da borda.</li>
+      <li>A <b>assinatura digital é calculada sobre o hash</b> do documento. Um hash com colisões (ex.: MD5, SHA-1) permite trocar o conteúdo mantendo o mesmo resumo. A assinatura continua "válida" e a <b>integridade</b> se perde.</li>
+      <li><b>AES em modo básico</b> (ECB, CBC, CTR) dá só <b>confidencialidade</b>. Para detectar adulteração é preciso um modo autenticado (<b>AES-GCM</b>) ou <b>HMAC</b>.</li>
+    </ul>
+    <div class="pega">"AES-256 é forte, logo protege tudo": o tamanho da chave não traz integridade. "O acesso ficou registrado no log, então não houve falha": o registro não desfaz a quebra de confidencialidade.</div>
+  </section>
+
+  <section class="sub" id="t08-cripto" data-titulo="Criptografia: mecanismos e escolhas">
+    <p class="cai">Questões reais: quiz nº 54, 55, 61 · slides Q1, Q2 · ENADE 2021 Q24</p>
+    <figure><img src="img/t08-cripto-mecanismos.png" alt="Simétrica: texto, AES, cifra, mesma chave secreta. Assimétrica: par de chave pública e privada. Hash: mensagem, SHA-256, digest, sem chave e sem reversão"><figcaption>Fonte: Material Completo - Segurança da Informação.pdf, p. 10</figcaption></figure>
+
+    <section class="sub" id="t08-cripto-mec" data-titulo="O que cada mecanismo garante">
+      <p class="cai">Questões reais: quiz nº 54, 55, 61 · slides Q1, Q2 · ENADE 2021 Q24</p>
+      <table>
+        <tr><th>Mecanismo: o que oferece</th><th>Não garante sozinho</th></tr>
+        <tr><td><b>Simétrica (AES)</b>: confidencialidade, com rapidez; em modo autenticado (GCM), também integridade</td><td>Identidade; distribuição da chave (a mesma chave secreta nos dois lados)</td></tr>
+        <tr><td><b>Assimétrica</b> (RSA, curvas elípticas): troca de chaves, assinatura, cifragem de dados pequenos</td><td>Desempenho com grande volume; confiança na chave pública (pede certificado)</td></tr>
+        <tr><td><b>Hash</b> (SHA-256, SHA-3): resumo de tamanho fixo; detecta mudança</td><td>Sigilo (não cifra, não se reverte) e autoria</td></tr>
+        <tr><td><b>HMAC</b> (hash + chave secreta): integridade e autenticidade entre quem tem a chave</td><td>Não repúdio (as duas partes conhecem a chave)</td></tr>
+        <tr><td><b>Assinatura digital</b>: autenticidade, integridade e não repúdio</td><td>Confidencialidade do conteúdo</td></tr>
+        <tr><td><b>Certificado digital</b>: vincula uma identidade a uma chave pública, por meio de uma autoridade certificadora</td><td>Vale só se validado (prazo, AC, revogação)</td></tr>
+      </table>
+      <div class="chave">Ocultar → criptografia. Detectar alteração → hash. Comprovar autoria → assinatura digital. Validar a chave pública → certificado. O hash é unidirecional; a cifragem se reverte com a chave.</div>
+    </section>
+
+    <section class="sub" id="t08-cripto-arq" data-titulo="Repouso × trânsito: AES-GCM e TLS híbrido">
+      <p class="cai">Questões reais: quiz nº 55 · slides Q2</p>
+      <ul>
+        <li><b>Dados em repouso volumosos</b> (imagens, prontuários): cifra simétrica, de preferência <b>AES-256-GCM</b>. É um modo autenticado: dá confidencialidade e integridade com bom desempenho.</li>
+        <li><b>Dados em trânsito</b>: <b>TLS</b>, que é <b>híbrido</b>. A assimétrica (RSA, ECDHE, ECDSA) entra só no handshake, para autenticar o servidor por certificado e negociar a chave de sessão. Depois, todo o fluxo usa cifra simétrica autenticada.</li>
+        <li><b>Prescrição com validade jurídica</b>: assinatura digital com certificado ICP-Brasil (RSA ou ECDSA sobre o hash).</li>
+      </ul>
+      <table>
+        <tr><th>Proposta errada</th><th>Por que falha</th></tr>
+        <tr><td>RSA-4096 para repouso e tráfego</td><td>A assimétrica é ordens de grandeza mais lenta, e o RSA cifra só algumas centenas de bytes por operação (na prática, só chaves). Também não "elimina a gestão de chaves": exige PKI, certificados e revogação.</td></tr>
+        <tr><td>SHA-3 para "cifrar" os dados</td><td>Hash não cifra. É irreversível: nem o dono recupera o dado. Serve para integridade.</td></tr>
+        <tr><td>Argon2id e salting, com assimétrica pura no tráfego e sem protocolo de sessão</td><td>Argon2id (como bcrypt, scrypt e PBKDF2) é função de derivação para <b>senhas</b>, lenta de propósito contra força bruta e tabelas rainbow. Dispensar o TLS é inseguro e lento.</td></tr>
+        <tr><td>ECDSA para cifrar grandes volumes</td><td>ECDSA <b>assina</b>, não cifra. Curvas elípticas servem para assinatura e troca de chaves (ECDHE); não substituem o AES.</td></tr>
+      </table>
+      <div class="pega">A alternativa correta pode deixar de citar o 3º requisito (assinatura ICP-Brasil). Fique com a única que não tem erro técnico. Se uma versão trouxer "AES-GCM + TLS + assinatura com certificado ICP-Brasil", essa é a mais completa.</div>
+    </section>
+
+    <section class="sub" id="t08-cripto-assin" data-titulo="Assinatura, AES, IV e hash na troca de mensagens">
+      <p class="cai">Questões reais: quiz nº 61, 54 · ENADE 2021 Q24 · slides Q1</p>
+      <ul>
+        <li><b>Assinatura</b>: o remetente assina com a sua chave <b>privada</b>, e qualquer um verifica com a chave <b>pública do remetente</b>, desde que ela esteja vinculada a ele (certificado). <b>Sigilo</b>: cifra-se com a chave pública do <b>destinatário</b> (na prática, ela protege uma chave simétrica de sessão).</li>
+        <li><b>AES é simétrico</b>: a mesma chave secreta cifra e decifra. O par pública/privada caracteriza a criptografia <b>assimétrica</b>. O AES usa blocos de 128 bits e chaves de 128, 192 ou 256 bits.</li>
+        <li><b>IV/nonce</b> variável por mensagem: mensagens iguais geram cifrados diferentes (oculta padrões), o que ajuda contra repetição. Não precisa ser secreto, mas reutilizá-lo onde o modo proíbe (ex.: GCM) compromete a confidencialidade e a integridade. A proteção completa contra replay depende também de contadores ou estado do protocolo.</li>
+        <li><b>SHA-256</b>: comparar o resumo recebido com o recalculado detecta alteração, desde que o resumo esperado seja confiável. Um atacante ativo altera a mensagem e recalcula o hash. Para autenticar o resumo, usa-se <b>HMAC</b> ou <b>assinatura</b>.</li>
+      </ul>
+      <div class="pega">"AES é simétrico porque usa um par de chaves diferentes" é falso: a razão descreve a assimétrica. "Criptografar com a chave privada" não é uma definição geral de assinatura. "SHA-256 garante a autoria" é falso: hash simples não identifica o autor.</div>
+    </section>
+  </section>
+
+  <section class="sub" id="t08-arp" data-titulo="ARP spoofing, homem no meio e TLS">
+    <p class="cai">Questões reais: quiz nº 56, 58 · slides Q3 · ENADE 2017 Q15</p>
+    <ul>
+      <li>O <b>ARP</b> resolve IP → MAC na rede local (camada 2, enlace) e <b>não tem autenticação</b>, integridade nem cifragem. Os hosts aceitam respostas não solicitadas e pacotes <i>Gratuitous ARP</i>.</li>
+      <li><b>ARP spoofing/poisoning</b>: o atacante anuncia que o IP do gateway pertence ao seu MAC. Com isso envenena as tabelas IP-MAC e passa a intermediar o tráfego (<b>homem no meio, MITM</b>), podendo ler ou alterar o que não estiver protegido.</li>
+    </ul>
+    <figure><img src="img/t08-arp-mitm.png" alt="Cliente 10.0.0.8, atacante com ARP spoofing no meio e gateway 10.0.0.1; mitigações: proteção ARP, segmentação, autenticação do ponto de acesso e criptografia autenticada fim a fim como TLS"><figcaption>Fonte: Material Completo - Segurança da Informação.pdf, p. 14</figcaption></figure>
+    <table>
+      <tr><th>Controle</th><th>Efeito contra o MITM por ARP</th></tr>
+      <tr><td>DAI (Dynamic ARP Inspection), entradas ARP estáticas, segmentação, monitoramento</td><td>Atacam a <b>causa</b>, na camada 2</td></tr>
+      <tr><td>TLS com validação de certificado (chaves de sessão individuais negociadas com chave pública)</td><td>Mesmo com o tráfego desviado, o atacante só vê dados cifrados e não consegue alterá-los sem ser detectado (confidencialidade e integridade). <b>Não corrige o ARP</b> e não garante disponibilidade, porque o atacante pode descartar pacotes</td></tr>
+      <tr><td>HSTS</td><td>Obriga o uso de HTTPS: impede o rebaixamento para HTTP (SSL stripping) e impede o usuário de "aceitar" um certificado inválido</td></tr>
+      <tr><td>Certificado do ponto de acesso, autenticável por chave pública confiável (ex.: 802.1X/EAP-TLS)</td><td>O cliente confirma que fala com o AP legítimo</td></tr>
+      <tr><td>Chaves fortes (128 bits) e bloqueio de dispositivos e modos legados</td><td>Reduz ataques de força bruta contra chaves fracas</td></tr>
+      <tr><td><b>Firewall</b></td><td><b>Não resolve.</b> Filtra fluxos por política, mas não autentica o AP nem impede o desvio entre clientes da mesma sub-rede (camada 2)</td></tr>
+    </table>
+    <ul>
+      <li><b>Limite do TLS</b>: não ajuda se o endpoint estiver comprometido, se o usuário aceitar certificado inválido ou se a aplicação gravar dados sensíveis em texto claro. "Ponta a ponta", no TLS, significa cliente ↔ servidor.</li>
+      <li>No slide do squad: ARP spoofing → proteção e segmentação da rede; MITM → TLS e validação de certificado.</li>
+      <li><b>Asserção-razão do squad</b>: são verdadeiras I (TLS com certificado e HSTS protege os dados mesmo com o tráfego desviado, sem corrigir o ARP) e II (o ARP não autentica e aceita Gratuitous ARP, o que viabiliza o MITM). O squad considera que <b>II justifica I</b>: a fragilidade estrutural do ARP é o motivo que torna indispensável a proteção na camada superior (defesa em profundidade).</li>
+    </ul>
+    <div class="pega">"Firewall no ponto de acesso evita o desvio entre clientes da mesma sub-rede" é falso. "O TLS corrige o ARP" também é falso: ele protege o conteúdo, não a resolução IP-MAC. Escolha o controle que atua sobre a causa.</div>
+    <div class="pega">Numa leitura estrita, "II justifica I" é discutível: a II explica por que o TLS é necessário, não por que ele funciona. Mesmo assim, é o gabarito do squad para esse texto. Se a II for trocada por algo sem relação com a I (outro protocolo, outra camada), a justificativa deixa de valer.</div>
+  </section>
+
+  <section class="sub" id="t08-lgpd" data-titulo="LGPD (Lei nº 13.709/2018)">
+    <p class="cai">Questões reais: quiz nº 57, 60 · slides Q4 · ENADE 2021 Q12</p>
+
+    <section class="sub" id="t08-lgpd-conceitos" data-titulo="Dado pessoal, dado sensível e tratamento">
+      <p class="cai">Questões reais: quiz nº 57, 60 · slides Q4 · ENADE 2021 Q12</p>
+      <ul>
+        <li><b>Dado pessoal</b> (art. 5º, I): informação relacionada a pessoa natural identificada ou identificável (nome, CPF, telefone, e-mail). <b>Titular</b>: a pessoa natural a quem os dados se referem.</li>
+        <li><b>Dado pessoal sensível</b> (art. 5º, II): origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato ou a organização de caráter religioso, filosófico ou político, dado referente à <b>saúde</b> ou à vida sexual, dado <b>genético ou biométrico</b>, quando vinculado a uma pessoa natural.</li>
+        <li>Dado sensível tem <b>regime mais restritivo</b> (art. 11). O tratamento só é permitido com consentimento específico e destacado, para finalidades específicas, ou sem consentimento quando indispensável: obrigação legal, políticas públicas, pesquisa (com anonimização sempre que possível), exercício de direitos, proteção da vida, tutela da saúde por profissionais de saúde, prevenção à fraude na identificação. Ou seja, a lei <b>restringe o tratamento indiscriminado</b> de dados sensíveis.</li>
+        <li><b>Não discriminação</b> (art. 6º, IX): é proibido tratar dados para fins discriminatórios ilícitos ou abusivos.</li>
+        <li><b>Tratamento</b> (art. 5º, X): <b>toda</b> operação realizada com dados pessoais, como coleta, produção, recepção, classificação, utilização, acesso, reprodução, transmissão, distribuição, processamento, arquivamento, armazenamento, eliminação, avaliação ou controle, modificação, comunicação, transferência, difusão ou extração. É uma acepção ampla, da coleta à eliminação.</li>
+        <li>Dados públicos continuam sujeitos às regras de tratamento.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t08-lgpd-anon" data-titulo="Anonimização × pseudonimização (art. 12)">
+      <p class="cai">Questões reais: quiz nº 57, 60 · slides Q4 · ENADE 2021 Q12</p>
+      <table>
+        <tr><th>Técnica</th><th>Continua dado pessoal?</th></tr>
+        <tr><td><b>Anonimização</b> (art. 5º, XI): uso de meios técnicos razoáveis e disponíveis no momento do tratamento, pelos quais o dado perde a possibilidade de associação, direta ou indireta, a um indivíduo</td><td><b>Não</b> (art. 12), <b>salvo</b> se a anonimização puder ser revertida com meios próprios ou com esforços razoáveis</td></tr>
+        <tr><td><b>Pseudonimização</b> (art. 13, § 4º): o dado perde a associação "<b>senão pelo uso de informação adicional</b> mantida separadamente pelo controlador em ambiente controlado e seguro"</td><td><b>Sim, sempre</b>: com a informação adicional (tabela, chave), o titular é reidentificado</td></tr>
+      </table>
+      <div class="chave">Art. 12: dados anonimizados não são dados pessoais, <b>salvo</b> quando a anonimização for revertida usando exclusivamente meios próprios, ou quando, <b>com esforços razoáveis</b>, puder ser revertida. O que é razoável se mede por fatores objetivos, como o custo e o tempo da reversão e a tecnologia disponível (§ 1º). Logo, a anonimização legal precisa ser irreversível por meios razoáveis. Se a reassociação for viável, o dado continua pessoal.</div>
+      <div class="pega">Atribuir à pseudonimização a definição de anonimização ("perde a associação e deixa irrevogavelmente de ser dado pessoal") é falso: a pseudonimização reduz riscos, mas não elimina todos e não tira o dado da LGPD. "Dados anonimizados nunca são pessoais, mesmo se a anonimização puder ser revertida" também é falso.</div>
+      <div class="pega">O gabarito comentado do slide da Q4 cita o art. 12 trocado ("revertido com esforço desproporcional"). A lei diz "com <b>esforços razoáveis</b>". Se a reversão exige esforço desproporcional, o dado continua anonimizado.</div>
+    </section>
+
+    <section class="sub" id="t08-lgpd-titular" data-titulo="Direitos do titular e papel da ANPD">
+      <p class="cai">Questões reais: quiz nº 60 · ENADE 2021 Q12</p>
+      <ul>
+        <li><b>Direitos do titular</b> (art. 18), mediante requisição ao controlador: confirmação da existência de tratamento; acesso aos dados; correção de dados incompletos, inexatos ou desatualizados; anonimização, bloqueio ou eliminação de dados desnecessários, excessivos ou tratados em desconformidade; portabilidade; eliminação dos dados tratados com consentimento; informação sobre com quem os dados foram compartilhados; informação sobre a possibilidade de não consentir; revogação do consentimento. O art. 20 garante ainda a revisão de decisões tomadas unicamente por tratamento automatizado.</li>
+        <li>A eliminação vale <b>"nas condições legais"</b>. O art. 16 permite conservar dados para cumprir obrigação legal ou regulatória, para estudo por órgão de pesquisa, para transferência a terceiro dentro da lei ou para uso exclusivo do controlador, desde que anonimizados.</li>
+        <li><b>ANPD</b> (Autoridade Nacional de Proteção de Dados): zela pela proteção dos dados pessoais, <b>regulamenta</b> (edita regulamentos e orientações), <b>fiscaliza</b> e <b>aplica sanções</b> (art. 52: advertência, multa de até 2% do faturamento limitada a R$ 50 milhões por infração, bloqueio ou eliminação dos dados etc.).</li>
+      </ul>
+      <div class="pega">"A ANPD fiscaliza, regula e <b>modifica a legislação</b>" é falso: alterar lei depende do processo legislativo (Congresso). A ANPD atua dentro da sua competência.</div>
+    </section>
+  </section>
+
+  <section class="sub" id="t08-etica" data-titulo="Segurança como processo, fator humano e ética">
+    <p class="cai">Questões reais: quiz nº 59 · ENADE 2017 Q16</p>
+    <ul>
+      <li><b>Segurança é processo, não produto</b>: ativos, ameaças, riscos e tecnologia mudam, então os controles exigem um ciclo contínuo de gestão e melhoria (SGSI da ISO/IEC 27001, funções do NIST CSF). Instalar um antivírus ou comprar uma ferramenta não encerra o problema. A segurança envolve pessoas, processos, tecnologia e ambiente físico.</li>
+      <li><b>Fator humano</b>: a engenharia social (phishing, pretexto) manipula pessoas, e controles técnicos não eliminam esse risco. Por isso as organizações continuam vulneráveis e precisam de treinamento, políticas e MFA.</li>
+      <li><b>Ética profissional</b> é relevante: o profissional de TI tem acesso privilegiado e toma decisões. Precisa avaliar danos, proporcionalidade, conflito de interesses, discriminação, transparência e efeitos sociais.</li>
+    </ul>
+    <div class="chave">As três ideias cobradas são verdadeiras: a organização continua vulnerável ao fator humano, a segurança é processo e a ética profissional faz parte dela.</div>
+    <div class="pega">"Uma ferramenta <b>garante</b> a segurança" e "ética não é assunto do técnico" são falsas. A apostila também ressalva que "o humano é <b>sempre</b> o elo mais fraco" simplifica demais, porque sistemas mal projetados induzem o erro.</div>
+  </section>
+
+  <section class="sub" id="t08-inf" data-titulo="Tópicos para as questões inferidas">
+
+    <section class="sub" id="t08-inf-risco" data-titulo="Risco: conceitos e matriz 5 × 5">
+      <figure><img src="img/t08-formacao-risco.png" alt="Cadeia: ameaça (criminoso) → vulnerabilidade (ausência de MFA) → ativo (conta e dados acadêmicos) → impacto (vazamento e alteração de notas); controles: MFA, alertas, logs e recuperação"><figcaption>Fonte: Aula Enade - Segurança da Informação.pdf, p. 4</figcaption></figure>
+      <ul>
+        <li><b>Ativo</b>: algo de valor (dados, servidor, chave privada). <b>Ameaça</b>: pode causar dano (criminoso, malware, enchente). <b>Vulnerabilidade</b>: fraqueza explorável (falta de MFA, senha padrão). O <i>exploit</i> é o meio de explorá-la.</li>
+        <li><b>Evento</b>: ocorrência observável, ainda sem dano comprovado (muitas tentativas de login). <b>Incidente</b>: evento que compromete ou ameaça a organização (conta invadida usada para extrair dados). <b>Risco</b>: possibilidade, função de probabilidade e impacto.</li>
+        <li>Controle <b>preventivo</b> reduz a probabilidade; <b>detectivo</b> reduz o tempo até a descoberta; <b>corretivo/de recuperação</b> limita o impacto.</li>
+      </ul>
+      <figure><img src="img/t08-matriz-risco.png" alt="Matriz 5×5 de probabilidade por impacto, escores de 1 a 25: B de 1 a 4, M de 5 a 9, A de 10 a 16, C de 20 a 25"><figcaption>Fonte: Material Completo - Segurança da Informação.pdf, p. 7</figcaption></figure>
+      <ul>
+        <li>Escore = probabilidade × impacto (1 a 5): 1–4 Baixo, 5–9 Médio, 10–16 Alto, 20–25 Crítico. Ex.: 4 × 5 = 20 (C); 3 × 4 = 12 (A); 5 × 3 = 15 (A).</li>
+        <li>Risco <b>inerente</b>: estimado antes dos controles. <b>Residual</b>: o que sobra depois. Nunca é zero: deve ser reavaliado após medir a efetividade dos controles, e a direção decide se aceita, reduz, evita ou transfere.</li>
+        <li>A multiplicação serve para priorizar, não é verdade universal. Um risco raro com impacto sobre vidas pode ser inaceitável.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t08-inf-controles" data-titulo="Classificação de controles e defesa em profundidade">
+      <table>
+        <tr><th>Dimensão: categorias</th><th>Exemplos</th></tr>
+        <tr><td><b>Finalidade</b>: preventivo, detectivo, corretivo, recuperativo, dissuasório, compensatório</td><td>MFA; SIEM; patch; restauração; aviso; revisão manual</td></tr>
+        <tr><td><b>Natureza</b>: administrativo, técnico, físico</td><td>política; firewall; controle de acesso à sala</td></tr>
+        <tr><td><b>Momento</b>: antes, durante, depois do evento</td><td>hardening; detecção; resposta e lições aprendidas</td></tr>
+        <tr><td><b>Responsabilidade</b>: pessoa, processo, tecnologia, terceiro</td><td>treinamento; mudança; EDR; cláusula contratual</td></tr>
+      </table>
+      <ul>
+        <li><b>Compensatório</b>: substitui um controle que não pode ser aplicado (revisão manual dos acessos de um equipamento legado sem MFA).</li>
+        <li><b>Defesa em profundidade</b>: camadas <b>independentes</b>, que cobrem caminhos de ataque diferentes e geram evidências. Não é acumular ferramentas: dois firewalls idênticos falham pelo mesmo motivo e dão pouca independência.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t08-inf-dispon" data-titulo="Disponibilidade, backup e continuidade">
+      <ul>
+        <li><b>A = MTBF ÷ (MTBF + MTTR)</b>. MTBF 99 h e MTTR 1 h → 99/100 = 99%; 495 h e 5 h → 495/500 = 99%. Para subir A, <b>aumente o MTBF</b> e <b>reduza o MTTR</b>.</li>
+        <li><b>RTO</b>: tempo máximo para restaurar o serviço (com RTO de 4 h, um MTTR de 5 h não atende). <b>RPO</b>: perda máxima de dados, medida em tempo (com RPO de 15 min, backup a cada 1 h não atende).</li>
+        <li>Backup sem teste de restauração não prova recuperabilidade. <b>Redundância, alta disponibilidade e replicação não substituem o backup</b>: replicam também a exclusão lógica e a cifragem feita pelo ransomware. Uma cópia online pode ser cifrada junto, por isso o backup deve ser <b>isolado, versionado, protegido e testado</b>.</li>
+        <li>Sites de contingência: <b>frio</b> é barato e lento; <b>morno</b> é o equilíbrio; <b>quente</b> tem retorno rápido, é caro e pode replicar corrupção.</li>
+        <li><b>BIA</b> (Análise de Impacto no Negócio): identifica processos essenciais, dependências e prioridades de retomada. Continuidade (operação mínima), recuperação de desastre (restaura a TI) e resposta a incidentes (trata o evento) se conectam, mas <b>não são sinônimos</b>.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t08-inf-chaves" data-titulo="Certificados, HMAC e armazenamento de senhas">
+      <ul>
+        <li>Validar um certificado: <b>nome, período de validade, finalidade, assinatura da autoridade certificadora e estado de confiança (revogação)</b>. O fato de a chave pública poder ser divulgada não dispensa essa validação.</li>
+        <li>Assinatura com a privada do remetente; sigilo com a pública do destinatário. Assinar não oculta o conteúdo.</li>
+        <li><b>HMAC</b>: integridade e autenticidade entre as partes que compartilham a chave, <b>sem não repúdio</b> perante terceiros, porque qualquer das partes poderia ter gerado a etiqueta. Não repúdio exige assinatura digital.</li>
+        <li><b>Senhas</b>: SHA-256 puro é inadequado, porque é rápido e permite testar bilhões de candidatos. Use uma KDF lenta e parametrizável (<b>Argon2id, scrypt, bcrypt, PBKDF2</b>) com <b>salt único</b> por credencial.</li>
+        <li>O <b>salt</b> não é secreto: fica junto do verificador, impede que senhas iguais gerem o mesmo resultado e reduz o valor de tabelas pré-computadas. O segredo guardado fora do banco (em cofre) é o <b>pepper</b>.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t08-inf-iam" data-titulo="Identificação, autenticação, autorização e MFA">
+      <table>
+        <tr><th>Etapa</th><th>Pergunta</th><th>Exemplo</th></tr>
+        <tr><td>Identificação</td><td>Quem afirma ser?</td><td>e-mail, nome de usuário</td></tr>
+        <tr><td>Autenticação</td><td>Como prova a identidade?</td><td>senha + chave de segurança</td></tr>
+        <tr><td>Autorização</td><td>O que pode fazer?</td><td>professor altera notas só das suas turmas</td></tr>
+        <tr><td>Auditoria</td><td>O que fez e quando?</td><td>log assinado da alteração</td></tr>
+        <tr><td>Accountability</td><td>A ação pode ser atribuída com confiança?</td><td>conta individual, relógio sincronizado, logs protegidos</td></tr>
+      </table>
+      <ul>
+        <li><b>MFA</b> exige fatores de <b>categorias diferentes</b>: algo que a pessoa sabe, possui ou é. Senha + PIN são dois fatores de conhecimento, portanto <b>não</b> é MFA.</li>
+        <li>Resistência a phishing: senha, baixa; SMS, baixa a média (SIM swap, redirecionamento); TOTP, média (o código pode ser capturado em tempo real); push simples, média (fadiga de aprovação, que se reduz com contexto e <i>number matching</i>); <b>FIDO2/WebAuthn, alta</b> (preferível para contas de maior risco).</li>
+        <li>Uma recuperação de conta fraca contorna o MFA. Biometria tem falsos positivos e não dá para "trocar o dedo" após um vazamento.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t08-inf-acesso" data-titulo="Modelos de controle de acesso, mínimo privilégio e Zero Trust">
+      <table>
+        <tr><th>Modelo</th><th>Decide por</th><th>Limitação</th></tr>
+        <tr><td>DAC</td><td>proprietário do recurso</td><td>propagação excessiva de permissões</td></tr>
+        <tr><td>MAC</td><td>rótulos e política central</td><td>pouca flexibilidade</td></tr>
+        <tr><td>RBAC</td><td>papéis organizacionais</td><td>explosão de papéis</td></tr>
+        <tr><td>ABAC</td><td>atributos de sujeito, recurso, ação e contexto (horário, dispositivo, risco)</td><td>políticas mais complexas</td></tr>
+        <tr><td>ReBAC</td><td>relações entre entidades (grafos)</td><td>análise e auditoria exigentes</td></tr>
+      </table>
+      <ul>
+        <li><b>Mínimo privilégio</b>: só as permissões necessárias, pelo tempo e no contexto necessários. Separe funções incompatíveis e revogue acessos quando o vínculo muda. Revise o acesso <b>efetivo</b> (papéis e grupos se somam), não apenas o papel nominal.</li>
+        <li><b>Zero Trust</b> (NIST SP 800-207): nenhuma confiança implícita pela localização (rede interna, VPN). Cada acesso considera identidade, dispositivo, recurso, contexto e sinais de risco, com verificação contínua. <b>Não</b> significa desconfiar de pessoas nem aprovar manualmente cada requisição.</li>
+        <li><b>Segmentação</b> (DMZ, VLAN, microsegmentação) com regra "negar por padrão" reduz o movimento lateral. Exceções mal planejadas (administração, DNS, atualizações) reabrem a superfície de ataque.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t08-inf-ataques" data-titulo="Ataques de rede e controles">
+      <table>
+        <tr><th>Ataque</th><th>Mecanismo</th><th>Controle</th></tr>
+        <tr><td>Phishing</td><td>mensagem enganosa rouba credenciais</td><td>MFA (de preferência resistente a phishing), filtros, treinamento</td></tr>
+        <tr><td>DNS spoofing</td><td>resposta ou cache aponta o nome para endereço malicioso</td><td>DNSSEC onde aplicável, resolvedor seguro, TLS e validação</td></tr>
+        <tr><td>Evil twin</td><td>ponto de acesso falso imita a rede legítima</td><td>802.1X com certificados, orientação, VPN</td></tr>
+        <tr><td>DoS/DDoS</td><td>exaustão de banda ou recursos</td><td>capacidade, rate limit, CDN, resposta do provedor</td></tr>
+        <tr><td>Sequestro de sessão</td><td>token obtido ou fixado</td><td>TLS, cookies seguros, rotação e expiração</td></tr>
+        <tr><td>Varredura</td><td>descoberta de portas e serviços</td><td>reduzir exposição, alertar e corrigir</td></tr>
+        <tr><td>Ransomware</td><td>dados ficam inacessíveis</td><td>backup isolado e restauração</td></tr>
+      </table>
+      <div class="chave">Escolha o controle que age sobre a causa do ataque. TLS aparece em várias linhas, mas o mecanismo de cada ataque é diferente.</div>
+    </section>
+
+    <section class="sub" id="t08-inf-malware" data-titulo="Tipos de código malicioso">
+      <table>
+        <tr><th>Tipo</th><th>Característica</th></tr>
+        <tr><td>Vírus</td><td>anexa-se a outro arquivo e depende de execução para se propagar</td></tr>
+        <tr><td>Worm</td><td>propaga-se sozinho por redes ou vulnerabilidades</td></tr>
+        <tr><td>Trojan</td><td>apresenta-se como legítimo para executar ação maliciosa</td></tr>
+        <tr><td>Ransomware</td><td>cifra, bloqueia ou exfiltra dados para extorquir</td></tr>
+        <tr><td>Spyware/infostealer</td><td>coleta dados, credenciais, cookies e carteiras</td></tr>
+        <tr><td>Rootkit</td><td>oculta a presença e mantém o privilégio</td></tr>
+        <tr><td>Bot</td><td>integra o host a uma infraestrutura controlada remotamente</td></tr>
+      </table>
+    </section>
+
+    <section class="sub" id="t08-inf-app" data-titulo="Aplicações: injeção SQL, APIs e JWT">
+      <pre><code>String sql = "SELECT * FROM pacientes "
+  + "WHERE nome = '" + entrada + "'";
+// entrada  ' OR '1'='1  gera:
+// WHERE nome = '' OR '1'='1'
+// sempre verdadeira: retorna tudo</code></pre>
+      <ul>
+        <li>A injeção SQL acontece porque a concatenação mistura dado e comando. Correção: <b>consulta parametrizada</b> (<code>PreparedStatement</code> com <code>WHERE nome = ?</code>), que envia o valor separado e impede que ele mude a estrutura do SQL. Escape manual é frágil; cifrar a coluna, esconder mensagens de erro ou pôr firewall de rede não resolvem. A parametrização não substitui a autorização.</li>
+        <li><b>Controle de acesso quebrado (IDOR)</b>: trocar <code>/api/alunos/105/documentos</code> por <code>106</code> e abrir o documento de outro aluno. Correção: autorização <b>no servidor</b> para cada objeto e ação. Autenticação forte não substitui autorização.</li>
+        <li><b>JWT assinado não é secreto</b>: o conteúdo é legível. A assinatura garante integridade e emissor, não confidencialidade.</li>
+        <li>Criptografia de disco protege a mídia perdida, mas não impede a leitura por uma aplicação autenticada e vulnerável.</li>
+        <li>Segredos ficam fora do código (cofre, rotação, escopo mínimo). O NIST SSDF integra segurança ao ciclo de desenvolvimento (requisitos, modelagem de ameaças, revisão, testes). O OWASP Top 10 é material de conscientização, não checklist completo.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t08-inf-nuvem" data-titulo="Nuvem e hardening">
+      <ul>
+        <li><b>Responsabilidade compartilhada</b>: o provedor protege parte da infraestrutura, e o cliente continua responsável por identidades, configuração, dados e uso seguro (no IaaS, também pelo sistema operacional e pelas aplicações das VMs). "Está na nuvem" não é propriedade de segurança.</li>
+        <li><b>Hardening</b>: remover contas padrão, desativar serviços e interfaces de escuta desnecessários, MFA administrativo, patches priorizados por exploração ativa e criticidade, logs centralizados com tempo sincronizado, segredos em cofre, backup separado, versionado e testado. A linha de base segura é versionada e monitorada contra desvios.</li>
+        <li>Terceirizar a execução não transfere a responsabilidade.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t08-inf-stride" data-titulo="Modelagem de ameaças (STRIDE)">
+      <p>Feita <b>antes</b> da implementação: decompor a arquitetura, identificar ativos e limites de confiança, enumerar abusos, priorizar riscos e definir controles verificáveis.</p>
+      <table>
+        <tr><th>STRIDE</th><th>Propriedade ameaçada</th></tr>
+        <tr><td>Spoofing (falsificação)</td><td>Autenticidade</td></tr>
+        <tr><td>Tampering (adulteração)</td><td>Integridade</td></tr>
+        <tr><td>Repudiation (repúdio)</td><td>Responsabilização</td></tr>
+        <tr><td>Information disclosure (divulgação)</td><td>Confidencialidade</td></tr>
+        <tr><td>Denial of service</td><td>Disponibilidade</td></tr>
+        <tr><td>Elevation of privilege</td><td>Autorização</td></tr>
+      </table>
+      <div class="pega">O repúdio ameaça a responsabilização, não a confidencialidade.</div>
+    </section>
+
+    <section class="sub" id="t08-inf-gov" data-titulo="Governança, NIST CSF 2.0 e tratamento de riscos">
+      <figure><img src="img/t08-nist-csf.png" alt="Seis funções do NIST CSF 2.0 em volta da gestão do risco cibernético: Governar, Identificar, Proteger, Detectar, Responder e Recuperar"><figcaption>Fonte: Material Completo - Segurança da Informação.pdf, p. 15</figcaption></figure>
+      <ul>
+        <li><b>ISO/IEC 27001</b>: requisitos de um Sistema de Gestão de Segurança da Informação (SGSI) baseado em risco e melhoria contínua.</li>
+        <li><b>NIST CSF 2.0</b>: <b>6 funções</b>, Governar, Identificar, Proteger, Detectar, Responder e Recuperar. "Governar" é a novidade da 2.0 (a versão 1.x tinha 5).</li>
+        <li>Documentos: <b>política</b> dá a direção de alto nível ("todo acesso administrativo exige MFA"); <b>norma</b> traz requisito obrigatório específico; <b>procedimento</b> é o passo a passo ("como revogar a conta de um desligado"); <b>guia</b> orienta com flexibilidade; <b>registro</b> é a evidência (ata, log, relatório de teste).</li>
+        <li>Indicadores precisam de definição, fonte, periodicidade, meta e responsável.</li>
+      </ul>
+      <table>
+        <tr><th>Resposta ao risco</th><th>Quando faz sentido / exemplo</th></tr>
+        <tr><td>Evitar</td><td>a atividade não compensa: tirar da internet um servidor legado</td></tr>
+        <tr><td>Mitigar</td><td>controles reduzem probabilidade ou impacto: MFA, segmentação</td></tr>
+        <tr><td>Transferir ou compartilhar</td><td>seguro, contrato; os <b>deveres legais permanecem</b></td></tr>
+        <tr><td>Aceitar</td><td>residual dentro do apetite: decisão formal registrada, com prazo e responsável</td></tr>
+      </table>
+    </section>
+
+    <section class="sub" id="t08-inf-incidentes" data-titulo="Resposta a incidentes">
+      <ol>
+        <li>Confirmar o evento e <b>preservar evidências</b>.</li>
+        <li>Classificar gravidade, ativos, dados e dependências afetados.</li>
+        <li>Acionar papéis técnicos, jurídicos, de comunicação e a direção, conforme o plano.</li>
+        <li><b>Conter</b> sem destruir evidências nem ampliar o impacto.</li>
+        <li><b>Erradicar</b>: remover a causa, corrigir a vulnerabilidade, trocar segredos comprometidos.</li>
+        <li><b>Recuperar</b> em etapas, monitorando recaídas e validando a integridade.</li>
+        <li>Documentar, comunicar quando exigido (LGPD, art. 48: ANPD e titulares, se houver risco ou dano relevante) e acompanhar as melhorias.</li>
+      </ol>
+      <ul>
+        <li>Conter → erradicar → recuperar. Recuperar antes de erradicar permite reinfecção. Base: NIST SP 800-61 Rev. 3, integrado ao CSF 2.0.</li>
+        <li><b>Cadeia de custódia</b>: registrar origem, coletor, data, método, hash, armazenamento e transferências de cada evidência.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t08-inf-lgpd" data-titulo="LGPD: agentes, princípios e bases legais">
+      <ul>
+        <li><b>Controlador</b>: decide sobre o tratamento. <b>Operador</b>: trata os dados em nome do controlador. <b>Encarregado</b>: canal de comunicação entre controlador, titulares e ANPD.</li>
+        <li><b>Princípios</b> (art. 6º): finalidade, adequação, <b>necessidade</b> (minimização), livre acesso, qualidade dos dados, transparência, segurança, prevenção, não discriminação, responsabilização e prestação de contas.</li>
+        <li><b>Consentimento é só uma das bases legais</b> (o art. 7º traz outras: obrigação legal, execução de contrato, legítimo interesse, proteção da vida, tutela da saúde etc.). Ele não autoriza qualquer finalidade: reusar os dados para outro fim (ex.: marketing) viola o princípio da finalidade.</li>
+        <li><b>Privacy by design</b>: minimização, retenção definida, transparência e segurança proporcional desde o projeto. Coletar mais do que o necessário contraria a minimização; prefira a alternativa menos invasiva (QR code ou documento com foto em vez de biometria facial).</li>
+        <li><b>Privacidade ≠ segurança</b>: um tratamento pode ser seguro (cifrado, com controle de acesso) e ainda assim excessivo ou sem base legal.</li>
+        <li>Biometria facial é dado sensível. Avalie necessidade, finalidade, retenção, proteção, contestação de erros (revisão de decisão automatizada, art. 20) e vieses.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t08-inf-outras" data-titulo="Sistemas distribuídos, IA e segurança física">
+      <ul>
+        <li><b>Sistemas distribuídos</b>: falhas parciais e mensagens atrasadas, duplicadas ou fora de ordem exigem autenticar serviços, limitar repetição, garantir idempotência e sincronizar relógios. Alta disponibilidade sem consistência serve dados errados; consistência sem redundância cria ponto único de falha.</li>
+        <li><b>IA</b>: envenenamento de dados, entrada adversarial, extração de modelo, <i>prompt injection</i> e vazamento por logs. Os controles clássicos (inventário, acesso, validação, monitoramento, governança) continuam válidos.</li>
+        <li><b>Segurança física</b>: zonas, identificação, registro de visitantes, climatização, UPS, gerador e descarte seguro. A segurança lógica não dispensa a física: basta alguém retirar um disco não cifrado ou plugar um equipamento na rede interna.</li>
+      </ul>
+    </section>
+
+  </section>
+</section>

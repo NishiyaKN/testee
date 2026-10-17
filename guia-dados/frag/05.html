@@ -1,0 +1,221 @@
+<section class="topico" id="t05" data-titulo="05 · Arquitetura de Computadores">
+
+  <section class="sub" id="t05-registradores" data-titulo="Registradores, busca e desvio">
+    <p class="cai">Questões reais: quiz nº 26 · slides Q2</p>
+    <table>
+      <tr><th>Registrador</th><th>Guarda</th></tr>
+      <tr><td><b>PC</b> (Program Counter)</td><td><b>endereço</b> da próxima instrução (não a instrução)</td></tr>
+      <tr><td><b>IR</b> (Instruction Register)</td><td>a instrução <b>atual</b> (opcode e campos), para decodificar</td></tr>
+      <tr><td><b>MAR</b></td><td><b>endereço</b> do acesso à memória</td></tr>
+      <tr><td><b>MDR / MBR</b></td><td><b>conteúdo</b> lido ou a escrever (instrução ou dado)</td></tr>
+      <tr><td><b>SP</b></td><td>topo da pilha</td></tr>
+      <tr><td><b>Flags / PSW</b> (EFLAGS no x86)</td><td>estado do resultado: zero, sinal, overflow, carry</td></tr>
+      <tr><td>Propósito geral</td><td>operandos e resultados</td></tr>
+    </table>
+    <h5>Busca (fetch) e execução</h5>
+    <ol>
+      <li><code>MAR ← PC</code>: o endereço vai ao barramento de endereços; o controle sinaliza leitura.</li>
+      <li><code>MDR ← Mem[MAR]</code>: a instrução chega pelo barramento de dados.</li>
+      <li><code>IR ← MDR</code> e <code>PC ← PC + 1</code> (ou + tamanho da instrução).</li>
+      <li>Decodificar → obter operandos → executar (ULA) → registrar o resultado (registrador de destino ou memória).</li>
+    </ol>
+    <p><b>Desvio condicional</b> (<code>JZ alvo</code>): a flag Z foi ajustada antes por outra instrução (ex.: <code>CMP</code>, <code>SUB</code>) no registrador de flags. Se Z = 1, <code>PC ← alvo</code>. Se não, o PC mantém o valor já incrementado e o programa segue em sequência. Desviar = alterar o PC.</p>
+    <div class="chave">PC → endereço da próxima; IR → instrução atual; MAR → endereço; MDR → conteúdo; flags → registrador de estado.</div>
+    <div class="pega">"O IR guarda o resultado e as flags (Zero, Overflow, Carry)" é falso: o resultado vai para o registrador de destino ou para a memória, e as flags ficam no registrador de estado (PSW/EFLAGS). Outras trocas típicas, todas falsas: "o PC guarda a instrução", "o MAR guarda o dado", "o SP aponta a próxima instrução".</div>
+  </section>
+
+  <section class="sub" id="t05-es" data-titulo="Polling, interrupção e DMA">
+    <p class="cai">Questões reais: quiz nº 27 · slides Q3</p>
+    <table>
+      <tr><th>Mecanismo</th><th>Como funciona</th><th>Uso típico</th></tr>
+      <tr><td><b>Polling</b></td><td>a CPU pergunta repetidamente ("terminou?"): espera ocupada, gasta ciclos</td><td>simples, mas desperdiça CPU</td></tr>
+      <tr><td><b>Interrupção</b></td><td>o dispositivo avisa; a CPU suspende o fluxo e executa a rotina de atendimento</td><td>eventos curtos, imprevisíveis e pouco frequentes: teclado, mouse</td></tr>
+      <tr><td><b>DMA</b></td><td>um controlador copia blocos entre dispositivo e memória, sem a CPU copiar unidade por unidade</td><td>grande volume contínuo: disco, vídeo, rede</td></tr>
+    </table>
+    <p>No DMA a CPU só <b>configura</b> a transferência (endereço, tamanho, direção) e recebe o aviso de término, normalmente por interrupção. O DMA <b>reduz</b> a participação da CPU, mas continua usando barramento/largura de banda (disputa com a CPU) e exige coordenação.</p>
+    <p>Cenário "vídeo 4K do disco para a RAM + teclado": blocos grandes → DMA; teclas → interrupção. A frase "o DMA transfere sem a CPU intervir instrução por instrução, e a interrupção trata eventos imprevisíveis sem o desperdício do polling" é verdadeira e é exatamente o <b>motivo</b> dessa escolha. Numa asserção-razão, portanto, ela justifica a escolha (não é "verdadeira, mas sem relação").</p>
+    <div class="chave">Polling = CPU pergunta. Interrupção = dispositivo avisa. DMA = controlador transfere.</div>
+    <div class="pega">Trocar os papéis (teclado por DMA, disco por polling) torna a escolha falsa. "O DMA elimina totalmente a participação da CPU" e "o DMA não consome banda do barramento" também são falsas. O gabarito comentado do squad diz "sem ocupar a ULA"; o correto é "sem ocupar a CPU com a cópia de cada dado".</div>
+  </section>
+
+  <section class="sub" id="t05-pipeline" data-titulo="Pipeline e hazards">
+    <p class="cai">Questões reais: quiz nº 25 · slides Q1</p>
+    <p>O pipeline divide a execução em estágios e sobrepõe instruções: enquanto uma executa, a seguinte é decodificada e outra é buscada. Modelo didático de 5 estágios: busca, decodificação/leitura de registradores, execução, acesso à memória e escrita do resultado (pipelines reais podem ter outras divisões).</p>
+    <figure><img src="img/t05-pipeline.png" alt="Pipeline de 5 estágios S1 a S5 e diagrama de tempo: a instrução 1 termina no tempo 5 e depois uma instrução termina a cada ciclo"><figcaption>Fonte: Apresentação Arquitetura de Computadores.pdf, p. 14</figcaption></figure>
+    <p>Na figura, a instrução 1 ainda leva 5 ciclos para ficar pronta, mas a partir do ciclo 5 sai uma instrução por ciclo. O ganho é de <b>vazão</b> (throughput), não de <b>latência</b>. Com k estágios e n instruções, o tempo cai de k·n para k + n − 1 ciclos (5 estágios e 100 instruções: 104 ciclos contra 500, speedup ≈ 4,8). A latência de uma instrução isolada não cai e pode até subir um pouco (registradores entre estágios; o estágio mais lento dita o clock).</p>
+    <table>
+      <tr><th>Hazard</th><th>Causa</th><th>Tratamento</th></tr>
+      <tr><td>Estrutural</td><td>duas instruções disputam o mesmo recurso</td><td>duplicar o recurso ou esperar (stall)</td></tr>
+      <tr><td>De dados</td><td>a instrução precisa de um resultado ainda não pronto</td><td><b>forwarding</b>/bypassing (leva o resultado direto à ULA) ou stall</td></tr>
+      <tr><td>De controle</td><td>um desvio torna incerta a próxima instrução</td><td><b>previsão de desvio</b>, bolhas; previsão errada → descarte (flush) do trabalho especulativo</td></tr>
+    </table>
+    <div class="pega">"Forwarding resolve hazards de controle (desvios) e evita o descarte do trabalho especulativo" é falso: forwarding é para hazard de <b>dados</b>. "O pipeline de 5 estágios reduz drasticamente a latência de cada instrução" é falso: ele aumenta a vazão.</div>
+  </section>
+
+  <section class="sub" id="t05-cisc-risc" data-titulo="CISC × RISC e o pipeline">
+    <p class="cai">Questões reais: quiz nº 25 · slides Q1</p>
+    <table>
+      <tr><th></th><th>CISC (ex.: x86)</th><th>RISC (ex.: Arm, RISC-V)</th></tr>
+      <tr><td>Instruções</td><td>complexas, tamanho e formato variáveis, muitos modos de endereçamento</td><td>regulares, formato fixo</td></tr>
+      <tr><td>Memória</td><td>algumas instruções operam direto sobre operandos na memória</td><td><b>load/store</b>: só LOAD e STORE acessam a memória; a ULA opera sobre registradores</td></tr>
+      <tr><td>Pipeline</td><td>mais difícil: instruções de vários ciclos e formatos variáveis</td><td>mais simples: toda instrução passa pelos estágios de forma uniforme</td></tr>
+    </table>
+    <p>Para manter o pipeline cheio, os processadores CISC modernos (x86) <b>traduzem</b> as instruções complexas em <b>micro-operações (µops)</b> simples e regulares, executadas por um núcleo interno de estilo RISC.</p>
+    <div class="chave">Load/store isola os acessos à memória em instruções próprias e simplifica o pipeline. CISC moderno = instruções complexas na ISA + µops por dentro.</div>
+  </section>
+
+  <section class="sub" id="t05-inf" data-titulo="Tópicos para as questões inferidas">
+
+    <section class="sub" id="t05-inf-von-neumann" data-titulo="Von Neumann, Harvard e arquitetura × organização">
+      <figure><img src="img/t05-von-neumann.png" alt="Modelo de von Neumann: memória única com instruções e dados ligada ao processador (unidade de controle, registradores, ULA) por barramento de endereço, barramento de instruções e dados e barramento de controle"><figcaption>Fonte: Apresentação Arquitetura de Computadores.pdf, p. 3</figcaption></figure>
+      <ul>
+        <li><b>Arquitetura</b> = o que a ISA mostra ao programador: instruções, registradores visíveis, modos de endereçamento. Mesmo binário roda sem recompilar ⇒ mesma arquitetura.</li>
+        <li><b>Organização</b> = como isso é implementado: clock, tamanho da cache, tipo de memória (ex.: DDR5).</li>
+        <li>CPU = unidade de controle + ULA + registradores. Computador = CPU + memória + E/S (CPU ≠ computador inteiro).</li>
+        <li>Programa armazenado: as instruções também ficam na memória.</li>
+      </ul>
+      <table>
+        <tr><th>Modelo</th><th>Memória e caminho</th></tr>
+        <tr><td>Von Neumann</td><td>mesma memória e mesmo caminho para instruções e dados ⇒ <b>gargalo de von Neumann</b></td></tr>
+        <tr><td>Harvard</td><td>memórias e caminhos separados</td></tr>
+        <tr><td>Harvard modificada</td><td>memória principal única + caches de instruções e de dados separadas (comum hoje)</td></tr>
+      </table>
+      <div class="pega">O gargalo de von Neumann vem do caminho compartilhado CPU↔memória, não da lentidão da ULA: uma ULA mais rápida não o elimina.</div>
+    </section>
+
+    <section class="sub" id="t05-inf-barramentos" data-titulo="Barramentos, PCIe/SATA/USB e Plug and Play">
+      <ul>
+        <li><b>Dados</b>: valores lidos/escritos. <b>Endereços</b>: onde. <b>Controle</b>: tipo e momento (leitura, escrita, confirmação).</li>
+        <li><b>PCIe</b>: enlaces <b>seriais ponto a ponto</b>, para componentes de alto desempenho (placa de vídeo, SSD NVMe). Não é barramento paralelo compartilhado.</li>
+        <li><b>SATA</b>: interface de armazenamento (≠ PCIe). <b>USB</b>: periféricos.</li>
+        <li><b>Chipset</b>: organiza as conexões da placa-mãe; funções antigas de northbridge/southbridge foram integradas à CPU.</li>
+        <li><b>Gargalo</b>: pouca banda, muita latência ou disputa em qualquer enlace; é preciso olhar o caminho completo.</li>
+        <li><b>Plug and Play</b>: automatiza <b>parte</b> da identificação, configuração e alocação de recursos, com participação do SO e dos drivers.</li>
+      </ul>
+      <div class="pega">Plug and Play não garante compatibilidade: sem driver para o SO, o dispositivo é detectado mas não funciona, sem que haja defeito físico.</div>
+    </section>
+
+    <section class="sub" id="t05-inf-memoria" data-titulo="Hierarquia de memória e cache">
+      <figure><img src="img/t05-hierarquia.png" alt="Pirâmide da hierarquia: registradores, memória cache, memória primária e memória secundária; velocidade cresce para cima e capacidade para baixo"><figcaption>Fonte: Apresentação Arquitetura de Computadores.pdf, p. 8</figcaption></figure>
+      <ul>
+        <li>Perto da CPU: <b>menor, mais rápida, mais cara por bit</b>. Registradores = nível mais rápido e de <b>menor</b> capacidade.</li>
+        <li><b>SRAM</b>: volátil, sem refresh → cache. <b>DRAM</b>: volátil, com refresh → memória principal. <b>ROM/flash</b>: não voláteis; a flash é reprogramável → firmware e SSD.</li>
+        <li>A cache explora a <b>localidade temporal</b> (o que foi usado volta a ser usado: <code>soma</code>, <code>i</code>, instruções do laço) e a <b>espacial</b> (vizinhos: vetor percorrido em sequência). Hit = achou no nível rápido; miss = busca no nível seguinte.</li>
+        <li>Tempo médio = t_acerto + taxa de falha × penalidade: 2 + 0,05 × 60 = <b>5 ns</b>; com 90% de acerto, 2 + 0,10 × 60 = 8 ns (pequena queda no acerto pesa muito). Se o enunciado der a outra fórmula, h·t_cache + (1 − h)·t_mem, fica 0,95 × 2 + 0,05 × 60 = 4,9 ns: use sempre a fórmula dada.</li>
+      </ul>
+      <div class="pega">A memória virtual guarda páginas no disco, mas não deixa o disco tão rápido quanto a RAM.</div>
+    </section>
+
+    <section class="sub" id="t05-inf-es-mapeada" data-titulo="E/S mapeada × isolada; controlador × driver">
+      <ul>
+        <li><b>E/S mapeada em memória</b>: os registradores do dispositivo ocupam endereços do mesmo espaço da memória (ex.: faixa 0x4000_0000 num Arm) e são acessados por instruções comuns de leitura/escrita.</li>
+        <li><b>E/S isolada</b>: espaço de E/S separado, com instruções específicas (x86: portas com <code>IN</code>/<code>OUT</code>).</li>
+        <li><b>Controlador</b> = hardware que adapta sinais, protocolos e velocidades. <b>Driver</b> = software do SO que controla o dispositivo.</li>
+      </ul>
+      <div class="pega">Ler os registradores de status não exige DMA: o DMA serve para transferir blocos de dados.</div>
+    </section>
+
+    <section class="sub" id="t05-inf-clock" data-titulo="Ciclo de instrução × ciclo de clock">
+      <p>Etapas: <b>buscar</b> (no endereço do PC) → <b>decodificar</b> (opcode e campos) → <b>obter operandos</b> (registradores ou memória) → <b>executar</b> → <b>registrar o resultado</b>. Depois o PC segue a sequência ou vai ao destino do desvio; interrupções e exceções também desviam o fluxo para uma rotina de atendimento. O <b>opcode</b> identifica a operação.</p>
+      <p><b>Ciclo de instrução ≠ ciclo de clock</b>: uma instrução pode levar vários ciclos. Tempo = nº de ciclos × período, com período = 1/f. A 2 GHz o período é 0,5 ns: 6 ciclos = 3 ns; 4 ciclos = 2 ns. Operando em memória exige um acesso extra e mais ciclos.</p>
+      <div class="pega">"Cada instrução leva exatamente um ciclo de clock" é falso. Em ordenação, decodificar vem antes de obter operandos.</div>
+    </section>
+
+    <section class="sub" id="t05-inf-cisc-risc" data-titulo="CISC × RISC: o que não é verdade">
+      <ul>
+        <li>CISC e RISC são <b>tendências</b> de projeto da ISA, não uma divisão absoluta; processadores das duas famílias usam pipeline e técnicas avançadas.</li>
+        <li><b>Microcódigo</b> é historicamente associado a CISC, mas não é exclusivo dele.</li>
+        <li>O desempenho depende da implementação, do compilador, do programa e do sistema de memória.</li>
+      </ul>
+      <div class="pega">Falsos: "RISC executa cada instrução em exatamente um ciclo" e "RISC é sempre mais rápido que CISC".</div>
+    </section>
+
+    <section class="sub" id="t05-inf-hdd" data-titulo="HDD: geometria, tempo de acesso e IOPS">
+      <figure><img src="img/t05-hdd.png" alt="Prato de HDD com trilhas concêntricas divididas em setores, sentido rotacional, cabeçote de leitura/gravação e braço de posicionamento"><figcaption>Fonte: Apresentação Arquitetura de Computadores.pdf, p. 18</figcaption></figure>
+      <table>
+        <tr><th>Termo</th><th>Significado</th></tr>
+        <tr><td>Trilha</td><td>círculo concêntrico na superfície do prato</td></tr>
+        <tr><td>Setor</td><td>subdivisão (pedaço) da trilha</td></tr>
+        <tr><td>Cilindro</td><td>trilhas de mesma posição radial em superfícies diferentes</td></tr>
+        <tr><td>LBA</td><td>numeração lógica de blocos vista pelo SO (separa a visão lógica da geometria)</td></tr>
+        <tr><td>Seek</td><td>mover a cabeça (pelo atuador) até a trilha</td></tr>
+      </table>
+      <p>HDD: não volátil, magnético, mecânico. <b>Tempo de acesso = seek + latência rotacional + transferência</b> (latência média = meia volta); o tempo de resposta pode somar fila e controlador. IOPS ≈ 1 / tempo de acesso.</p>
+      <p>Exemplo: 7.200 RPM → volta = 60/7.200 s = 8,33 ms → latência média 4,17 ms. Seek 5,8 ms; 4 KB a 120 MB/s = 0,033 ms. Total = 10 ms ⇒ ≈ 100 IOPS (só 0,4 MB/s). Erros típicos: esquecer a latência (5,83 ms), usar a volta inteira (14,17 ms), esquecer o seek (4,2 ms), contar só a transferência (30.000 IOPS).</p>
+      <div class="chave">Throughput = MB/s (importa no sequencial). IOPS = operações/s (muitos acessos pequenos). O acesso aleatório é lento pela mecânica (seek + rotação), não pela interface.</div>
+      <div class="pega">Interface rápida (SATA III ≈ 600 MB/s) não garante a taxa nominal. "A interface é mais rápida que o disco" é verdade, mas não explica a queda no acesso aleatório: quem explica é o reposicionamento mecânico.</div>
+    </section>
+
+    <section class="sub" id="t05-inf-raid0123" data-titulo="RAID 0, 1, 2 e 3; RAID ≠ backup">
+      <figure><img src="img/t05-raid0-raid1.png" alt="RAID 0 (striping): disk 1 com blocos 1, 3, 5, 7 e disk 2 com blocos 2, 4, 6, 8. RAID 1 (mirroring): disk 1 e disk 2 com os mesmos blocos 1 a 4"><figcaption>Fonte: Apresentação Arquitetura de Computadores.pdf, p. 21</figcaption></figure>
+      <p>Ideias-base: <b>striping</b> (distribui), <b>espelhamento</b> (copia), <b>paridade</b> (informação extra para reconstruir).</p>
+      <table>
+        <tr><th>Nível</th><th>Como</th><th>Falhas</th></tr>
+        <tr><td>RAID 0</td><td>striping sem redundância (na figura, os blocos pares só existem no disk 2)</td><td>nenhuma: perder 1 disco perde o volume</td></tr>
+        <tr><td>RAID 1</td><td>espelhamento; capacidade útil de 1 disco</td><td>continua com uma cópia íntegra</td></tr>
+        <tr><td>RAID 2</td><td>striping em <b>bits</b> + código de Hamming em discos extras</td><td>histórico</td></tr>
+        <tr><td>RAID 3</td><td>striping em <b>bytes</b> + paridade em disco dedicado</td><td>1 falha; histórico</td></tr>
+      </table>
+      <div class="pega">RAID não substitui backup. Uma exclusão ou alteração errada é aplicada a todas as cópias do espelho: não dá para recuperar a pasta apagada pelo "outro disco" do RAID 1. RAID protege contra falha física (disponibilidade); backup protege contra exclusão, corrupção, ransomware e erro humano.</div>
+    </section>
+
+    <section class="sub" id="t05-inf-raid45" data-titulo="RAID 4 e 5: paridade e capacidade útil">
+      <figure><img src="img/t05-raid4.png" alt="RAID 4: Disk 0 a 2 com blocos de dados A1 a D3 e Disk 3 com todas as paridades Ap, Bp, Cp, Dp"><figcaption>Fonte: Apresentação Arquitetura de Computadores.pdf, p. 26</figcaption></figure>
+      <figure><img src="img/t05-raid5.png" alt="RAID 5: quatro discos; a paridade de cada faixa fica em um disco diferente (Parity b1 no Disk 3, b2 no Disk 2, b3 no Disk 1, b4 no Disk 0)"><figcaption>Fonte: Apresentação Arquitetura de Computadores.pdf, p. 27</figcaption></figure>
+      <table>
+        <tr><th>Nível</th><th>Capacidade útil (n discos de C)</th><th>Tolera</th></tr>
+        <tr><td>RAID 0</td><td>n·C</td><td>0 falhas</td></tr>
+        <tr><td>RAID 1</td><td>C</td><td>enquanto restar uma cópia</td></tr>
+        <tr><td>RAID 4</td><td>(n − 1)·C; paridade em disco <b>dedicado</b> (gargalo nas escritas)</td><td>1 falha</td></tr>
+        <tr><td>RAID 5</td><td>(n − 1)·C; paridade <b>distribuída</b></td><td>1 falha (qualquer disco)</td></tr>
+        <tr><td>RAID 10</td><td>n·C / 2 (mínimo 4 discos)</td><td>1 garantida; mais se em pares diferentes</td></tr>
+      </table>
+      <p>Ex.: 6 discos de 4 TB (24 TB brutos): RAID 5 = 20 TB; RAID 4 = 20 TB, mas com paridade concentrada; RAID 10 = 12 TB; RAID 0 = 24 TB sem redundância.</p>
+      <p><b>Paridade = XOR</b> dos blocos da faixa; bloco perdido = XOR de todos os outros (dados + paridade). Ex.: 1a = 1011 0110, 1c = 1110 0011, P = 0000 1001 ⇒ 1b = 1a ⊕ 1c ⊕ P = <b>0101 1100</b>. Se o disco perdido também guardava a paridade de outra faixa, ela é recalculada.</p>
+      <div class="pega">A paridade ocupa o equivalente a um disco: RAID 5 com 6 × 4 TB não dá 24 TB. Tolerar a falha não significa manter o desempenho: a reconstrução pesa. Na figura do RAID 5, "Parity 4c" é erro de rótulo: é o Block 4c (a paridade da faixa 4 é a Parity b4).</div>
+    </section>
+
+    <section class="sub" id="t05-inf-raid10" data-titulo="RAID 10: falhas toleradas">
+      <figure><img src="img/t05-raid10.png" alt="RAID 1+0: RAID 0 sobre dois RAID 1; Disk 0 e Disk 1 com A1, A3, A5, A7; Disk 2 e Disk 3 com A2, A4, A6, A8"><figcaption>Fonte: Apresentação Arquitetura de Computadores.pdf, p. 29</figcaption></figure>
+      <ul>
+        <li><b>RAID 10 (1+0)</b>: primeiro espelha (pares RAID 1), depois distribui (RAID 0 sobre os pares). Mínimo de 4 discos e 50% de capacidade útil (4 × 4 TB → 8 TB).</li>
+        <li>Sobrevive enquanto <b>nenhum par perder as duas cópias</b>. Na figura: falha de Disk 1 + Disk 2 → continua (Disk 0 e Disk 3 têm todos os blocos); falha de Disk 2 + Disk 3 (mesmo par) → volume perdido. Das 6 combinações de duas falhas, 4 são toleradas.</li>
+      </ul>
+      <div class="pega">RAID 10 não tolera "quaisquer duas falhas" e não é o mesmo que RAID 0+1 (que distribui primeiro e espelha depois).</div>
+    </section>
+
+    <section class="sub" id="t05-inf-ssd" data-titulo="SSD: NAND, TRIM e M.2 × NVMe">
+      <ul>
+        <li>Flash NAND, <b>sem partes móveis</b>: sem seek nem rotação ⇒ baixa latência e bom desempenho aleatório (muitos arquivos pequenos).</li>
+        <li>A controladora traduz endereço lógico → físico, corrige erros e gerencia as células.</li>
+        <li>Grava em <b>páginas</b> e apaga em <b>blocos</b> maiores ⇒ a <b>garbage collection</b> move os dados válidos para liberar blocos.</li>
+        <li><b>Wear leveling</b> espalha gravações e apagamentos; a resistência de escrita continua limitada.</li>
+        <li><b>TRIM</b> avisa quais dados lógicos não são mais necessários; <b>não</b> é apagamento seguro imediato.</li>
+      </ul>
+      <table>
+        <tr><th>Termo</th><th>O que é</th></tr>
+        <tr><td>M.2</td><td><b>formato físico</b> (ex.: 2280); pode ser SATA ou NVMe</td></tr>
+        <tr><td>NVMe</td><td><b>protocolo</b> de SSD sobre PCIe</td></tr>
+        <tr><td>PCIe</td><td>interconexão de alta velocidade</td></tr>
+        <tr><td>SATA</td><td>interface tradicional de armazenamento (teto prático ≈ 550 MB/s)</td></tr>
+      </table>
+      <div class="pega">"M.2" sozinho não garante NVMe. Inverter os papéis ("NVMe é o formato, M.2 é o protocolo") é falso.</div>
+    </section>
+
+    <section class="sub" id="t05-inf-das-nas-san" data-titulo="DAS, NAS e SAN">
+      <table>
+        <tr><th></th><th>Ligação / serviço</th><th>Quem administra o sistema de arquivos</th></tr>
+        <tr><td><b>DAS</b></td><td>direto ao hospedeiro, interno ou externo (SATA, PCIe, USB, SAS)</td><td>o hospedeiro</td></tr>
+        <tr><td><b>NAS</b></td><td>rede + <b>arquivos</b> (SMB, NFS)</td><td>o próprio NAS (também usuários e permissões)</td></tr>
+        <tr><td><b>SAN</b></td><td>rede dedicada + <b>blocos</b> (Fibre Channel ou iSCSI)</td><td>o servidor que recebe o volume</td></tr>
+      </table>
+      <ul>
+        <li>Classifique pela <b>forma de ligação</b> e pelo <b>serviço</b> (arquivo ou bloco), não por ser externo, usar RAID ou ser acessado remotamente.</li>
+        <li>Gabinete SAS ligado a um servidor que compartilha as pastas na rede continua <b>DAS</b>: o acesso remoto é um serviço do servidor. Um SSD USB externo também é DAS.</li>
+        <li>NAS pode ter RAID e até oferecer iSCSI (bloco). Desempenho = discos + controladora + rede + acessos simultâneos: trocar HDD por SSD pode não resolver.</li>
+        <li>SAN não exige fibra óptica; caminhos redundantes aumentam a disponibilidade; vários servidores no mesmo volume precisam de cluster ou sistema de arquivos compatível (acesso aos mesmos blocos ≠ compartilhamento seguro de arquivos).</li>
+      </ul>
+    </section>
+
+  </section>
+</section>

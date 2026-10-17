@@ -1,0 +1,226 @@
+<section class="topico" id="t09" data-titulo="09 · Teoria dos Grafos">
+
+  <section class="sub" id="t09-handshake" data-titulo="Grau e Handshake Lemma">
+    <p class="cai">Questões reais: quiz nº 62 · slides Q1</p>
+    <ul>
+      <li><b>Grau</b> deg(v) = nº de arestas incidentes em v. Exemplo dos slides: arestas A–B, A–C, B–C, B–D → graus 2, 3, 2, 1.</li>
+      <li><b>Handshake Lemma</b>: Σ deg(v) = <b>2|E|</b>. Cada aresta tem duas pontas e soma 1 no grau de cada uma. No exemplo, 2+3+2+1 = 8 = 2·4.</li>
+      <li>A soma depende <b>só de |E|</b>: com 15 arestas a soma é 30, seja qual for o nº de vértices. Com 10 arestas, 20.</li>
+      <li>Consequências: a soma é sempre <b>par</b>, então o nº de vértices de grau ímpar também é par. Graus 3, 3, 2, 2, 1 somam 11: essa sequência é impossível. Graus 3, 2, 4, 1, 2, 4 somam 16, logo |E| = 8.</li>
+    </ul>
+    <div class="chave">soma dos graus = 2 × arestas. Se a soma for ímpar (25, 11…), a alternativa está errada.</div>
+    <div class="pega">Os erros mais comuns são dizer que a soma dos graus é igual a |E| (15 em vez de 30) e ligar a paridade do nº de arestas à planaridade. O triângulo K3 tem 3 arestas e é planar. O lema também não diz que cada vértice tem grau par: quem é par é a <b>soma</b>.</div>
+  </section>
+
+  <section class="sub" id="t09-planar" data-titulo="Planaridade e Teorema de Kuratowski">
+    <p class="cai">Questões reais: quiz nº 62 · slides Q1</p>
+    <p>Um grafo é <b>planar</b> se existe <b>algum</b> desenho dele sem cruzamentos (os vértices podem ser movidos e as arestas podem ser curvas). Planaridade é propriedade do grafo, não de um desenho específico.</p>
+    <figure><img src="img/t09-k4-planar.png" alt="K4 desenhado com cruzamento e o mesmo K4 desenhado sem cruzamentos"><figcaption>Fonte: TEORIA_DOS_GRAFOS - MATERIAL EXPLICATIVO.pdf, p. 18</figcaption></figure>
+    <p><b>K5</b> (5 vértices, 10 arestas) e <b>K3,3</b> (6 vértices, 9 arestas, bipartido completo) são os dois grafos não planares básicos.</p>
+    <figure><img src="img/t09-k5-k33.png" alt="Grafos K5 e K3,3"><figcaption>Fonte: TEORIA_DOS_GRAFOS - MATERIAL EXPLICATIVO.pdf, p. 20</figcaption></figure>
+    <p><b>Teorema de Kuratowski</b>: G é planar ⇔ G <b>não</b> contém subdivisão de K5 nem de K3,3. Subdividir uma aresta é trocá-la por um caminho, inserindo vértices de grau 2. Por isso, achar uma subdivisão de K5 ou K3,3 basta para concluir que o grafo é <b>não planar</b>. Nenhum redesenho a elimina.</p>
+    <table>
+      <tr><th>O que se sabe</th><th>Conclusão</th></tr>
+      <tr><td>Contém subdivisão de K5 ou K3,3</td><td><b>Não planar</b> (certeza)</td></tr>
+      <tr><td>Um desenho tem cruzamentos</td><td>Nada (o K4 acima é planar)</td></tr>
+      <tr><td>|E| &gt; 3|V| − 6 (grafo simples)</td><td>Não planar (K5: 10 &gt; 9)</td></tr>
+      <tr><td>|E| ≤ 3|V| − 6</td><td>Nada (é só condição necessária)</td></tr>
+      <tr><td>Nº ímpar de arestas</td><td>Irrelevante</td></tr>
+    </table>
+    <div class="pega">"Não é possível determinar a planaridade só pela subdivisão de K3,3" está errado: ela é condição suficiente. Também está errado "pode ser planar, basta reorganizar os vértices". Com 10 vértices e 15 arestas vale 15 ≤ 24, e mesmo assim o grafo pode ser não planar (o grafo de Petersen é assim).</div>
+  </section>
+
+  <section class="sub" id="t09-repr" data-titulo="Matriz × lista de adjacência">
+    <p class="cai">Questões reais: quiz nº 63 · slides Q2</p>
+    <table>
+      <tr><th>Critério</th><th>Matriz</th><th>Lista</th></tr>
+      <tr><td>Memória</td><td>O(V²): tabela V×V fixa, existam as arestas ou não</td><td>O(V + E): só os vizinhos reais</td></tr>
+      <tr><td>Testar se u–v existe</td><td><b>O(1)</b>, acesso direto a[u][v]</td><td>O(grau(u)), percorre a lista</td></tr>
+      <tr><td>Listar vizinhos de u</td><td>O(V), varre a linha</td><td>O(grau(u))</td></tr>
+      <tr><td>BFS/DFS</td><td>O(V²)</td><td>O(V + E)</td></tr>
+      <tr><td>Indicada para</td><td>grafos densos, consultas diretas</td><td>grafos <b>esparsos</b>, percursos</td></tr>
+    </table>
+    <ul>
+      <li>Grafo não direcionado: matriz <b>simétrica</b>, diagonal 0 (sem laços), soma da linha = grau. Na lista, cada aresta aparece 2 vezes (2|E| entradas).</li>
+      <li>Grafo direcionado: a[i][j] = 1 só se existe o arco i → j. Isso não implica j → i, então a matriz em geral é <b>assimétrica</b>. No slide abaixo, (A,B) = 1, mas (B,A) = 0.</li>
+    </ul>
+    <figure><img src="img/t09-matriz-dir.png" alt="Grafo direcionado A→B, B→D, C→A, C→E, D→C, D→E, E→D e sua matriz de adjacência"><figcaption>Fonte: Teoria dos Grafos.pdf (slides), p. 22</figcaption></figure>
+    <div class="chave">muitas conexões → matriz; poucas conexões → lista. O acesso O(1) é vantagem da <b>matriz</b>, e a economia de memória é vantagem da <b>lista</b>.</div>
+    <div class="pega">Duas inversões aparecem nos distratores. (1) "Em grafo direcionado a matriz é naturalmente simétrica" é falso, e o material o chama de erro mais frequente do tópico. (2) "A lista permite acesso indexado em O(1)" é falso: na lista é preciso percorrer os vizinhos.</div>
+  </section>
+
+  <section class="sub" id="t09-percurso" data-titulo="Percursos: BFS e DFS">
+    <p class="cai">Questões reais: quiz nº 64 · slides Q3</p>
+    <table>
+      <tr><th></th><th>DFS (profundidade)</th><th>BFS (largura)</th></tr>
+      <tr><td>Estrutura</td><td>Pilha / recursão</td><td><b>Fila (FIFO)</b></td></tr>
+      <tr><td>Exploração</td><td>Um caminho até o fim, depois volta (backtracking)</td><td>Por níveis: distância 1, depois 2…</td></tr>
+      <tr><td>Menor caminho em nº de arestas (não ponderado)</td><td>Não garante</td><td><b>Garante</b></td></tr>
+      <tr><td>Componentes / ciclos</td><td>Sim / sim</td><td>Sim / sim</td></tr>
+      <tr><td>Ordenação topológica</td><td>Aplicação clássica</td><td>Não na forma básica</td></tr>
+      <tr><td>Custo</td><td colspan="2">O(V + E) com lista; O(V²) com matriz</td></tr>
+    </table>
+    <p><b>Por que a BFS dá o menor nº de arestas:</b> a fila faz a BFS processar todos os vértices de distância k antes de qualquer vértice de distância k+1. Assim, a primeira vez que um vértice é descoberto já corresponde à sua menor distância em arestas. A exploração em camadas com fila é a <b>justificativa</b> do caminho mínimo.</p>
+    <figure><img src="img/t09-bfs-dfs.png" alt="Ordem de visita da BFS e da DFS a partir de A na mesma árvore"><figcaption>Fonte: TEORIA_DOS_GRAFOS - MATERIAL EXPLICATIVO.pdf, p. 26</figcaption></figure>
+    <p>Níveis da BFS na figura: {A}, {B, C}, {D, E, F}, {G}.</p>
+    <div class="pega">"A BFS usa pilha" é falso: pilha é da DFS. "A BFS não garante o menor nº de arestas" é falso em grafo não ponderado. Também é falso dizer que as camadas não justificam o caminho mínimo. Mas se o grafo for <b>ponderado</b> (menor custo), a BFS não serve: use Dijkstra (pesos ≥ 0) ou Bellman-Ford (pesos negativos).</div>
+  </section>
+
+  <section class="sub" id="t09-otim" data-titulo="Dijkstra, Bellman-Ford e Prim: qual usar">
+    <p class="cai">Questões reais: quiz nº 65 · slides Q4</p>
+    <table>
+      <tr><th>Pista no enunciado</th><th>Algoritmo</th></tr>
+      <tr><td>Menor nº de saltos, grafo sem pesos</td><td>BFS</td></tr>
+      <tr><td>Menor custo/latência a partir de uma origem, pesos ≥ 0</td><td><b>Dijkstra</b></td></tr>
+      <tr><td>Pesos negativos ("créditos"), detectar ciclo negativo</td><td><b>Bellman-Ford</b></td></tr>
+      <tr><td>Ligar <b>todos</b> os vértices com custo total mínimo (cabos), sem ciclos</td><td><b>Prim</b> (árvore geradora mínima, AGM)</td></tr>
+    </table>
+    <table>
+      <tr><th></th><th>Dijkstra</th><th>Bellman-Ford</th><th>Prim</th></tr>
+      <tr><td>Produz</td><td>caminhos mínimos de uma origem</td><td>caminhos mínimos de uma origem</td><td>AGM (|V|−1 arestas)</td></tr>
+      <tr><td>Estratégia</td><td>gulosa: menor distância provisória</td><td>relaxa <b>todas</b> as arestas, |V|−1 vezes</td><td>gulosa: aresta mais leve que sai da árvore</td></tr>
+      <tr><td>Pesos negativos</td><td>não (pode errar)</td><td>sim</td><td>podem existir</td></tr>
+      <tr><td>Ciclo negativo</td><td>não detecta</td><td>detecta (rodada extra)</td><td>não se aplica</td></tr>
+      <tr><td>Custo</td><td>O((V+E) log V) com heap</td><td>O(V·E)</td><td>O(E log V) heap; O(V²) matriz</td></tr>
+    </table>
+    <ul>
+      <li>Bellman-Ford: depois das |V|−1 rodadas, faz mais uma. Se alguma distância ainda diminuir, existe ciclo negativo alcançável e não há distância mínima finita.</li>
+      <li>Bellman-Ford também resolve pesos positivos, mas é mais lento. Com pesos ≥ 0, a escolha adequada é Dijkstra.</li>
+    </ul>
+    <div class="pega">Prim não é Dijkstra: a AGM minimiza a soma total e <b>não</b> dá caminhos mínimos entre dois pontos. Prim também não detecta ciclos negativos, e Bellman-Ford não constrói AGM. Dijkstra não serve com arestas negativas.</div>
+  </section>
+
+  <section class="sub" id="t09-inf" data-titulo="Tópicos para as questões inferidas">
+
+    <section class="sub" id="t09-inf-defs" data-titulo="Definições: ordem, tamanho, adjacência, incidência">
+      <ul>
+        <li>G = (V, E). <b>Ordem</b> = |V| (nº de vértices); <b>tamanho</b> = |E| (nº de arestas).</li>
+        <li><b>Adjacência</b> é relação entre vértices ligados por uma aresta. <b>Incidência</b> é relação entre a aresta e os vértices das suas pontas. <b>N(v)</b> é o conjunto dos vizinhos de v.</li>
+        <li><b>Grafo simples</b>: sem laços e sem arestas paralelas. Duas arestas entre o mesmo par formam um multigrafo, e repetir {u,v} no conjunto E não cria uma segunda aresta.</li>
+        <li>Relação com sentido ("A segue B", "Si replica para Sj") pede grafo <b>direcionado</b>, em que (u,v) ≠ (v,u). Relação simétrica (amizade, cabo) usa grafo não direcionado.</li>
+        <li>Exemplo: S1–S2, S1–S3, S2–S3, S3–S4 têm ordem 4 e tamanho 4. N(S3) = {S1, S2, S4}, e S4 tem grau 1.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t09-inf-funcoes" data-titulo="Funções injetora, sobrejetora e bijetora">
+      <p><b>Função</b> f: A → B: cada elemento de A tem <b>exatamente uma</b> imagem. Se algum elemento fica sem seta ou tem duas, f não é função. Vários elementos podem apontar para o mesmo elemento de B.</p>
+      <table>
+        <tr><th>Tipo</th><th>Pode repetir imagem?</th><th>Pode sobrar elemento em B?</th></tr>
+        <tr><td>Injetora</td><td>Não</td><td>Sim</td></tr>
+        <tr><td>Sobrejetora</td><td>Sim</td><td>Não</td></tr>
+        <tr><td>Bijetora</td><td>Não</td><td>Não</td></tr>
+      </table>
+      <figure><img src="img/t09-funcoes.png" alt="Diagramas de flechas de funções injetora, sobrejetora e bijetora"><figcaption>Fonte: TEORIA_DOS_GRAFOS - MATERIAL EXPLICATIVO.pdf, p. 8</figcaption></figure>
+      <ul>
+        <li>Em conjuntos finitos, uma bijeção exige |A| = |B|, e toda bijetora tem inversa f⁻¹: B → A.</li>
+        <li>Se |A| &gt; |B| (ex.: 4 reservas → 3 salas), nenhuma f é injetora, e trocar uma imagem pode torná-la sobrejetora, mas nunca bijetora.</li>
+        <li>A bijeção é a base do isomorfismo de grafos.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t09-inf-isomorfismo" data-titulo="Isomorfismo e invariantes">
+      <p>G e H são <b>isomorfos</b> se existe uma bijeção f: V(G) → V(H) que preserva adjacências: {u,v} ∈ E(G) ⇔ {f(u),f(v)} ∈ E(H).</p>
+      <figure><img src="img/t09-isomorfos.png" alt="Grafo G (quadrado com diagonal A–C) e grafo H isomorfos, bijeção A→1, B→3, C→2, D→4"><figcaption>Fonte: TEORIA_DOS_GRAFOS - MATERIAL EXPLICATIVO.pdf, p. 17</figcaption></figure>
+      <ol>
+        <li>Compare os invariantes: |V|, |E|, sequência de graus, nº de componentes conexas, vértices isolados, nº de triângulos. Se algum diferir, os grafos não são isomorfos.</li>
+        <li>Associe só vértices de mesmo grau. Na figura, A e C (grau 3) vão para 1 e 2, e B e D (grau 2) vão para 3 e 4.</li>
+        <li>Teste aresta por aresta: uma única aresta que não corresponda derruba a bijeção.</li>
+      </ol>
+      <div class="pega">Ter os mesmos |V|, |E| e a mesma sequência de graus é necessário, mas não suficiente. Um ciclo de 6 vértices e dois triângulos separados têm 6 vértices, 6 arestas e todos os graus iguais a 2, mas não são isomorfos: um tem 1 componente e o outro tem 2.</div>
+    </section>
+
+    <section class="sub" id="t09-inf-euler" data-titulo="Fórmula de Euler e testes de planaridade">
+      <ul>
+        <li>Grafo planar conexo: <b>V − E + F = 2</b>, e a face externa conta. Ex.: V = 8 e E = 12 dão F = 6 (o cubo).</li>
+        <li>Planar simples com V ≥ 3 ⇒ <b>E ≤ 3V − 6</b>.</li>
+        <li>Planar bipartido (sem triângulos) com V ≥ 3 ⇒ <b>E ≤ 2V − 4</b>.</li>
+        <li>Violar uma desigualdade prova que o grafo é <b>não planar</b>. K5: 10 &gt; 9. K3,3: 9 ≤ 12, mas 9 &gt; 8. 6 vértices e 13 arestas: 13 &gt; 12.</li>
+      </ul>
+      <div class="pega">Satisfazer a desigualdade não prova que o grafo é planar: com 10 vértices e 15 arestas, 15 ≤ 24 e o grafo ainda pode ser não planar. Quem caracteriza a planaridade é Kuratowski.</div>
+    </section>
+
+    <section class="sub" id="t09-inf-direcionado" data-titulo="Matriz de grafo direcionado e graus de entrada/saída">
+      <ul>
+        <li><b>Linha</b> i: arcos que saem de i, e a soma da linha é deg⁺ (grau de saída). <b>Coluna</b> j: arcos que chegam em j, e a soma da coluna é deg⁻ (grau de entrada).</li>
+        <li>Σ deg⁺ = Σ deg⁻ = |E| = nº de uns na matriz. Não se multiplica por 2: o dobro vale só para grafo não direcionado.</li>
+        <li>Na matriz do slide (figura em "Matriz × lista"), há 7 arcos. Lista: A:[B]; B:[D]; C:[A,E]; D:[C,E]; E:[D]. deg⁺ = 1, 1, 2, 2, 1 e deg⁻ = 1, 1, 1, 2, 2 (A a E). Os dois somam 7.</li>
+      </ul>
+      <div class="pega">(D,E) = (E,D) = 1 só porque existem os dois arcos, D→E e E→D. Uma coincidência não torna a matriz simétrica.</div>
+    </section>
+
+    <section class="sub" id="t09-inf-ponderado" data-titulo="Grafos ponderados: matriz de pesos e lista">
+      <ul>
+        <li>Matriz: a[i][j] guarda o peso. A ausência de aresta precisa de um valor especial, como <b>∞</b>. O slide p. 23 usa 0, e o slide p. 46 usa ∞. Usar 0 confunde "sem aresta" com uma aresta de peso 0.</li>
+        <li>Lista: pares (vizinho, peso). No grafo A–B 8, A–C 4, A–D 10, B–D 3, B–E 6, C–D 5, D–E 7, a lista de D é [(A,10), (B,3), (C,5), (E,7)].</li>
+        <li>Em grafo não direcionado, o total de pares é <b>2|E|</b>: com 7 arestas, 14 pares.</li>
+        <li>A diagonal 0 indica ausência de laço, não uma aresta (D,0).</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t09-inf-ordem" data-titulo="Ordem de visita: DFS × BFS">
+      <p>Exemplo da figura em "Percursos": arestas A–B, A–C, B–D, B–E, C–F, E–G, com vizinhos em ordem alfabética.</p>
+      <ul>
+        <li><b>DFS</b>: A, B, D, E, G, C, F. Depois de D, volta a B; segue para E e G; volta até A e só então visita C e F.</li>
+        <li><b>BFS</b>: A, B, C, D, E, F, G. A fila evolui assim: [A] → [B, C] → [C, D, E] → [D, E, F] → [E, F] → [F, G].</li>
+        <li>Nos slides, o mesmo grafo aparece sem G: DFS A→B→D→E→C→F e BFS A→B→C→D→E→F.</li>
+      </ul>
+      <div class="pega">Na DFS, G vem logo após E, antes de C. Na BFS, F (nível 2) vem antes de G (nível 3). Outra ordem de vizinhos produz outra sequência válida.</div>
+    </section>
+
+    <section class="sub" id="t09-inf-aplic" data-titulo="Componentes, ciclos e ordenação topológica">
+      <figure><img src="img/t09-aplicacoes.png" alt="Aplicações dos percursos: conectividade, ciclos e ordenação topológica em DAG"><figcaption>Fonte: Teoria dos Grafos.pdf (slides), p. 38</figcaption></figure>
+      <ul>
+        <li><b>Componentes conexas</b>: dispare uma BFS/DFS a partir de cada vértice ainda não visitado. O nº de disparos é o nº de componentes, e um vértice isolado também conta. Uma BFS visita só o que é alcançável da origem e termina quando a fila esvazia.</li>
+        <li><b>Ciclo</b>: na DFS, é uma aresta para um ancestral que ainda está na pilha de recursão (aresta de retorno). Em grafo não direcionado, ignore a aresta para o pai.</li>
+        <li>O custo é O(V+E) com lista e O(V²) com matriz, porque com matriz é preciso varrer a linha inteira.</li>
+        <li><b>Ordenação topológica</b>: só existe em DAG (grafo direcionado sem ciclos). Para todo arco U → V, U vem antes de V. Com DFS, a ordem é a <b>pós-ordem invertida</b>. Várias ordens podem ser válidas: confira arco por arco.</li>
+        <li>Ex.: T1→T2, T1→T3, T2→T4, T3→T4, T2→T5, T4→T6, T5→T6. A ordem T1, T3, T2, T5, T4, T6 é válida. T1, T2, T4, T3… não é, porque viola T3→T4.</li>
+      </ul>
+      <div class="pega">O slide p. 37 marca a BFS com ✗ em ordenação topológica, mas a apostila diz "não na forma básica". Existe a versão com fila e graus de entrada (Kahn), então desconfie de "só a DFS ordena".</div>
+    </section>
+
+    <section class="sub" id="t09-inf-dijkstra" data-titulo="Execução do Dijkstra">
+      <p>Comece com d[origem] = 0 e os demais em ∞. Repita: finalize o vértice <b>não finalizado de menor d</b> (o menor entre todos, não o vizinho do último) e relaxe as arestas que saem dele. Relaxar é: se d[u] + w &lt; d[v], então d[v] ← d[u] + w.</p>
+      <figure><img src="img/t09-dijkstra.png" alt="Grafo ponderado A–B 8, A–C 4, A–D 10, B–D 3, B–E 6, C–D 5, D–E 7 e matriz com ∞"><figcaption>Fonte: Teoria dos Grafos.pdf (slides), p. 46</figcaption></figure>
+      <table>
+        <tr><th>Finaliza</th><th>B</th><th>C</th><th>D</th><th>E</th></tr>
+        <tr><td>A (0)</td><td>8</td><td>4</td><td>10</td><td>∞</td></tr>
+        <tr><td>C (4)</td><td>8</td><td>4</td><td><b>9</b></td><td>∞</td></tr>
+        <tr><td>B (8)</td><td>8</td><td>4</td><td>9</td><td><b>14</b></td></tr>
+        <tr><td>D (9)</td><td>8</td><td>4</td><td>9</td><td>14 (16 não melhora)</td></tr>
+      </table>
+      <p>O resultado é E = 14 pelo caminho A–B–E, com ordem de finalização A, C, B, D, E. No exemplo da apostila (Fig. 12), as distâncias são A 0, C 1, B 3, D 4, E 7 (A–C–B–D–E).</p>
+      <div class="pega">Ir sempre para "o vizinho mais barato do último vértice" (A–C–D–E = 16) não é Dijkstra. A ordem de finalização segue as distâncias crescentes, não a ordem alfabética.</div>
+    </section>
+
+    <section class="sub" id="t09-inf-bellman" data-titulo="Execução do Bellman-Ford e ciclo negativo">
+      <figure><img src="img/t09-bellman.png" alt="Grafo dirigido S→A 4, S→B 5, A→C −3, B→C 6, C→D 2, D→B −1"><figcaption>Fonte: TEORIA_DOS_GRAFOS - MATERIAL EXPLICATIVO.pdf, p. 31</figcaption></figure>
+      <ul>
+        <li>Faça |V| − 1 rodadas relaxando <b>todos</b> os arcos, porque um caminho simples tem no máximo |V| − 1 arestas. Depois, uma rodada extra: se alguma distância ainda cair, há ciclo negativo alcançável.</li>
+        <li>Na figura: S 0, A 4, C 4 − 3 = 1, D 3, e B melhora de 5 para 3 − 1 = <b>2</b> (S→A→C→D→B). O ciclo B→C→D→B pesa 6 + 2 − 1 = 7 ≥ 0, então não há ciclo negativo.</li>
+        <li>Se D→B valesse −9, o ciclo pesaria −1 e a rodada extra ainda reduziria distâncias: o algoritmo detecta o ciclo negativo.</li>
+        <li>Slide p. 47: A→B 4, A→C 5, B→C −2 dão d(C) = min(5, 4 − 2) = 2.</li>
+      </ul>
+      <div class="pega">Bellman-Ford não "finaliza cada vértice uma vez" de forma gulosa (isso é Dijkstra). Um vértice pode ser atualizado várias vezes, e o custo é O(V·E).</div>
+    </section>
+
+    <section class="sub" id="t09-inf-prim" data-titulo="Execução do Prim e “Prim não é Dijkstra”">
+      <p>O Prim cresce <b>uma</b> árvore a partir de um vértice. A cada passo, escolhe a aresta mais leve com uma ponta na árvore e outra fora (o "corte"). Uma aresta com as duas pontas na árvore é descartada, porque fecharia ciclo. Ao final, a árvore tem |V| − 1 arestas.</p>
+      <figure><img src="img/t09-prim.png" alt="Grafo ponderado A–F com a árvore geradora mínima destacada, peso total 10"><figcaption>Fonte: TEORIA_DOS_GRAFOS - MATERIAL EXPLICATIVO.pdf, p. 36</figcaption></figure>
+      <p>A partir de A, as arestas escolhidas são A–C 1, C–B 2, B–D 4 (A–B 3 é descartada), D–E 2 e E–F 1, com <b>total 10</b>. No exemplo dos slides (A–B 2, A–C 4, B–C 1, B–D 5, C–D 3), o Prim escolhe A–B, B–C e C–D (A–C é descartada), com custo 6.</p>
+      <table>
+        <tr><th></th><th>Prim</th><th>Dijkstra</th></tr>
+        <tr><td>Minimiza</td><td>peso total da árvore</td><td>distância desde a fonte</td></tr>
+        <tr><td>Chave do vértice</td><td>menor aresta que o liga à árvore</td><td>distância acumulada desde a fonte</td></tr>
+        <tr><td>Pesos negativos</td><td>podem existir</td><td>não (clássico)</td></tr>
+      </table>
+      <ul>
+        <li>A AGM não dá caminho mínimo. Na árvore acima, o caminho de A até F custa 10 (A–C–B–D–E–F), mas no grafo existe A–C–E–F, que custa 8.</li>
+        <li>Em grafo desconexo, aplicar o Prim em cada componente gera uma floresta geradora mínima.</li>
+        <li>O custo é O(E log V) com heap e O(V²) com matriz.</li>
+      </ul>
+      <div class="pega">Pegar a menor aresta do grafo inteiro (por exemplo, E–F logo no 2º passo) é o critério do Kruskal, não do Prim: o Prim só olha arestas que tocam a árvore. Outro erro é escolher a "árvore de caminhos mínimos" A–C, A–B, C–D, C–E, E–F, que custa 16 e não é a AGM.</div>
+    </section>
+
+  </section>
+</section>

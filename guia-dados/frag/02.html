@@ -1,0 +1,113 @@
+<section class="topico" id="t02" data-titulo="02 · Estruturas de Dados">
+
+  <section class="sub" id="t02-listas" data-titulo="Listas encadeadas (simples, duplas e circulares)">
+    <p class="cai">Questões reais: quiz nº 8 · origem Q1</p>
+    <p>Cada nó guarda o dado e ponteiro(s) para outro(s) nó(s). Os nós não são contíguos na memória. Inserir ou remover no <b>início</b> custa O(1). Chegar ao n-ésimo nó ou buscar por valor custa O(n), porque não há acesso por índice.</p>
+    <table>
+      <tr><th>Variação</th><th>Ponteiros do nó</th><th>Remover um nó já conhecido (tenho <code>p</code>)</th></tr>
+      <tr><td>Simples</td><td><code>prox</code></td><td><b>O(n)</b>: precisa achar o antecessor percorrendo desde a cabeça</td></tr>
+      <tr><td>Dupla</td><td><code>ant</code> e <code>prox</code></td><td><b>O(1)</b>: religa os dois vizinhos direto</td></tr>
+      <tr><td>Circular</td><td>último aponta para o primeiro</td><td>uso típico: estruturas cíclicas (escalonamento round-robin)</td></tr>
+    </table>
+    <pre><code>struct NoD { int dado;
+             struct NoD *ant, *prox; };
+/* remover p: O(1), sem percorrer */
+p-&gt;ant-&gt;prox = p-&gt;prox;
+p-&gt;prox-&gt;ant = p-&gt;ant;
+free(p); /* checar NULL nas pontas */</code></pre>
+    <figure><img src="img/t02-listas.png" alt="Lista simples, dupla (ant e prox) e circular"><figcaption>Fonte: Material_Estruturas_de_Dados.pdf, p. 6</figcaption></figure>
+    <div class="chave">É o ponteiro <code>ant</code> que dispensa a busca do antecessor. Por isso “a dupla remove nó conhecido em O(1)” é verdadeiro e “cada nó da dupla tem <code>ant</code> e <code>prox</code>” é a <b>justificativa</b> disso.</div>
+    <div class="chave">Asserção-razão: julgue a I, depois a II; só com as duas verdadeiras pergunte se a II explica a I. “A simples é mais adequada” ou “na dupla custa O(n)” tornam a I falsa. Uma II verdadeira mas sem relação (ex.: “a circular liga o último ao primeiro”) não justifica a I.</div>
+    <div class="pega">“Remover de lista é sempre O(n)” é falso: O(n) é <i>achar</i> o nó (ou o antecessor, na simples). O truque “copiar o próximo e removê-lo” na simples falha no último nó; não é remoção genérica.</div>
+  </section>
+
+  <section class="sub" id="t02-pilhas" data-titulo="Pilhas (LIFO) e filas (FIFO)">
+    <p class="cai">Questões reais: quiz nº 9 · origem Q2</p>
+    <table>
+      <tr><th></th><th>Pilha</th><th>Fila</th></tr>
+      <tr><td>Política</td><td>LIFO: último a entrar, primeiro a sair</td><td>FIFO: primeiro a entrar, primeiro a sair</td></tr>
+      <tr><td>Operações</td><td><code>push</code> e <code>pop</code>, só no topo, O(1)</td><td><code>enqueue</code> no fim e <code>dequeue</code> no início, O(1) (índices circulares <code>% MAX</code>)</td></tr>
+      <tr><td>Usos</td><td>pilha de execução, desfazer, expressões, backtracking (DFS)</td><td>escalonamento, buffers, BFS</td></tr>
+    </table>
+    <p><b>Underflow</b> = <code>pop</code> em pilha vazia. O <code>pop</code> do material (<code>return p-&gt;itens[p-&gt;topo--];</code>) não testa nada, então a verificação vem <b>antes</b>.</p>
+    <h5>Desfazer com duas pilhas (Desfazer e Refazer)</h5>
+    <ol>
+      <li>Verificar se a pilha Desfazer não está vazia; se estiver, encerrar.</li>
+      <li><code>pop</code> da ação no topo de Desfazer.</li>
+      <li>Aplicar ao documento a operação <b>inversa</b> dessa ação.</li>
+      <li><code>push</code> da ação na pilha Refazer.</li>
+    </ol>
+    <p>Refazer é o espelho: verifica Refazer → <code>pop</code> de Refazer → reaplica a ação → <code>push</code> em Desfazer.</p>
+    <figure><img src="img/t02-pilhas-undo.png" alt="Pilhas Desfazer e Refazer: a ação do topo sai de Desfazer (pop) e entra em Refazer (push)"><figcaption>Fonte: Apresentacao_Questoes_ENADE (1).pdf, p. 7</figcaption></figure>
+    <div class="chave">Ordem segura: <b>verificar → pop → aplicar o inverso → push no Refazer</b>.</div>
+    <div class="pega">Erros das sequências erradas: <code>pop</code> antes de verificar (risco de underflow); verificação deixada para o fim, depois de já mexer no documento; <code>push</code> no Refazer antes de aplicar o inverso (a ação ficaria “refazível” sem ter sido desfeita). O <code>push</code> no Refazer é sempre o último passo.</div>
+  </section>
+
+  <section class="sub" id="t02-arvores" data-titulo="Árvores de busca (BST) e balanceadas (AVL / rubro-negra)">
+    <p class="cai">Questões reais: quiz nº 10 · origem Q3</p>
+    <p><b>BST</b>: para cada nó, a subárvore esquerda tem valores menores e a direita, maiores. Busca, inserção e remoção custam <b>O(h)</b> (h = altura). Balanceada, h ≈ log n. Inserir 1, 2, 3, 4, 5 em ordem gera uma “escada” (só filhos à direita): h = n e a busca vira <b>O(n)</b>.</p>
+    <table>
+      <tr><th>Árvore</th><th>Pior caso (busca, inserção, remoção)</th><th>Altura</th></tr>
+      <tr><td>BST comum</td><td>O(n)</td><td>até n (degenerada)</td></tr>
+      <tr><td>AVL</td><td>O(log n)</td><td>≈ 1,44·log n (mais rígida)</td></tr>
+      <tr><td>Rubro-negra</td><td>O(log n)</td><td>≤ cerca de 2·log n (mais frouxa)</td></tr>
+    </table>
+    <ul>
+      <li><b>AVL</b>: em <b>todo</b> nó, |altura(esq) − altura(dir)| ≤ 1 (fator −1, 0 ou +1), restaurado por <b>rotações</b> após inserções e remoções. Mais rígida → mais rotações.</li>
+      <li><b>Rubro-negra</b>: nós vermelhos ou pretos; vermelho não tem filho vermelho; todo caminho raiz→folha tem o mesmo nº de pretos. Essas regras limitam a altura. Mais frouxa → menos rotações (base do <code>std::map</code>).</li>
+    </ul>
+    <figure><img src="img/t02-arvores.png" alt="BST com raiz 50 e árvore rubro-negra com raiz preta e filhos vermelhos"><figcaption>Fonte: Material_Estruturas_de_Dados.pdf, p. 11</figcaption></figure>
+    <div class="chave">AVL e rubro-negra garantem <b>O(log n) no pior caso</b> e diferem no <b>rigor do balanceamento</b>, logo na frequência de rotações. BST comum não garante nada no pior caso.</div>
+    <div class="pega">“A rubro-negra busca em O(1) porque a cor dispensa percorrer a altura” é falso. A cor só limita a altura; a busca ainda desce por ela. Nenhuma árvore de busca por comparação busca em O(1).</div>
+  </section>
+
+  <section class="sub" id="t02-hash" data-titulo="Tabela hash e tratamento de colisões">
+    <p class="cai">Questões reais: quiz nº 11 · origem Q4</p>
+    <p>A <b>função hash</b> transforma a chave em um índice do vetor: calcula onde o dado está, sem busca sequencial e sem ordem. Boa função: rápida e <b>distribui as chaves uniformemente</b>, o que reduz colisões. <b>Colisão</b> = duas chaves no mesmo índice; é inevitável, porque há mais chaves possíveis que posições.</p>
+    <table>
+      <tr><th>Tratamento</th><th>Como funciona</th><th>Fator de carga</th></tr>
+      <tr><td>Encadeamento separado</td><td>cada posição tem uma lista com as chaves que colidiram ali</td><td>tolera α &gt; 1</td></tr>
+      <tr><td>Endereçamento aberto</td><td>sonda a próxima posição livre (linear, quadrática, hash duplo)</td><td>exige α baixo</td></tr>
+    </table>
+    <p><b>Fator de carga</b> α = nº de elementos ÷ nº de posições. α maior → mais colisões → faz-se <i>rehash</i> (redimensionar, O(n)). Tamanho primo (ex.: M = 101) ajuda a espalhar.</p>
+    <figure><img src="img/t02-hash.png" alt="Chave gato passa pela função hash, vai ao balde 1 e a colisão vira lista no balde"><figcaption>Fonte: Apresentacao_Questoes_ENADE (1).pdf, p. 13</figcaption></figure>
+    <table>
+      <tr><th></th><th>Tabela hash</th><th>BST balanceada</th></tr>
+      <tr><td>Busca</td><td>O(1) médio, O(n) pior (tudo no mesmo balde)</td><td>O(log n)</td></tr>
+      <tr><td>Mantém ordem?</td><td><b>Não</b> (não faz busca binária)</td><td>Sim</td></tr>
+    </table>
+    <div class="chave">Hash: inserção, busca e remoção <b>O(1) no caso médio</b>, <b>O(n) no pior caso</b>, <b>sem ordem</b>. Precisa de ordenação → árvore balanceada.</div>
+    <div class="pega">“Com boa função hash a busca é O(log n) porque as chaves ficam ordenadas para busca binária” tem dois erros: o custo médio é O(1) e a hash não ordena nada. O(log n) com ordem é de árvore balanceada ou vetor ordenado. Em comando “INCORRETA”, a resposta é a afirmação <b>falsa</b>.</div>
+  </section>
+
+  <section class="sub" id="t02-grafos" data-titulo="Grafos: matriz × lista de adjacência">
+    <p class="cai">Questões reais: quiz nº 12 · origem Q5</p>
+    <p><b>Matriz</b>: V×V, a célula [u][w] vale 1 (ou o peso) se há aresta. <b>Lista</b>: para cada vértice, a lista dos seus vizinhos. V = nº de vértices, E = nº de arestas.</p>
+    <table>
+      <tr><th>Operação</th><th>Matriz</th><th>Lista</th></tr>
+      <tr><td>Espaço</td><td>O(V²), mesmo com poucas arestas</td><td><b>O(V + E)</b></td></tr>
+      <tr><td>Existe a aresta (u, w)?</td><td><b>O(1)</b> (acesso direto a [u][w])</td><td>O(grau(u))</td></tr>
+      <tr><td>Percorrer os vizinhos de v</td><td>O(V) (varre a linha toda)</td><td><b>O(grau(v))</b></td></tr>
+      <tr><td>Indicada para</td><td>grafo <b>denso</b></td><td>grafo <b>esparso</b> (maioria dos casos reais)</td></tr>
+    </table>
+    <figure><img src="img/t02-grafo-repr.png" alt="Grafo de 4 vértices com sua matriz de adjacência 4x4 e suas listas de vizinhos"><figcaption>Fonte: Material_Estruturas_de_Dados.pdf, p. 14</figcaption></figure>
+    <div class="chave">Consultar aresta em O(1) → <b>matriz</b>. Economizar memória em grafo esparso → <b>lista</b> (O(V+E)). Iterar vizinhos → <b>lista</b> (O(grau)).</div>
+    <div class="pega">Na associação, as duas vantagens da lista não se trocam: “espaço O(V+E)” combina com memória, e “O(grau(v))” combina com iterar vizinhos. A matriz nunca economiza memória. Leia a Coluna 2 de cima para baixo e confira <b>cada posição</b>: há sequência que acerta a matriz e só troca os dois itens da lista (o material descreve esse distrator de forma imprecisa).</div>
+  </section>
+
+  <section class="sub" id="t02-bfs-dfs" data-titulo="Busca em grafos: BFS e DFS">
+    <p class="cai">Questões reais: quiz nº 13 · origem Q6</p>
+    <table>
+      <tr><th></th><th>BFS (largura)</th><th>DFS (profundidade)</th></tr>
+      <tr><td>Estrutura auxiliar</td><td><b>fila</b></td><td><b>pilha</b> (ou recursão)</td></tr>
+      <tr><td>Como explora</td><td>por níveis: todos os vizinhos antes de avançar</td><td>o mais fundo possível num ramo, depois volta (<i>backtracking</i>)</td></tr>
+      <tr><td>Custo (lista de adj.)</td><td>O(V+E)</td><td>O(V+E)</td></tr>
+      <tr><td>Serve para</td><td><b>menor caminho em nº de arestas</b> (grafo não ponderado), níveis, vizinho mais próximo</td><td>ciclos, ordenação topológica, componentes conexas</td></tr>
+    </table>
+    <figure><img src="img/t02-bfs-dfs.png" alt="Mesma árvore A a F: BFS visita A B C D E F e DFS visita A B D E C F"><figcaption>Fonte: Material_Estruturas_de_Dados.pdf, p. 15</figcaption></figure>
+    <p>A BFS visita os vértices em distância crescente (1, depois 2, …), então o primeiro encontro com o destino já é pelo menor número de arestas. A DFS pode descer por um ramo longo e chegar ao destino por um caminho comprido: não garante o mínimo.</p>
+    <div class="chave">“Grau de conexão”, menor nº de intermediários, grafo sem pesos → <b>BFS</b>. Grafo com pesos não negativos → Dijkstra.</div>
+    <div class="pega">“A DFS se aprofunda ao máximo e faz backtracking” é uma descrição <b>verdadeira</b>, mas não torna a DFS adequada ao menor caminho; é justamente o motivo de ela não servir. Asserção “DFS é adequada ao menor caminho” = falsa; a descrição da DFS = verdadeira. Já “a BFS é adequada PORQUE explora por níveis” tem as duas verdadeiras e com nexo.</div>
+  </section>
+
+</section>

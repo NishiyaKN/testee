@@ -1,0 +1,223 @@
+<section class="topico" id="t06" data-titulo="06 · Sistemas Operacionais">
+
+  <section class="sub" id="t06-visoes" data-titulo="Duas visões do SO e softwares tradutores">
+    <p class="cai">Questões reais: quiz nº 28 · caderno Q1</p>
+    <p>Tanenbaum: o SO é <b>ao mesmo tempo</b> máquina estendida e gerenciador de recursos. São duas <b>visões</b> do mesmo sistema, não duas tarefas independentes.</p>
+    <table>
+      <tr><th>Visão</th><th>Direção</th><th>Palavras-chave do enunciado</th></tr>
+      <tr><td><b>Máquina estendida</b> (máquina virtual, no sentido antigo)</td><td>de cima para baixo</td><td><i>ocultar</i> o hardware, <i>oferecer abstrações</i> (arquivos, processos, chamadas de sistema), simplificar a programação</td></tr>
+      <tr><td><b>Gerenciador de recursos</b></td><td>de baixo para cima</td><td><i>arbitrar, compartilhar, proteger, contabilizar</i> CPU, memória e dispositivos entre programas e usuários concorrentes (multiplexação no tempo e no espaço)</td></tr>
+    </table>
+    <p>Máquina de níveis: dispositivos físicos → microarquitetura → ISA → núcleo → aplicações e utilitários. Cada camada oferece uma interface mais conveniente que a de baixo.</p>
+    <table>
+      <tr><th>Programa</th><th>O que faz</th></tr>
+      <tr><td><b>Montador</b> (assembler)</td><td>linguagem simbólica de montagem (MOV, ADD, JMP) → código de máquina, quase uma instrução para uma</td></tr>
+      <tr><td><b>Compilador</b></td><td>código-fonte de alto nível inteiro → módulo objeto <b>antes</b> da execução; erros de sintaxe aparecem na compilação; o executável roda sem o compilador</td></tr>
+      <tr><td><b>Interpretador</b></td><td>traduz e executa <b>comando a comando</b>, sem gerar módulo objeto; precisa estar presente a cada execução (Python, shell)</td></tr>
+      <tr><td><b>Ligador</b> (linker)</td><td>junta módulos objeto e bibliotecas e resolve referências externas → executável. <b>Não traduz</b></td></tr>
+      <tr><td><b>Carregador</b> (loader)</td><td>coloca o executável na memória; o SO cria o processo</td></tr>
+    </table>
+    <div class="pega">Os distratores invertem as visões (gerenciador de recursos ↔ máquina estendida) ou trocam os tradutores: o compilador não traduz assembly (isso é o montador), o ligador não traduz nada, e "sem gerar previamente um módulo objeto" descreve o interpretador, nunca o compilador. Java (bytecode interpretado ou JIT) é o caso híbrido.</div>
+  </section>
+
+  <section class="sub" id="t06-modos" data-titulo="Modo kernel, interrupção, exceção e chamada de sistema">
+    <p class="cai">Questões reais: quiz nº 29 · caderno Q2</p>
+    <ul>
+      <li>O <b>bit de modo</b> fica na CPU. Em modo kernel a CPU executa tudo; em modo usuário só o subconjunto não privilegiado, e a MMU limita o acesso à memória do próprio processo.</li>
+      <li><b>Instruções privilegiadas:</b> desabilitar/habilitar interrupções, acessar registradores de controladores (E/S direta), alterar a tabela de páginas ou o bit de modo, HALT.</li>
+      <li>Instrução privilegiada em modo usuário → o <b>hardware</b> não a executa, gera uma <b>exceção</b> e passa o controle ao núcleo, que normalmente encerra o processo ("violação de acesso").</li>
+    </ul>
+    <p>Só há três formas de passar ao núcleo:</p>
+    <table>
+      <tr><th>Mecanismo</th><th>Natureza</th><th>Exemplos</th></tr>
+      <tr><td><b>Interrupção</b></td><td><b>assíncrona</b>, vem de dispositivo externo, sem relação com a instrução em curso</td><td>disco terminou, temporizador expirou, tecla, pacote de rede</td></tr>
+      <tr><td><b>Exceção</b> (trap, falha)</td><td><b>síncrona e involuntária</b>, causada pela própria instrução</td><td>divisão por zero, endereço inválido, instrução privilegiada em modo usuário, falta de página</td></tr>
+      <tr><td><b>Chamada de sistema</b></td><td><b>síncrona e voluntária</b>: o processo pede um serviço com uma <b>instrução de trap</b> (syscall, int 0x80, svc), que troca para modo kernel</td><td>read, write, fork, open</td></tr>
+    </table>
+    <p><b>API ≠ chamada de sistema.</b> A biblioteca (libc, Win32) roda em modo usuário e só prepara o trap. strlen e sqrt não geram syscall; fopen gera open + fstat; printf, por causa do buffer, pode gerar 0, 1 ou várias write.</p>
+    <figure><img src="img/t06-syscall.png" alt="Percurso de uma chamada de sistema: aplicação, biblioteca e trap em modo usuário; tratador, rotina do núcleo e driver em modo kernel"><figcaption>Fonte: SISTEMAS_OPERACIONAIS - MATERIAL_EXPLICATIVO.pdf, p. 10</figcaption></figure>
+    <div class="pega">"A interrupção é síncrona, causada por divisão por zero ou endereço inválido" é <b>falsa</b>: isso descreve a exceção. "Toda função de biblioteca corresponde obrigatoriamente a uma única syscall" é <b>falsa</b>: as palavras "obrigatoriamente" e "única" denunciam o erro. Desabilitar interrupções é privilegiado e a definição de syscall via trap é verdadeira.</div>
+  </section>
+
+  <section class="sub" id="t06-boot" data-titulo="Sequência de inicialização (boot)">
+    <p class="cai">Questões reais: quiz nº 30 · caderno Q3</p>
+    <p>Cada elo carrega o seguinte. Decore a ordem pela <b>função</b>, porque a questão embaralha os números das etapas:</p>
+    <ol>
+      <li><b>Firmware</b> (BIOS/UEFI) executa o <b>POST</b>: testa e inventaria o hardware (mensagem de teste de memória). Nenhum disco foi lido ainda.</li>
+      <li>O firmware <b>localiza o dispositivo de boot</b> pela ordem configurada e lê o carregador gravado nele (MBR ou partição EFI em GPT).</li>
+      <li>O <b>gerenciador de boot</b> (GRUB, Windows Boot Manager) mostra as opções, carrega o kernel (e o initramfs) na memória e transfere o controle a ele.</li>
+      <li>O <b>kernel</b> inicializa suas estruturas, carrega drivers e monta o sistema de arquivos raiz.</li>
+      <li>O kernel cria o <b>primeiro processo em modo usuário, PID 1</b> (init/systemd), que sobe os serviços.</li>
+    </ol>
+    <figure><img src="img/t06-boot.png" alt="Cinco etapas do boot: firmware, dispositivo de boot, gerenciador de boot, kernel, primeiro processo"><figcaption>Fonte: SISTEMAS_OPERACIONAIS - MATERIAL_EXPLICATIVO.pdf, p. 52</figcaption></figure>
+    <div class="chave">Teste de memória na tela seguido de "nenhum dispositivo inicializável encontrado" = o POST terminou e a falha está no 2º elo, a localização do dispositivo de boot (disco ou configuração do firmware), não no kernel.</div>
+    <div class="pega">Ordens erradas típicas: buscar o dispositivo antes do POST; gerenciador de boot antes da leitura do dispositivo (ele é justamente o código lido ali); kernel se inicializando antes de ser carregado; PID 1 antes de montar a raiz (o init é um arquivo da raiz).</div>
+  </section>
+
+  <section class="sub" id="t06-pcb" data-titulo="PCB e troca de contexto">
+    <p class="cai">Questões reais: quiz nº 31 · caderno Q4</p>
+    <p><b>Bloco de Controle de Processo (PCB)</b>: estrutura do núcleo que representa o processo (task_struct no Linux, EPROCESS no Windows). Há um por processo, e o conjunto forma a tabela de processos. Partes (Machado &amp; Maia):</p>
+    <ul>
+      <li><b>Contexto de hardware:</b> registradores, contador de programa (PC), ponteiro de pilha (SP), PSW. É o que permite retomar do ponto exato.</li>
+      <li><b>Contexto de software:</b> PID, PPID, dono, prioridade, quotas, limites, estado.</li>
+      <li><b>Espaço de endereçamento:</b> ponteiro para a tabela de páginas.</li>
+    </ul>
+    <p><b>Troca de contexto</b>: o dispatcher salva o contexto de hardware de quem sai no PCB dele, restaura o de quem entra a partir do PCB dele e aponta a MMU para a nova tabela de páginas. É overhead puro.</p>
+    <figure><img src="img/t06-pcb.png" alt="Conteúdo do PCB e linha do tempo da troca de contexto entre os processos A e B"><figcaption>Fonte: SISTEMAS_OPERACIONAIS - MATERIAL_EXPLICATIVO.pdf, p. 17</figcaption></figure>
+    <div class="chave">Processos que, depois da preempção, "reiniciam do começo" indicam que o contexto de hardware não está sendo salvo e restaurado no PCB.</div>
+    <table>
+      <tr><th>Distrator</th><th>O que guarda e por que não é o PCB</th></tr>
+      <tr><td>Tabela de páginas</td><td>mapeamento página → quadro, usado pela MMU. É por processo, mas não guarda registradores nem o PC</td></tr>
+      <tr><td>Pilha de execução</td><td>registros de ativação das funções (retorno, variáveis locais). Não guarda o estado completo da CPU entre processos e não é tratada pelo dispatcher</td></tr>
+      <tr><td>Vetor de interrupções</td><td>endereços das rotinas de tratamento. É global, não por processo</td></tr>
+    </table>
+    <p>Estados: novo → pronto ⇄ executando; executando → espera → pronto; executando → terminado. <b>Não existe</b> espera → executando: terminada a E/S, o processo volta para pronto.</p>
+  </section>
+
+  <section class="sub" id="t06-deadlock" data-titulo="Exclusão mútua e deadlock">
+    <p class="cai">Questões reais: quiz nº 32 · caderno Q5</p>
+    <ul>
+      <li><b>Condição de corrida:</b> o resultado depende da ordem de intercalação dos fluxos. <b>Região crítica:</b> o trecho que acessa o recurso compartilhado.</li>
+      <li><b>Exclusão mútua</b> (semáforo binário/mutex) impede o acesso simultâneo e elimina condições de corrida.</li>
+      <li><b>Deadlock</b> exige as 4 <b>condições de Coffman</b> ao mesmo tempo: exclusão mútua, posse e espera, não preempção, espera circular.</li>
+    </ul>
+    <figure><img src="img/t06-deadlock.png" alt="Grafo de alocação: T1 detém mutex A e pede B; T2 detém B e pede A; ciclo = deadlock; quatro condições de Coffman"><figcaption>Fonte: SISTEMAS_OPERACIONAIS - MATERIAL_EXPLICATIVO.pdf, p. 26</figcaption></figure>
+    <p>Cenário clássico: uma rotina pega A e pede B; outra pega B e pede A. Mesmo com todas as regiões críticas corretamente protegidas, as quatro condições valem e o sistema trava.</p>
+    <div class="chave">A exclusão mútua <b>não previne</b> deadlock: ela é a <b>primeira</b> das condições que o tornam possível. Usar mutexes corretamente <b>não basta</b> para evitar impasse (falso); dizer que a exclusão mútua impede o acesso simultâneo e elimina condições de corrida é <b>verdadeiro</b>, mas trata de outro problema. Remédio: <b>ordem global de aquisição</b> (todos pegam A antes de B), que quebra a espera circular.</div>
+    <p>Estratégias: prevenir (negar uma condição), evitar (algoritmo do banqueiro, estado seguro), detectar e recuperar, ignorar (avestruz). Inanição não é deadlock: não há espera circular.</p>
+    <div class="pega">Na asserção-razão, a II verdadeira "parece explicar" a I. Se a I é falsa, não se avalia justificativa. Também não negue a II por desconfiança: ela define corretamente o semáforo.</div>
+  </section>
+
+  <section class="sub" id="t06-escalonamento" data-titulo="Escalonamento de CPU e tempo médio de espera">
+    <p class="cai">Questões reais: quiz nº 33 · caderno Q6</p>
+    <div class="chave">turnaround = conclusão − chegada · <b>espera = turnaround − duração</b> · resposta = 1ª execução − chegada. Monte o Gantt e <b>reavalie a fila a cada chegada e a cada término</b>.</div>
+    <table>
+      <tr><th>Algoritmo</th><th>Preempção</th><th>Característica</th></tr>
+      <tr><td>FCFS/FIFO</td><td>não</td><td>ordem de chegada; efeito comboio</td></tr>
+      <tr><td>SJF</td><td>não</td><td>menor duração primeiro, mas só escolhe quando a CPU fica livre; precisa conhecer as durações; inanição</td></tr>
+      <tr><td>SRTF</td><td>sim</td><td>a cada chegada, se o novo tem duração menor que o <b>restante</b> do atual, preempta; menor espera média quando as durações são conhecidas</td></tr>
+      <tr><td>Round-Robin</td><td>sim (quantum)</td><td>otimiza o tempo de <b>resposta</b>; quantum grande vira FCFS, pequeno gera excesso de trocas</td></tr>
+      <tr><td>Prioridade</td><td>ambos</td><td>inanição, resolvida com envelhecimento (aging)</td></tr>
+    </table>
+    <p>Carga da questão: P1 (chega 0, dura 7), P2 (2, 4), P3 (4, 1), P4 (5, 4). SLA: espera média ≤ 3,5 ms. O traço observado (P1 0–7, P2 7–11, P3 11–12, P4 12–16) segue a ordem de chegada sem preempção, ou seja, FCFS.</p>
+    <table>
+      <tr><th>Política</th><th>Gantt</th><th>Esperas P1, P2, P3, P4</th><th>Média</th></tr>
+      <tr><td>FCFS</td><td>P1&nbsp;0&#8288;–&#8288;7 · P2&nbsp;7&#8288;–&#8288;11 · P3&nbsp;11&#8288;–&#8288;12 · P4&nbsp;12&#8288;–&#8288;16</td><td>0, 5, 7, 7</td><td>4,75</td></tr>
+      <tr><td>SJF não preemptivo</td><td>P1&nbsp;0&#8288;–&#8288;7 · P3&nbsp;7&#8288;–&#8288;8 · P2&nbsp;8&#8288;–&#8288;12 · P4&nbsp;12&#8288;–&#8288;16</td><td>0, 6, 3, 7</td><td>4,0</td></tr>
+      <tr><td><b>SRTF</b></td><td>P1&nbsp;0&#8288;–&#8288;2 · P2&nbsp;2&#8288;–&#8288;4 · P3&nbsp;4&#8288;–&#8288;5 · P2&nbsp;5&#8288;–&#8288;7 · P4&nbsp;7&#8288;–&#8288;11 · P1&nbsp;11&#8288;–&#8288;16</td><td>9, 1, 0, 2</td><td><b>3,0</b></td></tr>
+      <tr><td>RR q = 2</td><td>P1&nbsp;0&#8288;–&#8288;2 · P2&nbsp;2&#8288;–&#8288;4 · P1&nbsp;4&#8288;–&#8288;6 · P3&nbsp;6&#8288;–&#8288;7 · P2&nbsp;7&#8288;–&#8288;9 · P4&nbsp;9&#8288;–&#8288;11 · P1&nbsp;11&#8288;–&#8288;13 · P4&nbsp;13&#8288;–&#8288;15 · P1&nbsp;15&#8288;–&#8288;16</td><td>9, 3, 2, 6</td><td>5,0</td></tr>
+    </table>
+    <p>Decisões do SRTF: em t = 2, P2 (4) preempta P1 (restam 5); em t = 4, P3 (1) preempta P2 (restam 2); em t = 5, P4 (4) <b>não</b> preempta P2 (restam 2); em t = 7, P4 (4) vence P1 (5).</p>
+    <figure><img src="img/t06-gantt-q6.png" alt="Gantt da mesma carga sob FCFS 4,75 ms, SJF não preemptivo 4,00 ms, SRTF 3,00 ms e Round-Robin q=2 5,00 ms"><figcaption>Fonte: SISTEMAS_OPERACIONAIS - GABARITO.pdf, p. 10</figcaption></figure>
+    <div class="pega">"SJF não preemptivo com 3,0 ms" é falso: P1 roda de 0 a 7 sem interrupção e a média dá 4,0 (os 3,0 são do SRTF). "RR q = 2 com 1,5 ms" usa o tempo de <b>resposta</b> médio (0, 0, 2, 4); a espera real é 5,0 ms (6,25 se o processo preemptado entrar na fila antes do que chega no mesmo instante), e viola o SLA. "Manter o FCFS (4,75 ms)" também viola o SLA. A inanição no SRTF se resolve com aging, e nesta carga P1 termina em t = 16.</div>
+  </section>
+
+  <section class="sub" id="t06-memoria" data-titulo="Alocação contígua, first/best/worst-fit e fragmentação">
+    <p class="cai">Questões reais: quiz nº 34 · caderno Q7</p>
+    <ul>
+      <li><b>Partições fixas</b> → fragmentação <b>interna</b>: sobra espaço <b>dentro</b> da partição alocada.</li>
+      <li><b>Partições variáveis</b> → fragmentação <b>externa</b>: a partição tem o tamanho exato do processo, e sobram lacunas livres pequenas e dispersas <b>fora</b> das áreas alocadas.</li>
+    </ul>
+    <figure><img src="img/t06-fragmentacao.png" alt="Partições fixas de 100 KB com desperdício interno e partições variáveis com lacunas livres de 40, 30 e 50 KB"><figcaption>Fonte: SISTEMAS_OPERACIONAIS - MATERIAL_EXPLICATIVO.pdf, p. 31</figcaption></figure>
+    <p>Mapa de áreas livres, em ordem de endereço: 100, 500, 200, 300, 600 KB. Pedido de 212 KB (cabe em 500, 300 e 600):</p>
+    <table>
+      <tr><th>Estratégia</th><th>Regra</th><th>212 KB vai para</th></tr>
+      <tr><td>First-fit</td><td>primeira área que cabe; a mais rápida</td><td>500 (resto 288)</td></tr>
+      <tr><td><b>Best-fit</b></td><td><b>menor</b> área que cabe; varre a lista toda e deixa o menor resto, mas espalha lacunas minúsculas</td><td><b>300 (resto 88)</b></td></tr>
+      <tr><td>Worst-fit</td><td>maior área de todas</td><td>600 (resto 388)</td></tr>
+    </table>
+    <div class="chave">Compactação resolve a fragmentação externa, mas é cara e exige relocação dinâmica. A paginação elimina a externa e deixa uma interna pequena na última página. A segmentação tem fragmentação externa. Com vários pedidos, aplique a estratégia sobre o mapa já atualizado.</div>
+    <div class="pega">"300 KB, fragmentação interna, pois a partição tem tamanho predefinido" erra o tipo: tamanho predefinido é partição fixa, e o cenário é de partições variáveis. 500 KB é a escolha do first-fit e 600 KB a do worst-fit.</div>
+  </section>
+
+  <section class="sub" id="t06-paginas" data-titulo="Substituição de páginas: FIFO, LRU e Ótimo">
+    <p class="cai">Questões reais: quiz nº 35 · caderno Q8</p>
+    <table>
+      <tr><th>Algoritmo</th><th>Vítima</th><th>Observação</th></tr>
+      <tr><td>FIFO</td><td>a página mais antiga na memória</td><td>simples; sofre a <b>anomalia de Belady</b> (mais quadros podem dar mais faltas)</td></tr>
+      <tr><td>LRU</td><td>a menos recentemente usada</td><td>melhor aproximação implementável do Ótimo; algoritmo de pilha, sem Belady; precisa de apoio de hardware</td></tr>
+      <tr><td>Ótimo (OPT)</td><td>a que será usada mais tarde, ou nunca mais</td><td>mínimo de faltas, mas exige conhecer o futuro: <b>referência teórica</b>, não implementável</td></tr>
+    </table>
+    <div class="chave">As faltas <b>compulsórias</b> (memória vazia) contam. Uma substituição é <b>uma</b> falta, não duas. Acerto não é falta. O Ótimo nunca tem mais faltas que LRU ou FIFO.</div>
+    <p>Cadeia 7 0 1 2 0 3 0 4 2 3, 3 quadros, memória vazia (conteúdo dos quadros após cada referência; F = falta):</p>
+    <table>
+      <tr><th>Ref.</th><th>FIFO</th><th>LRU</th><th>Ótimo</th></tr>
+      <tr><td>7</td><td>7 F</td><td>7 F</td><td>7 F</td></tr>
+      <tr><td>0</td><td>7 0 F</td><td>7 0 F</td><td>7 0 F</td></tr>
+      <tr><td>1</td><td>7 0 1 F</td><td>7 0 1 F</td><td>7 0 1 F</td></tr>
+      <tr><td>2</td><td>2 0 1 F</td><td>2 0 1 F</td><td>2 0 1 F</td></tr>
+      <tr><td>0</td><td>2 0 1 ·</td><td>2 0 1 ·</td><td>2 0 1 ·</td></tr>
+      <tr><td>3</td><td>2 3 1 F (sai 0)</td><td>2 0 3 F (sai 1)</td><td>2 0 3 F (sai 1)</td></tr>
+      <tr><td>0</td><td>2 3 0 F</td><td>2 0 3 ·</td><td>2 0 3 ·</td></tr>
+      <tr><td>4</td><td>4 3 0 F</td><td>4 0 3 F</td><td>2 4 3 F (sai 0)</td></tr>
+      <tr><td>2</td><td>4 2 0 F</td><td>4 0 2 F</td><td>2 4 3 ·</td></tr>
+      <tr><td>3</td><td>4 2 3 F</td><td>4 3 2 F</td><td>2 4 3 ·</td></tr>
+      <tr><td><b>Total</b></td><td><b>9</b></td><td><b>8</b></td><td><b>6</b></td></tr>
+    </table>
+    <div class="pega">6, 5 e 3 faltas: esqueceu as 3 compulsórias. 15, 13 e 9: contou duas faltas por substituição (3 + 2 × substituições). 9, 9 e 8: o LRU não empata com o FIFO (na referência 3 ele tira a página 1, não a 0) e o Ótimo dá 6. A conclusão "escolher só pelo custo de implementação" também é falsa, porque o FIFO sofre Belady e o LRU não.</div>
+    <p>Belady no FIFO: cadeia 1 2 3 4 1 2 5 1 2 3 4 5 → 9 faltas com 3 quadros e 10 com 4. Aproximações do LRU usadas na prática: segunda chance/relógio e NRU (bits R e M).</p>
+  </section>
+
+  <section class="sub" id="t06-thrashing" data-titulo="Thrashing, working set, TLB e alocação de quadros">
+    <p class="cai">Questões reais: quiz nº 36 · caderno Q9</p>
+    <ul>
+      <li><b>Working set</b> (Denning): páginas referenciadas nas últimas Δ referências, isto é, o que o processo precisa agora.</li>
+      <li><b>Thrashing</b>: a soma dos working sets dos processos residentes passa do número de quadros. O sistema pagina mais do que trabalha. Sintomas: <b>CPU baixa + fila do disco saturada + taxa de faltas muito alta</b>, em geral depois de aumentar os processos residentes.</li>
+      <li><b>Remédio: reduzir</b> o grau de multiprogramação (suspender processos). Prevenção: modelo do working set ou frequência de faltas (PFF).</li>
+    </ul>
+    <figure><img src="img/t06-thrashing.png" alt="Curva de utilização da CPU versus grau de multiprogramação: sobe até o ponto de virada e despenca no thrashing"><figcaption>Fonte: SISTEMAS_OPERACIONAIS - MATERIAL_EXPLICATIVO.pdf, p. 41</figcaption></figure>
+    <div class="pega">"Ampliar o grau de multiprogramação para manter a CPU ocupada" agrava o thrashing: são menos quadros por processo e ainda mais faltas. É o ciclo vicioso do escalonador de longo prazo que vê a CPU ociosa.</div>
+    <ul>
+      <li><b>TLB</b>: memória associativa (busca em paralelo) dentro da MMU com as traduções página → quadro usadas mais recentemente. No acerto, dispensa o acesso à tabela de páginas na memória. Tempo efetivo: TEA = h·(ε + t) + (1 − h)·(ε + 2t). Ex.: 90% de acerto, TLB de 10 ns e memória de 100 ns → 0,9·110 + 0,1·210 = 120 ns (sem TLB seriam 200 ns).</li>
+      <li><b>Alocação local</b>: a vítima sai só dos quadros do próprio processo, e a taxa de faltas depende só dele. <b>Global</b>: pode tomar quadros de outros, então a taxa de faltas depende dos demais e o thrashing de um contamina todos.</li>
+    </ul>
+  </section>
+
+  <section class="sub" id="t06-alocacao-disco" data-titulo="Métodos de alocação de arquivos em disco">
+    <p class="cai">Questões reais: quiz nº 37, 38 · caderno Q10, Q11</p>
+    <table>
+      <tr><th>Método</th><th>Como localiza os blocos</th><th>Desempenho e fragmentação</th></tr>
+      <tr><td><b>Contígua</b></td><td>blocos sequenciais; diretório guarda início e tamanho; bloco i = início + i (cálculo)</td><td>melhor leitura sequencial e acesso direto por cálculo; <b>tem</b> fragmentação externa; crescimento difícil</td></tr>
+      <tr><td><b>Encadeada</b></td><td><b>ponteiro em cada bloco</b> para o seguinte; diretório guarda início e fim</td><td>acesso direto <b>ruim</b> (percorre a cadeia desde o início); <b>sem</b> fragmentação externa; ponteiro corrompido perde o resto. FAT = ponteiros numa tabela à parte</td></tr>
+      <tr><td><b>Indexada</b></td><td><b>bloco de índice</b> reúne os ponteiros de todos os blocos (inode, extents)</td><td>acesso direto eficiente (um passo pelo índice); <b>sem</b> fragmentação externa; custa o espaço do índice</td></tr>
+    </table>
+    <figure><img src="img/t06-alocacao-disco.png" alt="O mesmo arquivo de 4 blocos em alocação contígua (6 a 9), encadeada (2, 8, 15, 18) e indexada (índice no bloco 5)"><figcaption>Fonte: SISTEMAS_OPERACIONAIS - MATERIAL_EXPLICATIVO.pdf, p. 46</figcaption></figure>
+    <div class="chave">Escolha pelo padrão de acesso: leitura em <b>posições arbitrárias</b> (imagens grandes, bancos de dados) → <b>indexada</b>; sequencial e crescimento incremental → encadeada; arquivos que não mudam (CD/DVD) → contígua.</div>
+    <div class="pega">Encadeada e indexada usam ponteiros. A diferença é onde eles ficam: espalhados nos blocos (encadeada) ou reunidos num bloco de índice (indexada). A contígua não guarda ponteiro, porque o endereço sai de um cálculo. Associe pelas palavras-chave, não pela posição na coluna.</div>
+  </section>
+
+  <section class="sub" id="t06-journaling" data-titulo="Journaling, espaço livre e escolha do sistema de arquivos">
+    <p class="cai">Questões reais: quiz nº 38 · caderno Q11</p>
+    <ul>
+      <li><b>Journaling</b>: grava a operação num diário <b>antes</b> de aplicá-la. Depois de uma queda, a recuperação lê só o diário, reaplica as transações completas e descarta as incompletas, em segundos e sem a varredura completa (fsck/chkdsk) que leva horas.</li>
+      <li><b>ext4</b> (Linux): journaling; modo padrão data=ordered (só metadados no diário, dados gravados antes), data=journal (tudo, mais seguro e lento), data=writeback (mais rápido). <b>XFS</b>: journaling, voltado a arquivos e volumes muito grandes. <b>NTFS</b>: journaling + ACL.</li>
+      <li><b>FAT32</b>: <b>sem journaling</b>, sem permissões e com limite de <b>4 GB por arquivo</b>. A tabela FAT é alocação encadeada, não diário. O exFAT remove o limite.</li>
+      <li>Espaço livre: <b>mapa de bits</b> (1 bit por bloco) facilita achar blocos <b>contíguos</b> livres e reduz a fragmentação de arquivos grandes (1 TB com blocos de 4 KB → 32 MB de bitmap). A <b>lista encadeada de livres</b> não gasta espaço extra, mas é lenta e não acha contiguidade.</li>
+    </ul>
+    <table>
+      <tr><th>Requisito no enunciado</th><th>Proposta que atende</th></tr>
+      <tr><td>queda de energia sem volume inconsistente nem horas de verificação</td><td>journaling (ext4, XFS)</td></tr>
+      <tr><td>leitura de trechos em posições arbitrárias</td><td>alocação indexada (inode/extents)</td></tr>
+      <tr><td>arquivos de 2 a 40 GB</td><td>descarta o FAT32 (limite de 4 GB)</td></tr>
+      <tr><td>reduzir fragmentação de arquivos grandes</td><td>mapa de bits para localizar blocos contíguos</td></tr>
+    </table>
+    <div class="pega">"FAT32 atende melhor porque sua tabela centralizada oferece journaling nativo e comporta arquivos grandes" tem dois erros: o FAT32 não tem journaling e limita os arquivos a 4 GB.</div>
+  </section>
+
+  <section class="sub" id="t06-es" data-titulo="Técnicas de E/S, spooling, cache e permissões">
+    <p class="cai">Questões reais: quiz nº 39 · caderno Q12</p>
+    <table>
+      <tr><th>Técnica</th><th>Quem move os dados</th><th>Efeito na CPU</th></tr>
+      <tr><td><b>E/S programada (polling)</b></td><td>a própria CPU, byte a byte, testando o registrador de status em laço</td><td><b>presa 100%</b> (espera ocupada); maior sobrecarga; ruim para dispositivos de alta taxa</td></tr>
+      <tr><td><b>Por interrupção</b></td><td>a CPU, quando o controlador interrompe</td><td>livre entre eventos, mas uma interrupção por byte/palavra</td></tr>
+      <tr><td><b>DMA</b></td><td>o controlador de DMA move o <b>bloco inteiro</b> direto para a memória (a CPU só programa endereço, contagem e direção)</td><td><b>uma</b> interrupção no final; menor sobrecarga (usado em disco e rede)</td></tr>
+    </table>
+    <ul>
+      <li><b>Buffering</b>: cópia em trânsito que absorve diferença de velocidade ou de tamanho. <b>Caching</b> (buffer cache): cópia extra em RAM dos blocos de disco recentes; usa a localidade de referência e reduz os acessos físicos.</li>
+      <li><b>Spooling</b>: fila em disco. Vários processos submetem trabalhos ao mesmo tempo, e um processo servidor (daemon) os envia à impressora, um de cada vez. Um dispositivo dedicado passa a ser usado de forma concorrente.</li>
+      <li><b>Permissões Linux</b>: rwx para dono, grupo e outros, verificadas pelo <b>núcleo</b>. Em diretório: r = listar, w = criar ou remover entradas, <b>x = atravessar</b>. Ex.: 754 = rwxr-xr--.</li>
+    </ul>
+    <div class="pega">"No polling a CPU delega ao controlador o controle completo da transferência e fica livre, sendo a técnica mais eficiente para alta taxa" é <b>falsa</b>: isso descreve o DMA. As afirmações sobre DMA, spooling, buffer cache e permissões rwx feitas acima são corretas. Atenção ao comando "assinale a INCORRETA".</div>
+  </section>
+
+</section>

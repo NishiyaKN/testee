@@ -1,0 +1,206 @@
+<section class="topico" id="t11" data-titulo="11 · Compiladores">
+
+  <section class="sub" id="t11-fases" data-titulo="Fases do compilador: cada problema tem sua fase">
+    <p class="cai">Questões reais: quiz nº 73–77 · slides Q1–Q5</p>
+    <p>Compilador = tradutor de um programa de alto nível para um equivalente de baixo nível. <b>Front-end</b> (análise: léxica, sintática, semântica) → <b>IR</b> → <b>back-end</b> (seleção de instruções e alocação de registradores).</p>
+    <figure><img src="img/t11-fluxo-compilacao.png" alt="Fluxo de compilação: código-fonte (caracteres), análise léxica (tokens), análise sintática (estrutura/AST), análise semântica (tipos, escopo e símbolos), IR e otimizações (representação intermediária), geração de código (instruções da arquitetura-alvo); front-end = análise do código, back-end = IR e recursos da arquitetura"><figcaption>Fonte: Compiladores_Roteiro_Oficial_23_Slides.pdf, p. 2</figcaption></figure>
+    <table>
+      <tr><th>Fase</th><th>Faz (artefatos)</th><th>Pergunta-chave</th></tr>
+      <tr><td><b>Léxica</b> (lexer)</td><td>caracteres → tokens (ER, AFD, tabela de keywords)</td><td>Lexema → token correto?</td></tr>
+      <tr><td><b>Sintática</b> (parser)</td><td>valida a estrutura e monta a AST (GLC)</td><td>A sequência é derivável pela gramática?</td></tr>
+      <tr><td><b>Semântica</b></td><td>tipos, declarações, escopo (tabela de símbolos)</td><td>Tipos, declarações e usos são compatíveis?</td></tr>
+      <tr><td><b>IR</b></td><td>código independente de máquina para otimizar (TAC, SSA, temporários virtuais)</td><td>—</td></tr>
+      <tr><td><b>Geração de código</b></td><td>IR → instruções da máquina; aloca registradores; spill</td><td>Temporários cabem nos recursos físicos?</td></tr>
+    </table>
+    <div class="pega">Quase todo distrator do squad (1) empurra a decisão para a fase errada (lexer → parser, parser → semântica, semântica → gerador), (2) resolve só o caso testado ou (3) viola uma restrição dada. O problema se corrige na fase que o define, e uma fase posterior nunca "conserta" a anterior.</div>
+  </section>
+
+  <section class="sub" id="t11-lexica" data-titulo="Análise léxica: identificador × palavra reservada">
+    <p class="cai">Questões reais: quiz nº 73 · slides Q1</p>
+    <ul>
+      <li><b>Lexema</b> = texto concreto (<code>contador1</code>, <code>if</code>, <code>&gt;=</code>). <b>Token</b> = categoria atribuída (IDENTIFICADOR, KW_IF, OPERADOR).</li>
+      <li>A regra <code>IDENTIFICADOR → letra (letra | dígito)*</code> também casa <code>if</code>, <code>while</code>, <code>return</code>. <b>Causa</b> do erro: o lexer emite IDENTIFICADOR sem consultar a tabela de palavras reservadas.</li>
+      <li><b>Correção em duas etapas, no lexer</b>: (1) reconhecer a sequência pelo padrão geral; (2) consultar logo a tabela de reservadas. Se o lexema estiver lá, sai o token específico (KW_IF, KW_RETURN), que tem <b>prioridade</b>; senão, IDENTIFICADOR. Nova keyword = nova linha na tabela, sem mexer na regra geral.</li>
+    </ul>
+    <table>
+      <tr><th>Proposta errada</th><th>Por que falha</th></tr>
+      <tr><td>Manter IDENTIFICADOR e o parser decidir pela posição</td><td>Decisão léxica jogada no parser (viola a separação de fases). O parser precisa receber KW_IF já discriminado.</td></tr>
+      <tr><td>Reescrever a ER para excluir as reservadas, sem tabela</td><td>Abandona a tabela; cada keyword nova exigiria mudar a ER (contraria o requisito de manutenção).</td></tr>
+      <tr><td>Marcar na tabela de símbolos e a semântica decidir</td><td>Tarde demais: o parser já recebeu o token errado. Tabela de símbolos guarda nomes do programa, não reclassifica tokens.</td></tr>
+    </table>
+    <div class="chave">Padrão geral → tabela de keywords → token específico. Quem decide é o lexer.</div>
+    <p>Em Flex/Lex o mesmo efeito vem de declarar as regras das keywords antes da regra de ID. Se o enunciado exige a tabela própria, a resposta é a consulta à tabela.</p>
+  </section>
+
+  <section class="sub" id="t11-sintatica" data-titulo="Análise sintática: lista recursiva de argumentos">
+    <p class="cai">Questões reais: quiz nº 74 · slides Q2</p>
+    <p><b>Terminal</b> = símbolo da entrada (ID = IDENTIFICADOR, NUMERO, vírgula, parênteses). <b>Não-terminal</b> = categoria (<code>&lt;chamada&gt;</code>, <code>&lt;lista&gt;</code>). <b>Produção</b> = regra de formação.</p>
+    <pre><code>&lt;chamada&gt;   → ID '(' &lt;argumento&gt; ')' ';'
+&lt;argumento&gt; → ID | NUMERO</code></pre>
+    <p>Essa gramática deriva <b>um só</b> argumento. Em <code>registrarVenda(cliente, total, 10);</code> os tokens estão corretos, mas o parser falha na primeira VIRGULA (esperava <code>')'</code>): a falha é da <b>gramática</b>.</p>
+    <p>Correção: não-terminal recursivo, com caso-base (1 argumento) e passo que amplia a lista, usado entre os parênteses:</p>
+    <pre><code>&lt;lista&gt;   → &lt;argumento&gt;
+            | &lt;lista&gt; ',' &lt;argumento&gt;
+&lt;chamada&gt; → ID '(' &lt;lista&gt; ')' ';'</code></pre>
+    <p><code>&lt;lista&gt; ⇒ &lt;lista&gt; , &lt;arg&gt; ⇒ &lt;lista&gt; , &lt;arg&gt; , &lt;arg&gt; ⇒ cliente , total , 10</code>. Aceita 1, 2, 3, … argumentos.</p>
+    <p>Recursão à esquerda é a forma usual no Bison (LR). Para parser descendente (LL), use a versão à direita, equivalente: <code>&lt;lista&gt; → &lt;argumento&gt; | &lt;argumento&gt; ',' &lt;lista&gt;</code>.</p>
+    <table>
+      <tr><th>Proposta errada</th><th>Por que falha</th></tr>
+      <tr><td>Lexer descartar as vírgulas</td><td>Os tokens estavam certos; a vírgula é separador sintático necessário; a regra continua com 1 argumento.</td></tr>
+      <tr><td>Produção com exatamente 3 argumentos</td><td>Só passa no teste: falha com 1, 2 ou 4+ e limita a quantidade.</td></tr>
+      <tr><td>Manter a gramática e a semântica separar os argumentos</td><td>A rejeição ocorre no parser; a semântica não substitui estrutura ausente na gramática.</td></tr>
+    </table>
+  </section>
+
+  <section class="sub" id="t11-semantica" data-titulo="Análise semântica: tipos e conversão explícita">
+    <p class="cai">Questões reais: quiz nº 75 · slides Q3</p>
+    <p><b>Sintaxe correta não garante significado válido.</b> A semântica verifica compatibilidade de tipos, declaração de variáveis e escopo, usando a <b>tabela de símbolos</b> (nomes, tipos, permissões).</p>
+    <pre><code>inteiro quantidade = 10;
+texto produto = "25";
+quantidade = produto - 5;</code></pre>
+    <p>Regras: <code>-</code> exige inteiros; variável inteira só recebe expressão inteira; texto → inteiro só com <code>paraInteiro(texto)</code> (sem conversão implícita). Pela tabela de símbolos, <code>produto</code> é texto e 5 é inteiro: a <b>análise semântica rejeita</b> <code>produto - 5</code>.</p>
+    <p>Correção: <code>quantidade = paraInteiro(produto) - 5;</code> → inteiro − inteiro = inteiro, atribuído a inteiro (valor 20).</p>
+    <table>
+      <tr><th>Proposta errada</th><th>Por que falha</th></tr>
+      <tr><td>Erro léxico: "25" deveria virar NUMERO</td><td>Entre aspas é literal de texto, e <code>produto</code> foi declarada texto. Léxico e sintaxe já tinham aceitado o trecho.</td></tr>
+      <tr><td>Erro sintático: criar produção "texto − inteiro"</td><td>A gramática não trata tipos; o parser aceitaria, mas os tipos continuam incompatíveis.</td></tr>
+      <tr><td>O gerador de código converte sozinho</td><td>É coerção implícita, proibida pela especificação; e a geração vem depois da semântica.</td></tr>
+    </table>
+    <div class="chave">Linguagem sem coerção implícita → erro de tipo é semântico e se corrige com conversão explícita.</div>
+  </section>
+
+  <section class="sub" id="t11-codigo" data-titulo="Geração de código: registradores, spill e reload">
+    <p class="cai">Questões reais: quiz nº 76 · slides Q4</p>
+    <ul>
+      <li>A IR usa <b>temporários virtuais</b> ilimitados (t1, t2, …), sem relação com registradores. O back-end faz seleção de instruções e alocação para os <b>registradores físicos</b> (aqui só R1 e R2; R3 é inválido).</li>
+      <li><b>Liveness</b>: valor vivo = ainda necessário numa operação futura. Vivos &gt; registradores ⇒ <b>spill</b> (<code>STORE TEMP, R1</code>: salva na memória e libera o registrador) e <b>reload</b> (<code>LOAD R2, TEMP</code>) logo antes do uso.</li>
+    </ul>
+    <p>IR: <code>t1 = a + b; t2 = c + d; t3 = t1 * t2; resultado = t3</code>. <code>ADD Rd, Rs</code> faz Rd ← Rd + Rs (idem MUL).</p>
+    <table>
+      <tr><th>Instrução</th><th>R1</th><th>R2</th><th>TEMP</th></tr>
+      <tr><td>LOAD R1, a</td><td>a</td><td>—</td><td>—</td></tr>
+      <tr><td>LOAD R2, b</td><td>a</td><td>b</td><td>—</td></tr>
+      <tr><td>ADD R1, R2</td><td>t1</td><td>b</td><td>—</td></tr>
+      <tr><td>STORE TEMP, R1</td><td>t1</td><td>b</td><td>t1 (spill)</td></tr>
+      <tr><td>LOAD R1, c</td><td>c</td><td>b</td><td>t1</td></tr>
+      <tr><td>LOAD R2, d</td><td>c</td><td>d</td><td>t1</td></tr>
+      <tr><td>ADD R1, R2</td><td>t2</td><td>d</td><td>t1</td></tr>
+      <tr><td>LOAD R2, TEMP</td><td>t2</td><td>t1 (reload)</td><td>t1</td></tr>
+      <tr><td>MUL R2, R1</td><td>t2</td><td>t3 = t1·t2</td><td>t1</td></tr>
+      <tr><td>STORE resultado, R2</td><td>t2</td><td>t3</td><td>t1</td></tr>
+    </table>
+    <p>Teste com a=2, b=3, c=5, d=7 (esperado (a+b)·(c+d) = 60):</p>
+    <table>
+      <tr><th>Sequência</th><th>Defeito → valor</th></tr>
+      <tr><td>Usa R3 para guardar t2 (sem memória)</td><td>Registrador inexistente: daria 60, mas não roda</td></tr>
+      <tr><td>Reload logo após o spill, antes de <code>LOAD R2, d</code></td><td><code>LOAD R2, d</code> sobrescreve t1 (vivo) → d·(c+d) = 84</td></tr>
+      <tr><td><code>ADD R2, R1</code> no lugar de MUL no fim</td><td>Muda a operação da IR → 17</td></tr>
+    </table>
+    <div class="chave">Confira 3 pontos: só registradores existentes; nenhum valor vivo sobrescrito antes do uso; operação final igual à da IR.</div>
+  </section>
+
+  <section class="sub" id="t11-ambiguidade" data-titulo="Ambiguidade, precedência e associatividade (Bison)">
+    <p class="cai">Questões reais: quiz nº 77 · slides Q5</p>
+    <p><b>Gramática ambígua</b>: a mesma cadeia tem 2 ou mais árvores sintáticas. <code>expr → expr '+' expr | expr '-' expr | expr '*' expr | ID</code> é ambígua: <code>a + b * c - d</code> admite ((a+b)*c)-d, (a+(b*c))-d, a+(b*(c-d)) etc. A ordem dos tokens não elimina a ambiguidade, e o Bison acusa conflitos <b>shift/reduce</b>.</p>
+    <ul>
+      <li><b>Precedência</b>: prioridade entre operadores diferentes (<code>*</code> antes de <code>+</code>).</li>
+      <li><b>Associatividade</b>: agrupamento no mesmo nível (<code>%left</code>: <code>a - b - c → (a - b) - c</code>).</li>
+    </ul>
+    <p>Com <code>*</code> &gt; <code>+</code> = <code>-</code>, todos à esquerda: <b>(a + (b * c)) - d</b>.</p>
+    <p>No Bison, cada linha <code>%left</code>/<code>%right</code> é um nível, e a linha declarada <b>depois</b> tem precedência <b>maior</b>. Isso remove os conflitos sem reescrever a gramática em níveis (expr/termo/fator).</p>
+    <table>
+      <tr><th>Configuração</th><th>a + b * c - d vira</th></tr>
+      <tr><td><pre><code>%left '+' '-'
+%left '*'</code></pre></td><td>(a + (b * c)) - d ✔</td></tr>
+      <tr><td><pre><code>%left '+' '-' '*'</code></pre>(uma linha só)</td><td>((a + b) * c) - d: tudo no mesmo nível, sem conflito mas com semântica errada</td></tr>
+      <tr><td><pre><code>%left '*'
+%left '+' '-'</code></pre></td><td>(a + b) * (c - d): + e − ficaram maiores</td></tr>
+      <tr><td><pre><code>%right '+' '-'
+%left '*'</code></pre></td><td>a + ((b * c) - d): associatividade errada</td></tr>
+    </table>
+    <div class="pega">a + (b * (c - d)) exigiria <code>-</code> antes de <code>*</code> e associar à direita: contraria a especificação. "Não é ambígua, a ordem dos tokens decide" é falso.</div>
+  </section>
+
+  <section class="sub" id="t11-inf" data-titulo="Tópicos para as questões inferidas">
+
+    <section class="sub" id="t11-inf-arquitetura" data-titulo="Front-end, IR e back-end (M + N módulos)">
+      <ul>
+        <li><b>Front-end</b> = léxica + sintática + semântica: depende da <b>linguagem</b> (keywords, gramática, regras de tipo) e produz a IR.</li>
+        <li><b>Back-end</b> = seleção de instruções + alocação de registradores/spill: depende do <b>processador</b>.</li>
+        <li>A <b>IR é independente de máquina</b> (temporários virtuais, sem registradores físicos), então qualquer front-end conversa com qualquer back-end.</li>
+        <li>M linguagens e N processadores: <b>M + N módulos</b> em vez de M × N compiladores. Ex.: 3 linguagens e 3 processadores = 6, não 9. Nova máquina = só um back-end novo.</li>
+      </ul>
+      <div class="pega">Alocar registradores no front-end (ou pôr registradores na IR) prende a IR à máquina. Tipos são regra da linguagem, não do processador. "Um front-end único para todas as linguagens" inverte as dependências.</div>
+    </section>
+
+    <section class="sub" id="t11-inf-deteccao" data-titulo="Qual fase detecta cada problema">
+      <table>
+        <tr><th>Situação</th><th>Fase</th></tr>
+        <tr><td>Caractere sem padrão de token (<code>5$</code>)</td><td>Léxica</td></tr>
+        <tr><td>Tokens válidos, mas sequência não derivável (falta <code>)</code>)</td><td>Sintática</td></tr>
+        <tr><td>Nome não declarado, tipo incompatível, uso fora do escopo</td><td>Semântica</td></tr>
+        <tr><td>Valores vivos &gt; registradores físicos</td><td>Geração de código (spill/reload)</td></tr>
+      </table>
+      <div class="pega">Falta de registradores não é erro do programa nem erro semântico: o back-end resolve com spill. Variável não declarada não é erro sintático: <code>saldo = total + 1;</code> é bem formada.</div>
+    </section>
+
+    <section class="sub" id="t11-inf-er-afd" data-titulo="Expressão regular e AFD de um token">
+      <p>A ER define a forma do lexema; o AFD a implementa (estado final = lexema completo). <code>*</code> = zero ou mais, <code>+</code> = um ou mais, <code>?</code> = opcional.</p>
+      <p>Número = dígitos, opcionalmente ponto + dígitos: <code>dígito+ ('.' dígito+)?</code>. AFD: q0 –dígito→ <b>q1</b> (final) –'.'→ q2 (<b>não final</b>) –dígito→ <b>q3</b> (final). Aceita 10 e 3.14; rejeita <code>.</code>, <code>7.</code>, <code>1.2.3</code>.</p>
+      <table>
+        <tr><th>ER errada</th><th>Problema</th></tr>
+        <tr><td><code>(dígito | '.')+</code></td><td>aceita <code>.</code>, <code>7.</code>, <code>1.2.3</code></td></tr>
+        <tr><td><code>(dígito | '.')* dígito</code></td><td>ainda aceita <code>1.2.3</code>, <code>.5</code></td></tr>
+        <tr><td><code>dígito+ '.' dígito+</code></td><td>rejeita inteiros (10)</td></tr>
+      </table>
+      <div class="pega">Formato de token é regra léxica: não deixe para a semântica "validar os pontos".</div>
+    </section>
+
+    <section class="sub" id="t11-inf-regular-glc" data-titulo="Linguagem regular (lexer) × GLC (parser)">
+      <ul>
+        <li>Lexer: linguagens <b>regulares</b> (ER/AFD, Tipo 3 de Chomsky). Parser: <b>GLC</b> (Tipo 2), valida a estrutura e monta a AST.</li>
+        <li>AFD tem número finito de estados: não "conta" parênteses abertos, então não reconhece aninhamento balanceado de profundidade arbitrária. A GLC gera isso com recursão: <code>&lt;termo&gt; → '(' &lt;expr&gt; ')'</code>.</li>
+        <li>Repetição simples (<code>*</code>, <code>+</code>) cabe em ER; aninhamento balanceado exige GLC. Por isso "validar chamadas aninhadas com uma única ER no lexer" é inviável, e esse limite das ERs justifica manter a regra no parser.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t11-inf-escopo" data-titulo="Escopo e tabela de símbolos">
+      <ul>
+        <li>A semântica também checa <b>declaração</b> e <b>escopo</b> (resolução de nomes). Tabela de símbolos como <b>pilha de escopos</b>: entra no bloco, empilha; sai do bloco, desempilha.</li>
+        <li>Escopo de bloco: variável declarada dentro de <code>{ }</code> só existe até o fim do bloco; um bloco interno pode usar e alterar variáveis externas.</li>
+        <li>Usar a variável depois do <code>}</code> dá "não declarado": o compilador está <b>certo</b>. Correção: declarar antes do bloco e só atribuir dentro dele.</li>
+      </ul>
+      <div class="pega">Tabela de símbolos (nomes, tipos, escopo; semântica) ≠ tabela de palavras reservadas (lexer). O erro não é léxico, e um escopo global único contraria o escopo de bloco.</div>
+    </section>
+
+    <section class="sub" id="t11-inf-tac" data-titulo="IR: código de três endereços (TAC)">
+      <p>TAC: no máximo <b>um operador por instrução</b> (dois operandos + destino), resultados em temporários virtuais. A ordem segue a árvore, ou seja, a precedência e a associatividade.</p>
+      <pre><code>total = subtotal - desconto * taxa + frete
+t1 = desconto * taxa
+t2 = subtotal - t1
+t3 = t2 + frete
+total = t3</code></pre>
+      <p>Com 100, 10, 2, 15: 95. Seguir a ordem de leitura ((100 − 10)·2 + 15) dá 195; agrupar à direita (100 − (20 + 15)) dá 65; usar R1/R2 na IR viola a independência de máquina (registrador é coisa do back-end).</p>
+    </section>
+
+    <section class="sub" id="t11-inf-ssa" data-titulo="IR: forma SSA">
+      <p><b>SSA</b> (Static Single Assignment): cada nome é atribuído <b>uma única vez</b>. Reatribuição gera nova versão; cada uso aponta para a definição mais recente que o alcança.</p>
+      <pre><code>x = a + b   →  x1 = a + b
+y = x * 2   →  y1 = x1 * 2
+x = y - c   →  x2 = y1 - c
+z = x + y   →  z1 = x2 + y1</code></pre>
+      <p>Com a=3, b=4, c=5: z1 = 9 + 14 = 23, igual ao original (usar x1 daria 21). SSA continua sendo IR (temporários virtuais): registradores físicos e spill ficam no back-end. Com desvios (if/else), a SSA usa funções φ para unir versões.</p>
+    </section>
+
+    <section class="sub" id="t11-inf-otimizacao" data-titulo="Otimizações na IR">
+      <p>Feitas na IR, <b>independentes de máquina</b>, antes da geração de código, e sem mudar o resultado.</p>
+      <ul>
+        <li><b>Dobramento de constantes</b>: calcula em compilação só o que tem operandos conhecidos (<code>2 * 3 → 6</code>). <code>preco * 6</code> não dobra se <code>preco</code> é parâmetro.</li>
+        <li><b>Subexpressão comum</b>: <b>reaproveita</b> o valor já calculado (<code>t3 = preco * 6</code> igual a t2 → <code>t4 = t2 + t2</code>), não o descarta.</li>
+        <li><b>Código morto</b>: remove instrução cujo resultado nunca é usado (<code>aux</code>).</li>
+      </ul>
+      <p>Ex.: <code>t2 = preco * 6; t4 = t2 + t2; resultado = t4</code> (preco = 10 → 120).</p>
+    </section>
+
+  </section>
+</section>

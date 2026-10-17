@@ -1,0 +1,400 @@
+<section class="topico" id="t04" data-titulo="04 · Orientação a Objetos">
+
+  <section class="sub" id="t04-abstrata-interface" data-titulo="Classe abstrata × interface">
+    <p class="cai">Questões reais: quiz nº 23 · slides Q5</p>
+    <table>
+      <tr><th></th><th>Classe abstrata</th><th>Interface</th></tr>
+      <tr><td>Estado de instância</td><td>Sim: campos, construtores, invariantes</td><td><b>Não</b>. Campos são só constantes <code>public static final</code></td></tr>
+      <tr><td>Código comum</td><td>Métodos concretos, validação, algoritmo parcial</td><td>Métodos <code>default</code>, <code>static</code> e <code>private</code>, sem estado</td></tr>
+      <tr><td>Em Java</td><td><b>Uma</b> superclasse direta (<code>extends</code>)</td><td><b>Várias</b> por classe (<code>implements A, B</code>)</td></tr>
+      <tr><td>Relação</td><td>"é-um": família coesa com estado comum</td><td>"pode-fazer": capacidade ou papel que atravessa hierarquias</td></tr>
+    </table>
+    <p>Nenhuma das duas é instanciada diretamente. Uma classe abstrata pode não ter nenhum método abstrato.</p>
+    <div class="chave">Estado compartilhado + hierarquia natural → <b>classe abstrata</b>. Comportamento transversal, adotado até por classes sem relação entre si → <b>interface</b>.</div>
+    <pre><code>abstract class DispositivoBase {
+  // estado e conexão comuns
+  protected String idRegistro;
+  protected String enderecoRede;
+  public void conectarBase() { ... }
+  abstract void iniciarOperacao();
+}
+interface Controlavel {
+  void ligar(); void desligar();
+}
+interface Auditavel {
+  void registrarLog(String msg);
+}
+class TermostatoSmart
+    extends DispositivoBase
+    implements Controlavel, Auditavel
+{ ... }
+class ServidorNuvem
+    implements Auditavel { ... }</code></pre>
+    <div class="pega">Distratores típicos:
+      <ul>
+        <li>"Tudo vira interface, inclusive a base": cada dispositivo redeclara os atributos e reescreve <code>conectarBase()</code>. É duplicação (fere o DRY), e <code>default</code> não guarda estado por instância.</li>
+        <li>"Interfaces armazenam estado mutável" é falso em Java.</li>
+        <li>"Capacidades como classes abstratas em cadeia (Termostato → Controlavel → Auditavel → DispositivoBase)": hierarquia artificial (um Controlavel não "é um" Auditavel), e <code>ServidorNuvem</code> só seria Auditavel virando dispositivo.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sub" id="t04-encapsulamento" data-titulo="Encapsulamento e Tell, Don't Ask">
+    <p class="cai">Questões reais: quiz nº 24 · slides Q6</p>
+    <ul>
+      <li>Encapsular <b>não</b> é "atributos <code>private</code> + getters/setters". É o objeto controlar as próprias transições de estado e proteger suas <b>invariantes</b> (regras que sempre valem).</li>
+      <li>Com <code>setSaldo</code> público, qualquer cliente grava qualquer saldo, sem validação. A regra de negócio vai para o serviço e a entidade vira depósito de dados: <b>Modelo de Domínio Anêmico</b> (Fowler), com alto acoplamento.</li>
+      <li>Correção: remover <code>setSaldo</code> e criar <code>sacar(valor)</code> e <code>depositar(valor)</code> <b>dentro</b> de <code>Conta</code>, validando valor &gt; 0 e saldo + limite ≥ valor.</li>
+      <li><b>Tell, Don't Ask</b>: mande o objeto agir, em vez de perguntar o estado e decidir fora.</li>
+    </ul>
+    <pre><code>// Ask (ruim): o serviço decide
+origem.setSaldo(
+    origem.getSaldo() - valor);
+// Tell (bom): a Conta valida
+origem.sacar(valor);
+destino.depositar(valor);</code></pre>
+    <table>
+      <tr><th>Modificador Java</th><th>Quem acessa</th></tr>
+      <tr><td><code>private</code></td><td>só a própria classe</td></tr>
+      <tr><td>sem modificador (pacote)</td><td>classes do mesmo pacote</td></tr>
+      <tr><td><code>protected</code></td><td>pacote <b>+</b> subclasses</td></tr>
+      <tr><td><code>public</code></td><td>todos</td></tr>
+    </table>
+    <div class="pega">Distratores típicos:
+      <ul>
+        <li>"Já está encapsulado porque os campos são <code>private</code>": o setter livre anula a proteção.</li>
+        <li>"Trocar para <code>protected</code>": isso <b>amplia</b> o acesso (pacote + subclasses) e não concentra as regras na classe.</li>
+        <li>"Tornar a Conta imutável e recriá-la a cada transação": encapsulamento ≠ imutabilidade. Uma entidade com ciclo de vida pode mudar de estado, desde que a mudança seja validada pela própria classe.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sub" id="t04-heranca-composicao" data-titulo="Herança (é-um) × composição (tem-um)">
+    <p class="cai">Questões reais: quiz nº 20 · slides Q2</p>
+    <ul>
+      <li><b>Herança</b> modela "é-um": a subclasse precisa ser um subtipo que substitui a base sem quebrar o comportamento esperado (Princípio de Substituição de Liskov, <b>LSP</b>).</li>
+      <li><b>Composição/delegação</b> modela "tem-um" ou "usa": a classe guarda uma referência e delega.</li>
+      <li>Nunca herde só para reaproveitar código: "prefira composição à herança" (Effective Java, item 18; GoF).</li>
+    </ul>
+    <p>Caso típico: <code>SensorTemperaturaSmart extends ComunicadorRede</code> só para usar <code>enviarPacote()</code>. O sensor não <b>é</b> um comunicador, ele <b>usa</b> a rede. A herança expõe <code>estabelecerConexao()</code> e <code>enviarPacote()</code> a qualquer cliente do sensor, pode quebrar a substituibilidade e acopla rigidamente (trocar a rede por Bluetooth quebra a hierarquia). Já <code>implements DispositivoAtuador</code> está certo: a interface é um contrato sem estado. Correção: o sensor guarda um canal de rede (que <code>ComunicadorRede</code> pode implementar) e delega a ele.</p>
+    <pre><code>class SensorTemperaturaSmart
+    implements DispositivoAtuador {
+  // composição: o sensor USA um canal
+  private final CanalComunicacao canal;
+  private double temperaturaAtual;
+  SensorTemperaturaSmart(
+      CanalComunicacao c) {
+    canal = c;  // injetado
+  }
+  public void acionarAlerta(String m) {
+    if (temperaturaAtual &gt; 40.0)
+      canal.enviarPacote(m.getBytes());
+  }
+}</code></pre>
+    <p>Prefira composição quando a especialização não é estável, o reúso é só de código, a base expõe detalhes <code>protected</code> ou as capacidades se combinam de forma independente. Use herança numa hierarquia pequena, coesa e documentada como contrato de substituição.</p>
+    <div class="pega">Distratores típicos:
+      <ul>
+        <li>"Interfaces servem para simular herança múltipla de <b>estado</b>": interface não tem estado de instância.</li>
+        <li>"A herança está certa (especialização); a falha é a interface, que impede o reúso": aceita um "é-um" falso. Interface define contrato, não serve para reúso de código.</li>
+        <li>"Herdar evita duplicação e compensa a falta de herança múltipla": reúso não justifica herança, e Java já tem herança múltipla de <b>tipo</b> por interfaces.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sub" id="t04-polimorfismo" data-titulo="Polimorfismo: vinculação estática × dinâmica">
+    <p class="cai">Questões reais: quiz nº 19 · slides Q1</p>
+    <p>O cliente depende do contrato. Em execução, roda a implementação do objeto real.</p>
+    <figure><img src="img/t04-despacho-forma.png" alt="Cliente areaTotal depende do contrato Forma; Circulo e Retangulo implementam area()"><figcaption>Fonte: Material sobre Orientação a Objetos.pdf, p. 8</figcaption></figure>
+    <table>
+      <tr><th>Membro</th><th>Vinculação</th><th>Quem decide</th></tr>
+      <tr><td>Método de instância sobrescrito (<code>@Override</code>)</td><td><b>dinâmica</b> (execução)</td><td>classe <b>real</b> do objeto</td></tr>
+      <tr><td>Campo (atributo)</td><td><b>estática</b> (compilação)</td><td>tipo estático no ponto em que o campo é lido</td></tr>
+      <tr><td>Método <code>static</code> ou <code>private</code></td><td>estática</td><td>tipo declarado (não há override real)</td></tr>
+    </table>
+    <p><b>Field shadowing</b>: se a subclasse redeclara um campo com o mesmo nome, o objeto passa a ter <b>dois</b> campos. Nada é realocado: o novo campo só oculta o antigo, e o código da superclasse continua lendo o dela.</p>
+    <p><b>Template Method</b> (comportamental, GoF): a superclasse define o esqueleto do algoritmo (<code>processar</code>) e as subclasses implementam passos (<code>taxa</code>).</p>
+    <pre><code>abstract class Base {
+  protected double fator = 1.5;
+  double processar(double v) {
+    // lê Base.fator (estático)
+    return v * fator + taxa();
+  }
+  protected double taxa() {
+    return 10.0;
+  }
+}
+class Sub extends Base {
+  // 2º campo: só oculta o 1º
+  protected double fator = 2.0;
+  @Override
+  protected double taxa() {
+    return 25.0;  // dinâmico
+  }
+}
+Base p = new Sub();
+p.processar(100.0);
+// 100 × 1.5 + 25 = 175.0</code></pre>
+    <table>
+      <tr><th>Suposição</th><th>Conta</th><th>Saída</th></tr>
+      <tr><td>Campo estático, método dinâmico (correto)</td><td>100 × 1.5 + 25</td><td><b>175.0</b></td></tr>
+      <tr><td>Campo também "polimórfico"</td><td>100 × 2.0 + 25</td><td>225.0 ✗</td></tr>
+      <tr><td>Tipo da referência fixa tudo (sem despacho)</td><td>100 × 1.5 + 10</td><td>160.0 ✗</td></tr>
+    </table>
+    <div class="chave">Atributo → estático. Método sobrescrito → dinâmico. Com <code>Sub p = new Sub()</code> continua 175.0 (o campo é lido dentro de <code>Base</code>). Sem redeclarar o campo e com <code>super(2.0)</code> no construtor, ou com um <code>getFator()</code> sobrescrito: 225.0. Com <code>taxa()</code> <code>private</code> ou <code>static</code>: 160.0.</div>
+    <p>Projeto: o shadowing é falha (dois estados com o mesmo nome, quebra do encapsulamento). Configure o estado herdado por construtor ou por método polimórfico.</p>
+    <div class="pega">"225.0 e alta coesão" supõe atributo polimórfico e elogia o shadowing. "160.0 e projeto seguro" ignora o <code>@Override</code>: o tipo declarado não impede o despacho de métodos. "A subclasse redefine a alocação de memória do atributo": nada é realocado. O slide diz "tipo DECLARADO da referência". O exato é o tipo estático <b>onde o campo é lido</b>.</div>
+  </section>
+
+  <section class="sub" id="t04-uml" data-titulo="UML: multiplicidade, associação, agregação e composição">
+    <p class="cai">Questões reais: quiz nº 21 · slides Q3</p>
+    <table>
+      <tr><th>Notação</th><th>Leitura</th><th>Frase típica da regra</th></tr>
+      <tr><td><code>1</code></td><td>exatamente um</td><td>"um e apenas um", "exatamente um"</td></tr>
+      <tr><td><code>0..1</code></td><td>zero ou um</td><td>"no máximo um", "pode gerar um"</td></tr>
+      <tr><td><code>0..*</code> ou <code>*</code></td><td>zero ou muitos</td><td>"diversos, mas pode não ter nenhum"</td></tr>
+      <tr><td><code>1..*</code></td><td>um ou muitos</td><td>"um ou mais", "precisa ter pelo menos um"</td></tr>
+    </table>
+    <p><b>Leitura</b>: parta de <b>uma</b> instância do lado oposto. O número junto à classe X diz quantos X cada objeto do outro lado tem. Na figura, o <code>1</code> junto de Cliente diz que cada Pedido tem exatamente 1 cliente, e o <code>0..*</code> junto de Pedido diz que cada Cliente tem zero ou muitos pedidos.</p>
+    <figure><img src="img/t04-uml-vendas.png" alt="Diagrama UML Cliente 1 – 0..* Pedido 1 – 1..* ItemPedido 0..* – 1 Produto, com losango de composição"><figcaption>Fonte: Material sobre Orientação a Objetos.pdf, p. 15</figcaption></figure>
+    <div class="pega">Nesta figura o losango preto aparece encostado em ItemPedido (a parte). Está errado: pelo texto da própria apostila e pelos slides, ele fica no <b>todo</b>, encostado em Pedido.</div>
+    <table>
+      <tr><th>Relação</th><th>Símbolo</th><th>Significado</th></tr>
+      <tr><td>Associação</td><td>linha simples</td><td>um usa/conhece o outro; não pressupõe posse</td></tr>
+      <tr><td>Agregação</td><td>losango <b>vazio</b> no todo</td><td>conjunto–parte fraco; a parte pode existir sozinha ou ser compartilhada</td></tr>
+      <tr><td>Composição</td><td>losango <b>preenchido</b> no <b>todo</b></td><td>parte exclusiva (no máximo 1 todo), com pertencimento estrutural e ciclo de vida ligado ao todo; no lado do todo a multiplicidade é 1 (ou 0..1)</td></tr>
+      <tr><td>Generalização</td><td>triângulo vazio na superclasse</td><td>herança: só para "é-um"</td></tr>
+    </table>
+    <div class="chave">"1 no extremo Cliente" <b>não</b> quer dizer que há um único cliente no sistema. "Parte com ciclo de vida do todo" → composição ◆ no todo. Algo "gerado por" outro não é subclasse dele.</div>
+    <div class="pega">Distratores típicos:
+      <ul>
+        <li>Inverter os lados (pôr <code>1..*</code> junto da classe que deveria ter <code>1</code>).</li>
+        <li>Muitos-para-muitos onde a regra diz "um e apenas um".</li>
+        <li>Herança para "gera/pertence" (um receituário não é um atendimento).</li>
+        <li>Agregação (losango vazio) quando há ciclo de vida dependente, ou losango na classe parte.</li>
+        <li><code>1..*</code> onde a regra admite zero, <code>0..*</code> onde exige "um ou mais", e <code>1..*</code> onde a regra diz "no máximo um" (<code>0..1</code>).</li>
+      </ul>
+    </div>
+    <p>A UML 2.5.1 não dá à agregação semântica operacional universal (use ◇ com cautela). Na prova: ◇ = fraco, ◆ = forte.</p>
+  </section>
+
+  <section class="sub" id="t04-strategy" data-titulo="Padrões GoF: Strategy e o Princípio Aberto/Fechado">
+    <p class="cai">Questões reais: quiz nº 22 · slides Q4</p>
+    <ul>
+      <li>Sintoma: um <code>if / else if</code> por modalidade que cresce a cada regra nova. Toda nova regra obriga a editar a mesma classe, o que viola o <b>OCP</b> (aberto para extensão, fechado para modificação) e reduz a coesão.</li>
+      <li><b>Strategy</b> (comportamental): uma interface comum e uma classe por algoritmo. O contexto recebe a estratégia por <b>composição/injeção</b>. Nova modalidade = nova classe, sem tocar no código existente.</li>
+    </ul>
+    <pre><code>interface EstrategiaFrete {
+  double calcular(Pedido p);
+}
+class FretePac
+    implements EstrategiaFrete {
+  public double calcular(Pedido p) {
+    return p.getPeso() * 1.2;
+  }
+}
+class CalculadoraFrete { // contexto
+  private final EstrategiaFrete est;
+  CalculadoraFrete(EstrategiaFrete e) {
+    est = e;               // composição
+  }
+  double calcular(Pedido p) {
+    return est.calcular(p);  // sem if
+  }
+}</code></pre>
+    <table>
+      <tr><th>Padrão</th><th>Grupo</th><th>Resolve</th></tr>
+      <tr><td>Strategy</td><td>comportamental</td><td>algoritmos intercambiáveis atrás de uma interface</td></tr>
+      <tr><td>Template Method</td><td>comportamental</td><td>esqueleto na superclasse, passos nas subclasses</td></tr>
+      <tr><td>Observer</td><td>comportamental</td><td>notificar N inscritos sobre um evento (1→N)</td></tr>
+      <tr><td>Mediator</td><td>comportamental</td><td>centralizar a coordenação entre colegas</td></tr>
+      <tr><td>Factory Method</td><td>criacional</td><td>quem instancia o objeto</td></tr>
+      <tr><td>Singleton</td><td>criacional</td><td>uma instância por escopo (estado global)</td></tr>
+    </table>
+    <div class="pega">Factory Method trata da criação, não da variação do algoritmo, e as condicionais continuariam centralizadas. Observer avisa inscritos sobre eventos, não escolhe um cálculo síncrono que devolve valor. Singleton não remove <code>if</code> nem melhora a coesão, e ainda cria estado global. Nuance: o Strategy tira os <code>if</code> do <b>contexto</b>, mas a escolha da estratégia ainda acontece em algum lugar (injeção, <code>Map</code>).</div>
+  </section>
+
+  <section class="sub" id="t04-inf" data-titulo="Tópicos para as questões inferidas">
+
+    <section class="sub" id="t04-inf-contrato" data-titulo="Classe, objeto e contrato da operação">
+      <ul>
+        <li><b>Classe</b> = tipo/descrição (atributos, operações, construtores, regras de acesso). <b>Objeto</b> = instância com <b>identidade</b> (distingue objetos de valores iguais), <b>estado</b> (valores no momento) e <b>comportamento</b>. Não são sinônimos.</li>
+        <li><b>Pré-condição</b>: o que o cliente garante <b>antes</b> da chamada. <b>Pós-condição</b>: o que a operação garante <b>depois</b>. <b>Invariante</b>: vale em todo estado observável.</li>
+        <li>Na <code>Conta</code> da apostila (saldo em <code>long</code> centavos, sem <code>setSaldo</code>): <code>sacar</code> exige <code>0 &lt; valor ≤ saldo</code>. Pós-condição: saldo novo = anterior − valor. Invariante: <code>saldoCentavos ≥ 0</code> (saldo zero vale). O construtor estabelece a invariante, e <code>depositar</code>/<code>sacar</code> a preservam.</li>
+      </ul>
+      <div class="pega">Lançar exceção é a reação à pré-condição violada, não uma pós-condição. O construtor não é "chamado de novo" antes de operar. <code>private</code> com setter público não garante invariante nenhuma.</div>
+    </section>
+
+    <section class="sub" id="t04-inf-igualdade" data-titulo="Identidade × igualdade: ==, equals e hashCode">
+      <pre><code>// equals(Object) compara o sku,
+// mas hashCode NÃO foi redefinido
+Produto a = new Produto("SKU-1");
+Produto b = new Produto("SKU-1");
+set.add(a); set.add(b);  // HashSet
+a == b        // false
+a.equals(b)   // true
+set.size()    // 2</code></pre>
+      <ul>
+        <li><code>==</code> em referências testa <b>identidade</b> (mesmo objeto). Redefinir <code>equals</code> não muda o <code>==</code>.</li>
+        <li><code>equals</code> = igualdade lógica definida pela classe (o padrão de <code>Object</code> compara identidade).</li>
+        <li><code>HashSet</code>/<code>HashMap</code> localizam primeiro pelo <code>hashCode</code> e só então comparam com <code>equals</code>. Quem redefine <code>equals</code> redefine <code>hashCode</code> com os <b>mesmos</b> campos (<code>Objects.hash(sku)</code>), e aí <code>size()</code> dá 1. Quebrar o contrato muda o resultado, não só o desempenho.</li>
+      </ul>
+      <div class="pega"><code>equals(Produto p)</code> é <b>sobrecarga</b> e não substitui <code>equals(Object)</code>. Se o campo usado no <code>hashCode</code> mudar depois da inserção, <code>contains</code> falha. Use campos imutáveis.</div>
+    </section>
+
+    <section class="sub" id="t04-inf-interfaces" data-titulo="Interfaces: contrato, evolução e conflito de default">
+      <ul>
+        <li>Dependa da interface e receba a implementação pelo construtor (<code>ServicoDeRelatorios(Exportador e)</code>). Assim a implementação pode ser trocada sem editar o serviço, e os testes usam dublês.</li>
+        <li>Método <b>abstrato</b> novo numa interface pública quebra todos os implementadores. Método <code>default</code> evita a quebra de compilação, mas não garante a semântica: implementações antigas herdam o valor padrão. Documente e teste.</li>
+        <li>O compilador verifica assinaturas e visibilidade. Não prova pós-condições, invariantes nem substituibilidade.</li>
+        <li>Combinação válida: interface (contrato) + classe abstrata esqueleto (<code>AbstractList&lt;E&gt;</code>).</li>
+      </ul>
+      <pre><code>interface Exportavel {
+  default String descricao() {
+    return "exportavel"; }
+}
+interface Auditavel {
+  default String descricao() {
+    return "auditavel"; }
+}
+class Relatorio
+    implements Exportavel, Auditavel {
+  @Override  // obrigatório aqui
+  public String descricao() {
+    return Exportavel.super.descricao()
+      + "+"
+      + Auditavel.super.descricao();
+  }
+}  // imprime exportavel+auditavel</code></pre>
+      <p>Dois <code>default</code> iguais vindos de interfaces não relacionadas causam erro de compilação até a classe sobrescrever. Java não escolhe pela ordem do <code>implements</code>. Dois métodos abstratos iguais não conflitam.</p>
+      <div class="chave">"Java não tem herança múltipla" é frase incompleta: tem herança múltipla de <b>tipo</b> (interfaces), mas não de estado/implementação de classes. C++ aceita várias classes-base (bases virtuais no diamante). Python usa a MRO C3.</div>
+    </section>
+
+    <section class="sub" id="t04-inf-vazamento" data-titulo="Vazamento da representação (final ≠ imutável)">
+      <pre><code>private final List&lt;String&gt; alunos =
+    new ArrayList&lt;&gt;();
+public List&lt;String&gt; getAlunos() {
+  return alunos;           // vaza
+}
+// cliente burla matricular():
+t.getAlunos().add("Caio");
+// capacidade 2, mas size() → 3</code></pre>
+      <ul>
+        <li><code>final</code> na referência só impede reatribuir: o <code>ArrayList</code> continua mutável. <code>private</code> protege o nome do campo, não o objeto devolvido. Método <code>final</code> só impede sobrescrita.</li>
+        <li>Correção: <code>return List.copyOf(alunos);</code> (um <code>add</code> lança <code>UnsupportedOperationException</code>) e alterações só por operações de domínio. A cópia não torna os elementos imutáveis nem resolve concorrência.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t04-inf-heranca" data-titulo="Herança, construtores e subtipagem (Liskov)">
+      <ul>
+        <li>Herança pode ser de tipo, de implementação ou de estado. <b>Subclasse ≠ subtipo</b>: só é subtipo se puder substituir a base sem quebrar expectativas documentadas.</li>
+        <li>Construtores <b>não</b> são herdados. A subclasse inicializa a base com <code>super(...)</code>, obrigatório quando a base não tem construtor sem parâmetros (<code>Circulo</code> chama <code>super(cor)</code>).</li>
+        <li><code>@Override</code> faz o compilador acusar erro se a assinatura não sobrescrever nada. Sem ele, <code>area(int)</code> viraria uma sobrecarga silenciosa.</li>
+        <li><b>LSP</b>: o subtipo não pode exigir pré-condição mais forte, entregar pós-condição mais fraca ou lançar exceção para entradas que a base aceita. Exemplo: o contrato <code>gravar</code> aceita qualquer tamanho, e uma implementação "nuvem grátis" lança exceção acima de 1 MB. Isso quebra o cliente. Revise o contrato ou não use a classe como subtipo.</li>
+      </ul>
+      <div class="pega">"Compila, logo é substituível" está errado. <code>instanceof</code> + cast no cliente esconde a violação (use só quando a distinção de tipo é parte do problema). Reduzir para <code>protected</code> um método de interface nem compila.</div>
+    </section>
+
+    <section class="sub" id="t04-inf-sobrecarga" data-titulo="Sobrecarga × sobrescrita × ocultação de static">
+      <pre><code>class Base {
+  static String nome() {
+    return "Base"; }
+  String tipo() { return "Base"; }
+}
+class Derivada extends Base {
+  static String nome() {
+    return "Derivada"; }
+  @Override String tipo() {
+    return "Derivada"; }
+}
+// sobrecargas: imprimir(Base b)
+//          e imprimir(Derivada d)
+Base ref = new Derivada();
+ref.tipo();    // "Derivada"
+ref.nome();    // "Base"
+imprimir(ref); // imprimir(Base)</code></pre>
+      <ul>
+        <li><code>tipo()</code>: sobrescrita, decidida em execução pela classe real. <code>nome()</code>: <code>static</code> não é sobrescrito, só <b>ocultado</b>, e vale o tipo declarado (<code>Base</code>). <code>imprimir(ref)</code>: sobrecarga escolhida pelo tipo estático do argumento (<code>Base</code>).</li>
+        <li><b>Sobrecarga</b> = mesmo nome, parâmetros diferentes, escolhida em compilação pelo tipo <b>estático</b> dos argumentos. Retorno diferente não cria sobrecarga: <code>int f(int)</code> e <code>double f(int)</code> dão erro "already defined".</li>
+        <li>Só método de instância sobrescrito é despachado dinamicamente. Chamar <code>static</code> por uma instância é má prática.</li>
+        <li>Polimorfismo paramétrico (generics, <code>List&lt;T&gt;</code>) é outro fenômeno, com apagamento de tipos.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t04-inf-uml-visibilidade" data-titulo="UML: visibilidade e alcance do diagrama de classes">
+      <table>
+        <tr><th>UML</th><th>Java</th></tr>
+        <tr><td><code>+</code></td><td><code>public</code></td></tr>
+        <tr><td><code>-</code></td><td><code>private</code></td></tr>
+        <tr><td><code>#</code></td><td><code>protected</code></td></tr>
+        <tr><td><code>~</code></td><td>pacote (sem modificador)</td></tr>
+      </table>
+      <p>Membro <code>static</code> aparece <b>sublinhado</b>. O diagrama de classes é uma visão <b>estrutural</b>: classes, atributos, operações, generalizações, associações, dependências e restrições. Não especifica algoritmo, ordem das mensagens (isso é o diagrama de sequência) nem gera código completo. O de análise omite detalhes; o de projeto se aproxima das assinaturas.</p>
+    </section>
+
+    <section class="sub" id="t04-inf-classe-assoc" data-titulo="Classe de associação e limites da multiplicidade">
+      <ul>
+        <li>Vínculo com dados próprios vira classe: <code>Matricula</code> (semestre, nota, frequência, situação) entre Aluno e Disciplina, ou <code>Emprestimo</code> (datas, situação) entre Leitor e Exemplar.</li>
+        <li>Biblioteca: Emprestimo → 1 Leitor e 1 Exemplar. Leitor → 0..* empréstimos. Exemplar → 0..* empréstimos (histórico) e 1 Livro. Livro → 1..* exemplares.</li>
+        <li>Multiplicidade só limita contagem. Não informa ordem (<code>{ordered}</code>), unicidade (<code>{unique}</code>), ciclo de vida nem tempo. <code>0..*</code> pode ser <code>Set</code>, <code>List</code> ou <code>Bag</code>, e <code>List</code> aceita duplicatas.</li>
+        <li>Regras como "uma matrícula por (aluno, disciplina, semestre)" ou "no máximo um empréstimo <b>ativo</b> por exemplar" exigem OCL, restrição de banco (<code>UNIQUE</code>), validação no código ou teste.</li>
+      </ul>
+      <div class="pega">Pôr <code>0..1</code> empréstimo por exemplar proíbe o histórico. Herança (<code>Emprestimo extends Exemplar</code>) e composição também não expressam a regra do "ativo".</div>
+    </section>
+
+    <section class="sub" id="t04-inf-relacoes" data-titulo="Associação × agregação × composição na prática">
+      <ul>
+        <li>Decida pela <b>regra de domínio</b>, nunca por <code>new</code> no construtor, <code>final</code>, classe interna ou destrutor. "Use a menor semântica suficiente": uma associação explícita é melhor que uma composição não justificada.</li>
+        <li><code>Carrinho ◆— Item</code>: o item é criado pelo carrinho, é exclusivo e é descartado com ele. <code>Item → 1 Produto</code> é associação, porque o produto existe sozinho e aparece em vários carrinhos. A coleta de lixo do Java não impede modelar composição.</li>
+      </ul>
+      <p>Teste o modelo de vendas (<a href="#t04-uml">figura</a>) com instâncias:</p>
+      <table>
+        <tr><th>Instância</th><th>Válida?</th></tr>
+        <tr><td>Cliente sem pedidos</td><td>Sim (0..*)</td></tr>
+        <tr><td>Pedido sem cliente</td><td>Não (exige 1)</td></tr>
+        <tr><td>Pedido sem itens</td><td>Não (exige 1..*)</td></tr>
+        <tr><td>Item em dois pedidos</td><td>Não (composição: parte exclusiva)</td></tr>
+        <tr><td>Produto em itens de vários pedidos</td><td>Sim (associação)</td></tr>
+      </table>
+    </section>
+
+    <section class="sub" id="t04-inf-gof" data-titulo="Padrões GoF: classificação e escolha">
+      <p>O GoF reúne 23 padrões em 3 grupos: <b>criacionais</b>, <b>estruturais</b> e <b>comportamentais</b> (veja a <a href="#t04-strategy">tabela</a>). Padrão não é biblioteca, framework nem receita, e todo padrão tem custo. Descreva o problema sem o nome do padrão:</p>
+      <figure><img src="img/t04-arvore-padroes.png" alt="Árvore de decisão: muitos receptores variáveis → Observer; colaboração cruzada → Mediator; unicidade real → Singleton ou instância injetada, com os custos de cada um"><figcaption>Fonte: Material sobre Orientação a Objetos.pdf, p. 17</figcaption></figure>
+      <ul>
+        <li>Colegas conhecidos que se referenciam (campos e botão de uma tela) → <b>Mediator</b>.</li>
+        <li>Receptores variáveis de um evento (cache, interface, auditoria) → <b>Observer</b>.</li>
+        <li>Configuração única que precisa de testes isolados → <b>instância única criada na composição e injetada</b>.</li>
+        <li>Fórmula fixa, usada num ponto só, sem variação → chamada direta, <b>sem padrão</b>.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t04-inf-observer-mediator" data-titulo="Observer × Mediator">
+      <ul>
+        <li><b>Observer</b>: dependência 1→N. O publicador (<code>ProductCatalog</code>) conhece só a interface (<code>PriceObserver</code>). Os observadores se inscrevem e cancelam em execução.</li>
+        <li>Notifique percorrendo <code>List.copyOf(observers)</code>: um cancelamento durante a notificação não afeta a iteração corrente e vale para os próximos eventos. Sem a cópia, um observador pode ser pulado em silêncio.</li>
+        <li>Observer não garante, por si só, ordem, entrega exatamente uma vez, persistência ou transação. <code>java.util.Observable</code> está depreciada desde o Java 9.</li>
+        <li><b>Mediator</b>: cada componente só avisa o mediador (<code>mediator.notify(this, "click")</code>) e não conhece os colegas. O <code>RegistrationDialog</code> decide quem reage, e um campo novo altera só o mediador. Custo: o mediador crescer demais (God Object). Mitigue dividindo por contexto, usando eventos tipados e delegando regras de domínio.</li>
+      </ul>
+      <div class="pega">Mediator não é Facade (que simplifica a interface de um subsistema). Usar Observer com todos inscritos em todos mantém o acoplamento N×N. Mediator coordena colegas conhecidos; Observer notifica receptores que variam.</div>
+    </section>
+
+    <section class="sub" id="t04-inf-singleton" data-titulo="Singleton (idioma Holder)">
+      <pre><code>public final class AppConfig {
+  private AppConfig() {}
+  private static class Holder {
+    static final AppConfig INSTANCE =
+        new AppConfig();
+  }
+  static AppConfig getInstance() {
+    return Holder.INSTANCE;
+  }
+}</code></pre>
+      <ul>
+        <li>Criacional: construtor privado + acesso estático. A JVM inicializa <code>Holder</code> uma vez, de forma sincronizada, na 1ª chamada a <code>getInstance()</code>. A criação é tardia e segura entre threads, sem <code>synchronized</code>. Um <code>enum</code> também serve.</li>
+        <li>A unicidade vale só no escopo: não vale entre JVMs, class loaders ou processos, e a reflexão pode criar outra instância.</li>
+        <li>Custo: acesso global (dependências ocultas, estado entre testes, dublês difíceis). Prefira uma instância criada na composição da aplicação e injetada: <code>new Service(logger)</code>. Só use Singleton se instâncias extras causarem dano real.</li>
+      </ul>
+    </section>
+
+  </section>
+</section>

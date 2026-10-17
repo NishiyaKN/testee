@@ -1,0 +1,326 @@
+<section class="topico" id="t03" data-titulo="03 · Engenharia de Software">
+
+  <section class="sub" id="t03-scrum" data-titulo="Scrum: papéis (PO, Scrum Master, Desenvolvedores)">
+    <p class="cai">Questões reais: quiz nº 14 · slides Q1</p>
+    <p><b>Scrum</b>: framework ágil mais popular. Trabalho em <b>Sprints</b> curtas e de duração fixa, <b>3 responsabilidades</b> e 4 ritos (Planejamento, Daily, Revisão, Retrospectiva). Funciona <b>sem "gerente de projeto"</b> tradicional.</p>
+    <table>
+      <tr><th>Papel</th><th>O que faz</th></tr>
+      <tr><td><b>Product Owner (PO)</b></td><td>Define a <b>visão do produto</b>, entende as necessidades dos usuários, maximiza o valor entregue, escreve e <b>prioriza o Product Backlog</b>, representa o cliente, aceita ou rejeita entregas. Diz <b>o quê e por quê</b>, não o como.</td></tr>
+      <tr><td><b>Scrum Master (SM)</b></td><td><b>Líder servidor</b>: facilita o Scrum e as cerimônias, <b>remove impedimentos</b>, protege o time de interrupções, orienta sobre práticas ágeis.</td></tr>
+      <tr><td><b>Desenvolvedores</b></td><td>Equipe multidisciplinar e <b>auto-organizada</b>: estima, planeja a sprint, constrói e testa o <b>incremento</b>. Decide o <b>como</b>.</td></tr>
+    </table>
+    <div class="chave">PO = backlog e valor. SM = líder servidor que remove impedimentos. Desenvolvedores = constroem o incremento. Leia o "respectivamente": trocar a ordem PO/SM é o distrator clássico.</div>
+    <div class="pega">"Gerente de Projetos", "Líder Técnico" e "Gerente de Portfólio" <b>não são papéis do Scrum</b>. O PMBOK é um guia de boas práticas, <b>não é metodologia</b> e não define papéis do Scrum. O PO é <b>uma pessoa</b>, não um papel dividido entre duas.</div>
+  </section>
+
+  <section class="sub" id="t03-processos" data-titulo="Fluxos e modelos de processo de software">
+    <p class="cai">Questões reais: quiz nº 15 · slides Q2</p>
+    <table>
+      <tr><th>Fluxo</th><th>Como funciona</th></tr>
+      <tr><td><b>Linear</b></td><td>Sequência fixa. Cada etapa termina antes da próxima, <b>sem retorno</b>.</td></tr>
+      <tr><td><b>Iterativo</b></td><td>Repete tarefas e <b>volta</b> a etapas anteriores para corrigir e melhorar.</td></tr>
+      <tr><td><b>Evolucionário</b></td><td><b>Ciclos</b> contínuos de planejamento, criação, testes e refinamento com <b>feedback dos usuários</b>. O produto evolui com o tempo.</td></tr>
+      <tr><td><b>Paralelo</b></td><td>Várias etapas <b>ao mesmo tempo</b>, por equipes distintas.</td></tr>
+    </table>
+    <figure><img src="img/t03-fluxo-evolucionario.png" alt="Fluxo evolucionário: comunicação, planejamento, modelagem, construção e implantação em ciclo que libera incrementos"><figcaption>Fluxo evolucionário: o ciclo se repete e cada volta libera um incremento. Fonte: ENGENHARIA DE SOFTWARE.pdf (slides), p. 23</figcaption></figure>
+    <table>
+      <tr><th>Modelo</th><th>Marca registrada</th></tr>
+      <tr><td><b>Cascata</b></td><td>Linear e rígido: requisitos → projeto → implementação e teste de unidade → integração e teste de sistema → operação e manutenção. <b>Não volta</b> a fases concluídas. Documentação extensa, escopo rígido, custo e prazo previsíveis, cliente só no início e no fim. Serve quando os requisitos são <b>bem compreendidos e estáveis</b>.</td></tr>
+      <tr><td><b>Incremental</b></td><td>Entrega em partes (incrementos), cada uma planejada, codificada, testada e liberada. Sequências lineares escalonadas no tempo.</td></tr>
+      <tr><td><b>Prototipação</b> (evolucionário)</td><td><b>Versões preliminares e simples</b> mostradas aos usuários para validar e entender os requisitos <b>antes do desenvolvimento definitivo</b>. Indicada quando o usuário não sabe dizer o que precisa.</td></tr>
+      <tr><td><b>Espiral</b> (evolucionário)</td><td>Ciclos que se ampliam. Cada ciclo começa com planejamento e <b>análise de riscos</b>.</td></tr>
+      <tr><td><b>Reuso</b></td><td>Monta o sistema com componentes, módulos e bibliotecas já existentes.</td></tr>
+    </table>
+    <figure><img src="img/t03-espiral.png" alt="Modelo espiral: planejamento com análise de risco, modelagem, construção, entrega e avaliação em voltas crescentes"><figcaption>Modelo espiral: cada volta passa por planejamento e análise de risco. Fonte: ENGENHARIA DE SOFTWARE.pdf (slides), p. 32</figcaption></figure>
+    <div class="chave">Modelos evolucionários são iterativos e têm dois tipos: <b>Prototipação</b> (protótipos para descobrir e validar requisitos) e <b>Espiral</b> (riscos a cada ciclo). "Ciclos com feedback" indica evolucionário; "versões simples para validar" indica prototipação; "análise de riscos a cada ciclo" indica espiral.</div>
+    <div class="pega">Protótipos para entender requisitos "antes da codificação definitiva" <b>não são Cascata</b>, que fecha toda a fase de requisitos e não volta. Chamar a prototipação de "técnica" não a torna errada: o material a trata como modelo e como técnica. "Interativo" na apostila = <b>iterativo</b>.</div>
+  </section>
+
+  <section class="sub" id="t03-requisitos" data-titulo="Requisitos funcionais e não funcionais">
+    <p class="cai">Questões reais: quiz nº 16 · slides Q3</p>
+    <table>
+      <tr><th></th><th>Funcional (RF)</th><th>Não funcional (RNF)</th></tr>
+      <tr><td>Pergunta</td><td>"O que o sistema <b>faz</b>"</td><td>"<b>Como</b> o sistema se comporta"</td></tr>
+      <tr><td>Conteúdo</td><td>Funções, fluxos, regras de negócio</td><td>Atributos de qualidade e restrições: desempenho, disponibilidade, segurança, escalabilidade, usabilidade</td></tr>
+      <tr><td>Exemplo</td><td>"Permitir login via e-mail"</td><td>"A busca deve responder em até 2 segundos"</td></tr>
+      <tr><td>Onde se resolve</td><td>Na funcionalidade</td><td>Na <b>arquitetura</b>: é <b>transversal</b>, afeta todas as funções</td></tr>
+    </table>
+    <ul>
+      <li><b>RNF deve ser mensurável e testável.</b> Vago: "o sistema deve ser rápido". Testável: "95% das requisições respondem em menos de 300 ms com 5 mil usuários simultâneos". O testável vira teste automatizado, cláusula de contrato e critério de aceite.</li>
+      <li><b>RNF dirige a arquitetura</b>: escolha de infraestrutura, banco, cache e padrões de comunicação. Exemplo: disponibilidade 24×7 exige eliminar pontos de falha, fall-back e recuperação automática. Errar isso não se conserta com ajuste pontual no código de uma funcionalidade.</li>
+      <li>Tipos de RNF na apostila: <b>de produto</b> (desempenho, confiabilidade, usabilidade, portabilidade, espaço), <b>organizacionais</b> (entrega, implementação, padrões) e <b>externos</b> (interoperabilidade, legais, éticos, privacidade; ex.: LGPD).</li>
+      <li>User Stories costumam registrar só RFs. Um RF sem o RNF correspondente "funciona", mas não aguenta o uso real (um PIX que trava com 500 usuários).</li>
+    </ul>
+    <div class="chave">Relação causal aceita pelo material: o RNF <b>precisa ser quantificado</b> porque orienta decisões <b>arquiteturais</b>, estruturais e caras de corrigir. As duas ideias são verdadeiras e a segunda justifica a primeira.</div>
+    <div class="pega">A razão mais direta para quantificar é a testabilidade, mas o material também aceita o peso arquitetural como justificativa. Se a frase de apoio mudar para algo sem nexo ("RNFs são escritos como User Stories", "RNF descreve o que o sistema faz"), ela fica falsa ou deixa de justificar a primeira.</div>
+  </section>
+
+  <section class="sub" id="t03-casos-uso" data-titulo="Diagrama de casos de uso (include, extend, atores)">
+    <p class="cai">Questões reais: quiz nº 17 · slides Q4 (e o exemplo do caixa eletrônico, exercício Q5)</p>
+    <table>
+      <tr><th>Elemento</th><th>Símbolo e significado</th></tr>
+      <tr><td><b>Ator</b></td><td>Boneco palito, <b>fora</b> do limite do sistema. Qualquer entidade <b>externa</b> que interage com o sistema: pessoa, organização, hardware, outro sistema ou API.</td></tr>
+      <tr><td><b>Caso de uso</b></td><td>Elipse horizontal: um objetivo do ator.</td></tr>
+      <tr><td><b>Associação</b></td><td>Linha simples entre ator e caso de uso.</td></tr>
+      <tr><td><b>Limite do sistema</b></td><td>Caixa em volta dos casos de uso. O que está fora está fora do escopo.</td></tr>
+      <tr><td><b>Pacote</b></td><td>Forma de pasta que agrupa elementos.</td></tr>
+    </table>
+    <table>
+      <tr><th>Relação</th><th>Quando usar e notação</th></tr>
+      <tr><td><b>«include»</b></td><td>O caso base <b>sempre</b> executa o outro: comportamento obrigatório e reutilizado (Finalizar Compra sempre faz Calcular Frete). Seta tracejada do <b>base</b> para o <b>incluído</b>.</td></tr>
+      <tr><td><b>«extend»</b></td><td>Comportamento <b>opcional</b>, inserido só se a condição do <b>ponto de extensão</b> for satisfeita (Aplicar Cupom durante Finalizar Compra). Seta tracejada do <b>extensor</b> para o <b>base</b>.</td></tr>
+      <tr><td><b>Generalização</b></td><td>Herança: um ator (ou caso) "deriva de" outro mais genérico (Cliente Ouro e Cliente Prata → Cliente). Linha sólida com <b>triângulo vazado</b> apontando para o genérico.</td></tr>
+    </table>
+    <figure><img src="img/t03-caso-uso-caixa.png" alt="Diagrama de casos de uso do caixa eletrônico com atores Cliente, Técnico e Banco"><figcaption>Caixa eletrônico: Cliente usa as 4 operações; Técnico faz Manutenção e Reparo; o <b>Banco</b>, um sistema externo, é ator ligado aos 6 casos de uso. Fonte: ENGENHARIA DE SOFTWARE.pdf (slides), p. 61</figcaption></figure>
+    <div class="chave">«include» = sempre. «extend» = às vezes, sob condição. Generalização = "é um tipo de". Gateway de pagamento, banco ou API externa que interage com o sistema = <b>ator</b>.</div>
+    <div class="pega">Os slides dizem que atores são "bonecos palito representando as pessoas"; a apostila corrige: <b>pessoa, organização ou sistema externo</b>, nunca "classe interna". Atores derivados ligam-se por generalização, não por associação. No «extend», o base é o <b>estendido</b> e o opcional é o <b>extensor</b>: chamar o opcional de "estendido" é impreciso, mas não muda a ideia de condicional.</div>
+  </section>
+
+  <section class="sub" id="t03-gof" data-titulo="Padrões de projeto GoF: Observer">
+    <p class="cai">Questões reais: quiz nº 18 · exemplo do professor (Estrutura de Questões ENADE, p. 10)</p>
+    <p><b>GoF</b> (Gamma, Helm, Johnson e Vlissides, 1994): catálogo de <b>23 padrões</b>. Um padrão é um modelo genérico de solução, não código pronto.</p>
+    <p><b>Observer</b>: dependência <b>um-para-muitos</b>. Quando o objeto observado (Subject) muda de estado, todos os dependentes (Observers) são <b>notificados e atualizados automaticamente</b>. O Subject só conhece a interface dos observadores, o que dá <b>baixo acoplamento</b>. Exemplo: o Pedido muda de status e o app do cliente, o painel do administrador e o SMS se atualizam.</p>
+    <table>
+      <tr><th>Padrão</th><th>O que faz (e se serve ao cenário 1 → N)</th></tr>
+      <tr><td><b>Observer</b> (comportamental)</td><td>Notificação automática 1 → N. É o caso.</td></tr>
+      <tr><td>Publish-Subscribe</td><td>Arquitetura distribuída com <b>broker</b> de eventos; quem publica e quem assina não se conhecem. Resolve o mesmo problema, mas não é um dos 23 padrões do catálogo GoF.</td></tr>
+      <tr><td>Mediator (comportamental)</td><td>Centraliza a interação <b>bidirecional</b> entre vários objetos (conversa N ↔ N). Não é notificação unidirecional.</td></tr>
+      <tr><td>Singleton (criacional)</td><td>Garante <b>uma única instância</b> de uma classe. Não trata de comunicação entre objetos.</td></tr>
+    </table>
+    <table>
+      <tr><th>Família</th><th>Padrões</th></tr>
+      <tr><td><b>Criacionais (5)</b>: criar objetos</td><td>Abstract Factory, Builder, Factory Method, Prototype, Singleton</td></tr>
+      <tr><td><b>Estruturais (7)</b>: compor classes e objetos</td><td>Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy</td></tr>
+      <tr><td><b>Comportamentais (11)</b>: responsabilidades e comunicação</td><td>Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento, Observer, State, Strategy, Template Method, Visitor</td></tr>
+    </table>
+    <div class="pega">No livro do GoF, "Publish-Subscribe" e "Dependents" aparecem como <b>outros nomes do Observer</b>. A literatura atual separa os dois (o Pub-Sub tem broker). Se "Observer" estiver entre as alternativas, ele é o nome canônico e vence. Se não estiver e houver "Publish-Subscribe", este passa a ser a melhor opção.</div>
+  </section>
+
+  <section class="sub" id="t03-inf" data-titulo="Tópicos para as questões inferidas">
+
+    <section class="sub" id="t03-inf-analise" data-titulo="Análise de requisitos e stakeholders">
+      <ol>
+        <li><b>Levantamento</b>: entrevistas, workshops, questionários, observação.</li>
+        <li><b>Documentação</b>: SRS/FSD, diagramas, modelos.</li>
+        <li><b>Validação</b>: requisitos corretos, completos e compreendidos, por meio de revisões, protótipos (Figma) e simulações.</li>
+        <li><b>Gerenciamento</b>: cada mudança é registrada, avaliada e aprovada (Jira, Azure DevOps, IBM DOORS).</li>
+        <li><b>Verificação e aprovação</b>: revisão final e aprovação formal antes de desenvolver.</li>
+      </ol>
+      <p>Roteiro prático alternativo: Concepção → Elicitação → Elaboração → Negociação (MVP) → Especificação → Validação (cliente assina o escopo) → Gerenciamento.</p>
+      <p><b>Stakeholders</b>: <b>interno</b> (funcionários, gerentes, diretores) × <b>externo</b> (clientes, fornecedores, <b>acionistas</b>, comunidade); <b>primário</b> (influência <b>direta</b> nos resultados) × <b>secundário</b> (interesse <b>indireto</b>). Os dois critérios são independentes. Para identificá-los: mapeamento, análise de influência (influência × interesse), entrevistas e feedback.</p>
+      <div class="pega">Validação (3ª etapa) ≠ verificação e aprovação (5ª). Quem aprova o orçamento e pode cancelar o projeto é stakeholder primário.</div>
+    </section>
+
+    <section class="sub" id="t03-inf-ireb" data-titulo="Princípios da ER (IREB), especificação e rastreabilidade">
+      <p><b>9 princípios (IREB)</b>: Valor (valor = benefício − custo; corrigir requisito na implementação ou operação custa <b>10 a 100×</b> mais) · Stakeholders · Entendimento comum (risco do <b>"falso entendimento"</b>) · Contexto (organizacional, técnico, social e legal; ignorá-lo gera sistema que funciona mas não se integra) · Problema-requisito-solução entrelaçados · Validação ("requisitos não validados são inúteis") · Evolução (mudar é o caso normal) · Inovação (não ser "gravador de voz"; em vez de botões de zoom, colapsar colunas) · Trabalho sistemático (agilidade não desculpa trabalho ad hoc).</p>
+      <ul>
+        <li><b>Especificação</b> = escrever os requisitos <b>corretamente</b> (claros, completos, consistentes, testáveis; SRS ou Product Backlog). <b>Validação</b> = escrever os requisitos <b>certos</b> (revisões, protótipos, gerar casos de teste antes de codificar).</li>
+        <li><b>CCB</b>: Solicitação → <b>Análise de impacto</b> → Aprovação/Rejeição → Atualização. A análise vem antes da decisão. No ágil, a mudança é tratada no refinamento do backlog.</li>
+        <li>Rastreabilidade <b>backward</b> = origem (por que existe, quem pediu). <b>Forward</b> = destino (onde foi implementado, qual teste prova). Na matriz: requisito sem teste = esquecido; código sem requisito = <b>gold plating</b>.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t03-inf-iso" data-titulo="ISO/IEC 25010:2023 (qualidade do produto)">
+      <p>9 características: adequação funcional, eficiência de desempenho, compatibilidade, capacidade de interação, confiabilidade, <b>segurança (Security)</b>, manutenibilidade, flexibilidade e <b>proteção (Safety)</b>.</p>
+      <table>
+        <tr><th>Característica</th><th>Subcaracterísticas que caem</th></tr>
+        <tr><td>Eficiência de desempenho</td><td>comportamento temporal, utilização de recursos, capacidade</td></tr>
+        <tr><td>Compatibilidade</td><td>coexistência, <b>interoperabilidade</b> (troca de dados entre sistemas)</td></tr>
+        <tr><td>Confiabilidade</td><td>impecabilidade, disponibilidade, <b>tolerância a falhas</b>, recuperabilidade</td></tr>
+        <tr><td>Security</td><td>confidencialidade, integridade, <b>não repúdio</b>, responsabilização, autenticidade, resistência</td></tr>
+        <tr><td>Manutenibilidade</td><td>modularidade, reutilização, analisabilidade, modificabilidade, testabilidade</td></tr>
+        <tr><td>Flexibilidade</td><td>adaptabilidade, facilidade de instalação, substituibilidade, escalabilidade</td></tr>
+        <tr><td>Safety</td><td>restrição operacional, identificação de riscos, <b>comportamento à prova de falhas</b>, aviso de perigo, integração segura</td></tr>
+      </table>
+      <div class="chave">Mudanças de 2023: usabilidade → <b>capacidade de interação</b>; portabilidade → <b>flexibilidade</b>; <b>Safety</b> é nova, e a Security continua existindo.</div>
+      <div class="pega">Security protege <b>informação</b> contra acesso não autorizado. Safety evita <b>dano não intencional</b> a pessoas, propriedades e meio ambiente. Tolerância a falhas = <b>continuar operando</b>. À prova de falhas = <b>ir para um estado seguro</b>.</div>
+    </section>
+
+    <section class="sub" id="t03-inf-elicitacao" data-titulo="Técnicas de elicitação">
+      <p>Elicitação = descobrir requisitos. A melhor é a que identifica o <b>maior número</b> de requisitos, analisando empresa, negócio e processos.</p>
+      <table>
+        <tr><th>Categoria</th><th>Técnicas e sinais</th></tr>
+        <tr><td>Tradicionais</td><td>entrevista; <b>questionário</b> (grande volume, padronizado); observação</td></tr>
+        <tr><td>De grupo</td><td>workshop; brainstorming (gerar ideias <b>sem julgamento</b>, quantidade antes de qualidade, depois selecionar); <b>JAD</b> (facilitador, sessões intensivas, documentação em tempo real, aprovação ao final); <b>RAD</b> (entrega rápida com JAD + prototipação + ferramentas CASE)</td></tr>
+        <tr><td>Prototipação</td><td>alta incerteza, feedback rápido</td></tr>
+        <tr><td>Cognitivas (pensamento)</td><td>análise de protocolo; laddering (escada de "por quê?"); <b>card sorting</b> (agrupar cartões); repertory grids (comparar e contrastar elementos)</td></tr>
+        <tr><td>Contextuais (ambiente)</td><td><b>etnografia</b> (imersão longa, cultura, origem antropológica); análise social (comunicação entre stakeholders)</td></tr>
+      </table>
+    </section>
+
+    <section class="sub" id="t03-inf-rup" data-titulo="Outros modelos de processo e RUP">
+      <p>Lembrete: <b>incremental</b> = entregas em partes; <b>espiral</b> = riscos a cada ciclo; <b>reuso</b> = componentes prontos; <b>fluxo paralelo</b> = equipes fazendo etapas diferentes ao mesmo tempo.</p>
+      <p><b>RUP</b> (Rational): processo <b>iterativo e incremental</b> com 4 fases, <b>I-E-C-T</b>:</p>
+      <table>
+        <tr><th>Fase</th><th>Atividades → saída</th></tr>
+        <tr><td>Iniciação (Incepção)</td><td>stakeholders, viabilidade, requisitos iniciais → <b>documento de visão</b></td></tr>
+        <tr><td>Elaboração</td><td>arquitetura inicial, protótipo, detalhar RF/RNF, reduzir riscos → <b>arquitetura sólida</b> e plano detalhado</td></tr>
+        <tr><td>Construção</td><td>codificação, integração, testes contínuos → produto quase final</td></tr>
+        <tr><td>Transição</td><td>testes finais, <b>treinamento</b>, implantação em produção, feedback → produto entregue e plano de suporte</td></tr>
+      </table>
+      <figure><img src="img/t03-rup-fases.png" alt="Gráfico das fases do RUP com a intensidade de cada disciplina ao longo das iterações"><figcaption>Fases (colunas) × disciplinas (linhas). Fonte: APOSTILA DE ESTUDO PARA O ENADE SOBRE ENGENHARIA DE SOFTWARE.pdf, p. 42</figcaption></figure>
+      <div class="pega">Modelagem de Negócio, Requisitos, Análise e Design, Implementação, Teste e Implantação são <b>disciplinas</b>, que atravessam todas as fases. As fases são só as quatro.</div>
+    </section>
+
+    <section class="sub" id="t03-inf-agil" data-titulo="Ágil × tradicional, frameworks, TDD e XP">
+      <table>
+        <tr><th>Aspecto</th><th>Tradicional (Cascata) → Ágil</th></tr>
+        <tr><td>Estrutura</td><td>sequencial, cada etapa depende da anterior → iterativa, em sprints</td></tr>
+        <tr><td>Planejamento</td><td>todo definido antes → atualizado continuamente</td></tr>
+        <tr><td>Mudanças</td><td>rígidas, com processo formal lento → integradas a cada ciclo</td></tr>
+        <tr><td>Feedback e entrega</td><td>só no fim do projeto → após cada sprint, com incrementos frequentes</td></tr>
+      </table>
+      <p>No ágil, o Product Backlog é revisado e priorizado <b>no início de cada sprint</b>.</p>
+      <table>
+        <tr><th>Framework</th><th>Marca</th></tr>
+        <tr><td>Kanban</td><td>quadro visual + <b>limite de WIP</b>, fluxo contínuo</td></tr>
+        <tr><td>Lean</td><td>Toyota: <b>eliminar desperdício</b>, adiar decisões irreversíveis</td></tr>
+        <tr><td>Scrumban</td><td>papéis e cerimônias do Scrum + fluxo contínuo com WIP (suporte e manutenção)</td></tr>
+        <tr><td>XP</td><td>excelência técnica: pair programming, integração contínua, refatoração</td></tr>
+        <tr><td>TDD</td><td><b>prática técnica</b>, não gestão: Red (teste que falha) → Green (código mínimo) → Refactor</td></tr>
+        <tr><td>FDD</td><td>modelagem do domínio → lista de <b>features</b> → construção por feature</td></tr>
+        <tr><td>ASD</td><td>Especular-Colaborar-Aprender</td></tr>
+        <tr><td>SAFe</td><td>escala o ágil em grandes empresas, com muitos times</td></tr>
+      </table>
+      <div class="pega">No TDD o teste vem <b>antes</b> do código. Duração da sprint: os slides dizem 1 a 4 semanas e a apostila, 2 a 4. O Scrum Guide diz até um mês, com duração fixa.</div>
+    </section>
+
+    <section class="sub" id="t03-inf-pmbok" data-titulo="PMBOK (8ª edição)">
+      <p>Guia de boas práticas, diretrizes e terminologia. <b>Não é metodologia</b>: é adaptável a qualquer uma e serve de base a metodologias como o APF. Seis princípios:</p>
+      <table>
+        <tr><th>Princípio</th><th>Ênfase</th></tr>
+        <tr><td>Visão holística</td><td>pensamento sistêmico, efeito na organização inteira</td></tr>
+        <tr><td>Foco no valor</td><td>resultados que importam aos stakeholders, não tarefas concluídas</td></tr>
+        <tr><td>Qualidade incorporada ("de incorporação")</td><td>qualidade nos processos e nas entregas</td></tr>
+        <tr><td>Líder responsável</td><td>decisões éticas e boa governança</td></tr>
+        <tr><td>Integrar a sustentabilidade</td><td>aspectos ambientais, econômicos e sociais</td></tr>
+        <tr><td>Cultura de empoderamento</td><td>colaboração, confiança, segurança psicológica</td></tr>
+      </table>
+      <div class="pega">Na tabela dos slides (p. 18), o rótulo "cultura de empoderamento" aparece duplicado na linha da sustentabilidade. Guie-se pela descrição: "ambiental, econômica e social" = sustentabilidade.</div>
+    </section>
+
+    <section class="sub" id="t03-inf-poo-solid" data-titulo="POO e SOLID">
+      <p><b>Pilares da POO</b>: abstração (identidade, propriedades, métodos); encapsulamento (atributos privados + getters/setters, "caixa preta"); herança (reúso; direta ou indireta; a herança múltipla do C++ <b>não se difundiu</b>); polimorfismo (sobrescrever um método herdado: <code>Ligar()</code> diferente em Televisão e Geladeira). Segundo a apostila, a programação estruturada é <b>mais rápida</b> (por isso C em embarcados), e a POO ganha em reúso e manutenção.</p>
+      <table>
+        <tr><th>SOLID</th><th>Sinal de violação → correção</th></tr>
+        <tr><td><b>S</b> Responsabilidade única</td><td>"Classe Deus" que calcula, gera PDF e salva → dividir</td></tr>
+        <tr><td><b>O</b> Aberto/fechado</td><td><code>switch</code> por tipo que precisa ser alterado para aceitar o Pix → interface + uma classe por tipo</td></tr>
+        <tr><td><b>L</b> Liskov</td><td><code>Pinguim.voar()</code> lança exceção → AveQueVoa / AveQueNada</td></tr>
+        <tr><td><b>I</b> Segregação de interfaces</td><td>interface "gorda" que deixa métodos vazios (fax) → interfaces pequenas</td></tr>
+        <tr><td><b>D</b> Inversão de dependência</td><td><code>new MySQLConnection()</code> na regra de negócio → depender de <code>IUsuarioRepository</code> injetada pelo construtor</td></tr>
+      </table>
+      <div class="chave">Após aplicar o DIP, trocar MySQL por PostgreSQL <b>não altera</b> o serviço, e dá para testá-lo com um mock. O DIP é o princípio; a injeção de dependência é a técnica que o aplica.</div>
+    </section>
+
+    <section class="sub" id="t03-inf-arquitetura" data-titulo="Camadas, microsserviços e ADR">
+      <ul>
+        <li><b>Camadas lógicas</b>: Apresentação → Aplicação/Serviço (orquestra) → Domínio (regras de negócio puras) → Infraestrutura (banco, serviços externos). Camada lógica ≠ física: um monolito é fácil de implantar e depurar, mas pouco escalável. Vantagens: separação de responsabilidades, reúso, testabilidade com mocks/stubs. Desvantagens: <b>overhead</b> entre camadas, rigidez e dificuldade com <b>mudanças transversais</b> (auditoria, rastreamento).</li>
+        <li><b>Microsserviços</b> não substituem o cliente-servidor: mudam como o servidor é construído. <b>Um banco por serviço</b> (regra de ouro) e API Gateway na entrada. Ganhos: escalar só o serviço sobrecarregado, tolerância a falhas (Recomendações cai e o checkout segue) e independência tecnológica.</li>
+        <li><b>ADR</b>: título numerado, data, status (proposto, aceito, rejeitado, substituído), contexto, decisão com as alternativas descartadas, consequências. É <b>append-only</b>: ADR aceito não se edita; cria-se outro que o <b>substitui</b> (supersedes). Y-Statement: "No contexto de…, enfrentando…, decidimos… (e não…) para alcançar…, aceitando que…". Primeira Lei: só existem <b>trade-offs</b> (mais camadas: mais modificabilidade e menos desempenho).</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t03-inf-gof" data-titulo="Padrões GoF: outros exemplos">
+      <p>Todo padrão tem 4 elementos: <b>nome, problema, solução, consequências</b>. A família sai do verbo: criar = criacional; compor/estruturar = estrutural; distribuir responsabilidades e algoritmos = comportamental.</p>
+      <table>
+        <tr><th>Situação</th><th>Padrão (família)</th></tr>
+        <tr><td>Trocar o algoritmo em tempo de execução (frete Correios × transportadora)</td><td><b>Strategy</b> (comportamental)</td></tr>
+        <tr><td>Integrar API legada com interface incompatível</td><td><b>Adapter</b> (estrutural)</td></tr>
+        <tr><td>Delegar a criação a subclasses/fábricas, sem if/switch (Cartão ou Pix)</td><td><b>Factory Method</b> (criacional)</td></tr>
+        <tr><td>Dar acesso simplificado a um subsistema</td><td>Facade (estrutural)</td></tr>
+      </table>
+      <div class="pega">Abstract Factory e Builder são criacionais; Bridge e Proxy, estruturais; Template Method, comportamental.</div>
+    </section>
+
+    <section class="sub" id="t03-inf-vv" data-titulo="Verificação × validação e níveis de teste">
+      <table>
+        <tr><th></th><th>Verificação</th><th>Validação</th></tr>
+        <tr><td>Pergunta</td><td>Construímos o produto <b>corretamente</b>?</td><td>Construímos o <b>produto certo</b>?</td></tr>
+        <tr><td>Compara com</td><td>especificação</td><td>necessidade real do cliente</td></tr>
+        <tr><td>Como</td><td>revisões, inspeções, análise estática, testes unitários e de integração</td><td>UAT, testes beta, testes de sistema</td></tr>
+        <tr><td>Quem</td><td>devs e QA (sem o cliente)</td><td>usuários e PO</td></tr>
+      </table>
+      <p>Casa construída exatamente conforme a planta, mas com porta estreita demais para a geladeira: passou na verificação e falhou na validação.</p>
+      <figure><img src="img/t03-modelo-v.png" alt="Modelo V ligando requisitos ao teste de sistema, projeto ao teste de integração e projeto detalhado ao teste unitário"><figcaption>Modelo V. Fonte: APOSTILA DE ESTUDO PARA O ENADE SOBRE ENGENHARIA DE SOFTWARE.pdf, p. 66</figcaption></figure>
+      <table>
+        <tr><th>Nível</th><th>Foco e executor</th></tr>
+        <tr><td>Unitário</td><td>função ou classe isolada, com mocks (<code>calcularDesconto(100, 0.10)</code> = 90); devs</td></tr>
+        <tr><td>Integração</td><td>interfaces entre módulos (API + PostgreSQL + fila); devs e QA</td></tr>
+        <tr><td>Sistema</td><td>ponta a ponta em homologação (login → carrinho → PIX → e-mail), RF e RNF; QA</td></tr>
+        <tr><td>Aceitação (UAT)</td><td>cliente, usuário ou PO aprova formalmente; alfa e beta</td></tr>
+      </table>
+      <div class="pega">Regressão não é nível de teste: é reexecutar testes antigos a cada deploy.</div>
+    </section>
+
+    <section class="sub" id="t03-inf-caixas" data-titulo="Caixa-branca, preta e cinza; valor-limite">
+      <table>
+        <tr><th>Abordagem</th><th>Visão, técnicas e limite</th></tr>
+        <tr><td><b>Branca</b> (estrutural)</td><td>vê o código; cobertura de comandos, decisões e caminhos, complexidade ciclomática; nível unitário. Pode testar um código perfeito com a regra de negócio errada.</td></tr>
+        <tr><td><b>Preta</b> (funcional)</td><td>só entradas e saídas; particionamento por equivalência, valor-limite, <b>tabela de decisão</b>, <b>transição de estados</b>; sistema e aceitação. Não alcança caminhos ocultos.</td></tr>
+        <tr><td><b>Cinza</b></td><td>conhecimento parcial (APIs, schemas, logs), sem mexer no código: conferir HTTP 401/429 e a flag <code>is_locked</code> no banco</td></tr>
+      </table>
+      <div class="chave">Intervalo [a, b]: <b>3 classes</b> (abaixo, dentro, acima), logo 3 casos. Valor-limite no padrão do material: a−1, a, a+1, b−1, b, b+1. Idade de 18 a 60 → 17, 18, 19, 59, 60, 61. Senha de 8 a 16 → 7, 8, 9, 15, 16, 17.</div>
+      <div class="pega">Parte da literatura usa valor-limite de 2 pontos (a−1, a, b, b+1). O material usa 3.</div>
+    </section>
+
+    <section class="sub" id="t03-inf-defeitos" data-titulo="Casos de teste, automação e defeitos">
+      <ul>
+        <li><b>Caso de teste</b>: claro, reproduzível, independente e rastreável. Campos: ID, título, <b>pré-condição</b> (estado <b>antes</b>), massa de dados, passos, resultado esperado, <b>pós-condição</b> (estado <b>depois</b>).</li>
+        <li><b>Automatizar</b> (ROI): regressão, smoke, carga/desempenho, testes orientados a dados. <b>Manter manual</b>: exploratório, usabilidade, funcionalidade instável.</li>
+        <li><b>Ciclo do defeito</b>: Novo → Atribuído → Em correção → Resolvido (correção enviada ao staging) → Re-teste → Fechado. Se o re-teste falhar: <b>Reaberto</b>.</li>
+        <li><b>Severidade</b> = impacto técnico (o quanto quebra). <b>Prioridade</b> = urgência de negócio. São independentes: logotipo errado na véspera de uma campanha = severidade baixa e prioridade alta; crash num módulo que só será usado daqui a 10 meses = severidade alta e prioridade baixa.</li>
+      </ul>
+    </section>
+
+    <section class="sub" id="t03-inf-uml" data-titulo="UML: diagramas">
+
+      <section class="sub" id="t03-inf-uml-geral" data-titulo="Visão geral: estruturais × comportamentais">
+        <p>UML: linguagem padronizada (ISO/IEC 19505) para visualizar, especificar, construir e documentar. Tem 14 diagramas.</p>
+        <table>
+          <tr><th>Estruturais (o que o sistema é)</th><th>Comportamentais (o que faz no tempo)</th></tr>
+          <tr><td>classes, objetos, componentes, <b>implantação</b>, pacotes, estrutura composta, perfil</td><td><b>casos de uso</b>, atividades, máquina de estados e os de interação: sequência, comunicação, tempo, visão geral</td></tr>
+        </table>
+        <p>Modelo funcional = casos de uso; modelo de objeto = classes; modelo dinâmico = interação, estados e atividades. O diagrama de classes é a base de qualquer solução OO; o de sequência mostra a <b>ordem</b> das interações.</p>
+      </section>
+
+      <section class="sub" id="t03-inf-uml-classes" data-titulo="Diagrama de classes">
+        <p>Retângulo com 3 compartimentos: nome (único obrigatório), atributos, operações.</p>
+        <div class="chave"><b>+</b> público · <b>−</b> privado · <b>#</b> protegido · <b>~</b> pacote · <b>/</b> derivado · <b>sublinhado</b> = estático (escopo de classificador: mesmo valor em todas as instâncias). Sem formatação = membro de instância.</div>
+        <ul>
+          <li><b>Herança/generalização</b>: linha sólida com triângulo vazado apontando para a superclasse (Carro → Veículo).</li>
+          <li><b>Associação bidirecional</b>: linha simples. <b>Unidirecional</b>: seta aberta da classe que conhece para a conhecida.</li>
+          <li>Multiplicidade 0..1 = nenhum ou um; 0..* = nenhum ou vários. Ela pertence à associação. Generalização não tem multiplicidade, logo uma coisa não justifica a outra.</li>
+        </ul>
+      </section>
+
+      <section class="sub" id="t03-inf-uml-sequencia" data-titulo="Diagrama de sequência">
+        <p>Diagrama de interação: <b>como e em que ordem</b> os objetos colaboram. Símbolos: linha de vida (tracejada vertical), ator, <b>ativação</b> (retângulo fino, mais longo quanto mais dura a tarefa), retorno (seta <b>tracejada</b>), auto-mensagem (seta em U), criação e destruição (<b>X</b> na linha de vida).</p>
+        <figure><img src="img/t03-seq-alt-opt-loop.png" alt="Fragmentos alt, opt e loop de um diagrama de sequência de compra"><figcaption>alt (pagamento confirmado ou recusado), opt (cupom), loop (cada item do carrinho). Fonte: ENGENHARIA DE SOFTWARE.pdf (slides), p. 77</figcaption></figure>
+        <div class="chave"><b>alt</b> = if/else (só um caminho executa). <b>opt</b> = if sem else. <b>loop</b> = repetição. <b>par</b> = paralelo. A condição vai entre colchetes.</div>
+        <div class="pega">O <b>DSS</b> (diagrama de sequência do sistema) trata o sistema como <b>caixa-preta</b> e mostra os eventos ator → sistema de um caso de uso. Não detalha os objetos internos.</div>
+      </section>
+
+      <section class="sub" id="t03-inf-uml-atividades" data-titulo="Diagrama de atividades">
+        <p>Diagrama comportamental para fluxos de processo e lógica de negócio.</p>
+        <table>
+          <tr><th>Símbolo</th><th>Significado</th></tr>
+          <tr><td>Nó inicial (círculo preto)</td><td>início</td></tr>
+          <tr><td>Decisão (losango)</td><td>1 entrada, 2 ou mais saídas com condição; segue <b>um</b> caminho</td></tr>
+          <tr><td>Garfo/fork (barra)</td><td>1 fluxo → atividades <b>simultâneas</b></td></tr>
+          <tr><td>Junção (barra de sincronização)</td><td>atividades simultâneas → 1 fluxo</td></tr>
+          <tr><td>Final de fluxo (círculo com X)</td><td>encerra <b>só aquele fluxo</b></td></tr>
+          <tr><td>Término/nó final (círculo preto contornado)</td><td>encerra <b>todos</b> os fluxos da atividade</td></tr>
+        </table>
+      </section>
+
+      <section class="sub" id="t03-inf-uml-comp-impl" data-titulo="Componentes e implantação">
+        <ul>
+          <li><b>Componentes</b>: componente = módulo de classes (subsistema), marcado com «component» ou ícone para não ser confundido com classe. Interface <b>fornecida</b> = linha + <b>círculo</b> ("pirulito"); <b>necessária</b> = linha + <b>semicírculo</b> ("soquete"); juntas formam a "bola-e-soquete". Porta = quadradinho. Dependência = linha <b>tracejada</b> com seta.</li>
+          <li><b>Implantação</b> (a apostila também diz "implementação"): diagrama <b>estrutural</b>, o único que descreve hardware. <b>Nó</b> = caixa 3D. Nó de dispositivo = PC, servidor, celular. Nó de ambiente de execução (EEN) = SO, JVM ou contêiner web dentro do dispositivo. <b>Artefato</b> = «artifact» + arquivo (.war, HTML). Percurso de comunicação = linha entre nós.</li>
+        </ul>
+        <figure><img src="img/t03-implantacao.png" alt="Diagrama de implantação com servidor web, servidor de banco e cliente com navegador, cada um com artefatos"><figcaption>Nós «device» com artefatos ligados por percursos de comunicação. Fonte: ENGENHARIA DE SOFTWARE.pdf (slides), p. 102</figcaption></figure>
+      </section>
+
+    </section>
+  </section>
+</section>
