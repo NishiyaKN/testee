@@ -1,0 +1,530 @@
+{
+ "topico": "05 · Arquitetura de Computadores",
+ "slug": "arq",
+ "excluidas_simulado1": [
+  {
+   "banco": "Caderno Q5",
+   "simulado": "Q8",
+   "motivo": "Mesma situação (sensor de rede com rajadas; polling × interrupção × DMA) e mesmo comando; no simulado as alternativas foram reordenadas (correta C no caderno → A no simulado). Gabarito do simulado lista #5 Arquitetura."
+  },
+  {
+   "banco": "Caderno Q2",
+   "simulado": "Q25",
+   "motivo": "Mesmo texto-base (Hennessy & Patterson) e mesmas métricas do barramento compartilhado (32 GB/s a 35%, 12 ns → 420 ns, 128 requisições); alternativas reordenadas (correta B no caderno → C no simulado). Gabarito do simulado lista #2 Arquitetura."
+  }
+ ],
+ "questoes": [
+  {
+   "ref": "Caderno do squad: Q1",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Um estudante de Ciência da Computação está analisando a estrutura funcional de um sistema de computação para compreender como as instruções e os dados trafegam e são processados. Para organizar seus estudos, ele elencou quatro conceitos fundamentais da disciplina na Coluna I e suas respectivas definições funcionais/características operacionais na Coluna II.</p><p>Relacione os conceitos da Coluna I às suas correspondentes características na Coluna II:</p><table><tr><th>Coluna I</th><th>Coluna II</th></tr><tr><td>(1) Arquitetura de Computadores</td><td>( A ) Unidade funcional responsável por realizar operações aritméticas/lógicas e gerenciar o ciclo de busca e execução de instruções.</td></tr><tr><td>(2) Organização de Computadores</td><td>( B ) Conceito que define a memória principal compartilhada como o local único para armazenamento de dados e de programas em execução.</td></tr><tr><td>(3) Modelo de Von Neumann</td><td>( C ) Conjunto de atributos do sistema visíveis ao programador de linguagem de montagem, tais como o conjunto de instruções e modos de endereçamento.</td></tr><tr><td>(4) Unidade Central de Processamento (CPU)</td><td>( D ) Detalhes operacionais e de hardware transparentes ao programador, como barramentos, sinal de clock e tecnologia da memória.</td></tr></table><p>Assinale a alternativa que apresenta a sequência <b>CORRETA</b> da associação, de cima para baixo:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "1-C, 2-D, 3-B, 4-A"
+    },
+    {
+     "l": "B",
+     "t": "1-D, 2-C, 3-A, 4-B"
+    },
+    {
+     "l": "C",
+     "t": "1-C, 2-A, 3-B, 4-D"
+    },
+    {
+     "l": "D",
+     "t": "1-A, 2-D, 3-C, 4-B"
+    }
+   ],
+   "cor": "A",
+   "just": "Arquitetura é o que o programador de montagem enxerga (ISA, modos de endereçamento) → C; Organização é a implementação transparente (barramentos, clock, tecnologia de memória) → D; von Neumann é o programa armazenado, dados e instruções na mesma memória → B; a CPU executa operações (ULA) e controla o ciclo de busca/execução → A. A B inverte Arquitetura e Organização e troca CPU com von Neumann. A C acerta 1 e 3, mas troca Organização com CPU. A D atribui à Arquitetura a definição de CPU e à von Neumann o conjunto de instruções.",
+   "nota": null,
+   "tags": [
+    "Arq: von Neumann e organização"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q3",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte</b></p><p>\"A hierarquia de memória baseia-se na propriedade da localidade das referências. A localidade temporal estabelece que, se um item for referenciado, ele tenderá a ser referenciado novamente em breve. A localidade espacial estabelece que, se um item for referenciado, itens cujos endereços estejam próximos tenderão a ser referenciados em breve. Quando uma aplicação exibe padrões de acesso com alta reuso de dados recentes, a localidade temporal domina; contudo, quando os acessos são aleatórios no espaço de endereçamento, o aumento no tamanho do bloco de cache pode causar poluição de cache, reduzindo a taxa de acertos (hits) e aumentando a penalidade por falha (miss penalty).\"</p><p>— PATTERSON, David A.; HENNESSY, John L. <i>Organização e Projeto de Computadores: A Interface Hardware/Software</i>. 5. ed. Rio de Janeiro: Elsevier, 2014, p. 370-376.</p><p>Uma equipe de desenvolvimento está otimizando um sistema de banco de dados em memória que executa pesquisas sobre grandes tabelas hash. A análise do perfil de execução revelou que a aplicação realiza um elevado volume de acessos repetidos a um conjunto restrito de chaves (<i>hotset</i>), porém os locais de memória dessas chaves estão espalhados de forma aleatória no espaço de endereçamento principal.</p><p>Para reduzir o Tempo Médio de Acesso à Memória (AMAT = Tempo de Hit + Taxa de Miss × Penalidade de Miss), a equipe analisa quatro propostas de adequação do subsistema de memória cache:</p><p><b>I.</b> Aumentar a capacidade total da memória cache L2/L3 com alta associatividade para explorar a localidade temporal, mantendo o tamanho dos dados do <i>hotset</i> retidos na cache e reduzindo falhas de capacidade.</p><p><b>II.</b> Incrementar o tamanho das linhas (blocos) de cache para transferir blocos maiores de memória a cada falha, priorizando a exploração da localidade espacial em acessos aleatórios.</p><p><b>III.</b> Adotar mapeamento direto na cache L1 para eliminar totalmente a necessidade de algoritmos de substituição e acelerar o tempo de busca em acessos não sequenciais.</p><p><b>IV.</b> Reorganizar as estruturas de dados para alinhar os elementos do <i>hotset</i> na memória, potencializando o reaproveitamento das linhas de cache e mitigando falhas por conflito.</p><p>Considerando os princípios de localidade, o comportamento da hierarquia de memória e o impacto na taxa de acertos e penalidade de falha, avalie as afirmativas feitas pela equipe e assinale a alternativa que apresenta apenas as propostas <b>CORRETAS</b> para a solução do problema:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e IV, apenas."
+    },
+    {
+     "l": "B",
+     "t": "I e II, apenas."
+    },
+    {
+     "l": "C",
+     "t": "II e III, apenas."
+    },
+    {
+     "l": "D",
+     "t": "III e IV, apenas."
+    }
+   ],
+   "cor": "A",
+   "just": "O hotset é reacessado muitas vezes (localidade temporal forte): cache maior e mais associativa o mantém residente e reduz misses de capacidade (I correta). Reorganizar/alinhar os dados do hotset aproveita melhor cada linha e evita que chaves quentes disputem o mesmo conjunto, reduzindo misses de conflito (IV correta). II é falsa: com acessos aleatórios não há localidade espacial, e blocos maiores trazem vizinhos inúteis (poluição de cache) e aumentam a penalidade de miss. III é falsa: mapeamento direto é o mais sujeito a misses de conflito (thrashing) com acessos espalhados. Por isso B, C e D, que incluem II ou III, estão erradas.",
+   "nota": "Pegadinha: o texto-base já entrega a resposta da II (blocos maiores + acesso aleatório = poluição de cache).",
+   "tags": [
+    "Arq: Hierarquia de memória e cache"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q4",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Um estudante de Ciência da Computação está analisando a etapa de busca e execução do ciclo de instrução no processador. Ele precisa mapear a função dos registradores de controle no fluxo de dados entre a CPU e a memória principal para garantir a precisão no acompanhamento da execução.</p><p>Preencha as lacunas do texto abaixo com a sequência de termos que descreve corretamente a atuação de cada registrador:</p><p>Durante o ciclo de instrução, o ________ armazena o endereço de memória da próxima instrução a ser buscada. Uma vez buscada da memória, o código binário da instrução é movido para o ________ para decodificação e controle da execução. Simultaneamente, qualquer acesso à memória física requer que a localização de destino seja colocada no ________, enquanto os dados propriamente ditos transferidos de ou para a memória passam pelo ________.</p><p>Assinale a alternativa que preenche correta e respectivamente as lacunas do texto:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "PC – IR – MAR – MDR"
+    },
+    {
+     "l": "B",
+     "t": "IR – PC – MDR – MAR"
+    },
+    {
+     "l": "C",
+     "t": "PC – MAR – IR – MDR"
+    },
+    {
+     "l": "D",
+     "t": "MAR – IR – PC – MDR"
+    }
+   ],
+   "cor": "A",
+   "just": "PC guarda o endereço da próxima instrução; IR recebe a instrução buscada para decodificação; MAR recebe o endereço que vai para o barramento de endereços; MDR (MBR) guarda o dado que transita pelo barramento de dados. A B troca PC↔IR e MAR↔MDR. A C troca MAR↔IR nas lacunas do meio (MAR não guarda instrução). A D troca PC↔MAR (o MAR não controla o fluxo do programa; o PC não endereça diretamente a memória).",
+   "nota": null,
+   "tags": [
+    "Arq: Registradores e ciclo de instrução"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q6",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte</b></p><p>\"O ciclo de instrução básico é composto pelas etapas de busca, decodificação e execução. Durante a busca, o endereço contido no Contador de Programa (PC) é enviado à memória via Registrador de Endereço de Memória (MAR), e o PC é incrementado para apontar para a instrução subsequente. Na etapa de decodificação, a Unidade de Controle interpreta o código de operação (opcode) contido no Registrador de Instrução (IR) e determina os operandos necessários. Na execução de instruções de desvio condicional (branch), se a condição avaliada pela ULA for verdadeira, o endereço de destino do salto é carregado diretamente no PC, alterando o fluxo sequencial de controle; caso contrário, a execução prossegue normalmente no endereço já incrementado do PC.\"</p><p>— PATTERSON, David A.; HENNESSY, John L. <i>Organização e Projeto de Computadores: A Interface Hardware/Software</i>. 5. ed. Rio de Janeiro: Elsevier, 2014, p. 248-254.</p><p>Considere um trecho de programa em linguagem de montagem armazenado sequencialmente na memória principal a partir do endereço de memória 1000<sub>10</sub>, onde cada instrução ocupa 4 bytes:</p><ul><li><b>Endereço 1000:</b> <code>LOAD R1, [2000]</code> (Carrega no registrador R1 o valor contido no endereço de memória 2000)</li><li><b>Endereço 1004:</b> <code>ADD R1, R2</code> (Soma o valor do registrador R2 ao registrador R1, atualizando R1 e os registradores de estado/flags)</li><li><b>Endereço 1008:</b> <code>BEQ 1020</code> (Desvia o fluxo para o endereço 1020 se a flag de Zero estiver ativada — ou seja, se o resultado de R1 + R2 for igual a 0)</li><li><b>Endereço 1012:</b> <code>STORE R1, [2004]</code> (Grava o conteúdo de R1 no endereço de memória 2004)</li></ul><p>Sabe-se que, antes da busca da instrução no endereço 1008, o registrador de estado da CPU indica que a condição do desvio foi satisfeita (ZeroFlag = 1).</p><p>Um estudante rastreou o fluxo de dados, a alteração nos registradores (PC, IR, MAR, MDR, registradores de uso geral) e o ciclo de instrução para cada uma das etapas do programa fornecido. Ao analisar o comportamento dos registradores e do fluxo de controle durante a execução do programa, assinale a opção que apresenta uma afirmação <b>INCORRETA</b> (falsa) sobre o ciclo de busca-decodificação-execução:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Durante a etapa de busca de qualquer uma das instruções do trecho, o PC é incrementado antes de a Unidade de Controle identificar qual é a operação a ser executada no IR."
+    },
+    {
+     "l": "B",
+     "t": "Durante a etapa de execução da instrução <code>LOAD R1, [2000]</code>, o registrador MAR recebe o endereço 2000 e o dado retornado da memória passa pelo MDR antes de ser gravado no registrador R1."
+    },
+    {
+     "l": "C",
+     "t": "Durante a etapa de busca da instrução <code>BEQ 1020</code>, o PC é atualizado temporariamente para 1012 antes de ter seu valor alterado para 1020 na etapa de execução do desvio."
+    },
+    {
+     "l": "D",
+     "t": "Durante a etapa de execução da instrução <code>BEQ 1020</code>, a confirmação da flag de Zero faz com que a instrução contida no endereço 1012 seja buscada e decodificada na memória antes de efetivar o salto para 1020."
+    }
+   ],
+   "cor": "D",
+   "just": "Questão negativa: procura-se a afirmação falsa. D é falsa: com ZeroFlag = 1, a execução do BEQ grava 1020 no PC e o próximo ciclo de busca já começa em 1020; a instrução de 1012 não é buscada nem decodificada. A é verdadeira: no fetch, PC → MAR e PC ← PC + 4 antes da decodificação. B é verdadeira: no LOAD, MAR ← 2000, a memória devolve o dado no MDR e só então R1 ← MDR. C é verdadeira: ao buscar o BEQ (em 1008), o PC vira 1012 e só na execução é sobrescrito com 1020.",
+   "nota": "⚠️ A resposta vale para o modelo conceitual (não pipelined) do texto-base. Num processador com pipeline, a instrução de 1012 seria buscada especulativamente e depois descartada (flush) — mas, mesmo assim, \"a confirmação da flag faz com que ela seja buscada\" continua errado, pois a busca ocorre por padrão, não por causa da flag.",
+   "tags": [
+    "Arq: Registradores e ciclo de instrução"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q7",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Considere o modelo clássico de pipeline RISC de 5 estágios operando em regime permanente (<i>steady state</i>) sem interrupções ou bolhas:</p><ol><li><b>IF</b> (<i>Instruction Fetch</i>): Busca da instrução na memória de instruções usando o PC.</li><li><b>ID</b> (<i>Instruction Decode</i>): Decodificação da instrução e leitura dos registradores fonte.</li><li><b>EX</b> (<i>Execute</i>): Operação da ULA ou cálculo de endereço de memória.</li><li><b>MEM</b> (<i>Memory Access</i>): Leitura ou escrita de dados na memória principal/cache.</li><li><b>WB</b> (<i>Write Back</i>): Escrita do resultado final de volta no banco de registradores.</li></ol><p>Um estudante de Ciência da Computação está analisando o comportamento do pipeline durante a execução sequencial de quatro instruções independentes (I1, I2, I3, I4). No quinto ciclo de clock (C5), o sistema atinge a ocupação total dos seus estágios funcionais. Avalie se as afirmativas a seguir, referentes ao funcionamento dos estágios do pipeline no ciclo C5, são Verdadeiras (V) ou Falsas (F):</p><p>( ) No ciclo C5, a instrução I1 encontra-se na etapa de Escrita dos Resultados (WB), liberando seu valor retornado para o banco de registradores.</p><p>( ) A instrução I3, estando na etapa de Execução (EX), utiliza a ULA para realizar cálculos aritméticos ou computar endereços de memória.</p><p>( ) Durante a etapa de Decodificação (ID), a instrução I4 lê o banco de registradores enquanto a instrução I2 realiza o acesso à memória na etapa MEM.</p><p>( ) O pipeline reduz o tempo individual de execução (latência) de cada instrução em cinco vezes em comparação com a execução sequencial não-pipelined.</p><p>Assinale a alternativa que apresenta a sequência <b>CORRETA</b> de preenchimento, de cima para baixo:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "V – V – V – F"
+    },
+    {
+     "l": "B",
+     "t": "V – F – V – V"
+    },
+    {
+     "l": "C",
+     "t": "F – V – F – V"
+    },
+    {
+     "l": "D",
+     "t": "V – V – F – F"
+    }
+   ],
+   "cor": "A",
+   "just": "Ii entra em IF no ciclo Ci; em C5: I1 está em WB, I2 em MEM, I3 em EX e I4 em ID — as três primeiras afirmativas são verdadeiras. A quarta é falsa: o pipeline aumenta a vazão (uma instrução concluída por ciclo), mas cada instrução continua levando 5 ciclos; a latência individual não cai (pode até subir um pouco pelos registradores de pipeline). B erra a 2ª (EX usa a ULA) e a 4ª; C inverte quase tudo; D marca a 3ª como falsa, ignorando que ID e MEM usam recursos distintos e operam em paralelo.",
+   "nota": "⚠️ Inconsistência do enunciado: com apenas quatro instruções, o estágio IF estaria vazio em C5 (a \"ocupação total\" exigiria uma I5). Isso não afeta nenhuma das quatro afirmativas.",
+   "tags": [
+    "Arq: Pipeline, CISC e RISC"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q8",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma equipe de engenharia de sistemas está avaliando o desempenho de duas famílias de processadores para integrar um servidor de alto desempenho: uma arquitetura com ISA orientada a CISC e outra orientada a RISC. A equipe analisa o impacto da escolha da ISA sobre o esforço do compilador, a densidade de código e a eficiência de pipeline na execução do mesmo algoritmo.</p><p>Analise as duas asserções a seguir e a relação proposta entre elas:</p><p><b>I.</b> Arquiteturas baseadas na filosofia RISC utilizam o modelo load/store para restringir o acesso à memória às instruções explícitas de carga (LOAD) e escrita (STORE), permitindo simplificar o controle da Unidade Central de Processamento e otimizar o paralelismo no pipeline.</p><p><b>PORQUE</b></p><p><b>II.</b> O desempenho global de um sistema computacional depende da interação equilibrada entre o número de instruções executadas, os ciclos por instrução (CPI) e a frequência de clock, de modo que o aumento do número de instruções gerado por um modelo load/store pode ser compensado por um CPI menor e ciclos de clock mais curtos.</p><p>A respeito dessas asserções, assinale a opção <b>CORRETA</b>:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    }
+   ],
+   "cor": "A",
+   "just": "I é verdadeira: o load/store isola os acessos à memória em LOAD/STORE, e as demais instruções operam entre registradores, com formato fixo — controle mais simples e pipeline mais eficiente. II é verdadeira: é a equação de desempenho (Tempo = IC × CPI × T); o RISC executa mais instruções, mas compensa com CPI menor e clock mais rápido. Para o squad, a II justifica a I por dar a razão quantitativa que faz a escolha load/store valer a pena. C erra ao achar que mais instruções significa sempre menos desempenho; D erra ao negar que o load/store é traço do RISC.",
+   "nota": "⚠️ O gabarito do squad é A, mas a relação é discutível: a II explica por que o trade-off do RISC compensa, não por que o load/store \"simplifica o controle\" (o que a I afirma). Uma banca poderia aceitar B (as duas verdadeiras, sem relação de justificativa). Mantido A, conforme o gabarito oficial do squad.",
+   "tags": [
+    "Arq: Pipeline, CISC e RISC"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q9",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte</b></p><p>\"O tempo total de acesso a um disco rígido magnético (HDD) é dominado por componentes mecânicos: o tempo de busca (<i>seek time</i> — movimento da cabeça de leitura/escrita até a trilha desejada) e a latência rotacional (tempo para o setor desejado girar até a cabeça). Em acessos pequenos e aleatórios, o custo mecânico desproporcional por operação reduz o throughput e limita severamente o número de IOPS (Operações de E/S por Segundo). Para otimizar o desempenho sob cargas aleatórias, as requisições devem ser amortecidas e reordenadas pelo sistema operacional ou pelo controlador de disco utilizando algoritmos de escalonamento de E/S (como ELEVATOR/SCAN), transformando saltos desordenados em varreduras contínuas pelas trilhas do disco.\"</p><p>— SILBERSCHATZ, Abraham; GALVIN, Peter B.; GAGNE, Greg. <i>Sistemas Operacionais com Java</i>. 8. ed. Rio de Janeiro: LTC, 2012, p. 385-392.</p><p>Um servidor de banco de dados transacional executa uma carga de trabalho pesada baseada em milhares de requisições de leitura pequenas e aleatórias espalhadas por diferentes setores de um disco rígido (HDD). O tempo médio de resposta está inaceitável devido ao excesso de deslocamentos do braço mecânico do disco.</p><p>A equipe de engenharia decidiu implementar uma estratégia de escalonamento e agrupamento de E/S em buffer (<i>I/O reordering</i> e <i>batching</i>) no nível do driver de armazenamento para reestruturar o fluxo de requisições e maximizar a vazão (<i>throughput</i>) do disco.</p><p>Considere as etapas necessárias para processar e otimizar essa carga de trabalho aleatória no subsistema de armazenamento HDD:</p><ol><li><b>Agrupamento em Buffer (Batching):</b> Reter e acumular temporariamente as requisições de E/S recebidas na fila do controlador em vez de enviá-las imediatamente ao disco de forma síncrona.</li><li><b>Transferência de Dados:</b> Executar a leitura dos setores contíguos na velocidade de rotação do prato e transferir o bloco para a memória principal.</li><li><b>Reordenação por Trilha (Elevator/SCAN Scheduling):</b> Ordenar as requisições acumuladas na fila de acordo com o endereço físico de suas trilhas no prato, em uma única direção de movimento do braço mecânico.</li><li><b>Posicionamento Mecânico (Seek &amp; Rotation):</b> Mover a cabeça de leitura/escrita até a trilha alvo (<i>seek time</i>) e aguardar o setor alinhar sob a cabeça (latência rotacional).</li></ol><p>Assinale a alternativa que apresenta a sequência cronológica e lógica <b>CORRETA</b> das etapas para otimizar o tempo de acesso e reduzir o desgaste mecânico sob a carga descrita:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "1 – 3 – 4 – 2"
+    },
+    {
+     "l": "B",
+     "t": "3 – 1 – 2 – 4"
+    },
+    {
+     "l": "C",
+     "t": "1 – 4 – 3 – 2"
+    },
+    {
+     "l": "D",
+     "t": "4 – 1 – 3 – 2"
+    }
+   ],
+   "cor": "A",
+   "just": "Primeiro é preciso acumular as requisições (1), porque só se reordena o que está na fila; depois o SCAN as ordena por trilha (3); então o braço se posiciona (seek + latência rotacional) (4) e, por fim, os setores são lidos e transferidos para a memória (2). B reordena antes de acumular, o que é impossível. C move o braço antes de reordenar, perdendo o ganho do escalonamento. D começa pelo movimento mecânico, sem otimização prévia.",
+   "nota": null,
+   "tags": [
+    "Arq: HDD"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q10",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Um analista de infraestrutura está avaliando o relatório de desempenho do subsistema de armazenamento baseado em HDDs de uma empresa. Ele precisa interpretar corretamente as métricas coletadas para identificar se a carga de trabalho atual é limitada pela quantidade de transações por segundo ou pela taxa de transferência de dados bruta.</p><p>Com base nos fundamentos das métricas de desempenho de discos rígidos (HDD), assinale a opção que apresenta a <b>DEFINIÇÃO E RELAÇÃO CORRETA</b> entre os parâmetros de tempo mecânico e as métricas de vazão e capacidade transacional:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "O <i>seek time</i> é o tempo que o prato do disco leva para girar até o setor desejado, sendo o principal parâmetro que determina a taxa de <i>throughput</i> em transferências de grandes arquivos sequenciais."
+    },
+    {
+     "l": "B",
+     "t": "A latência rotacional representa o deslocamento do braço mecânico entre trilhas distantes, sendo o fator dominante na determinação do volume de dados em MB/s transferidos por segundo."
+    },
+    {
+     "l": "C",
+     "t": "O IOPS mede a quantidade de operações de leitura/escrita realizadas por segundo, sendo fortemente impactado pela soma do <i>seek time</i> e da latência rotacional em cargas de acessos aleatórios."
+    },
+    {
+     "l": "D",
+     "t": "O <i>throughput</i> expressa o número total de requisições concluídas por unidade de tempo, sendo independente do tempo de transferência dos dados e da taxa de rotação dos pratos magnéticos."
+    }
+   ],
+   "cor": "C",
+   "just": "IOPS = operações por segundo; em acessos pequenos e aleatórios cada operação paga seek + latência rotacional, então IOPS ≈ 1 / (tempo total de acesso) e cai quando esses tempos sobem. A troca a definição de seek time pela de latência rotacional, e em leitura sequencial o que manda é a taxa de transferência, não o seek. B faz a troca inversa (latência rotacional não é movimento do braço). D dá ao throughput a definição de IOPS; throughput é MB/s (≈ IOPS × tamanho do bloco) e depende da rotação.",
+   "nota": null,
+   "tags": [
+    "Arq: HDD"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q11",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma equipe de arquitetura de infraestrutura de TI precisa selecionar uma configuração RAID para um banco de dados corporativo. Durante a fase de avaliação de risco, os engenheiros realizaram testes simulando a perda súbita de uma única unidade de disco rígido nas configurações RAID 0, RAID 1, RAID 2 e RAID 3 para mapear o comportamento e o impacto em cada arranjo.</p><p>Associe os Níveis RAID da Coluna 1 aos seus respectivos Comportamentos/Impactos diante da Falha de um Único Disco descritos na Coluna 2:</p><p><b>Coluna 1 — Nível RAID</b></p><p>(1) RAID 0</p><p>(2) RAID 1</p><p>(3) RAID 2</p><p>(4) RAID 3</p><p><b>Coluna 2 — Comportamento diante da falha de 1 disco</b></p><p>( ) O volume sofre indisponibilidade e perda total de dados, pois não possui redundância para reconstruir o bloco fracionado (<i>striped</i>).</p><p>( ) O volume permanece funcional e os dados perdidos no disco com falha são reconstruídos em tempo real a partir dos bits do disco de paridade dedicado.</p><p>( ) O volume continua totalmente operacional lendo a cópia idêntica contida no disco espelhado sem degradação na reconstrução por paridade.</p><p>( ) O volume identifica o bit com erro e restaura o dado diretamente através dos discos dedicados ao código de Hamming (ECC).</p><p>Assinale a opção que apresenta a sequência <b>CORRETA</b> de associação, de cima para baixo:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "1 – 4 – 2 – 3"
+    },
+    {
+     "l": "B",
+     "t": "1 – 3 – 2 – 4"
+    },
+    {
+     "l": "C",
+     "t": "4 – 1 – 3 – 2"
+    },
+    {
+     "l": "D",
+     "t": "2 – 4 – 1 – 3"
+    }
+   ],
+   "cor": "A",
+   "just": "Perda total sem redundância = RAID 0 (striping puro) → 1; disco de paridade dedicado reconstruído por XOR = RAID 3 → 4; leitura da cópia espelhada = RAID 1 → 2; discos de código de Hamming (ECC) = RAID 2 → 3. Sequência 1 – 4 – 2 – 3. B troca RAID 2 e RAID 3 (Hamming × paridade dedicada). C associa perda total ao RAID 3 e paridade ao RAID 0. D associa perda total ao RAID 1 e espelhamento ao RAID 0.",
+   "nota": "No gabarito do squad, a análise do distrator C fala em \"RAID 4\", mas o item (4) da Coluna 1 é o RAID 3 — erro de digitação que não muda a resposta.",
+   "tags": [
+    "Arq: RAID"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q12",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte</b></p><p>\"O RAID 10 (ou RAID 1+0) é uma arquitetura aninhada (composta) que combina as características de desempenho do RAID 0 (<i>striping</i>) com a tolerância a falhas do RAID 1 (<i>mirroring</i>). Nessa estrutura, cria-se primeiramente um conjunto de sub-arranjos espelhados (pares RAID 1) sobre os quais é aplicada a divisão de dados em nível de bloco (striping do RAID 0). Essa organização exige um número mínimo de quatro discos e oferece alta disponibilidade: o arranjo suporta a falha simultânea de múltiplos discos, desde que nenhum par espelhado perca ambas as suas unidades. Além disso, por não demandar o cálculo em tempo real de códigos de paridade (como nos níveis RAID 5 ou RAID 6), o RAID 10 mantém altíssimo desempenho em operações de escrita.\"</p><p>— PATTERSON, David A.; HENNESSY, John L. <i>Organização e Projeto de Computadores: A Interface Hardware/Software</i>. 5. ed. Rio de Janeiro: Elsevier, 2014, p. 532-536.</p><p>Uma empresa de processamento de pagamentos está projetando o sistema de armazenamento para seu banco de dados transacional primário. A equipe de engenharia exige alta vazão em operações de escrita, baixo tempo de latência e resiliência contra falhas mecânicas. Para atender a esses requisitos, os arquitetos optaram por implementar uma solução de armazenamento baseada na arquitetura RAID 10 utilizando um grupo inicial de quatro unidades de discos rígidos de mesma capacidade.</p><p>Em uma arquitetura RAID 10 configurada com um número mínimo de quatro discos, a integração entre as estratégias de redundância e desempenho ocorre quando...</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "os dados são divididos em blocos entre dois grupos primários e, em seguida, cada grupo é protegido pela gravação de um bloco de paridade dedicado em um disco reserva."
+    },
+    {
+     "l": "B",
+     "t": "as unidades são organizadas em dois pares espelhados (RAID 1) internos e os blocos de dados são distribuídos (RAID 0) entre esses dois pares, tolerando a falha de até dois discos de pares distintos."
+    },
+    {
+     "l": "C",
+     "t": "as informações são distribuídas aleatoriamente em três unidades de armazenamento e o quarto disco é mantido como cópia global em <i>standby</i> passivo para reconstrução automática."
+    },
+    {
+     "l": "D",
+     "t": "o volume realiza o espelhamento contínuo do bloco completo sobre todas as quatro unidades de forma simultânea, garantindo a sobrevivência do sistema se três discos falharem juntos."
+    }
+   ],
+   "cor": "B",
+   "just": "RAID 10 = dois pares espelhados (RAID 1) com striping (RAID 0) por cima; com 4 discos tolera a perda de até 2 discos, desde que sejam de pares diferentes, e oferece 50% de capacidade útil. A descreve um esquema com paridade (RAID 3/4/5), que o RAID 10 não usa. C descreve um hot spare passivo; no RAID 10 os quatro discos são ativos. D descreve espelhamento de 4 vias (capacidade útil de 25% e sem ganho de striping).",
+   "nota": null,
+   "tags": [
+    "Arq: RAID"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q13",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Um estudante de Ciência da Computação está analisando os subsistemas de armazenamento de dois servidores de banco de dados. Ele observa que, enquanto o HDD sofre com grandes atrasos em acessos aleatórios devido aos componentes mecânicos, o SSD mantém alta taxa de IOPS e baixíssima latência. Para consolidar seu relatório de arquitetura de hardware, o estudante precisa preencher corretamente a síntese conceitual sobre o funcionamento da memória flash NAND do SSD.</p><p>Preencha as lacunas do texto a seguir com os termos adequados:</p><p>\"Ao contrário do HDD, o SSD não possui partes móveis e utiliza memória flash NAND. Suas operações de leitura e escrita ocorrem na unidade de [ I ], enquanto a operação de apagamento é realizada obrigatoriamente na escala de [ II ]. Para evitar o desgaste prematuro das células de memória, o controlador aplica o [ III ], distribuindo as gravadas de forma uniforme pelo dispositivo, ao passo que o comando [ IV ] informa antecipadamente ao SSD quais páginas contêm dados excluídos.\"</p><p>Assinale a opção que apresenta a sequência de termos que preenche <b>CORRETAMENTE</b> as lacunas I, II, III e IV:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I: blocos — II: páginas — III: TRIM — IV: <i>wear leveling</i>"
+    },
+    {
+     "l": "B",
+     "t": "I: páginas — II: blocos — III: <i>wear leveling</i> — IV: TRIM"
+    },
+    {
+     "l": "C",
+     "t": "I: setores — II: trilhas — III: <i>wear leveling</i> — IV: TRIM"
+    },
+    {
+     "l": "D",
+     "t": "I: páginas — II: blocos — III: TRIM — IV: <i>wear leveling</i>"
+    }
+   ],
+   "cor": "B",
+   "just": "Na flash NAND, lê-se e grava-se por página, mas apaga-se por bloco (conjunto de dezenas a centenas de páginas). O wear leveling é o algoritmo do controlador que espalha as gravações para equilibrar o desgaste; o TRIM é o comando do SO que avisa quais páginas não têm mais dados válidos, ajudando a coleta de lixo. A inverte as duas coisas (granularidade e funções). C usa termos de HDD (setores/trilhas). D acerta páginas/blocos, mas troca TRIM e wear leveling.",
+   "nota": "\"distribuindo as gravadas\" está assim no caderno (leia-se \"as gravações\").",
+   "tags": [
+    "Arq: SSD"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q14",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma empresa possui um servidor corporativo rodando um sistema operacional de rede, onde os discos rígidos estão conectados diretamente aos canais SAS internos do chassi do servidor. A equipe de TI habilitou o serviço de compartilhamento de arquivos (utilizando o protocolo SMB) para permitir que colaboradores remotos acessem e salvem seus documentos através da rede local Ethernet.</p><p>Durante uma auditoria de arquitetura de TI, os analistas discutiram se o uso desse serviço de compartilhamento altera a taxonomia básica do armazenamento diretamente conectado àquela máquina.</p><p>Considerando a topologia de conexão entre o servidor e seus dispositivos físicos de armazenamento sob a perspectiva da arquitetura de hardware, assinale a opção que apresenta a afirmação <b>INCORRETA</b>:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A arquitetura física de armazenamento primário conectada ao servidor continua sendo classificada como DAS, uma vez que os discos permanecem acoplados diretamente ao barramento local do chassi."
+    },
+    {
+     "l": "B",
+     "t": "A exportação de compartilhamentos via rede pelo sistema operacional transforma o armazenamento físico local do servidor em uma topologia SAN (<i>Storage Area Network</i>) dedicada em nível de bloco."
+    },
+    {
+     "l": "C",
+     "t": "Os usuários da rede interagem com uma abstração de protocolo de arquivos (SMB/NFS), enquanto o sistema operacional do servidor traduz essas requisições em comandos de bloco para o barramento DAS."
+    },
+    {
+     "l": "D",
+     "t": "A disponibilização dos dados pela rede Ethernet constitui uma camada de serviço de arquivos no nível de software, sem modificar o vínculo físico e direto existente entre o controlador e as unidades de disco."
+    }
+   ],
+   "cor": "B",
+   "just": "Questão negativa. B é a falsa: compartilhar arquivos por SMB é um serviço de software em nível de arquivo; não cria uma SAN, que é uma rede dedicada (FC/iSCSI) que entrega blocos brutos. A é verdadeira: discos no barramento SAS interno continuam sendo DAS. C é verdadeira: o cliente vê arquivos e o SO do servidor converte em operações de bloco no DAS. D é verdadeira: o serviço de rede não altera a ligação física controlador–disco.",
+   "nota": null,
+   "tags": [
+    "Arq: DAS, NAS e SAN"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q15",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte</b></p><p>\"A arquitetura de armazenamento dedicado à rede (NAS — <i>Network-Attached Storage</i>) consiste em um dispositivo autônomo conectado a uma rede de computadores que oferece serviços de armazenamento de dados em nível de arquivo para outros dispositivos na rede. Diferente de uma SAN (<i>Storage Area Network</i>), que disponibiliza blocos brutos via rede de alta velocidade, o NAS possui seu próprio sistema operacional especializado e seu próprio sistema de arquivos local. Ele traduz requisições de alto nível enviadas por protocolos de compartilhamento de arquivos — como SMB/CIFS (utilizado nativamente em ambientes Windows) e NFS (padrão em ambientes Unix/Linux) — em operações locais de E/S. O NAS gerencia o controle de acesso de usuários e permissões diretamente no sistema de arquivos, frequentemente combinando arranjos RAID para garantir alta disponibilidade e redundância técnica.\"</p><p>— TANENBAUM, Andrew S.; BOS, Herbert. <i>Sistemas Operacionais Modernos</i>. 4. ed. São Paulo: Pearson Education do Brasil, 2016, p. 302-306.</p><p>Uma empresa em expansão necessita de uma solução de armazenamento para centralizar milhares de documentos e projetos colaborativos acessados simultaneamente por estações de trabalho heterogêneas (Windows e Linux) conectadas à rede local (LAN). A solução deve permitir a atribuição rigorosa de permissões por grupo de usuários, garantir resiliência contra a falha física de discos rígidos e ser facilmente gerenciada sem a complexidade de implantar uma infraestrutura dedicada de rede por fibra óptica.</p><p>Com base nos requisitos da empresa e nos fundamentos teóricos sobre arquiteturas de armazenamento, analise as afirmativas a seguir e classifique-as como Verdadeiras (V) ou Falsas (F):</p><p>( ) A implementação de um dispositivo NAS atende aos requisitos de compartilhamento de arquivos ao abstrair a manipulação de blocos brutos e expor dados via protocolos SMB e NFS, permitindo o gerenciamento nativo de usuários e controle de permissões.</p><p>( ) A arquitetura NAS exige que cada estação de trabalho cliente formate o volume remoto utilizando seu próprio sistema de arquivos local (como NTFS ou ext4) para habilitar o controle de permissões de acesso.</p><p>( ) A utilização de um arranjo RAID interno no dispositivo NAS adiciona tolerância a falhas físicas de discos sem alterar a forma como os clientes da rede acessam e compartilham os arquivos por meio do protocolo de rede.</p><p>( ) O NAS opera no nível de transferência de blocos brutos de dados via rede, sendo incapaz de interpretar hierarquias de diretórios e políticas de permissões de usuários diretamente no dispositivo.</p><p>Assinale a opção que apresenta a sequência <b>CORRETA</b> de classificação, de cima para baixo:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "V – F – V – F"
+    },
+    {
+     "l": "B",
+     "t": "V – V – F – F"
+    },
+    {
+     "l": "C",
+     "t": "F – V – F – V"
+    },
+    {
+     "l": "D",
+     "t": "F – F – V – V"
+    }
+   ],
+   "cor": "A",
+   "just": "1ª V: o NAS serve arquivos via SMB/NFS e gerencia usuários e permissões no próprio dispositivo. 2ª F: quem formata e mantém o sistema de arquivos é o NAS; o cliente só envia pedidos de arquivo (formatar o volume é coisa de SAN/iSCSI). 3ª V: o RAID interno é transparente para os clientes. 4ª F: blocos brutos é SAN; o NAS entende diretórios e permissões. B erra a 2ª e a 3ª; C inverte tudo; D erra a 1ª e a 4ª.",
+   "nota": null,
+   "tags": [
+    "Arq: DAS, NAS e SAN"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q16",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Um servidor de banco de dados corporativo está conectado a um <i>array</i> de armazenamento consolidado por meio de uma rede SAN (<i>Storage Area Network</i>) baseada no protocolo iSCSI. Um estudante de Ciência da Computação precisa mapear a sequência lógica e hierárquica percorrida por uma solicitação de escrita efetuada por uma aplicação, desde a geração do comando no nível de software até a persistência física no dispositivo de armazenamento.</p><p>Ordene as etapas a seguir na sequência cronológica e funcional <b>CORRETA</b> em que uma operação de escrita é processada em uma arquitetura SAN:</p><ol><li><b>Formatos e Escrita Física:</b> O controlador do <i>array</i> de armazenamento recebe a requisição de blocos, traduz a LUN lógica para a geometria física dos discos e efetua a gravação.</li><li><b>Encapsulamento de Protocolo de Rede SAN:</b> A placa de interface do host (HBA ou NIC iSCSI) encapsula os comandos de bloco nos quadros do protocolo de transporte de rede (iSCSI ou Fibre Channel).</li><li><b>Solicitação da Aplicação:</b> A aplicação em execução no servidor requisita a gravação de um conjunto de dados e o sistema operacional local traduz essa chamada no seu sistema de arquivos em comandos de endereçamento de blocos brutos (LUN).</li><li><b>Tráfego no Switch SAN:</b> O pacote contendo a solicitação em nível de bloco trafega através dos switches da infraestrutura dedicada de rede até alcançar a porta do controlador do armazenamento.</li></ol><p>Assinale a opção que apresenta a sequência <b>CORRETA</b> das etapas:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "3 – 2 – 4 – 1"
+    },
+    {
+     "l": "B",
+     "t": "2 – 3 – 1 – 4"
+    },
+    {
+     "l": "C",
+     "t": "3 – 4 – 2 – 1"
+    },
+    {
+     "l": "D",
+     "t": "4 – 3 – 1 – 2"
+    }
+   ],
+   "cor": "A",
+   "just": "A escrita nasce no host: a aplicação pede a gravação e o SO converte em comandos de bloco para a LUN (3); a HBA/NIC encapsula em iSCSI ou FC (2); os quadros atravessam os switches da SAN (4); o controlador do array mapeia a LUN para os discos e grava (1). B encapsula antes de existirem os comandos de bloco. C põe o tráfego nos switches antes do encapsulamento. D começa pela rede, antes de o host originar a requisição.",
+   "nota": null,
+   "tags": [
+    "Arq: DAS, NAS e SAN"
+   ]
+  },
+  {
+   "ref": "Caderno: Questão reformulada 1 (de Q1 dos slides)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Durante a etapa de especificação técnica do núcleo de um novo processador, uma equipe de engenheiros de computação precisa analisar os impactos que as decisões da arquitetura do conjunto de instruções (ISA) e os mecanismos de resolução de conflitos (<i>hazards</i>) causam no comportamento do pipeline de execução e nas métricas globais de desempenho (latência versus vazão).</p><p>Com base nos fundamentos de microarquitetura, análise de <i>hazards</i> e paralelismo em nível de instrução, avalie as afirmativas a seguir:</p><p><b>I.</b> O modelo <i>load/store</i>, característico de arquiteturas predominantemente RISC, simplifica o projeto dos estágios do pipeline, pois restringe as operações aritméticas e lógicas aos registradores internos, isolando os acessos à memória em instruções específicas.</p><p><b>II.</b> O uso da técnica de <i>forwarding</i> (ou encaminhamento) é uma solução voltada para solucionar <i>hazards</i> de controle causados por desvios condicionais imprevistos, evitando o descarte do trabalho especulativo.</p><p><b>III.</b> Arquiteturas CISC com instruções de múltiplos ciclos e formatos variáveis enfrentam maior complexidade no projeto de pipelines, motivo pelo qual muitos processadores CISC modernos traduzem instruções complexas em operações internas mais simples e regulares (micro-operações).</p><p><b>IV.</b> O ganho de desempenho obtido pelo uso de um pipeline ideal de 5 estágios reflete-se primariamente na redução drástica da latência individual de cada instrução isolada.</p><p>É <b>CORRETO</b> o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e III, apenas."
+    },
+    {
+     "l": "B",
+     "t": "I e II, apenas."
+    },
+    {
+     "l": "C",
+     "t": "II e IV, apenas."
+    },
+    {
+     "l": "D",
+     "t": "I, III e IV, apenas."
+    }
+   ],
+   "cor": "A",
+   "just": "I é verdadeira: no load/store só LOAD/STORE acessam a memória e as operações da ULA usam registradores, o que deixa os estágios uniformes. III é verdadeira: CISC moderno (x86) decodifica instruções complexas em micro-operações para alimentar um núcleo em pipeline. II é falsa: forwarding resolve hazard de dados (RAW); hazard de controle se trata com previsão de desvio, delayed branch ou flush. IV é falsa: o pipeline aumenta a vazão, não reduz a latência de cada instrução. B inclui II, C inclui II e IV, D inclui IV.",
+   "nota": "Versão reformulada da Questão 1 dos slides do squad (Apresentação Arquitetura de Computadores, p. 35–36), que tinha o mesmo conteúdo, só com a situação-problema reescrita, \"pipeline de 5 estágios\" (sem \"ideal\") e uma 5ª alternativa E) \"I, II, III e IV\". A resposta continua A. Versão alterada provável: se a IV falar em aumento da vazão, ela fica verdadeira e a resposta vira \"I, III e IV\".",
+   "tags": [
+    "Arq: Pipeline, CISC e RISC"
+   ]
+  },
+  {
+   "ref": "Caderno: Questão reformulada 2 (de Q2 dos slides)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Um estudante de Ciência da Computação está analisando a simulação do caminho de dados de uma CPU von Neumann clássica no momento em que ela executa a instrução de desvio condicional <code>JZ target</code> (<i>Jump if Zero</i>). Ele deve acompanhar o fluxo de sinais e a transferência de dados entre os registradores internos durante as fases de busca e atualização do fluxo de controle.</p><p>Com base na dinâmica de transferência entre registradores e no ciclo de processamento de instruções de desvio condicional, avalie as afirmativas a seguir:</p><p><b>I.</b> Na etapa de busca (<i>fetch</i>), a CPU copia o valor do <i>Program Counter</i> (PC) para o <i>Memory Address Register</i> (MAR) a fim de indicar ao barramento de endereços a posição de memória a ser lida.</p><p><b>II.</b> O resultado da instrução em processamento permanece retido dentro do <i>Instruction Register</i> (IR), registrador encarregado de armazenar também as <i>flags</i> de estado como Zero, Overflow e Carry.</p><p><b>III.</b> O <i>Memory Data Register</i> (MDR) armazena temporariamente a instrução ou dado lido da memória RAM antes de seu encaminhamento interno para os registradores de trabalho da CPU.</p><p><b>IV.</b> Se a condição do desvio for satisfeita (ex.: flag Zero ativa), o endereço de destino (<i>target</i>) é carregado no <i>Program Counter</i> (PC), alterando a sequência normal de execução do programa.</p><p>É <b>CORRETO</b> o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e II, apenas."
+    },
+    {
+     "l": "B",
+     "t": "III e IV, apenas."
+    },
+    {
+     "l": "C",
+     "t": "I, III e IV, apenas."
+    },
+    {
+     "l": "D",
+     "t": "II, III e IV, apenas."
+    }
+   ],
+   "cor": "C",
+   "just": "I: no fetch, MAR ← PC, e o MAR está ligado ao barramento de endereços (verdadeira). III: o MDR/MBR guarda o que veio da memória antes de ir para o IR ou para os registradores (verdadeira). IV: desvio tomado carrega o target no PC (verdadeira). II é falsa: o IR guarda só a instrução atual; o resultado vai para o registrador de destino e as flags ficam no registrador de estado (PSW/EFLAGS). A e D incluem a II; B omite a I, que é verdadeira.",
+   "nota": "Versão reformulada da Questão 2 dos slides do squad (Apresentação Arquitetura de Computadores, p. 37–38): mesmo conteúdo, com contexto reescrito e uma 5ª alternativa E) \"I, II, III e IV\" na versão dos slides. A resposta continua C.",
+   "tags": [
+    "Arq: Registradores e ciclo de instrução"
+   ]
+  },
+  {
+   "ref": "Caderno: Questão reformulada 3 (de Q3 dos slides)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Um sistema computacional dedicado ao processamento de vídeo em tempo real precisa ler continuamente grandes volumes de dados (fluxos de vídeo em resolução 4K) armazenados no disco e transferi-los para a memória RAM. Simultaneamente, o sistema deve responder a comandos curtos, esporádicos e imprevisíveis enviados pelo usuário por meio de um teclado.</p><p>Considerando a adequação dos mecanismos de Entrada e Saída (E/S) às características operacionais de cada periférico, avalie as asserções a seguir e a relação proposta entre elas:</p><p><b>I.</b> A transferência dos blocos contínuos de vídeo do disco para a memória RAM deve ser delegada a um controlador de DMA (<i>Direct Memory Access</i>), enquanto a captura das teclas digitadas no teclado deve ser tratada por meio de interrupções de hardware.</p><p><b>PORQUE</b></p><p><b>II.</b> O DMA transfere blocos massivos de dados diretamente entre o periférico e a memória sem intervir na CPU instrução por instrução, enquanto o mecanismo de interrupções trata eventos assíncronos e de baixa frequência sem desperdiçar ciclos de processamento em <i>polling</i> (espera ocupada).</p><p>A respeito dessas asserções, assinale a opção <b>CORRETA</b>:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    }
+   ],
+   "cor": "A",
+   "just": "I é verdadeira: fluxo contínuo e volumoso disco→RAM é o caso típico de DMA; teclado (eventos raros e assíncronos) é o caso típico de interrupção. II é verdadeira e é exatamente o motivo da escolha: o DMA dispensa a CPU de copiar palavra por palavra (ela só programa o controlador e trata a interrupção de fim de bloco), e a interrupção evita a espera ocupada do polling. B erra ao negar a relação causal. C nega a II, que descreve corretamente DMA e interrupção. D nega a I, como se teclado pedisse polling ou o vídeo pudesse ir por E/S programada.",
+   "nota": "Versão reformulada da Questão 3 dos slides do squad (Apresentação Arquitetura de Computadores, p. 39–40), que tinha uma 5ª alternativa E) \"As asserções I e II são proposições falsas\"; a resposta continua A. Mesmo tema (DMA × interrupção × polling) da Q5 do caderno, que caiu no Simulado 1 (Q8), mas a situação-problema e o comando são outros (vídeo + teclado, asserção-razão), por isso foi mantida. Cuidado numa versão alterada: \"o DMA elimina totalmente a participação da CPU\" seria falsa.",
+   "tags": [
+    "Arq: Interfaces de E/S"
+   ]
+  }
+ ],
+ "dissertativas": [],
+ "observacoes": "Caderno com 16 questões + 3 reformuladas, todas com gabarito oficial comentado; nenhuma figura indispensável (nada recortado). As 3 \"QUESTÕES DO MATERIAL REFORMULADAS\" são reescritas das Q1, Q2 e Q3 dos slides do squad (existing reais-25, 26 e 27), com as mesmas letras corretas (A, C, A); por isso as versões dos slides não entraram separadamente (registro na nota). Nenhuma reformulada corresponde às questões que caíram no Simulado 1 (Q2 e Q5 do caderno); a reformulada 3 tem o mesmo tema da Q5 (DMA/interrupção), mas outra situação-problema e outro comando, então foi mantida. Divergência: Q8 (asserção-razão RISC/load-store) tem gabarito A, mas B é defensável (⚠️ na nota). Pequenas inconsistências: Q7 fala em \"ocupação total\" no ciclo C5 com só 4 instruções; Q13 traz \"as gravadas\" (= gravações); no gabarito da Q11, o comentário do distrator C cita \"RAID 4\" por engano. A apostila \"Revisão Arquitetura de Computadores-1.pdf\" não traz questões; não há discursivas no tópico."
+}

@@ -1,0 +1,520 @@
+{
+ "topico": "08 · Segurança da Informação",
+ "slug": "seg",
+ "excluidas_simulado1": [
+  {
+   "banco": "Caderno Q3",
+   "simulado": "Q16",
+   "motivo": "Mesma questão: fintech com MFA, criptografia híbrida e chave privada da AC interna exposta no servidor de CI/CD (texto e alternativas idênticos, gabarito B)."
+  }
+ ],
+ "questoes": [
+  {
+   "ref": "Caderno do squad: Q1 (Tema 1: Fundamentos, Riscos e Dependabilidade)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma instituição de saúde de grande porte está modernizando o seu Prontuário Eletrônico do Paciente (PEP), um sistema considerado de missão crítica para a operação hospitalar. O comitê de governança de TI realizou uma auditoria preventiva para mensurar a resiliência da infraestrutura tecnológica atual. Durante a análise, constatou-se que o banco de dados principal apresenta um Tempo Médio Entre Falhas (MTBF) de 720 horas e um Tempo Médio para Reparar (MTTR) de 24 horas. Paralelamente, identificou-se que partes sensíveis do sistema armazenam dados sem criptografia em repouso e que a gestão de vulnerabilidades é reativa. O gestor de segurança precisa apresentar um plano de mitigação para equilibrar o apetite ao risco da instituição e assegurar os atributos de confidencialidade, integridade e disponibilidade (tríade CIA).</p><p>Considerando o cenário apresentado e os conceitos de segurança da informação, dependabilidade e gestão de riscos, analise as afirmativas a seguir:</p><p>I. A disponibilidade estimada do banco de dados principal, calculada com base nos índices de MTBF e MTTR apresentados, é de aproximadamente 96,8%, o que pode expor a instituição a indisponibilidades inaceitáveis para um ambiente crítico de saúde.</p><p>II. O risco residual representa o nível total de ameaças inerentes ao ambiente antes da aplicação de qualquer medida de controle, devendo ser totalmente eliminado por meio de salvaguardas técnicas.</p><p>III. A ausência de criptografia dos prontuários em repouso compromete diretamente o princípio da confidencialidade, tornando o ativo vulnerável a vazamentos caso ocorra uma quebra de perímetro.</p><p>IV. O emprego de cópias de segurança (backups) periódicas soluciona isoladamente o problema da alta disponibilidade, eliminando a necessidade de redundância de hardware em tempo de execução.</p><p>É correto o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e III, apenas."
+    },
+    {
+     "l": "B",
+     "t": "II e IV, apenas."
+    },
+    {
+     "l": "C",
+     "t": "I, II e III, apenas."
+    },
+    {
+     "l": "D",
+     "t": "I, III e IV, apenas."
+    }
+   ],
+   "cor": "A",
+   "just": "I é correta: A = MTBF/(MTBF + MTTR) = 720/744 ≈ 0,9677 (96,8%), baixo para sistema hospitalar crítico (cerca de 12 dias parado por ano). III é correta: dado sem cifra em repouso fere a confidencialidade. II é falsa: ela descreve o risco inerente; o residual é o que sobra após os controles e nunca chega a zero. IV é falsa: backup recupera dados, mas não mantém o serviço no ar (isso é redundância). Logo, I e III (A); B, C e D incluem II e/ou IV.",
+   "nota": "Conferido: 720/744 = 0,96774. Versão alterada provável: outros valores de MTBF/MTTR ou pedir as horas de parada por ano (≈ 3,2% de 8.760 h ≈ 283 h).",
+   "tags": [
+    "Seg: Disponibilidade, continuidade e incidentes",
+    "Seg: Riscos e classificação de controles"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q2 (Tema 1: Fundamentos, Riscos e Dependabilidade)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma empresa de logística de nível global opera um sistema automatizado de rastreamento de cargas que funciona ininterruptamente (24/7). Recentemente, o sistema sofreu uma interrupção severa devido a uma falha de hardware não redundante, gerando prejuízos financeiros expressivos e atrasos contratuais. Durante a análise pós-incidente (post-mortem), a equipe de engenharia de confiabilidade (SRE) e segurança cibernética propôs a revisão das métricas de continuidade de negócios, estabelecendo novas metas de RTO (Recovery Time Objective) e RPO (Recovery Point Objective), além de classificar os ativos de informação segundo sua criticidade operacional.</p><p>Com base nos conceitos de dependabilidade, tolerância a falhas e métricas de continuidade, assinale a alternativa correta:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "O RPO (Recovery Point Objective) define o limite máximo de tempo tolerável para que os serviços críticos voltem a operar plenamente após uma interrupção catastrófica."
+    },
+    {
+     "l": "B",
+     "t": "A tolerância a falhas é alcançada exclusivamente por meio de políticas estritas de controle de acesso lógico, dispensando o uso de redundância física ou arquitetural."
+    },
+    {
+     "l": "C",
+     "t": "O RTO (Recovery Time Objective) refere-se ao limite máximo de perda de dados aceitável medido em unidades de tempo, determinando a frequência ideal com que as rotinas de cópia de segurança (backup) devem ser executadas."
+    },
+    {
+     "l": "D",
+     "t": "A adoção de componentes redundantes e arquiteturas tolerantes a falhas visa reduzir drasticamente o impacto de interrupções, elevando o MTBF e mitigando o tempo de indisponibilidade sistêmica."
+    }
+   ],
+   "cor": "D",
+   "just": "D é correta: redundância e tolerância a falhas mantêm o serviço quando um componente falha, aumentando o MTBF do sistema e reduzindo a indisponibilidade. A e C trocam as definições: RTO é o tempo máximo para restabelecer o serviço; RPO é a perda máxima de dados tolerada (medida em tempo), que define a frequência dos backups. B é falsa: controle de acesso não substitui redundância de hardware/software.",
+   "nota": "Pegadinha clássica: A e C são as definições trocadas de RTO e RPO. \"Elevando o MTBF\" vale para o MTBF do sistema como um todo, não de cada peça.",
+   "tags": [
+    "Seg: Disponibilidade, continuidade e incidentes"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q4 (Tema 2: Criptografia, Identidade e Acesso)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Em uma corporação multinacional, o departamento de auditoria interna identificou falhas graves na gestão de identidades e acessos (IAM). Verificou-se que colaboradores recém-contratados recebiam perfis de acesso irrestritos (superuser) por padrão para facilitar a adaptação operacional, mantendo tais privilégios mesmo após mudarem de departamento. Além disso, o sistema de autenticação permitia o uso de senhas fracas e não exigia verificação em duas etapas para acessos remotos via VPN.</p><p>Considerando os conceitos de controle de acesso, modelos de segurança e identidade, analise as afirmativas a seguir:</p><p>I. A prática de conceder privilégios irrestritos por padrão viola frontalmente o Princípio do Privilégio Mínimo, que estipula que os usuários devem receber apenas as permissões estritamente necessárias para a execução de suas funções por um período limitado.</p><p>II. O modelo de controle de acesso discricionário (DAC) impede totalmente que o proprietário de um arquivo compartilhe permissões com outros usuários da rede, centralizando o poder exclusivamente no administrador do sistema.</p><p>III. A implementação de uma autenticação multifator (MFA) genuína deve combinar obrigatoriamente fatores de naturezas distintas, tais como algo que o usuário sabe, algo que ele tem e algo que ele é.</p><p>IV. O modelo de controle de acesso baseado em papéis (RBAC) vincula as permissões diretamente aos cargos ou funções desempenhadas na organização, facilitando a governança e a revogação de acessos em caso de movimentação de pessoal.</p><p>É correto o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e II, apenas."
+    },
+    {
+     "l": "B",
+     "t": "III e IV, apenas."
+    },
+    {
+     "l": "C",
+     "t": "I, III e IV, apenas."
+    },
+    {
+     "l": "D",
+     "t": "II, III e IV, apenas."
+    }
+   ],
+   "cor": "C",
+   "just": "I é correta: superuser por padrão viola o privilégio mínimo. III é correta: MFA exige fatores de categorias distintas (saber, ter, ser). IV é correta: o RBAC liga permissões a papéis, o que facilita revogar acessos quando a pessoa muda de função. II é falsa: no DAC é justamente o proprietário quem concede permissões a seu critério; poder centralizado no administrador descreve o MAC. Logo, I, III e IV (C); A e D incluem a II, e B omite a I.",
+   "nota": "Pegadinha: confundir DAC (discricionário, decide o dono) com MAC (obrigatório, rótulos definidos centralmente). O \"por um período limitado\" da I é um acréscimo (ideia de acesso just-in-time), mas não torna a afirmativa falsa.",
+   "tags": [
+    "Seg: Autenticação, MFA e controle de acesso"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q5 (Tema 3: Redes, Sistemas, Aplicações e Dados)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma empresa de comércio eletrônico (e-commerce) sofreu uma invasão em seu portal de vendas. Os invasores exploraram uma vulnerabilidade na forma como o sistema tratava os parâmetros de entrada inseridos pelos usuários nos formulários de busca, injetando comandos maliciosos diretamente nas consultas executadas contra o banco de dados corporativo. Como consequência, houve exfiltração de milhares de registros de cadastros de clientes. Além disso, análises posteriores nas redes locais da empresa revelaram que um atacante posicionado na mesma rede local conseguiu interceptar o tráfego entre estações de trabalho e o roteador utilizando técnicas de falsificação de endereçamento de camada de enlace.</p><p>Considerando o contexto de segurança em aplicações, desenvolvimento seguro e arquitetura de redes, analise as afirmativas abaixo:</p><p>I. A vulnerabilidade explorada no formulário de busca caracteriza um ataque de Injeção de SQL (SQL Injection), cuja mitigação eficaz envolve o uso obrigatório de consultas parametrizadas (prepared statements) para separar os dados fornecidos pelo usuário das instruções executáveis do banco.</p><p>II. O ataque de interceptação na rede local descrito refere-se ao ARP Spoofing (envenenamento de cache ARP), que explora a falta de autenticação nativa do protocolo ARP na camada de enlace do modelo OSI.</p><p>III. A adoção exclusiva de certificados digitais e criptografia baseada em TLS (Transport Layer Security) na camada de transporte impede por si só a ocorrência de vulnerabilidades lógicas e falhas de injeção na camada de aplicação web.</p><p>IV. O modelo de ameaças STRIDE categoriza violações de segurança de forma a mapear propriedades como Elevation of Privilege (Elevação de Privilégio) e Spoofing (Falsificação de Identidade), auxiliando na fase de projeto de software seguro.</p><p>É correto apenas o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e III."
+    },
+    {
+     "l": "B",
+     "t": "II e IV."
+    },
+    {
+     "l": "C",
+     "t": "I, II e IV."
+    },
+    {
+     "l": "D",
+     "t": "I, II, III e IV."
+    }
+   ],
+   "cor": "C",
+   "just": "I é correta: comandos injetados na consulta = SQL Injection, mitigada por consultas parametrizadas. II é correta: falsificar endereçamento de enlace na LAN para interceptar tráfego é ARP spoofing, possível porque o ARP não autentica respostas. IV é correta: STRIDE = Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege, usado na modelagem de ameaças no projeto. III é falsa: o TLS protege o canal, mas não impede injeção nem falhas de lógica na aplicação. Logo, I, II e IV (C).",
+   "nota": null,
+   "tags": [
+    "Seg: Segurança de aplicações e STRIDE",
+    "Seg: Ataques de rede, ARP spoofing e TLS"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q6 (Tema 3: Redes, Sistemas, Aplicações e Dados)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma instituição bancária contratou uma equipe especializada para realizar testes de segurança em sua nova aplicação de internet banking desenvolvida em microsserviços. Durante a auditoria de código fonte e análise de infraestrutura, foram encontradas falhas críticas: a API permitia consultas em massa sem validação de limites de paginação (gerando exaustão de recursos), as mensagens de erro do sistema retornavam rastros detalhados de pilha (stack trace) com nomes de tabelas e versões de banco de dados, e os servidores web utilizavam configurações padrão de fábrica com portas administrativas expostas diretamente à rede pública de internet sem a devida aplicação de hardening.</p><p>Com base nas práticas de segurança em sistemas, desenvolvimento seguro e mitigação de vulnerabilidades (como o OWASP Top 10), assinale a alternativa correta:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A exposição detalhada de rastros de pilha (stack trace) nas mensagens de erro contribui para a mitigação de invasões, pois orienta os usuários legítimos a corrigirem seus próprios erros de digitação rapidamente."
+    },
+    {
+     "l": "B",
+     "t": "A aplicação de hardening em servidores e sistemas operacionais consiste no processo de endurecimento da configuração, desativando serviços desnecessários, alterando credenciais padrão e fechando portas não utilizadas para reduzir a superfície de ataque."
+    },
+    {
+     "l": "C",
+     "t": "Vulnerabilidades relacionadas à exaustão de recursos por falta de controle de paginação em APIs enquadram-se exclusivamente em falhas de criptografia simétrica na camada física."
+    },
+    {
+     "l": "D",
+     "t": "O uso de frameworks modernos de desenvolvimento elimina por completo a necessidade de validação de entradas no servidor, uma vez que todas as entradas de formulários são tratadas de forma nativa pelo navegador do cliente."
+    }
+   ],
+   "cor": "B",
+   "just": "B é correta: hardening é endurecer a configuração (desativar serviços, trocar credenciais padrão, fechar portas) para reduzir a superfície de ataque, exatamente o que faltou nos servidores. A é falsa: stack trace exposto entrega a arquitetura interna ao atacante (falha de configuração/exposição de informação). C é falsa: falta de limite de paginação é consumo irrestrito de recursos, problema de lógica/controle da API, não de criptografia. D é falsa: validação no cliente é contornável e nunca substitui a validação no servidor.",
+   "nota": "Termos absolutos (\"exclusivamente\", \"elimina por completo\") marcam os distratores.",
+   "tags": [
+    "Seg: Malware, hardening e infraestrutura",
+    "Seg: Segurança de aplicações e STRIDE"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q7 (Tema 4: Gestão, Resposta, Continuidade e Legislação)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma multinacional com filial no Brasil passou por um incidente cibernético de grande proporção: um ataque de ransomware criptografou os servidores de arquivos corporativos e vazou dados pessoais de clientes e colaboradores na dark web. A equipe de resposta a incidentes foi acionada para conter o avanço do código malicioso, preservar as evidências digitais para fins forenses e notificar os órgãos competentes, em conformidade com a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018) e as diretrizes do marco NIST Cybersecurity Framework (NIST CSF 2.0).</p><p>Com base nos processos de governança, resposta a incidentes e arcabouço legal brasileiro, assinale a alternativa correta:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A fase de resposta a incidentes dispensa a manutenção de uma cadeia de custódia rigorosa para as evidências digitais coletadas, desde que a empresa decida pagar o resgate aos criminosos para recuperar os dados rapidamente."
+    },
+    {
+     "l": "B",
+     "t": "Sob o escopo da LGPD, o vazamento de dados pessoais exige a comunicação imediata e transparente tanto aos titulares afetados quanto à Autoridade Nacional de Proteção de Dados (ANPD), dentro dos prazos e critérios legais estabelecidos."
+    },
+    {
+     "l": "C",
+     "t": "O framework NIST CSF 2.0 restringe-se exclusivamente a diretrizes técnicas de criptografia de discos rígidos, desconsiderando funções gerenciais e de governança estratégica organizacional."
+    },
+    {
+     "l": "D",
+     "t": "O princípio do Privacy by Design estabelece que a privacidade de dados deve ser inserida nas corporações apenas após a ocorrência de um vazamento público de grande repercussão, como medida corretiva obrigatória."
+    }
+   ],
+   "cor": "B",
+   "just": "B é correta: pela LGPD (art. 48), incidente que possa causar risco ou dano relevante aos titulares deve ser comunicado à ANPD e aos titulares, nos prazos e critérios regulamentados. A é falsa: a cadeia de custódia é indispensável para a validade forense, pagando-se ou não o resgate. C é falsa: o NIST CSF 2.0 tem seis funções, incluindo Governar (Govern), além de Identificar, Proteger, Detectar, Responder e Recuperar. D é falsa: Privacy by Design é proativo, desde a concepção, não reativo.",
+   "nota": "A lei fala em \"prazo razoável\"; o Regulamento de Comunicação de Incidentes da ANPD (Res. CD/ANPD nº 15/2024) fixa 3 dias úteis. O \"imediata\" da B é forte, mas a alternativa ressalva \"dentro dos prazos e critérios legais\", e a obrigação vale quando há risco ou dano relevante.",
+   "tags": [
+    "Seg: LGPD e privacidade",
+    "Seg: Disponibilidade, continuidade e incidentes"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q8 (Tema 4: Gestão, Resposta, Continuidade e Legislação)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma instituição financeira de médio porte iniciou a estruturação de seu programa de governança em segurança da informação, alinhando-se às recomendações do framework NIST CSF 2.0 e às exigências de conformidade regulatória do Banco Central e da LGPD. O comitê executivo determinou que o programa deveria abranger desde a identificação contínua de ativos críticos até a capacidade de resposta rápida e recuperação operacional em caso de incidentes cibernéticos.</p><p>Com base nas diretrizes de governança, frameworks de segurança e resposta a incidentes, analise as afirmativas abaixo:</p><p>I. A função Governar (Govern) do NIST CSF 2.0 auxilia a organização a compreender, comunicar e priorizar o gerenciamento de riscos de segurança cibernética, integrando a segurança à estratégia corporativa global.</p><p>II. O processo de resposta a incidentes engloba fases coordenadas que tipicamente incluem a preparação, detecção e análise, contenção, erradicação, recuperação e as atividades posteriores ao incidente (post-mortem).</p><p>III. A cadeia de custódia em forense computacional é o procedimento formal que documenta o histórico, manuseio, transferência e análise de evidências digitais, garantindo a sua admissibilidade e integridade perante auditorias e processos legais.</p><p>IV. A conformidade com a LGPD exime a empresa de manter planos de resposta a incidentes ou controles técnicos preventivos, uma vez que a responsabilidade civil por vazamentos recai integralmente sobre a ANPD.</p><p>É correto o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e II, apenas."
+    },
+    {
+     "l": "B",
+     "t": "III e IV, apenas."
+    },
+    {
+     "l": "C",
+     "t": "I, II e III, apenas."
+    },
+    {
+     "l": "D",
+     "t": "I, II, III e IV."
+    }
+   ],
+   "cor": "C",
+   "just": "I é correta: a função Govern, nova no CSF 2.0, integra o risco cibernético à estratégia da organização. II é correta: é o ciclo clássico de resposta (NIST SP 800-61): preparação, detecção e análise, contenção, erradicação e recuperação, pós-incidente. III é correta: é a definição de cadeia de custódia. IV é falsa: a LGPD obriga controlador e operador a adotar medidas de segurança (art. 46) e eles respondem pelos danos; a ANPD fiscaliza, não assume a responsabilidade. Logo, I, II e III (C).",
+   "nota": null,
+   "tags": [
+    "Seg: Governança, fator humano e ética",
+    "Seg: Disponibilidade, continuidade e incidentes"
+   ]
+  },
+  {
+   "ref": "Slides do squad (Aula Enade - Segurança da Informação): Questão 1",
+   "origem": "slides",
+   "tipo": "mc",
+   "enun": "<p>Um hospital de grande porte modernizou sua infraestrutura de tecnologia implementando um sistema de Prontuário Eletrônico do Paciente (PEP). A arquitetura de segurança da informação adotada engloba controle de acesso baseado em papéis (RBAC), criptografia simétrica (AES-256) para dados em repouso, assinaturas digitais baseadas em infraestrutura de chave pública (ICP) com certificados X.509 para prescrições, além de replicação de servidores para alta disponibilidade.</p><p>Durante uma auditoria de conformidade com a ISO/IEC 27001 e a LGPD, foram registradas as seguintes ocorrências:</p><p><b>I.</b> Um técnico de enfermagem utilizou temporariamente as credenciais de acesso de um médico plantonista — obtidas por negligência na guarda de senha — para visualizar históricos clínicos de pacientes alocados em alas sob a responsabilidade de outra equipe, sem que o sistema disparasse alertas de desvio de perfil, embora o acesso tenha sido registrado em log.</p><p><b>II.</b> Um ataque de negação de serviço distribuído (DDoS) exauriu os recursos da infraestrutura de borda, tornando o PEP inacessível por 45 minutos nas unidades de terapia intensiva e violando o Acordo de Nível de Serviço (SLA) de continuidade operacional.</p><p><b>III.</b> Uma prescrição digital foi assinada com a chave privada de um médico, mas, devido a uma vulnerabilidade na função de hash subjacente (geradora de colisões), um atacante conseguiu alterar o conteúdo do arquivo prescrito sem que a verificação da assinatura digital pela farmácia apontasse falha.</p><p><b>IV.</b> Um administrador de banco de dados mal-intencionado alterou diretamente os registros de um diagnóstico sensível na tabela transacional; contudo, visto que o armazenamento utilizava criptografia simétrica convencional (AES-256) voltada exclusivamente à confidencialidade, a adulteração passou despercebida pelos mecanismos de verificação de integridade.</p><p>Considerando os conceitos fundamentais da Segurança da Informação, avalie as afirmativas a seguir:</p><p><b>I.</b> A ocorrência I evidencia uma falha grave de <i>confidencialidade</i> e de controle de acesso, comprometendo também a confiabilidade da autoria devido ao compartilhamento inadequado de credenciais.</p><p><b>II.</b> A ocorrência II caracteriza uma violação direta da propriedade de <i>disponibilidade</i>, essencial em ambientes críticos de saúde onde a demora na informação pode colocar vidas em risco.</p><p><b>III.</b> A ocorrência III ilustra um comprometimento da <i>integridade</i>, demonstrando que a fragilidade na função matemática de <i>hash</i> que alimenta a assinatura digital pode quebrar a garantia de imutabilidade do documento.</p><p><b>IV.</b> A ocorrência IV reforça que cifras simétricas tradicionais focadas na <i>confidencialidade</i> (como o AES em modos básicos) não garantem, por si sós, a <i>integridade</i> dos dados contra modificações não autorizadas.</p><p>É correto o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Apenas I e II."
+    },
+    {
+     "l": "B",
+     "t": "Apenas III e IV."
+    },
+    {
+     "l": "C",
+     "t": "Apenas I, II e III."
+    },
+    {
+     "l": "D",
+     "t": "Apenas II, III e IV."
+    },
+    {
+     "l": "E",
+     "t": "I, II, III e IV."
+    }
+   ],
+   "cor": "E",
+   "just": "As quatro estão certas: I = acesso de quem não tem autorização (confidencialidade), e o log aponta a conta errada (autoria); II = DDoS viola a disponibilidade; III = hash com colisão mantém a assinatura válida para o conteúdo adulterado; IV = AES sem GCM/HMAC não detecta alteração.",
+   "nota": "A afirmativa n comenta a ocorrência n (mesma numeração I–IV). Na IV o autor é um insider com as chaves, que passaria até pelo AES-GCM; como afirmação geral, a IV continua correta.",
+   "tags": [
+    "Seg: Princípios da segurança (CID e não repúdio)",
+    "Seg: Criptografia, hash e assinatura digital"
+   ]
+  },
+  {
+   "ref": "Slides do squad (Aula Enade - Segurança da Informação): Questão 2",
+   "origem": "slides",
+   "tipo": "mc",
+   "enun": "<p>Um grande conglomerado hospitalar está estruturando sua nova plataforma digital de telemedicina e gestão de prontuários eletrônicos em nuvem. A arquitetura exige que o sistema atenda simultaneamente a três pilares rigorosos:</p><p><b>1. Dados em Repouso:</b> Armazenamento massivo de exames de imagem de alta resolução e prontuários volumosos em bancos de dados relacionais, exigindo alta performance de leitura/escrita e proteção robusta contra vazamentos.<br><b>2. Dados em Trânsito:</b> Comunicação síncrona, de baixíssima latência e criptografada entre os aplicativos móveis dos médicos em campo e a infraestrutura central de servidores via internet aberta.<br><b>3. Integridade e Autenticidade Transacional:</b> Assinatura digital de prescrições médicas de alta complexidade com validade jurídica perante órgãos reguladores (ICP-Brasil).</p><p>A equipe de arquitetura de segurança da informação foi encarregada de selecionar os mecanismos criptográficos ideais para cumprir os requisitos de desempenho, confidencialidade, integridade e conformidade regulatória.</p><p>Considerando as propriedades matemáticas e operacionais dos algoritmos e protocolos de segurança, qual é a combinação de mecanismos técnica e arquiteturalmente mais adequada?</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Empregar criptografia assimétrica (RSA com chaves de 4096 bits) tanto para o armazenamento em repouso quanto para o tráfego de rede, visto que o uso exclusivo de chaves públicas e privadas elimina a necessidade de gestão complexa de chaves simétricas e garante máxima segurança matemática."
+    },
+    {
+     "l": "B",
+     "t": "Utilizar criptografia simétrica de bloco (como o AES-256 em modo autenticado GCM) para os dados em repouso e o protocolo TLS moderno para os dados em trânsito (utilizando criptografia assimétrica apenas no handshake para autenticação e troca segura de chaves, e simétrica para o fluxo contínuo de dados), garantindo desempenho, confidencialidade e integridade integradas."
+    },
+    {
+     "l": "C",
+     "t": "Aplicar funções criptográficas de dispersão unidirecional (como o SHA-3/512) para cifrar e proteger o conteúdo dos dados tanto em repouso quanto em trânsito, aproveitando a propriedade de irreversibilidade do hash para impedir qualquer visualização indevida por terceiros."
+    },
+    {
+     "l": "D",
+     "t": "Adotar algoritmos de derivação de chaves e salting (como Argon2id) em conjunto com criptografia assimétrica pura para todo o tráfego de rede, dispensando o uso de protocolos de sessão para simplificar a camada de transporte e evitar sobrecarga de processamento."
+    },
+    {
+     "l": "E",
+     "t": "Utilizar exclusivamente assinaturas digitais baseadas em curvas elípticas (ECDSA) para a cifra de grandes volumes de dados em repouso e em trânsito, pois a eficiência matemática das curvas elípticas substitui com vantagens o desempenho do AES em qualquer cenário de armazenamento."
+    }
+   ],
+   "cor": "B",
+   "just": "Volume grande pede cifra simétrica: AES-256-GCM dá sigilo e integridade. O TLS é híbrido: assimétrica só no handshake, simétrica no fluxo. Pegadinhas: RSA (A) é lento demais para volume, hash (C) não cifra, Argon2id (D) é para senhas e ECDSA (E) assina, não cifra.",
+   "nota": "A B não trata o pilar 3 (assinatura com certificado ICP-Brasil), mas é a única sem erro técnico. Se a prova trouxer uma alternativa com AES-GCM + TLS + assinatura ICP-Brasil, essa será a mais completa.",
+   "tags": [
+    "Seg: Criptografia, hash e assinatura digital"
+   ]
+  },
+  {
+   "ref": "Slides do squad (Aula Enade - Segurança da Informação): Questão 3",
+   "origem": "slides",
+   "tipo": "mc",
+   "enun": "<p>Em uma rede corporativa legada, o setor de segurança da informação identificou vulnerabilidades críticas na Camada de Enlace (Camada 2 do modelo OSI), permitindo que agentes maliciosos executem ataques de envenenamento de cache para desviar o fluxo de pacotes de dados. Para mitigar o impacto dessa exposição sem paralisar as operações, a equipe arquitetou contramedidas baseadas em criptografia de sessão e validação estrita de certificados.</p><p>Considerando esse cenário técnico de defesa em profundidade e os protocolos envolvidos, avalie as asserções a seguir e a relação proposta entre elas:</p><p><b>I.</b> A implementação rigorosa do protocolo TLS (Transport Layer Security) com validação mandatória de certificados e políticas de HSTS (HTTP Strict Transport Security) protege a confidencialidade e a integridade dos dados trafegados contra interceptações ativas, mesmo que o atacante tenha obtido sucesso em redirecionar o tráfego da rede local, embora o TLS não corrija a falha estrutural do protocolo ARP.</p><p><b>PORQUE</b></p><p><b>II.</b> O protocolo ARP (Address Resolution Protocol) carece de mecanismos nativos de autenticação, integridade ou criptografia na Camada 2, aceitando cegamente respostas e pacotes Gratuitous ARP não solicitados, o que corrompe as tabelas de mapeamento IP-MAC dos dispositivos e viabiliza a criação furtiva de cenários de Homem no Meio (Man-in-the-Middle).</p><p>A respeito dessas asserções, assinale a opção correta:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    },
+    {
+     "l": "E",
+     "t": "As asserções I e II são proposições falsas."
+    }
+   ],
+   "cor": "A",
+   "just": "I: com certificado validado e HSTS, o TLS cifra e autentica o canal mesmo com o tráfego desviado, sem consertar o ARP. II: o ARP aceita respostas sem autenticação, o que permite o MitM. Para o squad, essa fragilidade é o motivo da contramedida, então a II justifica a I.",
+   "nota": "Relação discutível: a II explica por que o TLS é necessário, não por que ele é eficaz; numa leitura estrita, a B seria defensável. O gabarito do squad é A.",
+   "tags": [
+    "Seg: Ataques de rede, ARP spoofing e TLS"
+   ]
+  },
+  {
+   "ref": "Slides do squad (Aula Enade - Segurança da Informação): Questão 4",
+   "origem": "slides",
+   "tipo": "mc",
+   "enun": "<p>Uma holding corporativa do setor de saúde e biotecnologia está estruturando um ambicioso projeto de Big Data e inteligência artificial para o desenvolvimento de modelos preditivos voltados a diagnósticos precoces. Para mitigar riscos regulatórios perante a Autoridade Nacional de Proteção de Dados (ANPD) e garantir a conformidade com a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018), o comitê de governança e conformidade jurídica foi acionado para orientar a equipe de engenharia de dados sobre o ciclo de vida, a taxonomia e as técnicas de tratamento das informações dos pacientes.</p><p>Considerando os conceitos dogmáticos e legais estabelecidos pela LGPD, avalie as afirmativas a seguir:</p><p><b>I.</b> Dados pessoais relativos à saúde humana e dados biométricos vinculados a uma pessoa natural identificada ou identificável recebem a qualificação jurídica de <b>dados pessoais sensíveis</b>, exigindo, por regra geral, o cumprimento de hipóteses legais mais restritivas para o seu tratamento e vedando o seu uso discriminatório.</p><p><b>II.</b> A técnica de <b>pseudonimização</b> consiste no tratamento por meio do qual um dado perde a possibilidade de associação, direta ou indireta, a um indivíduo, fazendo com que, imediatamente após a sua aplicação, o conjunto de dados deixe irrevogavelmente de ser considerado dado pessoal para todos os efeitos legais da LGPD.</p><p><b>III.</b> Para que se configure a <b>anonimização</b> efetiva sob a ótica legal da LGPD, o processo deve ser irreversível, considerando o uso de meios técnicos disponíveis e razoáveis na ocasião do tratamento; caso a associação com a pessoa possa ser restabelecida por meios lógicos ou tecnológicos viáveis, o dado permanece juridicamente classificado como pessoal.</p><p><b>IV.</b> O conceito legal de <b>tratamento</b> de dados pessoais possui acepção ampla, abrangendo qualquer operação realizada com dados pessoais, tais como a coleta, produção, recepção, classificação, utilização, acesso, reprodução, transmissão, distribuição, processamento, arquivamento, armazenamento, eliminação ou modificação.</p><p>É correto o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Apenas I e II."
+    },
+    {
+     "l": "B",
+     "t": "Apenas II e III."
+    },
+    {
+     "l": "C",
+     "t": "Apenas I e IV."
+    },
+    {
+     "l": "D",
+     "t": "Apenas II, III e IV."
+    },
+    {
+     "l": "E",
+     "t": "Apenas I, III e IV."
+    }
+   ],
+   "cor": "E",
+   "just": "I, III e IV reproduzem a LGPD (art. 5º, II e X; art. 12). A II é a pegadinha: ela descreve a anonimização. O dado pseudonimizado pode ser reassociado com a informação adicional guardada à parte e continua sendo dado pessoal.",
+   "nota": "O gabarito do slide cita errado o art. 12 (\"esforço desproporcional\"). A lei diz que o dado continua pessoal se a anonimização puder ser revertida com esforços razoáveis.",
+   "tags": [
+    "Seg: LGPD e privacidade"
+   ]
+  },
+  {
+   "ref": "ENADE 2017 Q15 (resumida na apostila do squad, seção 15.1)",
+   "origem": "enade",
+   "tipo": "multi",
+   "enun": "<p>Tema: ataque de homem no meio por ARP spoofing em rede Wi-Fi.</p><p>A apostila reproduz a questão de forma resumida: só o tema e as afirmações, sem o texto-base completo e sem as alternativas A–E da prova. Marque <b>todas</b> as afirmações verdadeiras.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I. Uso de protocolo com chave pública para negociar chaves individuais, como TLS."
+    },
+    {
+     "l": "B",
+     "t": "II. Firewall no ponto de acesso evita o desvio entre clientes da mesma sub-rede."
+    },
+    {
+     "l": "C",
+     "t": "III. Certificado do ponto de acesso autenticável com chave pública confiável."
+    },
+    {
+     "l": "D",
+     "t": "IV. Substituir chaves fracas por 128 bits e limitar dispositivos compatíveis."
+    }
+   ],
+   "cor": [
+    "A",
+    "C",
+    "D"
+   ],
+   "just": "Contra o MitM valem autenticação criptográfica (chaves negociadas por TLS, AP com certificado) e chaves mais fortes. A II é falsa: firewall não corrige o envenenamento ARP entre clientes da mesma sub-rede; isso exige controles de camada 2 e proteção fim a fim.",
+   "nota": "Gabarito oficial do Inep: D (I, III e IV). A apostila traz a questão resumida; a IV é verdadeira \"no contexto da questão\".",
+   "tags": [
+    "Seg: Ataques de rede, ARP spoofing e TLS"
+   ]
+  },
+  {
+   "ref": "ENADE 2017 Q16 (resumida na apostila do squad, seção 15.2)",
+   "origem": "enade",
+   "tipo": "mc",
+   "enun": "<p>Tema: fator humano, engenharia social e ética.</p><p>A apostila reproduz a questão de forma resumida, sem o texto-base completo. Avalie as afirmações a seguir.</p><p>I. Organizações permanecem vulneráveis diante do fator humano.<br>II. Segurança da Informação é processo, não produto.<br>III. Ética profissional é relevante.</p><p>É correto o que se afirma em</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I, apenas."
+    },
+    {
+     "l": "B",
+     "t": "II, apenas."
+    },
+    {
+     "l": "C",
+     "t": "I e III, apenas."
+    },
+    {
+     "l": "D",
+     "t": "II e III, apenas."
+    },
+    {
+     "l": "E",
+     "t": "I, II e III."
+    }
+   ],
+   "cor": "E",
+   "just": "As três estão certas: controles técnicos não eliminam riscos de comportamento e manipulação; riscos e tecnologia mudam, então a segurança exige ciclo de gestão e melhoria; e profissionais têm acesso privilegiado e responsabilidades éticas.",
+   "nota": "Gabarito oficial do Inep: E (I, II e III). As alternativas A–D foram montadas no formato padrão do ENADE, porque a apostila não as traz. Numa versão alterada, desconfie de absolutos como \"o humano é sempre o elo mais fraco\". ⚠️ Tipo \"mc\" com alternativas A–E MONTADAS pelo banco anterior (não são as da prova); o texto oficial não pôde ser obtido nesta sessão.",
+   "tags": [
+    "Seg: Governança, fator humano e ética"
+   ]
+  },
+  {
+   "ref": "ENADE 2021 Q12 (resumida na apostila do squad, seção 15.3)",
+   "origem": "enade",
+   "tipo": "multi",
+   "enun": "<p>Tema: LGPD.</p><p>A apostila reproduz a questão de forma resumida: só o tema e as afirmações, sem o texto-base completo e sem as alternativas A–E da prova. Marque <b>todas</b> as afirmações verdadeiras.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I. A lei restringe tratamento indiscriminado de dados sensíveis."
+    },
+    {
+     "l": "B",
+     "t": "II. Dados anonimizados nunca são pessoais mesmo se a anonimização puder ser revertida."
+    },
+    {
+     "l": "C",
+     "t": "III. Titular pode confirmar tratamento e pedir correção ou eliminação nas condições legais."
+    },
+    {
+     "l": "D",
+     "t": "IV. ANPD fiscaliza, regula e modifica a legislação."
+    }
+   ],
+   "cor": [
+    "A",
+    "C"
+   ],
+   "just": "I: dado sensível tem regime restrito (art. 11). III: o titular pode confirmar o tratamento e pedir correção ou eliminação (art. 18). II é falsa pelo \"nunca\": anonimização reversível com esforços razoáveis não tira o dado da LGPD. IV: a ANPD regula e fiscaliza, mas não altera lei.",
+   "nota": "Gabarito oficial do Inep: B (I e III). A apostila traz a questão resumida.",
+   "tags": [
+    "Seg: LGPD e privacidade"
+   ]
+  },
+  {
+   "ref": "ENADE 2021 Q24 (resumida na apostila do squad, seção 15.4)",
+   "origem": "enade",
+   "tipo": "multi",
+   "enun": "<p>Tema: criptografia de ponta a ponta.</p><p>A apostila reproduz a questão de forma resumida: só o tema e as afirmações, sem o texto-base completo e sem as alternativas A–E da prova. Marque <b>todas</b> as afirmações verdadeiras.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I. Chave pública do remetente permite verificar autenticidade de assinatura."
+    },
+    {
+     "l": "B",
+     "t": "II. IV (vetor de inicialização) variável oculta padrões e pode contribuir contra repetição no protocolo descrito."
+    },
+    {
+     "l": "C",
+     "t": "III. AES é simétrico porque usa um par de chaves diferentes."
+    },
+    {
+     "l": "D",
+     "t": "IV. SHA-256 pode detectar alteração pela comparação de resumos."
+    }
+   ],
+   "cor": [
+    "A",
+    "B",
+    "D"
+   ],
+   "just": "I: assina-se com a privada e verifica-se com a pública do remetente. II: IV variável faz mensagens iguais gerarem cifrados diferentes. IV: comparar resumos SHA-256 detecta alteração. A III é falsa: AES usa uma única chave secreta; par de chaves é criptografia assimétrica.",
+   "nota": "Gabarito oficial do Inep: E (I, II e IV). A apostila traz a questão resumida; a II é verdadeira \"no contexto\" e a IV \"com ressalva\": contra atacante ativo, o hash precisa de MAC ou assinatura.",
+   "tags": [
+    "Seg: Criptografia, hash e assinatura digital"
+   ]
+  }
+ ],
+ "dissertativas": [
+  {
+   "fonte": "Segurança da Informação · Slides do squad (Aula Enade - Segurança da Informação, p. 16): \"Biometria para controle de presença\" (questões para análise, sem resposta no material)",
+   "caso": "<p>Situação: Uma universidade pretende usar reconhecimento facial para registrar presença.</p>",
+   "enun": "<p>Analise a situação respondendo às questões a seguir:</p><ol><li>A coleta é realmente necessária?</li><li>Existe uma alternativa menos invasiva?</li><li>Qual é a finalidade?</li><li>Por quanto tempo os dados serão mantidos?</li><li>Como a biometria será protegida?</li><li>O estudante poderá contestar erros?</li><li>O sistema foi avaliado quanto a vieses?</li></ol><p><b>Atenção</b> (quadro do slide): Consentimento não é a única base legal; Consentimento não autoriza qualquer finalidade; Pseudonimização não elimina todos os riscos; A ANPD não modifica leis; Dados públicos continuam sujeitos a regras de tratamento; Coletar mais dados do que o necessário contraria a minimização.</p>",
+   "topicos": [
+    "Biometria facial vinculada ao aluno é dado pessoal sensível (LGPD art. 5º, II); tratamento só nas hipóteses do art. 11, com salvaguardas reforçadas.",
+    "Necessidade/minimização (art. 6º, III): se chamada, QR code, cartão ou registro no sistema cumprem a finalidade, a biometria é excessiva; apontar alternativa menos invasiva.",
+    "Finalidade específica e informada (art. 6º, I e VI): registrar presença não autoriza reuso para vigilância ou outros fins.",
+    "Base legal: consentimento não é a única nem autoriza tudo; na relação aluno–universidade o consentimento pode não ser livre; oferecer alternativa sem prejuízo.",
+    "Retenção limitada e eliminação ao fim da finalidade/vínculo (arts. 15–16).",
+    "Proteção: templates em vez de imagens, criptografia em repouso e em trânsito, privilégio mínimo, logs, plano de incidentes, RIPD (art. 38); biometria vazada não pode ser trocada.",
+    "Direitos do titular: acesso e correção (art. 18) e revisão de decisões automatizadas (art. 20) para contestar faltas por erro de reconhecimento.",
+    "Vieses: medir falsos positivos/negativos por grupo demográfico (não discriminação, art. 6º, IX).",
+    "Conclusão: adotar só com necessidade e proporcionalidade demonstradas; caso contrário, preferir a alternativa menos invasiva."
+   ],
+   "exemplo": "<p>A biometria facial associada a um estudante é dado pessoal sensível segundo a LGPD (art. 5º, II), e seu tratamento só é admitido nas hipóteses restritas do art. 11, com salvaguardas reforçadas. Antes de adotá-la, a universidade deve verificar a necessidade: o objetivo é apenas registrar presença, o que pode ser atingido com chamada, cartão, QR code ou registro no sistema acadêmico. Se essas alternativas menos invasivas cumprem a finalidade, coletar o rosto dos alunos contraria o princípio da necessidade (minimização).</p><p>A finalidade deve ser específica, explícita e informada: os dados coletados para presença não podem ser reaproveitados para vigilância ou segurança patrimonial. O consentimento não é a única base legal e, na relação entre aluno e instituição, dificilmente é livre; por isso deve existir opção alternativa sem prejuízo ao estudante. A retenção precisa de prazo definido, com eliminação ao fim do semestre ou do vínculo.</p><p>Quanto à segurança, devem ser armazenados templates em vez de fotos, com criptografia em repouso e em trânsito, acesso pelo privilégio mínimo, registro de logs e plano de resposta a incidentes, já que uma biometria vazada não pode ser trocada como uma senha. Recomenda-se elaborar o Relatório de Impacto à Proteção de Dados (art. 38). O aluno deve poder acessar e corrigir seus dados e pedir revisão de decisões automatizadas (arts. 18 e 20), contestando faltas atribuídas por erro do sistema. Por fim, o sistema deve ser avaliado quanto a vieses, medindo taxas de falso positivo e falso negativo por grupo demográfico, em respeito à não discriminação. Conclui-se que o reconhecimento facial só se justifica se a universidade demonstrar necessidade, proporcionalidade, base legal adequada e essas salvaguardas; caso contrário, deve preferir a alternativa menos invasiva.</p>"
+  }
+ ],
+ "observacoes": "Caderno do squad: 8 questões (4 alternativas A–D), Q3 excluída (Simulado 1 Q16); as outras 7 incluídas, com gabaritos conferidos e sem divergência. As 4 questões dos slides (Aula Enade, Q1–Q4) não estão no caderno nem no Simulado 1 e entraram como origem \"slides\" (5 alternativas, gabaritos do squad). ENADE (2017 Q15 e Q16; 2021 Q12 e Q24): não foi possível obter o texto oficial — download.inep.gov.br e www.questoes.indagacao.com não resolvem nesta sessão (fora dos domínios de rede permitidos; www.gov.br também bloqueado pelo proxy). Precisam ser liberados nas configurações de rede da sessão para transcrever as provas oficiais. Por isso ficaram as versões resumidas da apostila: 2017 Q15, 2021 Q12 e 2021 Q24 como \"multi\" (marcar as afirmações verdadeiras, gabarito oficial do Inep citado na apostila: D = I, III, IV; B = I, III; E = I, II, IV); 2017 Q16 ficou como no banco anterior, \"mc\" com alternativas A–E montadas (as três afirmações são verdadeiras, gabarito oficial E). Uma busca web mostrou que o texto oficial da 2017 Q15 é mais longo e as afirmações têm outra redação (ex.: \"firewall nos pontos de acesso que filtre o tráfego entre clientes da mesma sub-rede\"). Dissertativa: biometria facial para controle de presença (slides, p. 16), sem resposta no material; os tópicos e o exemplo de resposta foram elaborados. Nenhuma figura precisou ser recortada."
+}
