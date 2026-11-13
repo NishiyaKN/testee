@@ -1,0 +1,833 @@
+{
+ "topico": "Formação Geral · ENADE Talks (11/11)",
+ "slug": "fg",
+ "questoes": [
+  {
+   "ref": "ENADE 2019 (Formação Geral) · Questão 6",
+   "origem": "enade",
+   "eixo": "Vozes Negras",
+   "enun": "<p>Conforme dados do Atlas da Violência 2019, apresentados no gráfico a seguir, verifica-se o crescimento no número de homicídios de mulheres no país durante o período de 2007 a 2017. Nesse período, a taxa de homicídios entre as mulheres negras cresceu mais do que a taxa de homicídios entre as mulheres não negras.</p><p><i>[Gráfico do caderno, não reproduzido: linhas com a taxa de homicídios por 100 mil mulheres negras e não negras, 2007–2017. Segundo o próprio Atlas da Violência 2019, a taxa das mulheres negras chegou a 5,6 em 2017 (alta de 29,9% no período) e a das não negras a 3,2 (alta de 4,5%); já em 2007 a taxa das negras era superior à das não negras (cerca de 4,3 contra 3,1, valores aproximados calculados a partir dessas variações).]</i></p><p class=\"fonte\">INSTITUTO DE PESQUISA ECONÔMICA APLICADA (IPEA); FÓRUM BRASILEIRO DE SEGURANÇA PÚBLICA (Orgs.). Atlas da violência 2019. Brasília: Ipea, 2019 (adaptado).</p><p>Considerando essas informações, avalie as asserções a seguir e a relação proposta entre elas.</p><p>I. O maior crescimento dos casos de homicídios de mulheres negras em comparação com os casos de mulheres não negras indica a relevância dos estudos a respeito das múltiplas variáveis relacionadas a este fenômeno social.</p><p style=\"text-align:center\">PORQUE</p><p>II. A análise do gráfico permite concluir que, no início da série histórica, havia um contexto favorável à superação da situação social de maior vulnerabilidade da mulher negra, em razão da menor diferença entre as taxas de homicídios.</p><p>A respeito dessas asserções, assinale a opção correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    },
+    {
+     "l": "E",
+     "t": "As asserções I e II são proposições falsas."
+    }
+   ],
+   "cor": "C",
+   "just": "A asserção I é verdadeira: a diferença de crescimento entre as taxas de mulheres negras e não negras mostra que raça, gênero, renda e território se combinam (interseccionalidade) e precisam ser estudados em conjunto. A asserção II é falsa: já em 2007 as mulheres negras eram mais vitimadas, e uma diferença menor entre as taxas não indica nenhum 'contexto favorável'. A série mostra justamente que a desigualdade se aprofundou. Como a II é falsa, as alternativas A, B, D e E estão erradas.",
+   "nota": "Gabarito oficial C (gabarito definitivo Inep 2019, p.ex. enfermagem.pdf: Q6 = C). O gráfico original não foi reproduzido. A descrição entre colchetes usa os números do relatório Atlas da Violência 2019 (Ipea/FBSP), não valores lidos no gráfico. O comando segue a redação padrão do ENADE para asserção-razão; o texto foi reconstituído a partir de reproduções indexadas (indagacao.com.br, Estratégia), porque o servidor do Inep estava inacessível nesta sessão.",
+   "tags": [
+    "FG: Relações étnico-raciais",
+    "FG: Direitos humanos e cidadania"
+   ],
+   "tipo": "mc"
+  },
+  {
+   "ref": "ENADE 2022 (Formação Geral) · Questão 3",
+   "origem": "enade",
+   "eixo": "Vozes Negras",
+   "enun": "<p>Em 2019, a violência armada foi três vezes maior para a população negra, em comparação com a não negra, tanto para a população geral quanto para o grupo jovem (entre 15 e 29 anos de idade). Quanto à taxa de mortalidade por 100 mil habitantes no grupo de pessoas com até 14 anos de idade, destaca-se, da mesma forma, a desigualdade na vitimização de crianças e adolescentes negros por agressão com arma de fogo, com taxa 3,6 vezes maior do que a de não negros em 2019.</p><p class=\"fonte\">INSTITUTO SOU DA PAZ. Violência armada e racismo: o papel da arma de fogo na desigualdade racial. 2021.</p><p>Considerando essas informações, avalie as asserções a seguir e a relação proposta entre elas.</p><p>I. O fator racial é um importante condicionante na análise de dados relativos a homicídios e violência no Brasil na população de adolescentes e jovens.</p><p style=\"text-align:center\">PORQUE</p><p>II. A população negra sofre mais violência do que a população não negra, em razão do racismo estrutural existente no país, além de outras vulnerabilidades sociais associadas a essa forma de preconceito.</p><p>A respeito dessas asserções, assinale a opção correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    },
+    {
+     "l": "E",
+     "t": "As asserções I e II são proposições falsas."
+    }
+   ],
+   "cor": "A",
+   "just": "As duas asserções são verdadeiras. A I decorre diretamente dos dados: a raça é variável decisiva para entender a letalidade entre jovens (3 vezes) e crianças (3,6 vezes). A II explica a I: o racismo estrutural (desigualdade de renda, moradia em áreas mais expostas à violência armada, seletividade policial) produz a sobrevitimização negra. Por isso a II justifica a I, o que elimina B. C, D e E estão erradas porque consideram falsa ao menos uma das asserções.",
+   "nota": "Gabarito oficial A (gabarito definitivo Inep 2022, p.ex. 2022_GB_tecnologia_em_processos_gerenciais.pdf: Q3 = A). O comando segue a redação padrão do ENADE para asserção-razão.",
+   "tags": [
+    "FG: Relações étnico-raciais",
+    "FG: Direitos humanos e cidadania"
+   ],
+   "tipo": "mc"
+  },
+  {
+   "ref": "ENADE 2011 (Formação Geral) · Questão 5",
+   "origem": "enade",
+   "eixo": "Socioambiental América Latina",
+   "enun": "<p>O ritmo de desmatamento na Amazônia Legal diminuiu no mês de junho de 2011, segundo levantamento feito pela organização ambiental brasileira Imazon (Instituto do Homem e Meio Ambiente da Amazônia). O relatório elaborado pela ONG, a partir de imagens de satélite, apontou desmatamento de 99 km² no bioma em junho de 2011, uma redução de 42% no comparativo com junho de 2010. No acumulado entre agosto de 2010 e junho de 2011, o desmatamento foi de 1 534 km², aumento de 15% em relação a agosto de 2009 e junho de 2010. O estado de Mato Grosso foi responsável por derrubar 38% desse total e é líder no ranking do desmatamento, seguido do Pará (25%) e de Rondônia (21%).</p><p><i>[Mapa do caderno, não reproduzido: distribuição do desmatamento na Amazônia Legal. A resposta depende só dos dados do texto.]</i></p><p class=\"fonte\">Disponível em: &lt;www.imazon.org.br/mapas/desmatamento-mensal-2011&gt;.</p><p>De acordo com as informações do mapa e do texto,</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "foram desmatados 1 534 km² na Amazônia Legal nos últimos dois anos."
+    },
+    {
+     "l": "B",
+     "t": "não houve aumento do desmatamento no último ano na Amazônia Legal."
+    },
+    {
+     "l": "C",
+     "t": "três estados brasileiros responderam por 84% do desmatamento na Amazônia Legal entre agosto de 2010 e junho de 2011."
+    },
+    {
+     "l": "D",
+     "t": "o estado do Amapá apresenta alta taxa de desmatamento em comparação aos demais estados da Amazônia Legal."
+    },
+    {
+     "l": "E",
+     "t": "o desmatamento na Amazônia Legal, em junho de 2010, foi de 140 km², comparando-se o índice de junho de 2011 ao índice de junho de 2010."
+    }
+   ],
+   "cor": "C",
+   "just": "C está certa: MT (38%) + PA (25%) + RO (21%) = 84% do desmatamento acumulado entre ago/2010 e jun/2011. A está errada porque os 1 534 km² cobrem cerca de 11 meses, não dois anos. B está errada porque o texto informa aumento de 15% no acumulado. D está errada porque o Amapá não aparece entre os líderes. E está errada: se 99 km² representam queda de 42%, junho de 2010 teve cerca de 99/0,58 ≈ 171 km², não 140 km².",
+   "nota": "Gabarito oficial C (gabarito definitivo Inep 2011, Enade2011_Gab_Def_Computacao.pdf: item 5 = C). Algumas compilações (indagacao.com.br) numeram esta questão como 6 e trocam a ordem de A e B. Aqui se usa a ordem do caderno oficial (Inep/UFSM).",
+   "tags": [
+    "FG: Meio ambiente e clima"
+   ],
+   "tipo": "mc"
+  },
+  {
+   "ref": "ENADE 2023 (Formação Geral) · Questão 1",
+   "origem": "enade",
+   "eixo": "Socioambiental América Latina",
+   "enun": "<p>A fome e a insegurança alimentar, antigos problemas da sociedade, são agravados em regiões com elevados índices de desigualdade social. Propor soluções para esse quadro requer uma abordagem multidimensional, que possibilite a interação entre as dimensões sociais, culturais, políticas, econômicas e ambientais envolvidas na produção e na distribuição de alimentos.</p><p><i>[Imagens do caderno, não reproduzidas. Uma delas, com a legenda \"Impacto dos conflitos sobre pessoas mais vulneráveis\", mostra três crianças sentadas no chão em volta de panelas sobre um fogareiro, ao ar livre, entre barracas. As imagens são ilustrativas e a resposta não depende delas.]</i></p><p>Considerando o texto e as imagens apresentados, avalie as asserções a seguir e a relação proposta entre elas.</p><p>I. A fome no mundo é um fenômeno biológico e sociológico inevitável.</p><p style=\"text-align:center\">PORQUE</p><p>II. A disponibilidade desigual de alimentos, o acirramento de conflitos geopolíticos, a formação de cadeias agrícolas globais e o aumento das catástrofes climáticas são fatores que impactam a segurança alimentar de um grande número de populações.</p><p>A respeito dessas asserções, assinale a opção correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    },
+    {
+     "l": "E",
+     "t": "As asserções I e II são proposições falsas."
+    }
+   ],
+   "cor": "D",
+   "just": "A asserção I é falsa. O próprio texto trata a fome como problema social, agravado pela desigualdade e passível de solução por uma abordagem multidimensional, logo não é 'inevitável'. A asserção II é verdadeira: desigualdade no acesso, guerras, cadeias globais e eventos climáticos extremos afetam a segurança alimentar. Por isso a resposta é D. A e B consideram a I verdadeira, C considera a II falsa e E considera ambas falsas.",
+   "nota": "Gabarito oficial D (gabarito definitivo Inep 2023, 2023_GB_odontologia.pdf: Q1 = D). A linha de fonte das imagens não foi recuperada, porque o servidor do Inep estava inacessível nesta sessão.",
+   "tags": [
+    "FG: Meio ambiente e clima",
+    "FG: Globalização e geopolítica"
+   ],
+   "tipo": "mc"
+  },
+  {
+   "ref": "ENADE 2013 (Formação Geral) · Questão 6",
+   "origem": "enade",
+   "eixo": "Conjuntura Internacional",
+   "enun": "<p>De um ponto de vista econômico, a globalização é a forma como os mercados de diferentes países interagem e aproximam pessoas e mercadorias. A superação de fronteiras gerou uma expansão capitalista que tornou possível realizar transações financeiras e expandir os negócios para mercados distantes e emergentes. O complexo fenômeno da globalização resulta da consolidação do capitalismo, dos grandes avanços tecnológicos e da necessidade de expansão do fluxo comercial mundial. As inovações nas áreas das telecomunicações e da informática (especialmente com a Internet) foram determinantes para a construção de um mundo globalizado.</p><p class=\"fonte\">Disponível em: &lt;www.significados.com.br&gt;. Acesso em: 2 jul. 2013 (adaptado).</p><p>Sobre globalização, avalie as afirmações a seguir.</p><p>I. É um fenômeno gerado pelo capitalismo, que impede a formação de mercados dinâmicos nos países emergentes.</p><p>II. É um conjunto de transformações na ordem política e econômica mundial que aprofunda a integração econômica, social, cultural e política.</p><p>III. Atinge as relações e condições de trabalho decorrentes da mobilidade física das empresas.</p><p>É correto o que se afirma em</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I, apenas."
+    },
+    {
+     "l": "B",
+     "t": "II, apenas."
+    },
+    {
+     "l": "C",
+     "t": "I e III, apenas."
+    },
+    {
+     "l": "D",
+     "t": "II e III, apenas."
+    },
+    {
+     "l": "E",
+     "t": "I, II e III."
+    }
+   ],
+   "cor": "D",
+   "just": "A II está correta: a globalização aprofunda a integração econômica, social, cultural e política. A III está correta: as empresas podem deslocar unidades entre países em busca de custos menores, o que afeta empregos, salários e direitos trabalhistas. A I está errada: o texto diz que a expansão capitalista alcançou mercados 'distantes e emergentes', ou seja, a globalização não impede mercados dinâmicos nesses países. Por isso a resposta é D, e as alternativas que incluem a I (A, C, E) ou deixam de fora a III (B) estão erradas.",
+   "nota": "Gabarito oficial D (gabarito Inep 2013, p.ex. 08_Gab_MEDICINA.pdf: item 6 = D). Texto e alternativas reconstituídos a partir de reproduções (Brainly/meuguru/Estratégia). A redação das alternativas segue as fontes ('I, apenas' etc.).",
+   "tags": [
+    "FG: Globalização e geopolítica"
+   ],
+   "tipo": "mc"
+  },
+  {
+   "ref": "ENADE 2021 (Formação Geral) · Questão 8",
+   "origem": "enade",
+   "eixo": "Conjuntura Internacional",
+   "enun": "<p>Que é democracia? Em seu famoso discurso em Gettysburg, Abraham Lincoln disse que \"a democracia é o governo do povo, feito para o povo e pelo povo, e responsável perante o povo\". O crédito desta definição é, na verdade, de Daniel Webster, que a elaborou 33 anos antes de Lincoln em outro discurso. [...] E quando o povo estiver em desacordo e tiver preferências divergentes? O politólogo Arend Lijphart ressalta que há duas respostas principais: a resposta da \"democracia majoritária\" e a resposta da \"democracia consensual\". Na democracia majoritária, a resposta é simples e direta: deve-se governar para a maioria do povo. A resposta alternativa, no modelo da democracia consensual, é: deve-se governar para o máximo possível de pessoas. [...] A virtude da democracia consensual é buscar consensos mais amplos no que é interesse de todos; o desafio da democracia consensual é que ele pressupõe lideranças políticas mais maduras, tanto no governo quanto na oposição. [...]</p><p class=\"fonte\">Disponível em: https://g1.globo.com/politica/blog/matheus-leitao/post/2020/02/25/democracia-consensual-contra-a-tirania-da-maioria.ghtml (adaptado).</p><p>A partir dos argumentos expostos no texto, avalie as afirmações a seguir.</p><p>I. O bem comum, a ser estabelecido por um governo democrático, nem sempre está associado às opiniões da maioria do povo.</p><p>II. A democracia consensual é caracterizada pelo consenso a ser alcançado entre situação e oposição, nas decisões governamentais.</p><p>III. Circunstâncias políticas de polarização, marcadas pela alta competitividade e combatividade entre posições divergentes, caracterizam um modelo de democracia majoritária.</p><p>IV. Democracia consensual pressupõe que a situação política no poder considere em suas decisões as necessidades das minorias, no sentido de governar para todo o povo.</p><p>É correto apenas o que se afirma em</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e II."
+    },
+    {
+     "l": "B",
+     "t": "I e IV."
+    },
+    {
+     "l": "C",
+     "t": "II e III."
+    },
+    {
+     "l": "D",
+     "t": "I, III e IV."
+    },
+    {
+     "l": "E",
+     "t": "II, III e IV."
+    }
+   ],
+   "cor": "D",
+   "just": "A I está correta: o modelo consensual mostra que o bem comum não se reduz à vontade da maioria. A III está correta: competição e combatividade entre blocos opostos caracterizam o modelo majoritário ('governar para a maioria'). A IV está correta: governar 'para o máximo possível de pessoas' significa considerar também as minorias. A II está errada: o modelo consensual não exige acordo entre situação e oposição em cada decisão. Ele busca dispersar e compartilhar o poder para incluir o maior número de pessoas. Por isso a resposta é D (I, III e IV).",
+   "nota": "Gabarito oficial D (gabaritos definitivos Inep 2021, 2021_GB_bacharelado_ciencias_sociais.pdf e 2021_GB_bacharelado_sistema_informacao.pdf: Q8 = D). O texto-base foi reconstituído a partir de reproduções indexadas, e os trechos omitidos estão marcados com [...]. Conferir a redação exata no caderno oficial (download.inep.gov.br estava inacessível nesta sessão).",
+   "tags": [
+    "FG: Democracia e desinformação"
+   ],
+   "tipo": "mc"
+  },
+  {
+   "ref": "ENADE 2022 (Formação Geral) · Questão 1",
+   "origem": "enade",
+   "eixo": "Conjuntura Internacional",
+   "enun": "<p><b>TEXTO 1</b></p><p>A democracia representativa exige, para o seu funcionamento, um conjunto de características, as quais podem ser compreendidas como instituições: funcionários eleitos; eleições livres, justas e frequentes; sufrágio inclusivo; direito de concorrer a cargos eletivos; liberdade de expressão; fontes de informação diversificadas; autonomia para as associações. [...] A liberdade de expressão inclui a liberdade de criticar os funcionários do governo, o governo em si, o regime, a ordem socioeconômica e a ideologia dominante. [...] Os cidadãos têm o direito de buscar fontes de informação diversificadas e independentes, cuja existência deve ser protegida por lei. [...]</p><p class=\"fonte\">DAHL, R. A. Sobre a democracia. Brasília: EdUnB, 2001 (adaptado).</p><p><b>TEXTO 2</b></p><p>Embora os regimes políticos possam ser derrubados e as ideologias criticadas e destituídas de sua legitimidade, por trás de um regime e de sua ideologia há sempre um modo de pensar e de sentir [...].</p><p class=\"fonte\">ECO, U. O fascismo eterno. In: Cinco escritos morais. Rio de Janeiro: Record, 2002 (adaptado).</p><p><b>TEXTO 3</b></p><p><i>[Figura do caderno, não reproduzida: alguns comportamentos que, segundo Umberto Eco, podem ser considerados contraditórios aos princípios democráticos.]</i></p><p>Com base na concepção de regimes políticos, abordada pelos autores, avalie as afirmações a seguir.</p><p>I. A democracia é o sistema que se propõe a assegurar aos seus cidadãos uma liberdade pessoal mais ampla do que outros modelos.</p><p>II. A liberdade de expressão no sistema democrático garante que a manifestação de um agente político e de um cidadão possuam repercussões equivalentes.</p><p>III. As fake news são manifestações relacionadas à categoria de fontes de informação diversificadas e podem ser utilizadas como estratégia para fragilizar o sistema democrático de governo.</p><p>IV. O direito à liberdade de expressão permite a emissão de opinião crítica e discursos contrários à democracia e aos direitos humanos.</p><p>É correto apenas o que se afirma em</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e II."
+    },
+    {
+     "l": "B",
+     "t": "I e III."
+    },
+    {
+     "l": "C",
+     "t": "I, III e IV."
+    },
+    {
+     "l": "D",
+     "t": "II, III e IV."
+    },
+    {
+     "l": "E",
+     "t": "II e IV."
+    }
+   ],
+   "cor": "B",
+   "just": "A I está correta: entre os regimes, a democracia é o que se propõe a garantir o conjunto mais amplo de liberdades individuais (Dahl). A III está correta: as fake news contaminam o pilar 'fontes de informação diversificadas' e podem ser usadas para corroer a confiança nas instituições. A II está errada: a liberdade de expressão é igual para todos, mas as manifestações não têm o mesmo alcance, porque agentes políticos têm mais poder e visibilidade. A IV está errada: a liberdade de expressão não protege discursos que atacam a própria democracia e os direitos humanos, que são justamente os comportamentos do Texto 3. Por isso a resposta é B.",
+   "nota": "Gabarito oficial B (gabarito definitivo Inep 2022, 2022_GB_tecnologia_em_processos_gerenciais.pdf: Q1 = B). O Texto 1 foi transcrito em parte, só com os trechos confirmados em reproduções indexadas e com [...] nas omissões. A frase sobre fontes diversificadas está levemente condensada. A figura do Texto 3 não foi reproduzida e não é necessária para resolver a questão.",
+   "tags": [
+    "FG: Democracia e desinformação",
+    "FG: Tecnologia e sociedade"
+   ],
+   "tipo": "mc"
+  },
+  {
+   "ref": "ENADE 2022 (Formação Geral) · Questão 6",
+   "origem": "enade",
+   "eixo": "Conjuntura Internacional",
+   "enun": "<p>Ao final de 2021, cerca de 89,3 milhões de pessoas estavam deslocadas em todo o mundo, em decorrência de violência, perseguições, violações dos direitos humanos ou outros conflitos em seus locais de origem. Esse contingente de deslocamentos forçados já alcançava mais de 100 milhões de pessoas em maio de 2022, sendo motivados por instabilidades como as ocorridas no Afeganistão, em alguns países africanos e nas regiões da Ucrânia ocupadas pela Rússia, além de outros locais onde já perduravam confrontos armados, como, por exemplo, na Síria.</p><p class=\"fonte\">Disponível em: https://www.acnur.org.</p><p>Com relação às atuais migrações internacionais forçadas, assinale a opção correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Os interesses em relação ao tipo de tratamento dispensado aos imigrantes no mundo independem de seus países de origem."
+    },
+    {
+     "l": "B",
+     "t": "A xenofobia, que consiste no preconceito contra estrangeiros, deve-se à falta de normas internacionais para o tratamento de situações de imigração."
+    },
+    {
+     "l": "C",
+     "t": "Os refugiados são migrantes de países subdesenvolvidos que se deslocam para países centrais do capitalismo global a fim de servir de mão de obra barata."
+    },
+    {
+     "l": "D",
+     "t": "As migrações internacionais forçadas surgem da globalização econômica, cujos processos são responsáveis pelo aumento do número de refugiados no mundo."
+    },
+    {
+     "l": "E",
+     "t": "A condição de migrante internacional forçado diferencia-se da condição geral de imigrante na medida em que se refere ao deslocamento motivado por fatores involuntários, que fogem ao controle do migrante e de sua família."
+    }
+   ],
+   "cor": "E",
+   "just": "E está correta: o migrante forçado (refugiado, solicitante de refúgio, deslocado) sai do país por perseguição, guerra ou violação de direitos, não por escolha. A está errada: o tratamento dado aos imigrantes varia conforme a origem, como mostram a acolhida seletiva e a xenofobia contra certos grupos. B está errada: existem normas internacionais (Convenção de 1951 e Protocolo de 1967 sobre refugiados), e a xenofobia tem raízes sociais e culturais. C reproduz um estereótipo: refúgio é proteção, não migração laboral, e a maioria dos refugiados fica em países vizinhos. D está errada porque o texto aponta conflitos e perseguições como causas, e não a globalização econômica.",
+   "nota": "Gabarito oficial E (gabarito definitivo Inep 2022, 2022_GB_tecnologia_em_processos_gerenciais.pdf: Q6 = E).",
+   "tags": [
+    "FG: Migração e refugiados",
+    "FG: Globalização e geopolítica",
+    "FG: Direitos humanos e cidadania"
+   ],
+   "tipo": "mc"
+  },
+  {
+   "ref": "Original · eixo Vozes Negras",
+   "origem": "original",
+   "eixo": "Vozes Negras",
+   "enun": "<p>O Censo Demográfico 2022 identificou 12.348 favelas e comunidades urbanas no Brasil, distribuídas em 656 municípios, onde viviam 16.390.815 pessoas, ou 8,1% da população do país. Nesses territórios, pretos (16,1%) e pardos (56,8%) somavam 72,9% dos moradores, e os brancos eram 26,6%. Na população total do país, pretos e pardos somavam 55,5% e os brancos, 43,5%.</p><p class=\"fonte\">IBGE EDUCA. Censo 2022: 16.390.815 pessoas moravam em favelas e comunidades urbanas. Disponível em: https://educa.ibge.gov.br/jovens/materias-especiais/22539-censo-2022-16-390-815-pessoas-moravam-em-favelas-e-comunidades-urbanas.html. Acesso em: 13 nov. 2026.</p><p>A partir dos dados apresentados, conclui-se que</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "a proporção de pretos e pardos nas favelas é menor que sua participação na população total, o que indica distribuição racial homogênea no espaço urbano."
+    },
+    {
+     "l": "B",
+     "t": "a população negra está sobrerrepresentada nas favelas em relação ao seu peso na população do país, o que é compatível com a noção de segregação socioespacial de base racial."
+    },
+    {
+     "l": "C",
+     "t": "os brancos estão sobrerrepresentados nas favelas, já que correspondem a mais de um quarto de seus moradores."
+    },
+    {
+     "l": "D",
+     "t": "mais da metade da população brasileira vive em favelas e comunidades urbanas."
+    },
+    {
+     "l": "E",
+     "t": "a composição racial das favelas decorre exclusivamente de escolhas individuais de moradia, sem relação com processos históricos."
+    }
+   ],
+   "cor": "B",
+   "just": "B está correta: pretos e pardos são 55,5% da população, mas 72,9% dos moradores de favelas. Essa sobrerrepresentação é expressão urbana do racismo estrutural, que inclui a falta de política de inclusão no pós-abolição, a remoção para periferias e a desigualdade de renda. A inverte os dados (72,9% > 55,5%). C está errada: os brancos são 43,5% da população e só 26,6% nas favelas, ou seja, estão sub-representados. D está errada porque as favelas abrigam 8,1% da população. E ignora os fatores históricos e estruturais que explicam a segregação.",
+   "tags": [
+    "FG: Relações étnico-raciais",
+    "FG: Direitos humanos e cidadania"
+   ],
+   "tipo": "mc",
+   "nota": null
+  },
+  {
+   "ref": "Original · eixo Vozes Negras",
+   "origem": "original",
+   "eixo": "Vozes Negras",
+   "enun": "<p>Art. 26-A. Nos estabelecimentos de ensino fundamental e de ensino médio, públicos e privados, torna-se obrigatório o estudo da história e cultura afro-brasileira e indígena.</p><p>§ 1º O conteúdo programático a que se refere este artigo incluirá diversos aspectos da história e da cultura que caracterizam a formação da população brasileira, a partir desses dois grupos étnicos, tais como o estudo da história da África e dos africanos, a luta dos negros e dos povos indígenas no Brasil, a cultura negra e indígena brasileira e o negro e o índio na formação da sociedade nacional, resgatando as suas contribuições nas áreas social, econômica e política, pertinentes à história do Brasil.</p><p>§ 2º Os conteúdos referentes à história e cultura afro-brasileira e dos povos indígenas brasileiros serão ministrados no âmbito de todo o currículo escolar, em especial nas áreas de educação artística e de literatura e história brasileiras.</p><p class=\"fonte\">BRASIL. Lei nº 9.394, de 20 de dezembro de 1996, art. 26-A, com redação dada pela Lei nº 11.645, de 10 de março de 2008. Disponível em: https://www.planalto.gov.br/ccivil_03/_ato2007-2010/2008/lei/l11645.htm. Acesso em: 13 nov. 2026.</p><p>Considerando o texto legal, avalie as afirmações a seguir.</p><p>I. A redação atual do art. 26-A amplia a obrigação criada pela Lei nº 10.639/2003, que tratava da história e cultura afro-brasileira, ao incluir a história e a cultura dos povos indígenas.</p><p>II. A obrigatoriedade restringe-se às escolas públicas e à disciplina de História.</p><p>III. A norma é exemplo de política de reconhecimento que busca combater o apagamento das contribuições de negros e indígenas na narrativa sobre a formação nacional.</p><p>IV. A lei dispensa conteúdos sobre o continente africano, por se limitar a fatos ocorridos em território brasileiro.</p><p>É correto apenas o que se afirma em</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e III."
+    },
+    {
+     "l": "B",
+     "t": "I e II."
+    },
+    {
+     "l": "C",
+     "t": "II e IV."
+    },
+    {
+     "l": "D",
+     "t": "I, III e IV."
+    },
+    {
+     "l": "E",
+     "t": "II, III e IV."
+    }
+   ],
+   "cor": "A",
+   "just": "A I está correta: a Lei 10.639/2003 incluiu na LDB o ensino de história e cultura afro-brasileira, e a Lei 11.645/2008 ampliou o art. 26-A para incluir os povos indígenas. A III está correta: a lei é uma política de reconhecimento e de educação das relações étnico-raciais. A II está errada porque o texto diz 'públicos e privados' e 'todo o currículo escolar'. A IV está errada porque o § 1º inclui expressamente 'a história da África e dos africanos'. Por isso a resposta é A.",
+   "tags": [
+    "FG: Relações étnico-raciais",
+    "FG: Povos indígenas e tradicionais"
+   ],
+   "tipo": "mc",
+   "nota": null
+  },
+  {
+   "ref": "Original · eixo Vozes Negras",
+   "origem": "original",
+   "eixo": "Vozes Negras",
+   "enun": "<p>Sancionada em 13 de novembro de 2023, a Lei nº 14.723 atualizou a Lei de Cotas (Lei nº 12.711/2012), que reserva vagas nas instituições federais de ensino superior e de ensino técnico de nível médio. Entre as mudanças, a nova lei incluiu os estudantes quilombolas entre os beneficiários, reduziu de 1,5 para 1 salário mínimo a renda familiar per capita máxima da subcota de renda e estabeleceu que os candidatos cotistas concorram primeiro às vagas de ampla concorrência, passando a disputar as vagas reservadas somente se não alcançarem nota suficiente naquela modalidade.</p><p class=\"fonte\">AGÊNCIA SENADO. Novas regras da Lei de Cotas já estão em vigor. Disponível em: https://www12.senado.leg.br/noticias/audios/2023/11/novas-regras-da-lei-de-cotas-ja-estao-em-vigor; UFPR. Atualização na Lei de Cotas inclui quilombolas e redução da renda per capita máxima. Disponível em: https://ufpr.br/atualizacao-na-lei-de-cotas-inclui-quilombolas-e-reducao-da-renda-per-capita-maxima/. Acesso em: 13 nov. 2026. (adaptado).</p><p>Considerando essas informações, avalie as asserções a seguir e a relação proposta entre elas.</p><p>I. A regra segundo a qual o candidato cotista concorre inicialmente às vagas de ampla concorrência tende a ampliar o número total de estudantes pretos, pardos, indígenas e quilombolas aprovados.</p><p style=\"text-align:center\">PORQUE</p><p>II. Os cotistas com nota suficiente para a ampla concorrência deixam de ocupar vagas reservadas, que ficam disponíveis para outros candidatos dos grupos beneficiários.</p><p>A respeito dessas asserções, assinale a opção correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    },
+    {
+     "l": "E",
+     "t": "As asserções I e II são proposições falsas."
+    }
+   ],
+   "cor": "A",
+   "just": "A I é verdadeira: com a nova regra, as vagas reservadas passam a ser um mínimo garantido, e não um teto, para os grupos beneficiários. A II também é verdadeira e explica a I: quem é aprovado pela ampla concorrência não consome vaga reservada, que fica para outro cotista. Por isso o número total de aprovados desses grupos tende a crescer. B está errada porque existe relação causal direta entre as duas asserções. C, D e E consideram falsa ao menos uma asserção verdadeira.",
+   "tags": [
+    "FG: Relações étnico-raciais",
+    "FG: Direitos humanos e cidadania"
+   ],
+   "tipo": "mc",
+   "nota": null
+  },
+  {
+   "ref": "Original · eixo Vozes Negras",
+   "origem": "original",
+   "eixo": "Vozes Negras",
+   "enun": "<p><b>TEXTO 1</b></p><p>Ao avaliar três sistemas comerciais de classificação de gênero a partir de imagens faciais (IBM, Microsoft e Face++), as pesquisadoras Joy Buolamwini e Timnit Gebru constataram que mulheres de pele mais escura eram o grupo mais classificado de forma errada, com taxas de erro de até 34,7%, enquanto a taxa máxima de erro para homens de pele mais clara foi de 0,8%.</p><p class=\"fonte\">BUOLAMWINI, J.; GEBRU, T. Gender Shades: intersectional accuracy disparities in commercial gender classification. Proceedings of Machine Learning Research, v. 81, p. 77-91, 2018. Disponível em: https://proceedings.mlr.press/v81/buolamwini18a.html. Acesso em: 13 nov. 2026. (adaptado).</p><p><b>TEXTO 2</b></p><p>Levantamento da Rede de Observatórios da Segurança apontou que, de março a outubro de 2019, 151 pessoas foram presas com uso de tecnologia de reconhecimento facial nos estados monitorados. Entre os casos com informação disponível, 90,5% dos presos eram negros.</p><p class=\"fonte\">THE INTERCEPT BRASIL. Levantamento revela que 90,5% dos presos por monitoramento facial no Brasil são negros. 21 nov. 2019. Disponível em: https://www.intercept.com.br/2019/11/21/presos-monitoramento-facial-brasil-negros/. Acesso em: 13 nov. 2026. (adaptado).</p><p>Considerando os textos, avalie as afirmações a seguir.</p><p>I. O desempenho de sistemas de visão computacional pode variar conforme a cor da pele e o gênero das pessoas, o que pode decorrer, entre outros fatores, de bases de treinamento pouco representativas.</p><p>II. Por serem baseados em cálculos matemáticos, sistemas de inteligência artificial são neutros e não reproduzem desigualdades presentes na sociedade.</p><p>III. O uso de reconhecimento facial na segurança pública sem auditoria de vieses e sem transparência pode reforçar a seletividade racial já existente no sistema penal.</p><p>IV. O percentual de 90,5% de negros entre os presos demonstra, por si só, que o algoritmo errou em 90,5% dos casos.</p><p>É correto apenas o que se afirma em</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e II."
+    },
+    {
+     "l": "B",
+     "t": "II e IV."
+    },
+    {
+     "l": "C",
+     "t": "III e IV."
+    },
+    {
+     "l": "D",
+     "t": "I e III."
+    },
+    {
+     "l": "E",
+     "t": "I, II e IV."
+    }
+   ],
+   "cor": "D",
+   "just": "A I está correta: o Texto 1 mostra erro de até 34,7% para mulheres de pele escura contra no máximo 0,8% para homens de pele clara, disparidade associada a dados de treinamento pouco diversos (racismo algorítmico). A III está correta: aplicar sem auditoria uma tecnologia com viés, num sistema penal já seletivo, pode ampliar abordagens e prisões injustas de pessoas negras. A II está errada porque modelos aprendem com dados e escolhas humanas e podem reproduzir desigualdades. A IV está errada: 90,5% é a composição racial dos presos, não a taxa de erro do sistema. Por isso a resposta é D.",
+   "tags": [
+    "FG: Relações étnico-raciais",
+    "FG: Tecnologia e sociedade"
+   ],
+   "tipo": "mc",
+   "nota": null
+  },
+  {
+   "ref": "Original · eixo Vozes Negras",
+   "origem": "original",
+   "eixo": "Vozes Negras",
+   "enun": "<p>Segundo o Atlas da Violência 2025, as pessoas negras (pretas e pardas), que representam 55,5% da população brasileira, foram 76,4% das vítimas de homicídio no país em 2023. Naquele ano, a taxa de homicídios entre negros foi de 28,9 por 100 mil habitantes, e entre não negros, de 10,6. Assim, uma pessoa negra teve risco 2,7 vezes maior de ser assassinada do que uma não negra; em 2013, essa razão era de 2,4. Entre 2013 e 2023, a taxa dos negros caiu 21,5% (de 36,8 para 28,9), enquanto a dos não negros recuou 32,1% (de 15,6 para 10,6).</p><p class=\"fonte\">AGÊNCIA BRASIL. Risco de negro ser vítima de homicídio é 2,7 vezes maior no Brasil. 12 maio 2025. Disponível em: https://agenciabrasil.ebc.com.br/direitos-humanos/noticia/2025-05/risco-de-negro-ser-vitima-de-homicidio-e-27-vezes-maior-no-brasil. Acesso em: 13 nov. 2026. (adaptado).</p><p>Com base nos dados apresentados, assinale a opção correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Entre 2013 e 2023, a desigualdade racial na violência letal diminuiu, pois a taxa de homicídios de negros caiu no período."
+    },
+    {
+     "l": "B",
+     "t": "Como os negros são a maioria da população, sua participação de 76,4% entre as vítimas é proporcional ao seu peso demográfico."
+    },
+    {
+     "l": "C",
+     "t": "Em 2023, a taxa de homicídios de negros foi inferior ao dobro da taxa observada entre não negros."
+    },
+    {
+     "l": "D",
+     "t": "Os dados indicam que a violência letal atinge todos os grupos raciais com a mesma intensidade."
+    },
+    {
+     "l": "E",
+     "t": "A redução proporcional da taxa de homicídios foi maior entre não negros do que entre negros, o que elevou o risco relativo de uma pessoa negra ser assassinada."
+    }
+   ],
+   "cor": "E",
+   "just": "E está correta: a taxa dos não negros caiu 32,1% e a dos negros 21,5%. Com isso, a razão entre as taxas subiu de 2,4 (2013) para 2,7 (2023), ou seja, a desigualdade racial aumentou mesmo com a queda geral dos homicídios. A confunde queda absoluta com redução da desigualdade. B está errada porque 76,4% das vítimas é muito mais que 55,5% da população. C está errada: 28,9 é cerca de 2,7 vezes 10,6, bem acima do dobro. D contradiz todos os dados.",
+   "tags": [
+    "FG: Relações étnico-raciais",
+    "FG: Direitos humanos e cidadania"
+   ],
+   "tipo": "mc",
+   "nota": null
+  },
+  {
+   "ref": "Original · eixo Socioambiental América Latina",
+   "origem": "original",
+   "eixo": "Socioambiental América Latina",
+   "enun": "<p>Segundo o Instituto Nacional de Pesquisas Espaciais (INPE), a taxa consolidada de desmatamento na Amazônia Legal medida pelo PRODES para o período de agosto de 2024 a julho de 2025 foi de 5.731 km², redução de 12,07% em relação ao período anterior (6.518 km²). A estimativa preliminar, divulgada em outubro de 2025, havia sido de 5.796 km². Pelos dados consolidados, as maiores quedas ocorreram em Roraima (−39,10%), Amapá (−37,04%) e Rondônia (−36,39%). Mato Grosso foi o único estado com aumento do desmatamento (+26,73%).</p><p class=\"fonte\">INPE. Novos dados do Prodes são atualizados pelo Programa BiomasBR. Disponível em: https://www.gov.br/inpe/pt-br/assuntos/ultimas-noticias/novos-dados-do-prodes-sao-atualizados-pelo-programa-biomasbr; INPE. Sistema do INPE aponta 5.731 km² de desmatamento na Amazônia em 2025. Disponível em: https://www.gov.br/inpe/pt-br/assuntos/ultimas-noticias/sistema-do-inpe-aponta-5-731-km2-de-desmatamento-na-amazonia-em-2025. Acesso em: 13 nov. 2026. (adaptado).</p><p>A partir do texto, assinale a opção correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A diferença entre a estimativa preliminar e o dado consolidado foi de 65 km², o que não alterou a tendência de queda do desmatamento."
+    },
+    {
+     "l": "B",
+     "t": "O desmatamento na Amazônia Legal aumentou no período, impulsionado pelo resultado de Mato Grosso."
+    },
+    {
+     "l": "C",
+     "t": "Todos os estados da Amazônia Legal reduziram o desmatamento no período analisado."
+    },
+    {
+     "l": "D",
+     "t": "A redução de 12,07% significa que foram desmatados cerca de 12 km² a menos do que no período anterior."
+    },
+    {
+     "l": "E",
+     "t": "A queda de 39,10% em Roraima demonstra que o desmatamento foi eliminado nesse estado."
+    }
+   ],
+   "cor": "A",
+   "just": "A está correta: 5.796 − 5.731 = 65 km², e as duas medições mostram queda em relação a 6.518 km². B está errada porque o total da Amazônia Legal caiu, apesar da alta em Mato Grosso. C está errada porque Mato Grosso teve aumento de 26,73%. D confunde variação percentual com absoluta: a redução foi de 6.518 − 5.731 = 787 km². E está errada porque uma queda de 39% não significa desmatamento zero.",
+   "tags": [
+    "FG: Meio ambiente e clima"
+   ],
+   "tipo": "mc",
+   "nota": null
+  },
+  {
+   "ref": "Original · eixo Socioambiental América Latina",
+   "origem": "original",
+   "eixo": "Socioambiental América Latina",
+   "enun": "<p>Adotado em Escazú (Costa Rica) em 4 de março de 2018 e em vigor desde 22 de abril de 2021, o Acordo Regional sobre Acesso à Informação, Participação Pública e Acesso à Justiça em Assuntos Ambientais na América Latina e no Caribe — o Acordo de Escazú — é o primeiro tratado ambiental regional da América Latina e do Caribe e o primeiro do mundo com disposições específicas sobre a proteção de defensores de direitos humanos em questões ambientais. A região concentra parcela expressiva dos assassinatos de ativistas ambientais registrados no mundo.</p><p class=\"fonte\">ONU BRASIL. CIDH e ONU Direitos Humanos celebram a entrada em vigor do Acordo de Escazú. Disponível em: https://brasil.un.org/pt-br/125495-cidh-e-onu-direitos-humanos-celebram-entrada-em-vigor-do-acordo-de-escazu. Acesso em: 13 nov. 2026. (adaptado).</p><p>Considerando o texto, avalie as afirmações a seguir.</p><p>I. O acordo articula proteção ambiental e direitos humanos, ao tratar do acesso à informação, da participação pública e do acesso à justiça em matéria ambiental.</p><p>II. A inclusão de dispositivos sobre defensores ambientais responde a um contexto regional em que lideranças indígenas, camponesas e ambientalistas sofrem ameaças e assassinatos.</p><p>III. Por ser um tratado entre Estados, o acordo dispensa a participação de comunidades locais nas decisões sobre projetos com impacto ambiental.</p><p>IV. A entrada em vigor do acordo tornou sua aplicação obrigatória em todos os países latino-americanos, inclusive nos que não o ratificaram.</p><p>É correto apenas o que se afirma em</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e III."
+    },
+    {
+     "l": "B",
+     "t": "II e IV."
+    },
+    {
+     "l": "C",
+     "t": "I e II."
+    },
+    {
+     "l": "D",
+     "t": "III e IV."
+    },
+    {
+     "l": "E",
+     "t": "I, II e IV."
+    }
+   ],
+   "cor": "C",
+   "just": "A I está correta: os pilares do acordo (informação, participação e justiça) aplicam direitos de cidadania à questão ambiental, a chamada democracia ambiental. A II está correta: a América Latina é a região mais letal para defensores da terra e do meio ambiente, muitos deles indígenas e camponeses, e o artigo 9 do acordo trata dessa proteção. A III está errada porque a participação pública é um dos pilares do tratado. A IV está errada porque tratados só obrigam os Estados que os ratificam. Por isso a resposta é C.",
+   "tags": [
+    "FG: Meio ambiente e clima",
+    "FG: Povos indígenas e tradicionais",
+    "FG: Direitos humanos e cidadania"
+   ],
+   "tipo": "mc",
+   "nota": null
+  },
+  {
+   "ref": "Original · eixo Socioambiental América Latina",
+   "origem": "original",
+   "eixo": "Socioambiental América Latina",
+   "enun": "<p>De acordo com o Serviço Geológico dos Estados Unidos (USGS), os recursos identificados de lítio no mundo somavam cerca de 115 milhões de toneladas. Entre os países com maiores recursos estavam Argentina (23 milhões de t), Bolívia (23 milhões de t) e Chile (11 milhões de t), que formam o chamado \"triângulo do lítio\". O mineral é insumo essencial para baterias de veículos elétricos e de sistemas de armazenamento de energia, e grande parte da extração sul-americana ocorre em salares de regiões áridas dos Andes, onde vivem comunidades indígenas.</p><p class=\"fonte\">U.S. GEOLOGICAL SURVEY. Mineral Commodity Summaries 2025: Lithium. Disponível em: https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-lithium.pdf. Acesso em: 13 nov. 2026. (adaptado).</p><p>Considerando essas informações, avalie as asserções a seguir e a relação proposta entre elas.</p><p>I. Argentina, Bolívia e Chile ocupam posição estratégica no mercado de minerais demandados pela transição energética.</p><p style=\"text-align:center\">PORQUE</p><p>II. A exploração de lítio nos salares andinos, por estar associada à produção de energia limpa, não gera conflitos socioambientais nem impactos sobre os recursos hídricos locais.</p><p>A respeito dessas asserções, assinale a opção correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    },
+    {
+     "l": "E",
+     "t": "As asserções I e II são proposições falsas."
+    }
+   ],
+   "cor": "C",
+   "just": "A I é verdadeira: juntos, os três países concentram cerca de 57 dos 115 milhões de toneladas de recursos identificados (aproximadamente metade), num mineral central para baterias. A II é falsa: a extração em salares usa muita água em regiões áridas e tem gerado disputas com comunidades indígenas e tradicionais. Ou seja, a transição energética também pode produzir injustiça ambiental. Como a I é verdadeira e a II é falsa, a resposta é C.",
+   "tags": [
+    "FG: Meio ambiente e clima",
+    "FG: Povos indígenas e tradicionais",
+    "FG: Globalização e geopolítica"
+   ],
+   "tipo": "mc",
+   "nota": null
+  },
+  {
+   "ref": "Original · eixo Socioambiental América Latina",
+   "origem": "original",
+   "eixo": "Socioambiental América Latina",
+   "enun": "<p><b>TEXTO 1</b></p><p>Levantamento do MapBiomas mostrou que, entre 1990 e 2020, as Terras Indígenas perderam apenas 1% de sua área de vegetação nativa, enquanto nas áreas privadas a perda foi de 20,6%. As Terras Indígenas ocupam 13,9% do território brasileiro e abrigam 19,5% da vegetação nativa do país. No mesmo estudo, a área ocupada pelo garimpo dentro de Terras Indígenas na Amazônia cresceu 495% entre 2010 e 2020.</p><p class=\"fonte\">MAPBIOMAS. Terras indígenas contribuem para a preservação das florestas. 19 abr. 2022. Disponível em: https://brasil.mapbiomas.org/2022/04/19/terras-indigenas-contribuem-para-a-preservacao-das-florestas/. Acesso em: 13 nov. 2026. (adaptado).</p><p><b>TEXTO 2</b></p><p>O Censo 2022 contou 1.693.535 indígenas no Brasil (0,83% da população), dos quais 51,25% viviam na Amazônia Legal. Do total de indígenas do país, 36,73% moravam em Terras Indígenas e 63,27% fora delas.</p><p class=\"fonte\">IBGE. Brasil tem 1,7 milhão de indígenas e mais da metade deles vive na Amazônia Legal. Disponível em: https://censo2022.ibge.gov.br/noticias-por-estado/37565-brasil-tem-1-7-milhao-de-indigenas-e-mais-da-metade-deles-vive-na-amazonia-legal. Acesso em: 13 nov. 2026. (adaptado).</p><p>Considerando os textos, avalie as afirmações a seguir.</p><p>I. Os dados reforçam a importância das Terras Indígenas como barreira ao desmatamento.</p><p>II. A maior parte da população indígena brasileira vive fora de Terras Indígenas, o que evidencia a presença indígena também em contextos urbanos e em territórios não demarcados.</p><p>III. O avanço do garimpo em Terras Indígenas na Amazônia indica que a demarcação, sem fiscalização e proteção territorial efetivas, não elimina as pressões sobre esses territórios.</p><p>IV. Como os indígenas representam menos de 1% da população, a proteção de seus territórios tem impacto ambiental irrelevante para o país.</p><p>É correto apenas o que se afirma em</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e IV."
+    },
+    {
+     "l": "B",
+     "t": "II e III."
+    },
+    {
+     "l": "C",
+     "t": "I, II e IV."
+    },
+    {
+     "l": "D",
+     "t": "I, III e IV."
+    },
+    {
+     "l": "E",
+     "t": "I, II e III."
+    }
+   ],
+   "cor": "E",
+   "just": "A I está correta: as Terras Indígenas perderam 1% da vegetação nativa, contra 20,6% nas áreas privadas. A II está correta: 63,27% dos indígenas vivem fora de Terras Indígenas. A III está correta: o crescimento de 495% do garimpo mostra que, sem fiscalização, a demarcação sozinha não protege o território. A IV está errada: mesmo com menos de 1% da população, as Terras Indígenas ocupam 13,9% do território e guardam quase um quinto da vegetação nativa. Por isso a resposta é E.",
+   "tags": [
+    "FG: Povos indígenas e tradicionais",
+    "FG: Meio ambiente e clima"
+   ],
+   "tipo": "mc",
+   "nota": null
+  },
+  {
+   "ref": "Original · eixo Socioambiental América Latina",
+   "origem": "original",
+   "eixo": "Socioambiental América Latina",
+   "enun": "<p><b>TEXTO 1</b></p><p>As enchentes de abril e maio de 2024 no Rio Grande do Sul afetaram 478 municípios e 2.398.255 pessoas. Em abril de 2025, a Defesa Civil estadual contabilizava 184 mortes confirmadas e 25 desaparecidos.</p><p class=\"fonte\">RIO GRANDE DO SUL. Defesa Civil atualiza balanço das enchentes no RS – 24/4. Disponível em: https://www.estado.rs.gov.br/defesa-civil-atualiza-balanco-das-enchentes-no-rs-24-4. Acesso em: 13 nov. 2026. (adaptado).</p><p><b>TEXTO 2</b></p><p>A COP30, realizada em Belém (PA) em novembro de 2025, terminou com a aprovação do Pacote de Belém por 195 países, que inclui o compromisso de triplicar o financiamento para adaptação climática até 2035. Durante a conferência, o Brasil lançou o Fundo Florestas Tropicais para Sempre (TFFF), mecanismo de investimento, e não de doação, que remunera países que mantêm suas florestas tropicais em pé; ao final da COP, o fundo somava mais de US$ 6,7 bilhões em aportes anunciados.</p><p class=\"fonte\">AGÊNCIA GOV. COP 30 termina com Pacote de Belém aprovado por 195 países. Disponível em: https://agenciagov.ebc.com.br/noticias/202511/cop30-e-encerrada-com-o-pacote-de-belem-aprovado-por-195-paises; AGÊNCIA BRASIL. Entenda como funciona o Fundo Florestas Tropicais para Sempre. Disponível em: https://agenciabrasil.ebc.com.br/meio-ambiente/noticia/2025-11/entenda-como-funciona-o-fundo-florestas-tropicais-para-sempre. Acesso em: 13 nov. 2026. (adaptado).</p><p>Considerando os textos e a noção de justiça climática, assinale a opção correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Adaptação climática refere-se exclusivamente à redução das emissões de gases de efeito estufa, razão pela qual não envolve planejamento urbano."
+    },
+    {
+     "l": "B",
+     "t": "Por ter ocorrido fora da Amazônia, a tragédia do Rio Grande do Sul não guarda relação com a agenda climática discutida na COP30."
+    },
+    {
+     "l": "C",
+     "t": "O TFFF é um fundo de doações criado para financiar a reconstrução de cidades atingidas por enchentes."
+    },
+    {
+     "l": "D",
+     "t": "Eventos extremos tendem a atingir com mais intensidade populações de baixa renda que vivem em áreas de risco e em moradias precárias, por isso as políticas de adaptação devem priorizar esses grupos."
+    },
+    {
+     "l": "E",
+     "t": "O compromisso de triplicar o financiamento para adaptação torna dispensáveis sistemas de alerta e a defesa civil nos municípios."
+    }
+   ],
+   "cor": "D",
+   "just": "D está correta: a justiça climática reconhece que os impactos de eventos extremos recaem com mais força sobre quem tem menos recursos para se proteger e se recuperar, e propõe priorizar esses grupos nas políticas de adaptação. A confunde adaptação com mitigação, que é a redução de emissões. Adaptação envolve justamente planejamento urbano, drenagem e sistemas de alerta. B está errada porque eventos extremos em qualquer região fazem parte da agenda climática global. C está errada porque o TFFF é um fundo de investimento voltado à conservação de florestas, não de doação para reconstrução. E está errada porque financiamento não substitui estruturas locais de prevenção e resposta.",
+   "tags": [
+    "FG: Meio ambiente e clima",
+    "FG: Direitos humanos e cidadania"
+   ],
+   "tipo": "mc",
+   "nota": null
+  },
+  {
+   "ref": "Original · eixo Conjuntura Internacional",
+   "origem": "original",
+   "eixo": "Conjuntura Internacional",
+   "enun": "<p>Formado originalmente por Brasil, Rússia, Índia e China, e depois ampliado com a África do Sul, o BRICS passou por nova expansão: Egito, Etiópia, Irã e Emirados Árabes Unidos aderiram com efeito a partir de 1º de janeiro de 2024, e a Indonésia foi admitida em janeiro de 2025. Em 2024, na Cúpula de Kazan (Rússia), foi criada a categoria de país parceiro. Sob a presidência brasileira, a 17ª Cúpula do grupo ocorreu no Rio de Janeiro, em 6 e 7 de julho de 2025. Nas reuniões, o processo decisório baseia-se no consenso.</p><p class=\"fonte\">BRASIL. Planalto. Cúpula do BRICS será no Rio de Janeiro, em 6 e 7 de julho. Disponível em: https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/noticias/2025/02/cupula-do-brics-sera-no-rio-de-janeiro-em-6-e-7-de-julho. Acesso em: 13 nov. 2026. (adaptado).</p><p>A respeito do BRICS, avalie as afirmações a seguir.</p><p>I. A expansão do grupo expressa a busca de países do chamado Sul Global por maior peso político e econômico em uma ordem internacional multipolar.</p><p>II. O BRICS é uma organização supranacional cujo tratado constitutivo obriga os membros a adotar uma moeda comum.</p><p>III. A adesão de países com regimes políticos e interesses estratégicos diversos tende a tornar mais complexa a formação de consensos no grupo.</p><p>É correto o que se afirma em</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I, apenas."
+    },
+    {
+     "l": "B",
+     "t": "II, apenas."
+    },
+    {
+     "l": "C",
+     "t": "I e III, apenas."
+    },
+    {
+     "l": "D",
+     "t": "II e III, apenas."
+    },
+    {
+     "l": "E",
+     "t": "I, II e III."
+    }
+   ],
+   "cor": "C",
+   "just": "A I está correta: a ampliação do BRICS é lida como busca de mais voz para economias emergentes e em desenvolvimento, num cenário de multipolaridade e de crítica à governança global dominada pelo G7. A III está correta: como as decisões exigem consenso, mais membros com interesses heterogêneos (por exemplo, Irã e Emirados, Índia e China) tornam os acordos mais difíceis. A II está errada: o BRICS é um agrupamento intergovernamental flexível, sem tratado supranacional e sem moeda comum. Por isso a resposta é C.",
+   "tags": [
+    "FG: Globalização e geopolítica"
+   ],
+   "tipo": "mc",
+   "nota": null
+  },
+  {
+   "ref": "Original · eixo Conjuntura Internacional",
+   "origem": "original",
+   "eixo": "Conjuntura Internacional",
+   "enun": "<p>Segundo o relatório Tendências Globais do Alto Comissariado das Nações Unidas para Refugiados (ACNUR), divulgado em junho de 2025, 123,2 milhões de pessoas estavam deslocadas à força no mundo ao final de 2024, em razão de perseguição, conflitos, violência, violações de direitos humanos e eventos que perturbaram gravemente a ordem pública. O número representou aumento de 7 milhões (6%) em relação a 2023, o equivalente a uma em cada 67 pessoas no planeta. Desse total, 73,5 milhões eram deslocados internos. Sudaneses (14,3 milhões), sírios (13,5 milhões), afegãos (10,3 milhões) e ucranianos (8,8 milhões) somavam pouco mais de um terço dos deslocados. Em 2024, 1,6 milhão de refugiados retornaram a seus países de origem.</p><p class=\"fonte\">ONU NEWS. Deslocados à força atingem novo recorde de 123 milhões em todo o mundo. jun. 2025. Disponível em: https://news.un.org/pt/story/2025/06/1849416; AGÊNCIA BRASIL. Acnur: mundo tem mais de 123 milhões de pessoas deslocadas à força. Disponível em: https://agenciabrasil.ebc.com.br/internacional/noticia/2025-06/acnur-mundo-tem-mais-de-123-milhoes-de-pessoas-deslocadas-forca. Acesso em: 13 nov. 2026. (adaptado).</p><p>A partir do texto, conclui-se que</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "a maioria das pessoas deslocadas à força cruzou fronteiras internacionais, condição necessária para o reconhecimento como refugiado."
+    },
+    {
+     "l": "B",
+     "t": "mais da metade dos deslocados à força permaneceu dentro do próprio país, o que mostra que o deslocamento forçado não se limita a refugiados que cruzam fronteiras."
+    },
+    {
+     "l": "C",
+     "t": "o deslocamento forçado diminuiu em 2024, em razão do retorno de 1,6 milhão de refugiados."
+    },
+    {
+     "l": "D",
+     "t": "os quatro países de origem citados concentram mais de dois terços das pessoas deslocadas à força."
+    },
+    {
+     "l": "E",
+     "t": "o deslocamento forçado decorre exclusivamente de desastres naturais."
+    }
+   ],
+   "cor": "B",
+   "just": "B está correta: 73,5 de 123,2 milhões (cerca de 60%) são deslocados internos, que não cruzaram fronteira e por isso não são juridicamente refugiados, mas também precisam de proteção. A inverte essa proporção. C está errada porque o total cresceu 7 milhões, apesar dos retornos. D está errada: 14,3 + 13,5 + 10,3 + 8,8 = 46,9 milhões, cerca de 38%, ou seja, 'pouco mais de um terço'. E está errada porque o texto cita perseguição, conflitos, violência e violações de direitos.",
+   "tags": [
+    "FG: Migração e refugiados",
+    "FG: Globalização e geopolítica"
+   ],
+   "tipo": "mc",
+   "nota": null
+  },
+  {
+   "ref": "Original · eixo Conjuntura Internacional",
+   "origem": "original",
+   "eixo": "Conjuntura Internacional",
+   "enun": "<p>Em 30 de julho de 2025, o presidente dos Estados Unidos assinou ordem executiva, com base na Lei de Poderes Econômicos de Emergência Internacional (IEEPA), que impôs tarifa adicional de 40% sobre produtos originários do Brasil, elevando a tarifa total a 50% a partir de 6 de agosto. Na redação original da medida, um anexo excluiu 694 produtos da cobrança adicional, como suco de laranja, aeronaves civis e suas partes, minérios e combustíveis, enquanto café, frutas e carnes ficaram sujeitos à nova alíquota. Segundo o Ministério do Desenvolvimento, Indústria, Comércio e Serviços (MDIC), cerca de 44,6% das exportações brasileiras para os EUA ficaram isentas.</p><p class=\"fonte\">CNN BRASIL. Trump isenta 45% das exportações brasileiras aos EUA de tarifaço. 30 jul. 2025. Disponível em: https://www.cnnbrasil.com.br/economia/macroeconomia/trump-isenta-45-das-exportacoes-brasileiras-aos-eua-de-tarifaco/. Acesso em: 13 nov. 2026. (adaptado).</p><p>Com base no texto, assinale a opção correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A tarifa total de 50% passou a incidir sobre todas as exportações brasileiras para os EUA, sem exceção."
+    },
+    {
+     "l": "B",
+     "t": "A medida foi adotada por decisão do Órgão de Solução de Controvérsias da Organização Mundial do Comércio (OMC)."
+    },
+    {
+     "l": "C",
+     "t": "Café e carnes estavam entre os produtos excluídos da tarifa adicional na redação original da medida."
+    },
+    {
+     "l": "D",
+     "t": "A tarifa resultou de negociação bilateral aprovada pelo Congresso Nacional brasileiro."
+    },
+    {
+     "l": "E",
+     "t": "A medida foi unilateral e, em sua redação original, deixou pouco menos da metade das exportações brasileiras para os EUA fora da cobrança adicional."
+    }
+   ],
+   "cor": "E",
+   "just": "E está correta: a tarifa foi imposta por ordem executiva baseada em lei interna dos EUA (IEEPA), sem negociação nem decisão multilateral, e cerca de 44,6% das exportações ficaram isentas. Esse uso de tarifas como instrumento de pressão política e econômica é típico das guerras comerciais e tensiona o multilateralismo da OMC. A está errada por causa das 694 exceções. B está errada porque a medida não passou pela OMC. C está errada porque café e carnes foram tributados. D está errada porque não houve negociação nem aprovação legislativa no Brasil.",
+   "nota": "O texto-base trata da redação original da medida (jul./ago. 2025). Mudanças posteriores na lista de produtos não foram verificadas aqui e não afetam o gabarito.",
+   "tags": [
+    "FG: Globalização e geopolítica"
+   ],
+   "tipo": "mc"
+  },
+  {
+   "ref": "Original · eixo Conjuntura Internacional",
+   "origem": "original",
+   "eixo": "Conjuntura Internacional",
+   "enun": "<p>O Regulamento (UE) 2024/1689 — conhecido como AI Act —, em vigor desde 1º de agosto de 2024, adota uma abordagem baseada em risco, com quatro níveis: risco inaceitável (práticas proibidas), risco elevado, risco limitado (sujeito a obrigações de transparência) e risco mínimo. Desde 2 de fevereiro de 2025, são proibidas práticas como a pontuação social (<i>social scoring</i>) de pessoas que leve a tratamento desfavorável injustificado e a coleta indiscriminada de imagens faciais da internet para criar bases de reconhecimento facial. As multas podem chegar a 35 milhões de euros ou 7% do faturamento anual global da empresa. A norma alcança fornecedores que coloquem sistemas de IA no mercado europeu, ainda que estabelecidos fora da União Europeia.</p><p class=\"fonte\">UNIÃO EUROPEIA. Regulamento (UE) 2024/1689 do Parlamento Europeu e do Conselho, de 13 de junho de 2024. Disponível em: https://eur-lex.europa.eu/eli/reg/2024/1689/oj. Acesso em: 13 nov. 2026. (adaptado).</p><p>Considerando o texto, avalie as afirmações a seguir.</p><p>I. A regulação europeia gradua as obrigações conforme o potencial de dano dos sistemas, em vez de proibir a inteligência artificial de forma genérica.</p><p>II. A proibição da pontuação social relaciona-se à proteção de direitos fundamentais, como a não discriminação e a dignidade da pessoa.</p><p>III. Por ser uma norma europeia, o AI Act não produz efeitos sobre empresas brasileiras ou estadunidenses que ofereçam sistemas de IA na União Europeia.</p><p>IV. Filtros de spam e sistemas de recomendação em jogos eletrônicos enquadram-se, como regra, na categoria de risco inaceitável.</p><p>É correto apenas o que se afirma em</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e III."
+    },
+    {
+     "l": "B",
+     "t": "I e II."
+    },
+    {
+     "l": "C",
+     "t": "II e IV."
+    },
+    {
+     "l": "D",
+     "t": "III e IV."
+    },
+    {
+     "l": "E",
+     "t": "I, II e III."
+    }
+   ],
+   "cor": "B",
+   "just": "A I está correta: a abordagem baseada em risco proíbe poucas práticas e impõe obrigações proporcionais ao risco às demais. A II está correta: a pontuação social pode gerar discriminação e controle social incompatíveis com direitos fundamentais. A III está errada: a norma se aplica a quem oferece sistemas no mercado europeu, onde quer que esteja estabelecido. Esse efeito extraterritorial ('efeito Bruxelas') faz parte da disputa global por padrões tecnológicos. A IV está errada porque aplicações como filtros de spam e jogos ficam, em regra, na categoria de risco mínimo. Por isso a resposta é B.",
+   "tags": [
+    "FG: Tecnologia e sociedade",
+    "FG: Globalização e geopolítica",
+    "FG: Direitos humanos e cidadania"
+   ],
+   "tipo": "mc",
+   "nota": null
+  },
+  {
+   "ref": "Original · eixo Conjuntura Internacional",
+   "origem": "original",
+   "eixo": "Conjuntura Internacional",
+   "enun": "<p>Art. 23 – 1. O Conselho de Segurança será composto de quinze Membros das Nações Unidas. A República da China, a França, a União das Repúblicas Socialistas Soviéticas, o Reino Unido da Grã-Bretanha e Irlanda do Norte e os Estados Unidos da América serão membros permanentes do Conselho de Segurança. A Assembleia Geral elegerá dez outros Membros das Nações Unidas para membros não permanentes do Conselho de Segurança [...].</p><p>Art. 27 – [...] 3. As decisões do Conselho de Segurança, em todos os outros assuntos [que não sejam questões processuais], serão tomadas pelo voto afirmativo de nove membros, inclusive os votos afirmativos de todos os membros permanentes [...].</p><p class=\"fonte\">CARTA DAS NAÇÕES UNIDAS (1945). Promulgada no Brasil pelo Decreto nº 19.841, de 22 de outubro de 1945. Disponível em: https://www.planalto.gov.br/ccivil_03/decreto/1930-1949/d19841.htm. Acesso em: 13 nov. 2026. (adaptado).</p><p>Considerando essas informações, avalie as asserções a seguir e a relação proposta entre elas.</p><p>I. A composição do Conselho de Segurança reflete de modo equilibrado a atual distribuição de população e de poder entre as regiões do mundo, razão pela qual não há propostas de sua reforma.</p><p style=\"text-align:center\">PORQUE</p><p>II. A exigência de votos afirmativos de todos os membros permanentes confere a cada um deles, na prática, poder de veto sobre as decisões substantivas do Conselho.</p><p>A respeito dessas asserções, assinale a opção correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    },
+    {
+     "l": "E",
+     "t": "As asserções I e II são proposições falsas."
+    }
+   ],
+   "cor": "D",
+   "just": "A I é falsa: a composição permanente reproduz a ordem de 1945 (vencedores da Segunda Guerra), sem membros permanentes da América Latina ou da África. Por isso há propostas de reforma, como a do G4 (Brasil, Alemanha, Índia e Japão). A II é verdadeira: pelo art. 27, basta o voto contrário de um membro permanente para impedir uma decisão substantiva, e isso costuma paralisar o Conselho em guerras que envolvem essas potências ou seus aliados. Por isso a resposta é D.",
+   "nota": "Os trechos entre colchetes [que não sejam questões processuais] e [...] são acréscimos ou omissões da questão. A Carta ainda menciona 'República da China' e 'URSS', assentos hoje ocupados pela República Popular da China e pela Federação da Rússia.",
+   "tags": [
+    "FG: Globalização e geopolítica",
+    "FG: Direitos humanos e cidadania"
+   ],
+   "tipo": "mc"
+  }
+ ],
+ "observacoes": "FONTES CONSULTADAS: o acesso direto a download.inep.gov.br, gov.br, wikipedia e outros sites estava bloqueado nesta sessão (proxy 403/ENOTFOUND). Por isso as questões reais foram reconstituídas pelo WebSearch, que lê o conteúdo indexado dos PDFs oficiais do Inep (cadernos 2011–2023) e de reproduções (indagacao.com.br, exercicios.indaguei.com, Estratégia, Brainly, Gabarite, Banco das Respostas). GABARITOS OFICIAIS CONFERIDOS (arquivos de gabarito do Inep indexados): 2011 Q1–8 = D A E A C B B E (Enade2011_Gab_Def_Computacao.pdf); 2013 = C B E A D D A A (09_Gab_MEDICINA_VETERINARIA, 08_Gab_MEDICINA etc.); 2019 = ANULADA D C B C C D B (gabaritos/2019/enfermagem.pdf); 2021 = E C B B A A C D (2021_GB_bacharelado_ciencias_sociais e sistema_informacao); 2022 = B D A C D E D C (2022_GB_tecnologia_em_processos_gerenciais); 2023 = D D B A E C A B E (2023_GB_odontologia). FIDELIDADE: textos-base curtos (2011 Q5, 2013 Q6, 2019 Q6, 2022 Q3, 2022 Q6, 2023 Q1) e as alternativas foram recuperados por completo. Em 2021 Q8 e 2022 Q1 o texto-base é parcial, com [...] nas omissões (ver 'nota'). Figuras e mapas não foram reproduzidos e estão descritos entre colchetes. Nenhuma das questões depende deles para a resposta, e em 2019 Q6 os dados foram descritos a partir do relatório Atlas da Violência 2019. Recomenda-se conferir a redação literal nos cadernos oficiais quando o domínio do Inep estiver acessível. QUESTÕES DESCARTADAS: ENADE 2021 (suicídio de crianças indígenas, Q5/Q6, gabarito A): a afirmação II depende de um mapa cujos dados não foram obtidos. ENADE 2023 Q2 (saneamento, gabarito D): o texto da afirmação IV e as alternativas B–E não foram confirmados, porque as fontes divergem. ENADE 2019 Q1 (regime internacional de mudanças climáticas): anulada pelo Inep. ENADE 2012 Q3 (Peter Singer/floresta) e uma questão sobre a Rio+20: numeração e alternativas não confirmadas. ENADE 2015 Relações Internacionais Q22 (refugiados Rohingya): componente específico, não FG. ENADE 2021 História (protestos antirracistas) e Educação Física/Pedagogia (Lei 10.639, educação quilombola): componente específico, não FG. ENADE 2022 Q7 (feminicídio/CEPAL) e Q5 (população em situação de rua): fora dos três eixos. ORIGINAIS: todos os números vêm de fonte oficial ou de imprensa verificada nesta sessão (IBGE/Censo 2022, Atlas da Violência 2025 via Agência Brasil, INPE/PRODES, MapBiomas 2022, USGS MCS 2025, ACNUR Global Trends 2025 via ONU News, Defesa Civil RS, Agência Gov/COP30, Planalto/BRICS, CNN/MDIC, EUR-Lex, Lei 11.645/2008, Lei 14.723/2023, Carta da ONU, Gender Shades/PMLR, Intercept/Rede de Observatórios). Observações sobre os dados: o PRODES 2025 consolidado (5.731 km²) foi publicado pelo INPE em 2026, e a estimativa de outubro de 2025 era de 5.796 km². A ordem executiva das tarifas dos EUA é citada na redação original (jul. 2025). A Arábia Saudita foi deixada de fora da lista do BRICS porque as fontes divergem sobre sua adesão. As letras corretas das originais foram distribuídas em 3 A, 3 B, 3 C, 3 D e 3 E."
+}
