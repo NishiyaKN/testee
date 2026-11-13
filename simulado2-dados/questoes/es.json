@@ -1,0 +1,553 @@
+{
+ "topico": "03 · Engenharia de Software",
+ "slug": "es",
+ "excluidas_simulado1": [],
+ "questoes": [
+  {
+   "ref": "Caderno do squad: Q1",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: Elicitação de Requisitos</b></p><p>Um banco multinacional decidiu criar um novo módulo de pagamentos transfronteiriços. Para levantar os requisitos do sistema, a gerência notou que entrevistas individuais com diretores, gerentes de TI e caixas geravam requisitos conflitantes e visões muito fragmentadas. Para resolver isso e acelerar a definição do escopo, o líder do projeto decidiu organizar uma imersão intensiva de três dias. Esta sessão reuniu todos os stakeholders (usuários, gerentes e desenvolvedores) em uma mesma sala, conduzida por um facilitador especializado. Durante as reuniões de trabalho colaborativas, o grupo definiu, visualizou e aprovou os requisitos, gerando documentação em tempo real e garantindo o alinhamento das expectativas de todos os envolvidos.</p><p>Qual técnica de elicitação de requisitos em grupo foi primariamente aplicada pelo líder do projeto nesse cenário?</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Observação, por acompanhar a rotina dos usuários em seu ambiente de trabalho."
+    },
+    {
+     "l": "B",
+     "t": "Brainstorming, focado na geração livre e sem julgamentos do maior número possível de ideias."
+    },
+    {
+     "l": "C",
+     "t": "JAD (Joint Application Development), por ser uma imersão intensiva conduzida por um facilitador, reunindo diferentes perfis para definir e aprovar requisitos."
+    },
+    {
+     "l": "D",
+     "t": "Questionários, por coletar informações de um grande volume de pessoas simultaneamente."
+    }
+   ],
+   "cor": "C",
+   "just": "O JAD reúne stakeholders de perfis diferentes (usuários, gerentes, técnicos) em workshops intensivos e estruturados, guiados por um facilitador, para chegar a consenso e documentar e aprovar requisitos rapidamente — exatamente a imersão de três dias descrita. A (Observação/etnografia) acompanha o usuário trabalhando, sem reunião conjunta. B (Brainstorming) só gera ideias livremente, sem a definição e aprovação formal dos requisitos. D (Questionários) é uma técnica individual e assíncrona para muitos respondentes, sem interação em grupo.",
+   "nota": "Pistas do JAD no enunciado: \"facilitador\", \"todos os stakeholders na mesma sala\", \"definiu, visualizou e aprovou\", \"documentação em tempo real\". Se a versão trouxer só \"gerar o maior número de ideias sem crítica\", a resposta passa a ser Brainstorming.",
+   "tags": [
+    "ES: Engenharia de requisitos"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q2",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: Requisitos Funcionais e Requisitos Não Funcionais</b></p><p>Na Engenharia de Requisitos, a distinção clara entre Requisitos Funcionais (RF) e Requisitos Não Funcionais (RNF) é determinante para a sustentabilidade arquitetural. Em muitos projetos ágeis, observa-se a tendência de expressar apenas necessidades funcionais na forma de User Stories (Ex.: \"Eu como cliente quero visualizar meu extrato\"), negligenciando restrições de desempenho, disponibilidade e escalabilidade.</p><p>Analise as asserções a seguir e a relação proposta entre elas:</p><p>I. Requisitos Não Funcionais (RNFs) devem ser quantificáveis e testáveis por meio de métricas objetivas (como tempo máximo de resposta em milissegundos ou taxa de disponibilidade em porcentagem), evitando-se formulações ambíguas como \"o sistema deve ser rápido e amigável\".</p><p><b>PORQUE</b></p><p>II. RNFs orientam diretamente a definição da arquitetura de software e dos atributos de qualidade do sistema, impactando decisões estruturais que raramente podem ser corrigidas apenas com alterações pontuais na camada de código de uma única funcionalidade.</p><p>A respeito dessas asserções, assinale a opção correta:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    }
+   ],
+   "cor": "A",
+   "just": "I é verdadeira: RNF precisa de métrica objetiva (ex.: 95% das requisições em menos de 300 ms; disponibilidade de 99,9%) para poder ser verificado. II é verdadeira: RNFs são transversais, definem atributos de qualidade e guiam a arquitetura, e corrigi-los depois é caro. Para o squad, II justifica I: por pesarem em decisões estruturais difíceis de reverter, os RNFs precisam ser definidos com rigor e quantificados desde o início. B nega esse nexo; C e D tratam como falsa uma proposição consolidada da Engenharia de Requisitos.",
+   "nota": "⚠️ O nexo causal é discutível: a razão mais direta para quantificar um RNF é a testabilidade, e um corretor rigoroso poderia defender B. O gabarito do squad (e o dos slides, onde é a Q3, com alternativa E extra e mesma letra) é A.",
+   "tags": [
+    "ES: Engenharia de requisitos"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q3",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: Validação e Gestão de Requisitos</b></p><p>Um hospital universitário está implementando um sistema corporativo de prontuário eletrônico em um ambiente altamente regulado por normas sanitárias e pela Lei Geral de Proteção de Dados (LGPD). Durante o desenvolvimento, frequentes atualizações nas portarias de saúde exigiram alterações em requisitos já aprovados. A equipe técnica observou que modificar um requisito de retenção de histórico causou falhas silenciosas nos módulos de auditoria, além de invalidar casos de teste já automatizados.</p><p>Para mitigar tais problemas e garantir o gerenciamento de mudanças de forma rigorosa, qual estratégia e instrumento de Engenharia de Requisitos devem ser adotados para realizar a análise de impacto em ambos os sentidos (backward e forward)?</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Adotar o modelo cascata puro sem registro de alterações, visando congelar o escopo e proibir modificações de regras de negócio após a fase de design."
+    },
+    {
+     "l": "B",
+     "t": "Utilizar uma Matriz de Rastreabilidade com suporte de ferramentas corporativas (como IBM DOORS ou Jira), conectando cada requisito aos seus stakeholders de origem (backward) e aos componentes de arquitetura, código e casos de teste (forward)."
+    },
+    {
+     "l": "C",
+     "t": "Eliminar a especificação formal de requisitos e adotar reuniões informais sem documentação, confiando exclusivamente no conhecimento implícito da equipe."
+    },
+    {
+     "l": "D",
+     "t": "Substituir a etapa de validação por prototipagem descartável ao final da produção, dispensando a verificação de conformidade com os testes."
+    }
+   ],
+   "cor": "B",
+   "just": "A Matriz de Rastreabilidade liga cada requisito à sua origem (stakeholder, norma — rastreabilidade backward) e aos artefatos que dele derivam (arquitetura, código, casos de teste — forward). Assim, ao mudar um requisito, sabe-se o que é afetado (análise de impacto), evitando as falhas silenciosas na auditoria e os testes invalidados; ferramentas como DOORS e Jira automatizam isso. A falha porque congelar o escopo é inviável quando a legislação muda. C elimina a documentação, o que é inaceitável em sistema regulado e auditável. D: prototipagem ajuda a validar interface, mas não substitui rastreabilidade nem testes.",
+   "nota": null,
+   "tags": [
+    "ES: Engenharia de requisitos"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q4",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: Análise e Projeto Orientado a Objetos</b></p><p>Durante o processo de revisão de código em uma empresa de logística, um engenheiro de software identificou a classe ProcessadorDePedidos. A análise do arquivo revelou que a classe contém métodos para:</p><p>1. Calcular a taxa de frete com base no CEP;<br>2. Aplicar regras de desconto ao valor do pedido;<br>3. Gerar e formatar o documento do recibo em arquivo PDF;<br>4. Criar conexões SQL diretas e persistir os dados da transação no banco de dados.</p><p>Considerando as boas práticas de projeto orientado a objetos e os princípios SOLID, assinale a opção que identifica corretamente o princípio violado e a solução de refatoração recomendada:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Violação do Princípio de Substituição de Liskov (LSP); a solução consiste em fazer a classe herdar de uma superclasse genérica e lançar exceções para funções não suportadas."
+    },
+    {
+     "l": "B",
+     "t": "Violação do Princípio da Responsabilidade Única (SRP); a solução consiste em refatorar a classe dividindo-a em componentes especialistas: CalculadoraDeFrete, GeradorDeReciboPdf e PedidoRepository."
+    },
+    {
+     "l": "C",
+     "t": "Violação do Princípio da Segregação de Interfaces (ISP); a solução consiste em unificar todos os métodos em uma única interface ampla contendo persistência, cálculo e impressão."
+    },
+    {
+     "l": "D",
+     "t": "Violação do Princípio do Aberto/Fechado (OCP); a solução consiste em modificar diretamente o código fonte da classe a cada nova regra de negócio, mantendo o acoplamento forte."
+    }
+   ],
+   "cor": "B",
+   "just": "A classe tem várias razões para mudar (frete, desconto, PDF, SQL): é uma \"God Class\" que viola o SRP. A refatoração é separar as responsabilidades em classes coesas (CalculadoraDeFrete, GeradorDeReciboPdf, PedidoRepository). A erra o princípio e a solução: o LSP trata da substituição de subclasses, e lançar exceções para funções não suportadas justamente viola o LSP. C propõe o contrário do ISP (que pede interfaces pequenas e específicas). D descreve como solução exatamente o que o OCP proíbe (modificar a classe a cada regra nova).",
+   "nota": "Atenção: as alternativas erradas combinam um princípio real com uma \"solução\" que o viola. Leia sempre as duas metades.",
+   "tags": [
+    "ES: POO e SOLID"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q5",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: Arquitetura de Software e Padrões de Projeto</b></p><p>Uma empresa de tecnologia opera um sistema de comércio eletrônico baseado em uma arquitetura cliente-servidor monolítica. Em datas comemorativas, o aumento no volume de acessos ao módulo de relatórios analíticos provoca a queda total do banco de dados relacional único, tornando indisponível o módulo de finalização de compras (checkout). A equipe de arquitetura elaborou um Registro de Decisão Arquitetural (ADR) propondo a migração para uma Arquitetura de Microsserviços com bancos de dados independentes por serviço.</p><p>Considerando a análise de trade-offs e a Primeira Lei da Arquitetura de Software (\"Não existem soluções perfeitas, apenas trade-offs\"), assinale a alternativa que apresenta corretamente os ganhos obtidos e os custos/desvantagens assumidos nessa decisão:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Ganho: Redução da complexidade de infraestrutura e rede. Custo: Perda da capacidade de implantar serviços de forma independente."
+    },
+    {
+     "l": "B",
+     "t": "Ganho: Escalabilidade isolada dos módulos críticos (checkout) e tolerância a falhas (isolamento de domínios). Custo: Aumento da complexidade de orquestração, monitoramento, latência de rede e governança de dados distribuídos."
+    },
+    {
+     "l": "C",
+     "t": "Ganho: Simplificação do gerenciamento de transações ACID em um único banco de dados. Custo: Impossibilidade de utilizar diferentes tecnologias em serviços distintos."
+    },
+    {
+     "l": "D",
+     "t": "Ganho: Eliminação completa da necessidade de utilizar APIs ou Gateways de comunicação. Custo: Perda da capacidade de realizar testes automatizados de unidade."
+    }
+   ],
+   "cor": "B",
+   "just": "Com microsserviços e um banco por serviço, o checkout pode ser escalado sozinho e a sobrecarga dos relatórios não derruba os demais domínios (isolamento de falhas). O preço é mais complexidade operacional: orquestração, monitoramento, latência de rede e consistência de dados distribuídos. A inverte a realidade (microsserviços aumentam a complexidade de rede e ganham implantação independente). C também inverte: com bancos separados as transações ACID distribuídas ficam mais difíceis, e é justamente possível usar tecnologias diferentes por serviço. D é falsa: microsserviços dependem de APIs/gateways e continuam permitindo testes de unidade.",
+   "nota": "Não confundir com a Q14 do Simulado 1 (Kafka, acoplamento temporal, asserção-razão): situação e comando diferentes.",
+   "tags": [
+    "ES: Arquitetura e padrões GoF"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q6",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: Técnicas de Teste e Métricas de Qualidade</b></p><p>A equipe de garantia da qualidade (QA) de uma empresa de tecnologia analisou os indicadores de qualidade de um subsistema de cálculo de juros antes da sua liberação em produção. A tabela a seguir apresenta os dados coletados:</p><table><thead><tr><th>Indicador de Qualidade</th><th>Valor Observado</th><th>Meta Estabelecida no Projeto</th></tr></thead><tbody><tr><td>Cobertura de Código (Testes Unitários / Caixa-Branca)</td><td>42%</td><td>≥ 85%</td></tr><tr><td>Cobertura de Requisitos (Testes de Sistema / Caixa-Preta)</td><td>98%</td><td>100%</td></tr><tr><td>Densidade de Defeitos em Produção</td><td>4.8 defeitos / KLOC</td><td>≤ 1.0 defeito / KLOC</td></tr><tr><td>Complexidade Ciclomática Média das Classes</td><td>24 (Alta)</td><td>≤ 10</td></tr></tbody></table><p>Considerando a interpretação técnica das métricas e suas relações, assinale a alternativa que apresenta o diagnóstico e a decisão técnica mais adequada para o projeto:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "O subsistema possui excelente qualidade interna, pois a elevada cobertura de requisitos garante que nenhuma falha ocorrerá durante a execução."
+    },
+    {
+     "l": "B",
+     "t": "A alta complexidade ciclomática aliada à baixa cobertura de testes de caixa-branca explica a elevada densidade de defeitos, exigindo refatoração do código para reduzir desvios lógicos e criação de novos testes unitários."
+    },
+    {
+     "l": "C",
+     "t": "A equipe deve eliminar os testes de caixa-preta e focar unicamente em aumentar a complexidade ciclomática para reduzir a taxa de defeitos em produção."
+    },
+    {
+     "l": "D",
+     "t": "A alta densidade de defeitos deve ser resolvida suspendendo a fase de testes de integração e realizando o lançamento imediato aos clientes finais."
+    }
+   ],
+   "cor": "B",
+   "just": "Complexidade ciclomática 24 significa muitos caminhos independentes (if/else/switch); com só 42% de cobertura de código, a maior parte desses caminhos nunca foi exercitada por testes unitários — o que explica 4,8 defeitos/KLOC. A ação adequada é refatorar para reduzir a complexidade e ampliar os testes de caixa-branca. A erra: cobertura de requisitos (caixa-preta) verifica entradas e saídas, não os fluxos internos, e nenhuma cobertura garante ausência de falhas. C é absurda: aumentar a complexidade piora a manutenção e gera mais defeitos. D lança o software sem tratar a causa, agravando o custo em produção.",
+   "nota": "No PDF do caderno as metas aparecem como código LaTeX não renderizado ($\\ge 85\\%$, $100\\%$, $\\le 1.0$, $\\le 10$); foram convertidas para ≥ 85%, 100%, ≤ 1.0 e ≤ 10.",
+   "tags": [
+    "ES: Verificação, validação e testes"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q7",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: Metodologia Ágil</b></p><p>Uma equipe de desenvolvimento de software adotou o Scrum para gerenciar a construção de um aplicativo financeiro. A metodologia ágil otimiza o gerenciamento de projetos ao dividir demandas complexas em ciclos curtos chamados sprints. Durante a execução do projeto, observou-se que o João era o responsável exclusivo por definir a visão do produto, entender as necessidades dos usuários, gerenciar e priorizar dinamicamente a lista de tarefas do projeto (Product Backlog). Por outro lado, a Maria focava em facilitar os processos ágeis, orientar a equipe, atuar como uma líder servidora e remover ativamente os impedimentos que travavam o progresso do time técnico.</p><p>A partir das responsabilidades descritas, assinale a alternativa que identifica corretamente os papéis desempenhados por João e Maria, respectivamente, dentro do framework Scrum.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "João é o Scrum Master (SM); Maria é o Product Owner (PO)."
+    },
+    {
+     "l": "B",
+     "t": "João é o Líder Técnico de Desenvolvedores; Maria é a Gerente de Projetos (PMBOK)."
+    },
+    {
+     "l": "C",
+     "t": "João é o Product Owner (PO); Maria é a Scrum Master (SM)."
+    },
+    {
+     "l": "D",
+     "t": "João é o Gerente de Portfólio; Maria é a Desenvolvedora Sênior."
+    }
+   ],
+   "cor": "C",
+   "just": "João define a visão do produto, entende os usuários e ordena o Product Backlog: é o Product Owner. Maria facilita o processo, orienta a equipe, é líder servidora e remove impedimentos: é a Scrum Master. A inverte os papéis (atenção ao \"respectivamente\"). B e D usam papéis que não existem no Scrum (Líder Técnico, Gerente de Projetos do PMBOK, Gerente de Portfólio); além disso, Maria não codifica, então não é Desenvolvedora.",
+   "nota": "Mesma questão da Q1 dos slides do squad (ENGENHARIA DE SOFTWARE.pdf, p. 19–20), que tinha uma 5ª alternativa (E: \"João e Maria compartilham o papel de Product Owner\"); o gabarito C não muda. Não é a Q19 do Simulado 1 (afirmativas I–IV sobre artefatos e eventos do Scrum).",
+   "tags": [
+    "ES: Ágil, Scrum e PMBOK"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q8",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: Metodologia Ágil</b></p><p>Uma organização desenvolve dois sistemas.</p><ul><li>O Sistema A possui requisitos estáveis, legislação previamente definida e poucas alterações esperadas durante o desenvolvimento.</li><li>O Sistema B será utilizado em um mercado novo, no qual as necessidades dos usuários ainda estão sendo descobertas.</li></ul><p>A equipe responsável pelo Sistema B deseja obter feedback frequente dos usuários e adaptar o produto durante o desenvolvimento.</p><p>Nesse cenário, a escolha que melhor representa as características dos dois projetos é:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Utilizar exclusivamente metodologia ágil nos dois projetos, pois mudanças sempre ocorrem em software."
+    },
+    {
+     "l": "B",
+     "t": "Utilizar um fluxo rígido e sequencial no Sistema B, pois requisitos incertos devem ser congelados."
+    },
+    {
+     "l": "C",
+     "t": "O Sistema A pode se beneficiar de um fluxo mais previsível, enquanto o Sistema B apresenta características favoráveis a uma abordagem iterativa e adaptativa."
+    },
+    {
+     "l": "D",
+     "t": "O Sistema B deve utilizar Cascata porque seus requisitos ainda não estão completamente definidos."
+    }
+   ],
+   "cor": "C",
+   "just": "A escolha do processo depende do contexto. Requisitos estáveis e legislação definida (Sistema A) favorecem um fluxo preditivo/sequencial; incerteza e necessidade de feedback frequente (Sistema B) pedem abordagem iterativa e adaptativa (ágil). A generaliza indevidamente: modelos preditivos continuam adequados a projetos estáveis. B e D invertem a lógica: congelar requisitos incertos ou usar Cascata justamente quando eles não estão definidos torna o custo da mudança altíssimo.",
+   "nota": null,
+   "tags": [
+    "ES: Modelos de processo e RUP",
+    "ES: Ágil, Scrum e PMBOK"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q9",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: Fluxos e Modelos de Software</b></p><p>Uma startup de tecnologia da área de saúde está desenvolvendo um novo sistema de prontuário eletrônico. Os desenvolvedores adotaram um ciclo de trabalho em que o software é desenvolvido em ciclos contínuos de planejamento, criação, testes e refinamento. Devido à criticidade das informações e à dificuldade inicial dos médicos em expressarem exatamente o que precisavam, a equipe técnica decidiu criar versões preliminares e simples da interface. Essas versões foram disponibilizadas aos médicos para que pudessem validar o funcionamento na prática, permitindo à equipe entender melhor as necessidades reais antes de iniciar a codificação definitiva e complexa do back-end.</p><p>Com base nos modelos e fluxos de processos de software, avalie as afirmações a seguir sobre a estratégia adotada pela startup:</p><p>I. A equipe está utilizando um modelo de fluxo evolucionário, que permite que o produto se adapte às necessidades do público ao longo do tempo com base em feedback constante.</p><p>II. A criação de versões preliminares e simples para validação do funcionamento caracteriza a técnica de Prototipação, que ajuda a entender melhor os requisitos antes do desenvolvimento definitivo.</p><p>III. O processo descrito exemplifica o modelo Cascata, pois a fase de levantamento de requisitos com os médicos está sendo finalizada completamente antes do início do projeto e da implementação.</p><p>É correto o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I, apenas."
+    },
+    {
+     "l": "B",
+     "t": "I e II, apenas."
+    },
+    {
+     "l": "C",
+     "t": "II, apenas."
+    },
+    {
+     "l": "D",
+     "t": "II e III, apenas."
+    }
+   ],
+   "cor": "B",
+   "just": "I é verdadeira: ciclos contínuos de planejamento, criação, testes e refinamento guiados por feedback caracterizam o fluxo evolucionário. II é verdadeira: versões preliminares e simples para o usuário validar e esclarecer requisitos é a Prototipação. III é falsa: o Cascata é linear e sequencial, sem ciclos nem validação contínua; usar protótipos antes de codificar o back-end não é \"fechar uma fase de requisitos\". Por isso A e C ficam incompletas e D inclui a III.",
+   "nota": "Mesma questão da Q2 dos slides do squad (p. 35–36), que tinha a alternativa E (\"I, II e III\"); o gabarito B não muda. Se trocarem \"versões preliminares\" por \"análise de riscos a cada ciclo\", a afirmativa passa a descrever o Espiral.",
+   "tags": [
+    "ES: Modelos de processo e RUP"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q10",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: Modelos de Software</b></p><p>Engenheiros de software ao projetarem sistemas devem selecionar o modelo de fluxo de processo mais adequado ao perfil de risco, clareza de requisitos e restrições do domínio. Considere dois cenários distintos de desenvolvimento:</p><p><b>Cenário X:</b> Um sistema de infusão automatizada de medicamentos para UTIs hospitalares, com requisitos de hardware/software altamente rígidos e risco direto à vida humana.</p><p><b>Cenário Y:</b> Uma startup desenvolvendo um aplicativo móvel de rede social voltado para nichos de e-sports, operando em ambiente de extrema incerteza de mercado e necessidade de validação rápida (Product-Market Fit).</p><p>Considerando a aplicação dos modelos de processo (Cascata, Prototipação, Espiral, Incremental e RUP) aos cenários descritos, avalie as afirmativas a seguir:</p><p>I. O Modelo Espiral, proposto por Barry Boehm, é altamente indicado para o Cenário X porque insere a análise explícita e formal de riscos em cada ciclo de evolução do projeto antes da tomada de decisão de prosseguimento.</p><p>II. O fluxo Linear (Modelo em Cascata) seria a escolha ideal para o Cenário Y, pois garante que todo o escopo seja codificado e testado de uma só vez antes de qualquer contato com os usuários finais.</p><p>III. O uso de Prototipação Evolucionária no Cenário Y permite a rápida coleta de feedback de usuários reais, reduzindo o risco de construir um produto sem adesão de mercado.</p><p>IV. No modelo RUP (Rational Unified Process), a Fase de Elaboração desempenharia papel crucial no Cenário X, pois é nela que a arquitetura do sistema é estabilizada e os principais riscos técnicos são mitigados.</p><p>É correto o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e II, apenas."
+    },
+    {
+     "l": "B",
+     "t": "III e IV, apenas."
+    },
+    {
+     "l": "C",
+     "t": "I, III e IV, apenas."
+    },
+    {
+     "l": "D",
+     "t": "II, III e IV, apenas."
+    }
+   ],
+   "cor": "C",
+   "just": "I é verdadeira: o Espiral (Boehm) faz análise formal de riscos a cada volta, adequado a um sistema crítico à vida (X). II é falsa: Cascata, sem contato com o usuário até o fim, é o pior cenário para validar mercado sob extrema incerteza (Y). III é verdadeira: protótipos evolucionários colhem feedback real rapidamente e reduzem o risco de produto sem adesão. IV é verdadeira: na Elaboração do RUP a arquitetura é estabilizada e os principais riscos técnicos são mitigados. A e D incluem a II; B omite a I.",
+   "nota": null,
+   "tags": [
+    "ES: Modelos de processo e RUP"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q11",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: UML Diagrama de caso de uso</b></p><p>Considere um sistema de comércio eletrônico em que o caso de uso \"Finalizar Compra\" sempre exige, como parte obrigatória de seu fluxo, a execução do caso de uso \"Autenticar Usuário\", independentemente de qualquer condição. Já o caso de uso \"Aplicar Cupom de Desconto\" só é executado quando o cliente, de forma opcional, decide inserir um código promocional durante a finalização da compra.</p><p>I. O relacionamento entre \"Finalizar Compra\" e \"Autenticar Usuário\" deve ser modelado com o estereótipo &lt;&lt;include&gt;&gt;, com a seta apontando de \"Finalizar Compra\" para \"Autenticar Usuário\"; já o relacionamento entre \"Finalizar Compra\" e \"Aplicar Cupom de Desconto\" deve ser modelado com o estereótipo &lt;&lt;extend&gt;&gt;, com a seta apontando de \"Aplicar Cupom de Desconto\" para \"Finalizar Compra\".</p><p><b>PORQUE</b></p><p>II. O relacionamento &lt;&lt;include&gt;&gt; representa um comportamento obrigatório e reutilizável, comum a mais de um caso de uso base, enquanto o relacionamento &lt;&lt;extend&gt;&gt; representa um comportamento opcional e condicional, que só é inserido no fluxo do caso de uso base em determinadas circunstâncias.</p><p>A respeito dessas asserções, assinale a alternativa correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    }
+   ],
+   "cor": "A",
+   "just": "I é verdadeira: comportamento sempre executado = &lt;&lt;include&gt;&gt;, com a seta do caso base (Finalizar Compra) para o incluído (Autenticar Usuário); comportamento opcional = &lt;&lt;extend&gt;&gt;, com a seta do caso que estende (Aplicar Cupom) para o caso base (Finalizar Compra). II é verdadeira e é exatamente o critério usado em I: &lt;&lt;include&gt;&gt; = obrigatório/reutilizável; &lt;&lt;extend&gt;&gt; = opcional/condicional (ponto de extensão). Logo, II justifica I. B nega o nexo; C e D declaram falsa uma proposição correta.",
+   "nota": "Pegadinha clássica: a direção das setas é oposta nos dois estereótipos (include: base → incluído; extend: extensor → base). Uma versão alterada que inverta uma das setas torna a I falsa (resposta D). Detalhe: o &lt;&lt;include&gt;&gt; não exige que o comportamento seja comum a mais de um caso base; o reúso é a motivação típica, e o squad considera a II verdadeira.",
+   "tags": [
+    "ES: UML e casos de uso"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q12",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: UML</b></p><p><b>Cenário:</b> Uma instituição financeira está desenvolvendo a nova versão do seu sistema de Internet Banking. Durante o levantamento de requisitos, identificaram-se as seguintes regras para a operação de transferência bancária:</p><ul><li>Todo usuário deve estar autenticado no sistema para realizar transferências.</li><li>Se o valor da transferência for superior a R$ 5.000,00, o sistema obrigatoriamente deve solicitar a validação por biometria facial. Em transferências até esse valor, a biometria facial não é exigida.</li><li>Caso ocorra saldo insuficiente ou falha na rede de comunicação interbancária durante a transação, o sistema deve registrar um log detalhado de falha de segurança no subsistema de auditoria.</li></ul><p>Com base na modelagem em linguagem UML (Unified Modeling Language), considere as afirmativas a seguir:</p><p>I. O relacionamento entre o caso de uso \"Realizar Transferência\" e o caso de uso \"Autenticar Usuário\" deve ser modelado como uma relação de dependência do tipo &lt;&lt;include&gt;&gt;.</p><p>II. O caso de uso \"Validar Biometria Facial\" deve possuir uma relação de &lt;&lt;extend&gt;&gt; em direção ao caso de uso \"Realizar Transferência\", vinculada a uma condição de extensão (extension point) acionada quando o valor ultrapassar R$ 5.000,00.</p><p>III. O registro do log de auditoria em virtude de falha na transação deve ser representado por uma relação de &lt;&lt;include&gt;&gt; partindo de \"Realizar Transferência\" para \"Registrar Log de Auditoria\", visto que o log é sempre parte essencial da estrutura de execução do caso de uso base.</p><p>IV. Se o ator \"Cliente Premium\" herdar todas as funcionalidades de \"Cliente Comum\", ele poderá executar o caso de uso \"Realizar Transferência\" sem a necessidade de redefinir as associações previamente estabelecidas para \"Cliente Comum\".</p><p>É correto o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e III, apenas."
+    },
+    {
+     "l": "B",
+     "t": "II e IV, apenas."
+    },
+    {
+     "l": "C",
+     "t": "I, II e IV, apenas."
+    },
+    {
+     "l": "D",
+     "t": "II, III e IV, apenas."
+    }
+   ],
+   "cor": "C",
+   "just": "I é verdadeira: autenticação é pré-requisito incondicional, logo &lt;&lt;include&gt;&gt;. II é verdadeira: a biometria só ocorre acima de R$ 5.000,00 (condição), típico &lt;&lt;extend&gt;&gt;, com a seta do extensor para o caso base. III é falsa: o log só acontece em falhas, não em toda execução; seria &lt;&lt;extend&gt;&gt; com condição (ou tratamento de exceção), nunca &lt;&lt;include&gt;&gt;. IV é verdadeira: na generalização entre atores, o ator filho herda as associações do pai. A e D incluem a III; B omite a I.",
+   "nota": "A III tenta enganar com \"sempre parte essencial\": o enunciado diz que o log ocorre apenas \"caso ocorra saldo insuficiente ou falha\" — condição = extend.",
+   "tags": [
+    "ES: UML e casos de uso"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q13",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: UML</b></p><p>Uma equipe de arquitetura de software precisa documentar como uma aplicação web será fisicamente distribuída em produção: um servidor de aplicação executando a lógica de negócio, comunicando-se via protocolo TCP/IP com um servidor de banco de dados, e um navegador do usuário se comunicando com o servidor de aplicação via HTTPS.</p><p>I. O diagrama de implantação (deployment) é o diagrama UML apropriado para modelar essa situação, pois representa nós de hardware (dispositivos e ambientes de execução), a alocação de artefatos de software a esses nós e os protocolos de comunicação entre eles.</p><p><b>PORQUE</b></p><p>II. Diferentemente do diagrama de componentes, que é estático e independente do ambiente de execução, o diagrama de implantação é essencialmente dinâmico, descrevendo exclusivamente a ordem cronológica das mensagens trocadas entre processos em tempo de execução.</p><p>A respeito dessas asserções, assinale a alternativa correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    }
+   ],
+   "cor": "C",
+   "just": "I é verdadeira: o diagrama de implantação mostra a topologia física — nós (device, execution environment), artefatos implantados neles e os caminhos/protocolos de comunicação (HTTPS, TCP/IP). II é falsa: o diagrama de implantação é estrutural (estático) e não descreve ordem de mensagens; quem mostra a sequência cronológica de mensagens é o diagrama de sequência. Como II é falsa, A, B e D estão erradas.",
+   "nota": "Revise a divisão da UML: estruturais (classes, objetos, componentes, implantação, pacotes) × comportamentais/interação (casos de uso, atividades, estados, sequência, comunicação).",
+   "tags": [
+    "ES: UML — atividades, componentes e implantação"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q14",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Tema: Diagrama de Componentes</b></p><p>A respeito da notação e da finalidade do diagrama de componentes em UML, avalie as afirmações a seguir.</p><p>I. Uma interface fornecida (provided interface) é representada por um símbolo em forma de círculo (\"bolinha\"), preso por uma linha ao componente, indicando que esse componente disponibiliza a outros os serviços declarados naquela interface.</p><p>II. Uma interface requerida (required interface) é representada por um símbolo em forma de semicírculo aberto (\"encaixe\"), preso ao componente, indicando uma dependência: o componente necessita que outro componente lhe forneça aquela interface para funcionar corretamente.</p><p>III. Diferentemente do diagrama de classes, cujo foco é descrever a estrutura estática de tipos, atributos, operações e seus relacionamentos em nível de código-fonte, o diagrama de componentes descreve a organização de módulos executáveis ou implantáveis do sistema (como bibliotecas, pacotes e serviços) e suas dependências expressas em termos de interfaces fornecidas e requeridas.</p><p>IV. Quando o \"encaixe\" de um componente se conecta perfeitamente à \"bolinha\" de outro componente, formando o símbolo semelhante a um conector do tipo \"plugue e tomada\", isso representa que o requisito de um componente é satisfeito pela interface fornecida pelo outro.</p><p>É correto o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e II, apenas."
+    },
+    {
+     "l": "B",
+     "t": "I, II e III, apenas."
+    },
+    {
+     "l": "C",
+     "t": "II, III e IV, apenas."
+    },
+    {
+     "l": "D",
+     "t": "I, II, III e IV."
+    }
+   ],
+   "cor": "D",
+   "just": "As quatro estão corretas. I: interface fornecida = \"bolinha\" (lollipop) ligada ao componente. II: interface requerida = semicírculo (socket), indicando dependência. III: o diagrama de classes fica no nível lógico do código; o de componentes, no nível modular/arquitetural (bibliotecas, serviços) com contratos por interfaces. IV: bolinha encaixada no socket é o conector de montagem (assembly connector), indicando que a interface requerida é suprida pela fornecida. Qualquer alternativa que exclua uma delas (A, B, C) está errada.",
+   "nota": "Versão alterada provável: trocar os símbolos (bolinha = requerida, semicírculo = fornecida), o que torna I e II falsas.",
+   "tags": [
+    "ES: UML — atividades, componentes e implantação"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q15",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Analise o trecho de modelagem estrutural de um domínio de e-commerce e as asserções a respeito das relações conceituais entre as classes Pedido, ItemPedido, Produto e Cliente:</p><p><b>Asserção I:</b> A relação entre a classe Pedido e a classe ItemPedido deve ser representada por uma Composição (losango preenchido no lado de Pedido), de modo que a exclusão da instância de um Pedido no banco de dados resulte na destruição em cascata de suas respectivas instâncias de ItemPedido.</p><p><b>PORQUE</b></p><p><b>Asserção II:</b> Na orientação a objetos e na UML, a Composição expressa uma relação de parte-todo forte, na qual a existência da parte (ItemPedido) depende estritamente do ciclo de vida do todo (Pedido), impedindo que um ItemPedido existencialmente autônomo pertença a múltiplos pedidos.</p><p>A respeito dessas asserções, assinale a opção correta:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    }
+   ],
+   "cor": "A",
+   "just": "A composição é a forma forte de agregação (parte-todo): ItemPedido não existe fora de um Pedido específico, então excluir o Pedido destrói seus itens em cascata (I verdadeira). A II define exatamente essa dependência de ciclo de vida e a exclusividade da parte (um item não pertence a vários pedidos), que é o motivo de a I ser verdadeira, logo justifica a I. B erraria ao negar o nexo; C e D negam definições corretas de composição.",
+   "nota": "Mesmo domínio da Q5 do Simulado 1 (diagrama Pedido/ItemPedido/Produto), mas com outro comando (asserção-razão); por isso foi mantida. O caderno cita um \"trecho de modelagem\" que não aparece no PDF; a questão se resolve só com as asserções. Lembre: Produto × ItemPedido é associação simples (excluir Produto NÃO apaga pedidos).",
+   "tags": [
+    "OO: Diagrama de classes UML e multiplicidade"
+   ]
+  },
+  {
+   "ref": "Slides do squad (ENGENHARIA DE SOFTWARE.pdf, p. 103–104): Q4",
+   "origem": "slides",
+   "tipo": "mc",
+   "enun": "<p>Durante o levantamento de requisitos de um complexo sistema de e-commerce, o Analista de Requisitos modelou os seguintes cenários no Diagrama de Casos de Uso:</p><ul><li>Ao realizar a ação \"Finalizar Compra\", o sistema invariavelmente executa a ação \"Calcular Frete\".</li><li>Durante a ação \"Finalizar Compra\", o sistema pode, opcionalmente, executar a ação \"Aplicar Cupom de Desconto\", dependendo de uma condição específica inserida pelo usuário.</li><li>O sistema possui dois perfis: \"Cliente Ouro\" e \"Cliente Prata\", ambos derivam de um perfil genérico chamado \"Cliente\".</li></ul><p>Considerando as diretrizes da UML, analise as proposições sobre a modelagem desse cenário:</p><p>I. O relacionamento entre \"Finalizar Compra\" e \"Calcular Frete\" deve ser modelado com o estereótipo &lt;&lt;include&gt;&gt; (inclusão), pois indica um comportamento obrigatório e incorporado pelo caso de uso base.</p><p>II. O relacionamento entre \"Finalizar Compra\" e \"Aplicar Cupom de Desconto\" deve ser modelado com o estereótipo &lt;&lt;extend&gt;&gt; (extensão), pois o caso de uso estendido é acionado apenas se os pontos de extensão (extension points) e suas condições forem satisfeitos.</p><p>III. Os perfis \"Cliente Ouro\" e \"Cliente Prata\" devem estar ligados ao ator genérico \"Cliente\" através de um relacionamento de associação bidirecional, indicando troca de dados entre os atores.</p><p>IV. Atores em diagramas de casos de uso representam estritamente seres humanos; caso o sistema precise validar o pagamento com um \"Gateway do Banco\" externo, esse gateway deve ser modelado como uma classe interna e não como um ator.</p><p>É correto o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e II, apenas."
+    },
+    {
+     "l": "B",
+     "t": "II e III, apenas."
+    },
+    {
+     "l": "C",
+     "t": "I, II e IV, apenas."
+    },
+    {
+     "l": "D",
+     "t": "I, III e IV, apenas."
+    },
+    {
+     "l": "E",
+     "t": "I, II, III e IV."
+    }
+   ],
+   "cor": "A",
+   "just": "I é verdadeira: \"invariavelmente executa\" = &lt;&lt;include&gt;&gt; (obrigatório). II é verdadeira: \"opcionalmente, sob condição\" = &lt;&lt;extend&gt;&gt; com ponto de extensão. III é falsa: perfis que derivam de um perfil genérico usam generalização (seta com triângulo vazado), não associação entre atores. IV é falsa: ator é qualquer entidade externa que interage com o sistema — pessoas, sistemas externos, hardware, APIs —, portanto o Gateway do Banco é um ator. B, C, D e E incluem a III ou a IV.",
+   "nota": "⚠️ A II chama de \"estendido\" o caso que estende (Aplicar Cupom); na UML, o estendido é o caso base. Não muda o gabarito. Questão diferente das Q11 e Q12 do caderno (cenário e comando distintos), por isso foi mantida como extra. Os slides trazem 5 alternativas (A–E).",
+   "tags": [
+    "ES: UML e casos de uso"
+   ]
+  },
+  {
+   "ref": "Exemplo do professor (Estrutura de Questões sob o padrão do ENADE.pdf, p. 10)",
+   "origem": "professor",
+   "tipo": "mc",
+   "enun": "<p><b>SITUAÇÃO-PROBLEMA</b></p><p>Uma equipe de desenvolvimento está projetando o módulo de notificações de um sistema de entregas. O requisito define que sempre que o status de um pedido for alterado (ex: \"Pedido Enviado\", \"Saiu para Entrega\"), múltiplos módulos independentes (o aplicativo do cliente, o painel do administrador e o sistema de SMS) devem ser notificados automaticamente e atualizar suas respectivas interfaces de forma desacoplada.</p><p><b>COMANDO</b></p><p>Para atender a esse requisito de arquitetura garantindo o baixo acoplamento, qual padrão de projeto do catálogo GoF (Gang of Four) deve ser aplicado?</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Observer."
+    },
+    {
+     "l": "B",
+     "t": "Publish-Subscribe."
+    },
+    {
+     "l": "C",
+     "t": "Singleton."
+    },
+    {
+     "l": "D",
+     "t": "Mediator."
+    }
+   ],
+   "cor": "A",
+   "just": "O Observer define uma dependência um-para-muitos: quando o Subject (o pedido) muda de estado, todos os Observers (app do cliente, painel, SMS) são notificados e atualizados automaticamente, e o Subject só conhece a interface dos observadores — baixo acoplamento. B resolve problema parecido, mas é um padrão de arquitetura distribuída (com broker) e não um dos 23 padrões do catálogo GoF. C (Singleton) é criacional: garante uma única instância, nada tem a ver com notificação. D (Mediator) centraliza interações bidirecionais entre colegas; aqui a notificação é unidirecional, de um emissor para muitos receptores.",
+   "nota": "⚠️ No livro do GoF, \"Publish-Subscribe\" aparece como nome alternativo (Also Known As) do Observer; vale A por ser o nome canônico. Se uma versão trouxer Publish-Subscribe sem Observer, ele vira a melhor resposta.",
+   "tags": [
+    "ES: Arquitetura e padrões GoF"
+   ]
+  }
+ ],
+ "dissertativas": [
+  {
+   "fonte": "Engenharia de Software · Caderno do squad: Questão 16 (discursiva)",
+   "caso": "<p>Uma biblioteca universitária decidiu digitalizar o controle de seu acervo e do processo de empréstimos, e o modelo será elaborado em UML (Unified Modeling Language). O acervo é composto por três tipos de mídia: livro físico, e-book e audiolivro. Todos os itens do acervo, independentemente do tipo, possuem código de identificação, título, autor e a quantidade total de vezes que já foram emprestados. Cada tipo de mídia, no entanto, define de forma distinta o prazo de devolução do item quando emprestado:</p><ul><li>livros físicos têm prazo fixo de 14 dias;</li><li>e-books têm prazo de 7 dias, pois podem estar reservados por outro usuário simultaneamente na fila de espera;</li><li>Os audiolivros têm prazo de 21 dias, acrescidos de 2 dias para cada dispositivo em que o usuário sincronizar o conteúdo.</li></ul><p>Um usuário pode realizar diversos empréstimos ao longo do tempo, mas cada empréstimo pertence a exatamente um usuário. Cada empréstimo está associado a exatamente um item do acervo, e cada item do acervo pode ser objeto de vários empréstimos ao longo de sua vida útil (nunca simultâneos). No momento em que um empréstimo é registrado, ele deve calcular e armazenar a data prevista de devolução, delegando esse cálculo ao próprio item emprestado.</p>",
+   "enun": "<p>Considerando essa situação, e sabendo que o modelo utilizará herança e polimorfismo, elabore um diagrama de classes UML que contemple:</p><ul><li>as classes que representam as entidades mencionadas (Usuário, Emprestimo, ItemAcervo e seus três subtipos);</li><li>as associações entre as classes, com a multiplicidade de cada papel;</li><li>a indicação de eventual(is) classe(s) abstrata(s) com a restrição {abstract};</li><li>os atributos relevantes de cada classe (não é necessário tipá-los);</li><li>O método polimórfico responsável pelo cálculo do prazo de devolução, declarado na superclasse e sobrescrito em cada subclasse, acompanhado, ao lado de cada sobrescrita, da regra de cálculo correspondente descrita no enunciado.</li></ul>",
+   "topicos": [
+    "Classes Usuario, Emprestimo, ItemAcervo, LivroFisico, Ebook e AudioLivro.",
+    "ItemAcervo marcada com {abstract} (não há item genérico sem ser um dos três tipos); LivroFisico, Ebook e AudioLivro ligados a ela por generalização (triângulo vazado na superclasse).",
+    "Associação Usuario 1 —— 0..* Emprestimo (cada empréstimo pertence a exatamente um usuário; um usuário tem zero ou muitos empréstimos).",
+    "Associação Emprestimo 0..* —— 1 ItemAcervo (cada empréstimo refere-se a exatamente um item; um item pode ter vários empréstimos ao longo do tempo, nunca simultâneos).",
+    "Atributos: ItemAcervo (codigo, titulo, autor, quantidadeEmprestimos); Emprestimo (dataRetirada, dataPrevistaDevolucao); AudioLivro (quantidadeDispositivosSincronizados); Ebook pode ter quantidadeReservas (opcional); Usuario (ex.: id/matricula, nome).",
+    "Método abstrato calcularPrazoDevolucao() em ItemAcervo, sobrescrito: LivroFisico → dataRetirada + 14; Ebook → dataRetirada + 7; AudioLivro → dataRetirada + 21 + 2 × quantidadeDispositivosSincronizados.",
+    "Emprestimo calcula/armazena a data prevista delegando ao ItemAcervo associado (vinculação dinâmica / polimorfismo em tempo de execução)."
+   ],
+   "exemplo": "<p><b>Classes e herança.</b> ItemAcervo {abstract} com os atributos codigo, titulo, autor e quantidadeEmprestimos e a operação abstrata (em itálico) calcularPrazoDevolucao(dataRetirada). Três subclasses ligadas por generalização (seta de triângulo vazado apontando para ItemAcervo): LivroFisico, Ebook (opcionalmente quantidadeReservas) e AudioLivro (quantidadeDispositivosSincronizados).</p><p><b>Sobrescritas com a regra ao lado:</b> LivroFisico.calcularPrazoDevolucao() → dataRetirada + 14 dias; Ebook.calcularPrazoDevolucao() → dataRetirada + 7 dias; AudioLivro.calcularPrazoDevolucao() → dataRetirada + 21 + 2 × quantidadeDispositivosSincronizados dias.</p><p><b>Associações.</b> Usuario (id, nome) 1 ——— 0..* Emprestimo: um usuário realiza zero ou muitos empréstimos; cada empréstimo pertence a exatamente um usuário. Emprestimo 0..* ——— 1 ItemAcervo: cada empréstimo refere-se a exatamente um item; cada item pode aparecer em vários empréstimos ao longo da vida útil (em momentos distintos — a regra de \"nunca simultâneos\" não cabe na multiplicidade e fica como restrição/nota no diagrama).</p><p><b>Emprestimo</b> (dataRetirada, dataPrevistaDevolucao) tem a operação registrar(), cuja implementação faz dataPrevistaDevolucao = item.calcularPrazoDevolucao(dataRetirada) e incrementa item.quantidadeEmprestimos.</p><p><b>Por que funciona:</b> Emprestimo conhece apenas o tipo abstrato ItemAcervo; em tempo de execução a chamada é despachada para a versão da subclasse real (vinculação dinâmica). Um novo tipo de mídia exige só uma nova subclasse, sem alterar Emprestimo (princípio aberto/fechado).</p><pre><code>Usuario 1 ──── 0..* Emprestimo 0..* ──── 1 ItemAcervo {abstract}\n                                              △\n                       ┌──────────────────────┼──────────────────────┐\n                 LivroFisico                Ebook                AudioLivro\n           prazo = retirada+14      prazo = retirada+7     prazo = retirada+21+2×disp</code></pre>"
+  },
+  {
+   "fonte": "Engenharia de Software · Slides do squad (ENGENHARIA DE SOFTWARE.pdf, p. 61): exercício \"Exemplo: Caixa eletrônico\"",
+   "caso": null,
+   "enun": "<p>Nesta modelagem em caso de uso um Cliente de Banco faz o acesso a uma caixa eletrônico e pode fazer as seguintes operações financeiras: checar saldo, depositar, sacar e transferir. Além do Cliente e Banco, um outro ator é o Técnico que pode fazer manutenção ou reparo neste sistema. Elabore o caso de uso.</p>",
+   "topicos": [
+    "Limite do sistema (retângulo \"Sistema de Caixa Eletrônico\") com os casos de uso dentro e os atores fora.",
+    "Casos de uso: Checar Saldo, Depositar, Sacar, Transferir, Manutenção e Reparo.",
+    "Ator Cliente associado às quatro operações financeiras.",
+    "Ator Técnico associado a Manutenção e Reparo.",
+    "Banco modelado como ator (sistema externo), associado aos casos de uso — ator não precisa ser humano."
+   ],
+   "exemplo": "<p>Desenha-se um retângulo com o título \"Sistema de Caixa Eletrônico\" contendo seis elipses: Checar Saldo, Depositar, Sacar, Transferir, Manutenção e Reparo. Fora do retângulo ficam três atores (bonecos): Cliente e Técnico à esquerda e Banco à direita.</p><p>Associações (linhas simples): Cliente — Checar Saldo, Depositar, Sacar e Transferir; Técnico — Manutenção e Reparo; Banco — ligado às quatro operações financeiras e também a Manutenção e Reparo (no slide do professor, o Banco aparece ligado aos seis casos de uso).</p><p>O Banco é ator porque é um sistema externo que participa das operações; isso mostra que ator não é necessariamente uma pessoa.</p><p>Refinamento opcional (não consta no slide): um caso \"Autenticar Cliente\" ligado por &lt;&lt;include&gt;&gt; às operações financeiras (obrigatório) e \"Imprimir Comprovante\" ligado por &lt;&lt;extend&gt;&gt; a Sacar (opcional).</p>"
+  }
+ ],
+ "observacoes": "A numeração do banco usado no Simulado 1 (nº 4 = diagrama de classes, nº 10 = CI/CD) NÃO corresponde ao caderno novo: no caderno, Q4 = SRP e Q10 = modelos de processo; conferido pelo conteúdo. O caderno não tem questão de CI/CD. A Q15 do caderno (asserção-razão sobre composição Pedido–ItemPedido, sem figura, mas citando um \"trecho de modelagem\" que não aparece) foi tratada como variante da Sim Q5 e EXCLUÍDA; se preferirem considerá-la questão nova, o gabarito do squad é A (texto em /tmp/ex/new, ENGENHARIA_DE_SOFTWARE_-_QUESTÕES, p. 17). Slides Q1, Q2 e Q3 (reais-14/15/16) são as mesmas questões das Q7, Q9 e Q2 do caderno (os slides tinham 5ª alternativa E; letras iguais) — mantida só a versão do caderno. Slides Q4 (reais-17) e o exemplo do professor (reais-18, Observer) entraram como extras. Gabaritos conferidos: todos concordam; ressalvas em nota na Q2 (nexo causal discutível) e na Q11 (include \"comum a mais de um caso base\"). Na Q6 o PDF traz as metas em LaTeX cru; convertidas. Nenhuma figura indispensável (sem recortes). A apostila de ES (106 p.) não tem questões. Dissertativas: Q16 do caderno (gabarito do squad usado para os tópicos) e o exercício do caixa eletrônico dos slides (p. 61, resposta = diagrama do próprio slide). | Sim Q9 (CI/CD), Q14 (Kafka) e Q19 (Scrum) vieram de bancos que não estão no repositório; nenhuma questão do caderno foi excluída."
+}

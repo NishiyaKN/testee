@@ -92,12 +92,12 @@ def main():
         sid = f'ce-{slug}'
         qs = [norm_q(q, sid, i + 1) for i, q in enumerate(d['questoes'])]
         exc = d.get('excluidas_simulado1') or []
-        exc_txt = ', '.join(re.sub(r'\s*\([^)]*reais-[^)]*\)', '', str(e.get('banco'))) + f" (Sim. {e.get('simulado')})" for e in exc)
+        exc_txt = ', '.join(re.sub(r',\s*banco anterior[^)]*', '', re.sub(r'\s*\((?!=)[^)]*\)', '', str(e.get('banco')))) + f" (Sim. {e.get('simulado')})" for e in exc)
         crit = nivel in ('Alto', 'Crítico')
         sets.append({
             'id': sid, 'grupo': 'ce', 'nome': nome, 'item': 'questão',
             'acerto': f"Simulado 1: <b class=\"{'crit' if crit else ''}\">{acerto}</b> de acerto (dificuldade {nivel.lower()})",
-            'desc': f"{len(qs)} questões dos materiais do squad." + (f" Fora por terem caído no Simulado 1: {exc_txt}." if exc else ''),
+            'desc': f"{len(qs)} questões dos materiais do squad." + (f" Fora por terem caído no Simulado 1: {exc_txt}." if exc else ' Nenhuma questão do caderno caiu no Simulado 1.'),
         })
         questions += qs
         for k, dd in enumerate(d.get('dissertativas') or []):
