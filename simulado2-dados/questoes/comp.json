@@ -1,0 +1,135 @@
+{
+ "topico": "11 · Compiladores",
+ "slug": "comp",
+ "excluidas_simulado1": [
+  {
+   "banco": "Caderno Q5",
+   "simulado": "Q12",
+   "motivo": "mesma gramática expr op expr, expressão a + b * c - d, interpretações I–III e declarações %left do Bison; mesmas alternativas, gabarito C"
+  }
+ ],
+ "questoes": [
+  {
+   "ref": "Caderno do squad (Questoes_ENADE_Compiladores (3).docx): Q1",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma equipe de desenvolvimento está implementando o analisador léxico de uma nova linguagem de programação. A especificação da linguagem determina que os identificadores sejam reconhecidos pela seguinte regra:</p><pre><code>IDENTIFICADOR → letra (letra | dígito)*</code></pre><p>Durante os testes, o analisador reconheceu corretamente nomes como valor, resultado e contador1. Entretanto, também classificou os lexemas if, while e return como identificadores, embora eles estejam definidos como palavras reservadas da linguagem.</p><p>Para facilitar a manutenção do compilador, a equipe mantém as palavras reservadas em uma tabela própria, permitindo que novas palavras sejam adicionadas sem modificar a regra geral de formação dos identificadores.</p><p>A equipe precisa identificar a causa da classificação incorreta e definir uma estratégia de reconhecimento que diferencie os identificadores comuns das palavras reservadas.</p><p><b>DADOS DE SUPORTE</b></p><p><b>Tabela 1 – Palavras reservadas definidas pela linguagem</b></p><table><thead><tr><th>Lexema</th><th>Token definido</th></tr></thead><tbody><tr><td>if</td><td>KW_IF</td></tr><tr><td>while</td><td>KW_WHILE</td></tr><tr><td>return</td><td>KW_RETURN</td></tr></tbody></table><p>Regra geral de reconhecimento de identificadores:</p><pre><code>IDENTIFICADOR → letra (letra | dígito)*</code></pre><p>Durante um teste, foi processado o trecho:</p><pre><code>if (contador1 &gt;= 10)\n    return resultado;</code></pre><p><b>Tabela 2 – Saída produzida pelo analisador léxico</b></p><table><thead><tr><th>Lexema</th><th>Token produzido</th></tr></thead><tbody><tr><td>if</td><td>IDENTIFICADOR</td></tr><tr><td>(</td><td>ABRE_PARENTESE</td></tr><tr><td>contador1</td><td>IDENTIFICADOR</td></tr><tr><td>&gt;=</td><td>OPERADOR_RELACIONAL</td></tr><tr><td>10</td><td>NUMERO</td></tr><tr><td>)</td><td>FECHA_PARENTESE</td></tr><tr><td>return</td><td>IDENTIFICADOR</td></tr><tr><td>resultado</td><td>IDENTIFICADOR</td></tr><tr><td>;</td><td>PONTO_E_VIRGULA</td></tr></tbody></table><p><i>Fonte: elaboração própria, adaptada conceitualmente de LLVM Project, “My First Language Frontend with LLVM Tutorial”, capítulo 5 – Lexer Extensions for If/Then/Else. llvm.org/docs/tutorial/MyFirstLanguageFrontend/LangImpl05.html</i></p><p><b>Considerando a regra de formação de identificadores, a tabela de palavras reservadas e a saída produzida pelo analisador léxico, assinale a alternativa que identifica corretamente a causa da classificação inadequada de if e return e apresenta uma estratégia adequada para corrigir o reconhecimento desses lexemas.</b></p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "O analisador deve manter if e return como identificadores durante a etapa léxica e permitir que o analisador sintático determine posteriormente se esses lexemas exercem funções reservadas conforme sua posição no programa."
+    },
+    {
+     "l": "B",
+     "t": "O padrão de identificadores deve ser reformulado para impedir que qualquer sequência correspondente a uma palavra reservada seja reconhecida inicialmente, eliminando a necessidade de consultar a tabela mantida pela linguagem durante a análise léxica."
+    },
+    {
+     "l": "C",
+     "t": "O analisador deve reconhecer inicialmente a sequência compatível com identificadores e, em seguida, consultar a tabela de palavras reservadas, atribuindo prioridade ao token específico sempre que o lexema estiver registrado nessa tabela."
+    },
+    {
+     "l": "D",
+     "t": "O analisador deve conservar a classificação de identificador e registrar na tabela de símbolos que determinados nomes possuem uso especial, permitindo que a análise semântica determine posteriormente sua função na linguagem."
+    }
+   ],
+   "cor": "C",
+   "just": "C. if e return são formados só por letras e, por isso, casam com a regra geral letra (letra | dígito)*; a causa do erro é o analisador não consultar a tabela de palavras reservadas. A estratégia correta é reconhecer o lexema pela regra de identificador e, em seguida, consultar a tabela: se houver correspondência, emite-se o token específico (KW_IF, KW_RETURN) em vez de IDENTIFICADOR — e novas palavras entram na tabela sem mexer na regra. A transfere ao parser uma decisão que é lexical: ele deve receber tokens já distintos. B embute exceções na regra de identificadores e abandona a tabela, contrariando o requisito de manutenção. D mantém a classificação lexical errada e empurra a decisão para a tabela de símbolos e a análise semântica.",
+   "nota": "Variação provável: em Flex/Lex, o mesmo efeito vem de declarar as regras das palavras reservadas antes da regra de ID. Também está nos slides do squad (Compiladores_Roteiro_Oficial_23_Slides) com o mesmo gabarito.",
+   "tags": [
+    "Comp: Análise léxica"
+   ]
+  },
+  {
+   "ref": "Caderno do squad (Questoes_ENADE_Compiladores (3).docx): Q2",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma equipe de desenvolvimento está implementando o analisador sintático (parser) de uma nova linguagem destinada à automação de processos. A especificação da linguagem permite chamadas de funções com um ou mais argumentos, separados por vírgulas.</p><p>Durante os testes, o analisador léxico reconheceu corretamente todos os elementos do código. Entretanto, o parser rejeitou uma chamada de função ao encontrar a primeira vírgula entre os argumentos. A equipe precisa verificar se a falha está na sequência de tokens produzida ou nas regras da gramática e definir uma correção que não limite a quantidade de argumentos permitidos.</p><p><b>DADOS DE SUPORTE</b></p><p><b>Trecho de código analisado</b></p><pre><code>registrarVenda(cliente, total, 10);</code></pre><p><b>Gramática utilizada pelo parser</b></p><pre><code>&lt;chamada&gt;   → IDENTIFICADOR '(' &lt;argumento&gt; ')' ';'\n&lt;argumento&gt; → IDENTIFICADOR | NUMERO</code></pre><p><b>Sequência de tokens produzida pelo analisador léxico</b></p><table><thead><tr><th>Lexema</th><th>Token produzido</th></tr></thead><tbody><tr><td>registrarVenda</td><td>IDENTIFICADOR</td></tr><tr><td>(</td><td>ABRE_PARENTESE</td></tr><tr><td>cliente</td><td>IDENTIFICADOR</td></tr><tr><td>,</td><td>VIRGULA</td></tr><tr><td>total</td><td>IDENTIFICADOR</td></tr><tr><td>,</td><td>VIRGULA</td></tr><tr><td>10</td><td>NUMERO</td></tr><tr><td>)</td><td>FECHA_PARENTESE</td></tr><tr><td>;</td><td>PONTO_E_VIRGULA</td></tr></tbody></table><p><i>Fonte: elaboração própria, adaptada conceitualmente de GNU Project, “Bison 3.8.1 Manual”, seções 3.3.1 – Syntax of Grammar Rules e 3.3.3 – Recursive Rules. https://www.gnu.org/software/bison/manual/html_node/Recursion.html</i></p><p><b>Considerando o trecho de código, a sequência de tokens e as produções da gramática, analise a causa do erro sintático e assinale a alternativa que identifica corretamente a limitação da gramática e apresenta uma alteração capaz de reconhecer chamadas com um ou mais argumentos separados por vírgulas.</b></p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A sequência de tokens está inadequada porque as vírgulas deveriam ser descartadas pelo analisador léxico. Mantendo a produção de chamada inalterada, o parser poderia processar os argumentos consecutivos como uma única construção sintática."
+    },
+    {
+     "l": "B",
+     "t": "O erro ocorre porque a produção de chamada admite apenas um argumento. Deve-se introduzir uma lista recursiva, como <code>&lt;lista&gt; → &lt;argumento&gt; | &lt;lista&gt; ',' &lt;argumento&gt;</code>, e usar <code>&lt;lista&gt;</code> no interior dos parênteses da produção <code>&lt;chamada&gt;</code>."
+    },
+    {
+     "l": "C",
+     "t": "O erro ocorre porque a produção atual não prevê três argumentos. Deve-se substituir <code>&lt;chamada&gt;</code> por uma produção contendo exatamente três <code>&lt;argumento&gt;</code> separados por vírgulas, permitindo que o trecho apresentado seja reconhecido pelo parser."
+    },
+    {
+     "l": "D",
+     "t": "A gramática da chamada pode permanecer inalterada, desde que o parser aceite os tokens existentes entre parênteses e transfira à análise semântica a tarefa de separar os argumentos e verificar sua quantidade conforme a função utilizada."
+    }
+   ],
+   "cor": "B",
+   "just": "B. A sequência de tokens está correta; o problema é que a produção &lt;chamada&gt; contém um único &lt;argumento&gt;, então o parser falha ao encontrar a primeira VIRGULA. Uma lista recursiva (&lt;lista&gt; → &lt;argumento&gt; | &lt;lista&gt; ',' &lt;argumento&gt;: caso-base com um argumento e passo recursivo que acrescenta “, argumento”) usada entre os parênteses aceita qualquer quantidade ≥ 1. A culpa o léxico: a vírgula é um separador sintático necessário, e mesmo descartada a produção continuaria aceitando um só argumento. C resolve apenas o caso de exatamente três argumentos, sem generalizar. D confunde as fases: a análise semântica pode conferir quantidade/tipos com a assinatura, mas só depois de o parser reconhecer a estrutura, o que a gramática atual impede.",
+   "nota": "Em parser descendente (LL), a forma equivalente usa recursão à direita: &lt;lista&gt; → &lt;argumento&gt; | &lt;argumento&gt; ',' &lt;lista&gt;. Também está nos slides do squad com o mesmo gabarito.",
+   "tags": [
+    "Comp: Análise sintática e GLC"
+   ]
+  },
+  {
+   "ref": "Caderno do squad (Questoes_ENADE_Compiladores (3).docx): Q3",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma equipe de desenvolvimento está testando o compilador de uma linguagem estaticamente tipada utilizada em um sistema de automação comercial. O trecho abaixo foi aceito pelas etapas de análise léxica e sintática, mas a análise semântica identificou uma inconsistência na expressão atribuída à variável quantidade.</p><p>A linguagem não realiza conversão implícita entre texto e inteiro em operações aritméticas. Quando um valor textual representa um número e precisa participar de uma operação numérica, a especificação exige o uso explícito da função de conversão paraInteiro(texto). A equipe precisa diagnosticar a inconsistência e indicar uma correção compatível com essas regras.</p><p><b>DADOS DE SUPORTE</b></p><p><b>Trecho de código analisado</b></p><pre><code>inteiro quantidade = 10;\ntexto produto = \"25\";\nquantidade = produto - 5;</code></pre><p><b>Tabela de símbolos</b></p><table><thead><tr><th>Identificador</th><th>Tipo declarado</th></tr></thead><tbody><tr><td>quantidade</td><td>inteiro</td></tr><tr><td>produto</td><td>texto</td></tr></tbody></table><p><b>Regras semânticas relevantes da linguagem</b></p><p>1. O operador de subtração (-) exige operandos do tipo inteiro.<br>2. Uma variável inteira só pode receber uma expressão cujo resultado seja inteiro.<br>3. A conversão de texto numérico para inteiro deve ser explícita por meio de paraInteiro(texto).</p><p><i>Fonte: elaboração própria, adaptada conceitualmente de Oracle, Java Language Specification, Java SE 26, seções 5.2 (Assignment Contexts) e 15.18 (Additive Operators). https://docs.oracle.com/javase/specs/jls/se26/html/</i></p><p><b>Considerando o trecho de código, a tabela de símbolos e as regras semânticas apresentadas, analise a inconsistência e assinale a alternativa que identifica corretamente o erro e propõe uma correção que torne o trecho semanticamente válido.</b></p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A inconsistência é lexical, pois o literal \"25\" contém apenas dígitos e deveria ser classificado como número mesmo entre aspas; reconhecendo-o como NUMERO, a operação com produto poderia ser mantida sem conversão adicional."
+    },
+    {
+     "l": "B",
+     "t": "A inconsistência é sintática, pois a gramática não deveria permitir a subtração entre um identificador textual e um número; acrescentando uma produção específica para texto - inteiro, a expressão passaria a ser semanticamente válida."
+    },
+    {
+     "l": "C",
+     "t": "A expressão pode ser mantida, pois o gerador de código deve detectar que o conteúdo de produto é numérico e realizar automaticamente a conversão para inteiro antes da subtração, preservando o tipo da variável de destino."
+    },
+    {
+     "l": "D",
+     "t": "A análise semântica deve rejeitar produto - 5 porque produto é texto e a subtração exige inteiros; para atender às regras, a expressão pode ser corrigida para quantidade = paraInteiro(produto) - 5, tornando os tipos compatíveis."
+    }
+   ],
+   "cor": "D",
+   "just": "D. Pela tabela de símbolos, produto é do tipo texto, e a regra 1 exige operandos inteiros na subtração: produto - 5 é um erro de tipos, detectado na análise semântica (léxico e sintaxe já aceitaram o trecho). Com a conversão explícita exigida pela regra 3, paraInteiro(produto) - 5 é inteiro − inteiro, e o resultado inteiro pode ser atribuído a quantidade (regra 2). A está errada: \"25\" entre aspas é corretamente um literal de texto, e reclassificá-lo no léxico contrariaria a declaração. B confunde validade sintática com semântica: uma produção nova não resolve a incompatibilidade de tipos. C propõe coerção implícita no gerador de código, proibida pela especificação.",
+   "nota": "Também está nos slides do squad com o mesmo gabarito.",
+   "tags": [
+    "Comp: Análise semântica e tabela de símbolos"
+   ]
+  },
+  {
+   "ref": "Caderno do squad (Questoes_ENADE_Compiladores (3).docx): Q4",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma equipe está implementando o back-end de um compilador para um processador simples que dispõe de apenas dois registradores físicos de uso geral, R1 e R2. A representação intermediária do programa utiliza temporários virtuais sem essa limitação, mas a etapa de geração de código precisa produzir uma sequência válida para a arquitetura de destino.</p><p>Durante a tradução, os dois resultados intermediários t1 e t2 precisam ser preservados até a multiplicação final. Como não há registradores físicos suficientes para manter simultaneamente todos os valores necessários, a arquitetura permite armazenar temporariamente um valor na posição de memória TEMP.</p><p><b>DADOS DE SUPORTE</b></p><p><b>Representação intermediária</b></p><pre><code>t1 = a + b\nt2 = c + d\nt3 = t1 * t2\nresultado = t3</code></pre><p><b>Instruções disponíveis na arquitetura</b></p><table><thead><tr><th>Instrução</th><th>Efeito</th></tr></thead><tbody><tr><td>LOAD Rn, X</td><td>Rn &lt;- valor de X</td></tr><tr><td>STORE X, Rn</td><td>X &lt;- valor de Rn</td></tr><tr><td>ADD Rd, Rs</td><td>Rd &lt;- Rd + Rs</td></tr><tr><td>MUL Rd, Rs</td><td>Rd &lt;- Rd * Rs</td></tr></tbody></table><p><b>Restrições:</b> somente R1 e R2 existem como registradores físicos; qualquer uso de R3 é inválido. A posição TEMP pode ser utilizada para spill temporário em memória.</p><p><i>Fonte: elaboração própria, adaptada conceitualmente de LLVM Project, “The LLVM Target-Independent Code Generator”, seções Instruction Selection e Register Allocation. https://llvm.org/docs/CodeGenerator.html</i></p><p><b>Considerando a representação intermediária, o conjunto de instruções e as restrições da arquitetura, avalie as estratégias abaixo e assinale a sequência que preserva corretamente a semântica do programa e utiliza apenas os recursos disponíveis no processador.</b></p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "LOAD R1,a; LOAD R2,b; ADD R1,R2; LOAD R3,c; LOAD R2,d; ADD R3,R2; MUL R1,R3; STORE resultado,R1. A sequência preserva t1 e t2 em registradores e evita acesso temporário à memória."
+    },
+    {
+     "l": "B",
+     "t": "LOAD R1,a; LOAD R2,b; ADD R1,R2; STORE TEMP,R1; LOAD R1,c; LOAD R2,d; ADD R1,R2; LOAD R2,TEMP; MUL R2,R1; STORE resultado,R2. A sequência usa TEMP para preservar t1 e respeita os dois registradores disponíveis."
+    },
+    {
+     "l": "C",
+     "t": "LOAD R1,a; LOAD R2,b; ADD R1,R2; STORE TEMP,R1; LOAD R2,TEMP; LOAD R1,c; LOAD R2,d; ADD R1,R2; MUL R2,R1; STORE resultado,R2. A sequência realiza spill, mas reutiliza R2 antes da multiplicação final."
+    },
+    {
+     "l": "D",
+     "t": "LOAD R1,a; LOAD R2,b; ADD R1,R2; STORE TEMP,R1; LOAD R1,c; LOAD R2,d; ADD R1,R2; LOAD R2,TEMP; ADD R2,R1; STORE resultado,R2. A sequência respeita os registradores e combina os dois resultados intermediários ao final."
+    }
+   ],
+   "cor": "B",
+   "just": "B. Simulação: R1 = a + b (t1); STORE TEMP,R1 faz o spill de t1; R1 = c + d (t2) usando R1 e R2; LOAD R2,TEMP recupera t1; MUL R2,R1 dá (a + b) × (c + d), armazenado em resultado — só com R1, R2 e TEMP. A calcula a expressão certa, mas usa R3, que não existe na arquitetura. C recarrega t1 em R2 cedo demais: LOAD R2,d sobrescreve esse valor, e a multiplicação final dá d × (c + d). D faz o spill corretamente, mas combina os resultados com ADD, calculando t1 + t2 em vez de t1 × t2.",
+   "nota": "Versão alterada provável: outra expressão, outra quantidade de registradores ou SUB no lugar de MUL. Confira registradores usados, valor vivo sobrescrito e operação final. Também está nos slides do squad com o mesmo gabarito.",
+   "tags": [
+    "Comp: Geração de código e registradores"
+   ]
+  }
+ ],
+ "dissertativas": [],
+ "observacoes": "Caderno oficial = Questoes_ENADE_Compiladores (3).docx (5 questões, com ficha técnica e gabarito comentado no próprio docx; sem figuras). Os slides (Compiladores_Roteiro_Oficial_23_Slides.pdf.pdf) e o Material_Explicativo_Compiladores.pdf trazem a resolução das mesmas 5 questões, com as mesmas letras; não há questões extras nem discursivas. Gabaritos conferidos (Q4 simulada registrador a registrador): nenhuma divergência. As linhas “Fonte: elaboração própria…” do docx foram mantidas no enunciado."
+}

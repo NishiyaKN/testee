@@ -1,0 +1,172 @@
+{
+ "topico": "04 · Orientação a Objetos",
+ "slug": "oo",
+ "excluidas_simulado1": [
+  {
+   "banco": "Slides Q4 (Strategy/OCP, CalculadoraFrete)",
+   "simulado": "Q10",
+   "motivo": "mesma situação (CalculadoraFrete com if/else por modalidade) e mesmo comando; gabarito do Simulado D."
+  },
+  {
+   "banco": "Slides Q5 (DispositivoBase abstrata + interfaces Controlavel/Auditavel)",
+   "simulado": "Q1",
+   "motivo": "mesma situação IoT e mesmo comando; gabarito do Simulado C."
+  },
+  {
+   "banco": "Slides Q6 (encapsulamento, Conta/ServicoTransferencia)",
+   "simulado": "Q23",
+   "motivo": "mesmo código e mesmo comando (Tell, Don't Ask); gabarito do Simulado B."
+  }
+ ],
+ "questoes": [
+  {
+   "ref": "Slides do squad (Apresentação Orientacao a Objetos.pdf): Q1",
+   "origem": "slides",
+   "tipo": "mc",
+   "enun": "<p><b>CONTEXTUALIZAÇÃO</b></p><p>A implementação de regras de negócio em sistemas orientados a objetos frequentemente se vale do padrão comportamental Template Method, que define o esqueleto de um algoritmo na superclasse e delega etapas específicas para as subclasses. A forma como os atributos e métodos interagem nesse cenário exige compreensão rigorosa sobre escopo, encapsulamento e vinculação (binding).</p><p><b>COMANDO</b></p><p>Considerando os princípios de polimorfismo, vinculação dinâmica (dynamic binding) e boas práticas de encapsulamento, avalie o comportamento do código executado na classe SistemaPrincipal e a qualidade arquitetural da decisão de implementação adotada na relação de herança. Assinale a alternativa tecnicamente adequada:</p><p><b>CENÁRIO: Qual o valor impresso por p.processar(100.0)?</b></p><pre><code>public abstract class ProcessadorDeRegra {\n    protected double fatorMultiplicador = 1.5;\n\n    public double processar(double valorBase) {\n        return (valorBase * fatorMultiplicador) + calcularTaxaExtra();\n    }\n\n    protected double calcularTaxaExtra() {\n        return 10.0;\n    }\n}\n\npublic class ProcessadorComplexo extends ProcessadorDeRegra {\n    protected double fatorMultiplicador = 2.0;\n\n    @Override\n    protected double calcularTaxaExtra() {\n        return 25.0;\n    }\n}\n\npublic class SistemaPrincipal {\n    public static void main(String[] args) {\n        ProcessadorDeRegra p = new ProcessadorComplexo();\n        System.out.println(p.processar(100.0));\n    }\n}</code></pre><p>Qual alternativa é tecnicamente adequada?</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A saída será 225.0, pois a vinculação dinâmica seria aplicada tanto ao método calcularTaxaExtra() (25.0) quanto ao atributo fatorMultiplicador (2.0) da subclasse. O projeto teria alta coesão, pois delega às subclasses a gestão de seus próprios estados e comportamentos."
+    },
+    {
+     "l": "B",
+     "t": "A saída será 160.0, pois a tipagem da referência p forçaria vinculação estática para TODOS os membros e métodos de ProcessadorDeRegra. O projeto seria excelente em segurança e manutenibilidade, blindando o método principal contra alterações das subclasses."
+    },
+    {
+     "l": "C",
+     "t": "A saída será 225.0, pois a subclasse redefiniria a alocação de memória do atributo fatorMultiplicador para 2.0. O projeto aumentaria indevidamente o acoplamento, pois obrigaria a classe base a conhecer e invocar estados modificados pelas subclasses."
+    },
+    {
+     "l": "D",
+     "t": "A saída será 175.0, pois fatorMultiplicador (1.5) sofre vinculação estática pela classe base, enquanto calcularTaxaExtra() (25.0) sofre vinculação dinâmica. O projeto é inadequado: o shadowing quebra o encapsulamento; o estado deveria ser configurado via construtores, não recriado nas subclasses."
+    }
+   ],
+   "cor": "D",
+   "just": "fatorMultiplicador é lido dentro de processar(), método da superclasse; atributos não são polimórficos (vinculação estática), então vale o campo da base: 1.5. Já calcularTaxaExtra() é sobrescrito e despachado pela classe real do objeto (ProcessadorComplexo): 25.0. Resultado: (100 × 1.5) + 25 = 175.0. No projeto, o field shadowing cria dois campos fatorMultiplicador no mesmo objeto; o certo seria inicializar o valor via construtor (super(2.0)) ou um método polimórfico getFator(). A e C (225.0) tratam o atributo como polimórfico; C ainda fala em \"realocação de memória\", que não existe. B (160.0) ignora a sobrescrita e o despacho dinâmico do método.",
+   "nota": "Versão alterada provável: declarar ProcessadorComplexo p = new ProcessadorComplexo() — a saída continua 175.0, porque o campo é lido dentro de processar(), código da superclasse. Se a subclasse sobrescrevesse processar(), aí leria o seu próprio campo (2.0).",
+   "tags": [
+    "OO: Polimorfismo e vinculação dinâmica"
+   ]
+  },
+  {
+   "ref": "Slides do squad (Apresentação Orientacao a Objetos.pdf): Q2",
+   "origem": "slides",
+   "tipo": "mc",
+   "enun": "<p><b>CONTEXTUALIZAÇÃO</b></p><p>Um arquiteto de software está revisando o código desenvolvido por um programador júnior para o módulo de controle de um sistema de Internet das Coisas (IoT) voltado para automação industrial. O sistema precisa lidar com diversos sensores que coletam dados e, quando necessário, emitem alertas de segurança enviando dados através da rede. O programador propôs a estrutura apresentada a seguir para resolver a necessidade de comunicação de rede e o comportamento de atuação do sensor de temperatura.</p><p><b>COMANDO</b></p><p>Avaliando a estrutura de herança e implementação apresentada no código, e considerando os impactos dessa decisão sobre o acoplamento, coesão, extensibilidade e a semântica estrutural da orientação a objetos, qual alternativa apresenta a análise técnica mais adequada?</p><p><b>CENÁRIO: A herança de ComunicadorRede é uma boa decisão de projeto?</b></p><pre><code>public class ComunicadorRede {\n    public void estabelecerConexao(String ip) {\n        // Lógica de infraestrutura para handshake e conexão TCP/IP\n    }\n    public void enviarPacote(byte[] dados) {\n        // Lógica genérica de roteamento e envio de pacotes na rede\n    }\n}\n\npublic interface DispositivoAtuador {\n    void acionarAlerta(String mensagem);\n}\n\n// Modelagem proposta pelo desenvolvedor\npublic class SensorTemperaturaSmart extends ComunicadorRede\n        implements DispositivoAtuador {\n    private double temperaturaAtual;\n\n    public void medirTemperatura() {\n        // Lógica de hardware que atualiza temperaturaAtual\n    }\n\n    @Override\n    public void acionarAlerta(String mensagem) {\n        if (this.temperaturaAtual &gt; 40.0) {\n            enviarPacote(mensagem.getBytes()); // reaproveita método herdado\n        }\n    }\n}</code></pre><p>Qual alternativa é tecnicamente adequada?</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A implementação da interface está incorreta, pois interfaces em Java serviriam para simular herança múltipla de ESTADO; a ação de alerta deveria migrar para uma superclasse abstrata para herdar atributos."
+    },
+    {
+     "l": "B",
+     "t": "A herança simples atende ao princípio de especialização, tornando o sensor um subtipo de comunicador. A falha estaria no uso da interface, que impediria o reaproveitamento do código do método de acionamento."
+    },
+    {
+     "l": "C",
+     "t": "A herança de ComunicadorRede é inadequada por não representar uma relação semântica \"é-um\" adequada, expondo métodos de infraestrutura ao domínio do sensor e podendo quebrar a substituibilidade esperada. O reaproveitamento de código de rede deveria ocorrer por composição."
+    },
+    {
+     "l": "D",
+     "t": "A modelagem é correta e eficiente, pois a herança garante reaproveitamento nativo do envio de dados, evitando duplicação de código e compensando a falta de herança múltipla na linguagem."
+    }
+   ],
+   "cor": "C",
+   "just": "SensorTemperaturaSmart não \"é um\" ComunicadorRede: ele apenas usa a rede para enviar alertas. Herdar só para reaproveitar enviarPacote() expõe métodos de infraestrutura (estabelecerConexao) a qualquer cliente do sensor e pode quebrar a substituibilidade (LSP); o correto é composição — um atributo privado do tipo ComunicadorRede (\"prefira composição à herança\"). O uso da interface DispositivoAtuador está correto. A erra: interfaces não guardam estado nem simulam herança múltipla de estado. B aceita a falsa especialização e culpa a interface por não reaproveitar código, papel que nunca foi dela. D trata evitar duplicação como objetivo supremo da herança, ignorando o acoplamento rígido (trocar a rede por Bluetooth quebraria a hierarquia).",
+   "nota": "Teste rápido: \"X é um Y?\" (é-um → herança) ou \"X tem/usa um Y?\" (tem-um → composição).",
+   "tags": [
+    "OO: Herança, subtipagem e composição"
+   ]
+  },
+  {
+   "ref": "Slides do squad (Apresentação Orientacao a Objetos.pdf): Q3",
+   "origem": "slides",
+   "tipo": "mc",
+   "enun": "<p><b>CONTEXTUALIZAÇÃO</b></p><p>A correta tradução de regras de negócio para a estrutura estática de um software é uma etapa crítica na engenharia de requisitos e no projeto orientado a objetos, garantindo que o sistema imponha as restrições de integridade do domínio antes mesmo da implementação do código-fonte.</p><p><b>COMANDO</b></p><p>Considerando a correspondência rigorosa entre o modelo UML e as regras de negócio apresentadas, analise os relacionamentos e avalie qual alternativa traduz corretamente as associações, papéis e multiplicidades para o Diagrama de Classes:</p><p><b>CENÁRIO: Traduzindo regras de negócio em relacionamentos UML</b></p><table><thead><tr><th>Relação</th><th>Regra de negócio</th></tr></thead><tbody><tr><td><b>Veterinário ↔ Atendimento</b></td><td>Um Veterinário pode realizar diversos Atendimentos ao longo do mês, mas também pode não ter realizado nenhum. Cada Atendimento é de responsabilidade de exatamente um Veterinário.</td></tr><tr><td><b>Tutor ↔ Animal</b></td><td>Um Animal deve possuir um e apenas um Tutor legal vinculado. Para existir no sistema, um Tutor precisa ter sob sua responsabilidade um ou mais Animais.</td></tr><tr><td><b>Atendimento ↔ Receituário</b></td><td>Ao final do Atendimento, o sistema pode gerar no máximo um Receituário. Um Receituário tem pertencimento estrutural e ciclo de vida associado ao Atendimento que o gerou.</td></tr></tbody></table><p>Qual alternativa traduz corretamente as multiplicidades?</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Tutor-Animal: [1..∗] em ambos os lados (muitos-para-muitos). Veterinário-Atendimento: [0..∗] no lado do Atendimento. Atendimento-Receituário: Herança, com Receituário especializando Atendimento."
+    },
+    {
+     "l": "B",
+     "t": "Tutor-Animal: [1] no Tutor e [1..∗] no Animal. Veterinário-Atendimento: [1] no Veterinário e [0..∗] no Atendimento. Atendimento-Receituário: Composição (losango no Atendimento [1]), multiplicidade [0..1] no Receituário."
+    },
+    {
+     "l": "C",
+     "t": "Tutor-Animal: [1..∗] no Tutor e [1] no Animal. Veterinário-Atendimento: [0..∗] no Veterinário e [1] no Atendimento. Atendimento-Receituário: Agregação (losango vazio no Receituário [0..1])."
+    },
+    {
+     "l": "D",
+     "t": "Tutor-Animal: [1] no Tutor e [0..∗] no Animal. Veterinário-Atendimento: [1..∗] apontando para Atendimento. Atendimento-Receituário: Associação simples, multiplicidade [1..∗] em Receituário."
+    }
+   ],
+   "cor": "B",
+   "just": "Lendo a multiplicidade a partir de uma instância do lado oposto: cada Animal tem exatamente 1 Tutor e cada Tutor tem 1..* Animais (Tutor [1], Animal [1..*]); cada Atendimento é de 1 Veterinário e cada Veterinário faz 0..* Atendimentos. O Receituário (no máximo um, 0..1) tem pertencimento estrutural e ciclo de vida ligados ao Atendimento: composição, losango preenchido no lado do todo (Atendimento). A usa muitos-para-muitos (ignora \"um e apenas um Tutor\") e herança (receituário não \"é um\" atendimento). C inverte os lados da multiplicidade e usa agregação com o losango na parte. D usa 0..* (tutor sem animais) e torna o receituário obrigatório e múltiplo (1..*).",
+   "nota": "Nos slides, o \"Diagrama de Classes Correto\" (com a resposta) aparece antes das alternativas; foi omitido aqui por revelar o gabarito. Pegadinha: o número perto de uma classe diz quantas instâncias DELA se ligam a UMA instância do outro lado.",
+   "tags": [
+    "OO: Diagrama de classes UML e multiplicidade",
+    "OO: Associação, agregação e composição"
+   ]
+  }
+ ],
+ "dissertativas": [
+  {
+   "fonte": "Orientação a Objetos · Material sobre Orientação a Objetos.pdf, §3.1.6 \"Verificação rápida\" (p. 6 impressa) — Q7 do banco anterior",
+   "caso": "<p>Exemplo Conta da apostila (§3.1.2):</p><pre><code>public final class Conta {\n    private final String id;\n    private long saldoCentavos;\n\n    public Conta(String id, long saldoInicialCentavos) {\n        if (id == null || id.isBlank())\n            throw new IllegalArgumentException(\"id obrigatório\");\n        if (saldoInicialCentavos &lt; 0)\n            throw new IllegalArgumentException(\"saldo inicial negativo\");\n        this.id = id;\n        this.saldoCentavos = saldoInicialCentavos;\n    }\n\n    public String id() { return id; }\n    public long saldoCentavos() { return saldoCentavos; }\n\n    public void depositar(long valorCentavos) {\n        exigirValorPositivo(valorCentavos);\n        saldoCentavos += valorCentavos;\n    }\n\n    public void sacar(long valorCentavos) {\n        exigirValorPositivo(valorCentavos);\n        if (valorCentavos &gt; saldoCentavos)\n            throw new IllegalStateException(\"saldo insuficiente\");\n        saldoCentavos -= valorCentavos;\n    }\n\n    private static void exigirValorPositivo(long valor) {\n        if (valor &lt;= 0)\n            throw new IllegalArgumentException(\"valor inválido\");\n    }\n}</code></pre>",
+   "enun": "<p>Responda:</p><ul><li>Explique por que classe e objeto não são sinônimos.</li><li>Indique pré-condição, pós-condição e invariante no exemplo Conta.</li><li>Diga por que um retorno diferente não torna duas declarações uma sobrecarga válida.</li><li>Explique a diferença entre identidade (==) e igualdade lógica (equals).</li></ul>",
+   "topicos": [
+    "Classe = tipo/descrição (atributos, operações, regras de acesso); objeto = instância concreta com identidade, estado e comportamento; dois objetos com os mesmos valores continuam distintos.",
+    "Pré-condições: id não nulo/não vazio e saldo inicial ≥ 0 (construtor); valor > 0 (depositar/sacar); valor ≤ saldo (sacar).",
+    "Pós-condições: depositar → saldo = saldo anterior + valor; sacar → saldo = saldo anterior − valor; violação lança exceção sem alterar o estado.",
+    "Invariante: saldoCentavos ≥ 0 sempre (e id válido e imutável), garantida por não existir setSaldo.",
+    "Sobrecarga é decidida em compilação pelo nome + lista de tipos de parâmetros; o tipo de retorno não faz parte da assinatura, logo int f(int) e double f(int) colidem.",
+    "== compara identidade de referências; equals compara igualdade lógica definida pela classe; quem redefine equals deve redefinir hashCode."
+   ],
+   "exemplo": "<p>Classe e objeto não são sinônimos: a classe é um tipo, uma descrição que declara atributos, operações, construtores e regras de acesso; o objeto é uma instância concreta desse tipo, com identidade própria, estado atual e comportamento. Uma classe pode gerar muitas instâncias, e dois objetos com os mesmos valores continuam sendo objetos distintos.</p><p>No exemplo Conta, as pré-condições são: no construtor, id não nulo e não em branco e saldo inicial não negativo; em depositar e sacar, valor positivo; em sacar, também valor ≤ saldo. As pós-condições: após depositar, o saldo é o anterior mais o valor; após sacar, o anterior menos o valor; se a pré-condição falha, lança-se exceção e o estado não muda. A invariante é saldoCentavos ≥ 0 (e id válido e imutável, por ser final); ela é preservada porque não há setter público, só operações de domínio que validam as entradas.</p><p>Um retorno diferente não cria sobrecarga porque a assinatura usada para distinguir métodos é nome + tipos dos parâmetros; a escolha é feita em compilação pelos argumentos. int f(int) e double f(int) têm a mesma assinatura e o compilador rejeita (numa chamada f(1); com o retorno descartado, seria impossível escolher).</p><p>Por fim, == compara identidade: se duas referências apontam para o mesmo objeto. equals expressa igualdade lógica segundo o contrato da classe (o padrão de Object também compara identidade). new String(\"ok\") == new String(\"ok\") é false, mas equals é true. Quem sobrescreve equals deve sobrescrever hashCode de forma coerente, senão o objeto falha em HashSet/HashMap.</p>"
+  },
+  {
+   "fonte": "Orientação a Objetos · Material sobre Orientação a Objetos.pdf, §8.1 \"Atividade 1 — Diagnóstico de conceitos\" (p. 19–20 impressas) — Q8 do banco anterior",
+   "caso": null,
+   "enun": "<p>Para cada afirmação, indique se é correta, incorreta ou incompleta e justifique:</p><p>1. \"Classe e objeto são a mesma coisa em níveis diferentes.\"<br>2. \"Uma interface é sempre apenas uma lista de operações abstratos.\"<br>3. \"Se duas classes compartilham código, uma deve herdar da outra.\"<br>4. \"1 no extremo Cliente significa que há um único cliente no sistema.\"<br>5. \"Qualquer coleção de filhos é composição.\"<br>6. \"Singleton é apenas uma forma elegante de escrever uma variável global.\"</p><p>Uma resposta forte não se limita a marcar verdadeiro ou falso. Ela apresenta o contrato, o escopo e o caso-limite que sustentam a decisão.</p>",
+   "topicos": [
+    "1 incorreta: classe é tipo/descrição; objeto é instância com identidade, estado e comportamento.",
+    "2 incorreta: interfaces Java podem ter métodos default, static e private e constantes; o que não têm é estado de instância.",
+    "3 incorreta: herança exige relação é-um/substituibilidade (Liskov); para só reaproveitar código, usar composição/delegação.",
+    "4 incorreta: multiplicidade se lê a partir de uma instância do lado oposto (cada pedido tem 1 cliente), não conta instâncias no sistema.",
+    "5 incorreta: composição exige parte pertencente a no máximo um todo e ciclo de vida controlado por ele; coleção pode ser associação ou agregação.",
+    "6 incompleta: Singleton é padrão criacional que garante uma instância num escopo; o custo é justamente o acesso global (dependência oculta, testes difíceis); preferir injeção."
+   ],
+   "exemplo": "<p>1. Incorreta. Classe é o tipo (vocabulário e restrições); objeto é a instância concreta, com identidade, estado e comportamento. Dois objetos da mesma classe com valores iguais continuam distintos.</p><p>2. Incorreta. Em Java moderno a interface pode declarar métodos abstratos, default, static e private, além de constantes; o que ela não tem é estado mutável por instância. Caso-limite: dois métodos default iguais herdados obrigam a classe a resolver o conflito.</p><p>3. Incorreta. Compartilhar código não justifica herança; ela exige subtipagem estável (é-um) em que a subclasse substitui a base sem quebrar expectativas (Liskov). Para reúso sem subtipagem, usa-se composição/delegação — ex.: o sensor que herdava de ComunicadorRede só para enviar pacotes.</p><p>4. Incorreta. A multiplicidade é lida a partir de uma instância do extremo oposto: \"1 em Cliente\" significa que cada pedido tem exatamente um cliente, não que o sistema tenha um só cliente.</p><p>5. Incorreta. Ter uma lista de filhos não define a semântica. Composição exige que a parte pertença a no máximo um composto e que este controle seu ciclo de vida (Pedido–ItemPedido); Item → Produto é associação, Equipe–Jogador pode ser agregação.</p><p>6. Incompleta. Singleton é padrão criacional que garante uma única instância num escopo definido (construtor privado + acesso estático); a unicidade não vale entre JVMs/processos. Seu principal custo é o do acesso global — dependências ocultas e estado entre testes —, por isso costuma ser melhor criar a instância na composição da aplicação e injetá-la.</p>"
+  },
+  {
+   "fonte": "Orientação a Objetos · Material sobre Orientação a Objetos.pdf, §8.2 \"Atividade 2 — Refatoração por composição\" (p. 20 impressa) — Q9 do banco anterior",
+   "caso": null,
+   "enun": "<p>Comece com uma classe RelatorioService que instancia diretamente ExportadorCsv, LoggerGlobal e RepositorioBanco. Refatore-a para depender de interfaces e receber as implementações pelo construtor. Compare:</p><ul><li>quantidade de dependências concretas;</li><li>facilidade de fornecer dublês em testes;</li><li>clareza das pré-condições;</li><li>possibilidade de substituir uma implementação;</li><li>custo adicional de interfaces e composição.</li></ul>",
+   "topicos": [
+    "Criar interfaces (Exportador, Logger, RepositorioRelatorios) e fazer RelatorioService depender só delas.",
+    "Receber as implementações pelo construtor (injeção de dependência), validando com requireNonNull.",
+    "Dependências concretas: 3 → 0 no serviço; as classes concretas são escolhidas na composição da aplicação.",
+    "Testes: dublês/fakes passados pelo construtor, sem banco real nem estado global.",
+    "Pré-condições explícitas no construtor; troca de implementação (ex.: ExportadorPdf) sem editar o serviço (OCP).",
+    "Custo: mais tipos/arquivos, uma indireção a mais e montagem na composição; interface com uma única implementação pode não compensar."
+   ],
+   "exemplo": "<p>Antes, RelatorioService fazia new ExportadorCsv(), LoggerGlobal.getInstance() e new RepositorioBanco() internamente, ficando preso a três classes concretas. Depois da refatoração:</p><pre><code>interface Exportador { String exportar(Relatorio r); }\ninterface Logger { void info(String msg); }\ninterface RepositorioRelatorios { Relatorio buscar(long id); }\n\nfinal class RelatorioService {\n    private final Exportador exportador;\n    private final Logger logger;\n    private final RepositorioRelatorios repositorio;\n\n    RelatorioService(Exportador e, Logger l, RepositorioRelatorios r) {\n        this.exportador = java.util.Objects.requireNonNull(e);\n        this.logger = java.util.Objects.requireNonNull(l);\n        this.repositorio = java.util.Objects.requireNonNull(r);\n    }\n\n    String gerar(long id) {\n        Relatorio rel = repositorio.buscar(id);\n        logger.info(\"gerando relatório \" + id);\n        return exportador.exportar(rel);\n    }\n}\n// composição: new RelatorioService(new ExportadorCsv(), new ConsoleLogger(), new RepositorioBanco());</code></pre><p>Comparação: o serviço passa de 3 dependências concretas para nenhuma (só conhece interfaces). Nos testes basta passar fakes ou lambdas pelo construtor, sem banco real e sem o estado compartilhado do logger global. As pré-condições ficam explícitas na assinatura do construtor. Trocar CSV por PDF é criar outra implementação de Exportador, sem tocar no serviço (aberto/fechado). O custo é ter mais tipos e arquivos, uma indireção a mais e a montagem das dependências na composição da aplicação — uma interface artificial com uma única implementação pode não compensar.</p>"
+  },
+  {
+   "fonte": "Orientação a Objetos · Material sobre Orientação a Objetos.pdf, §8.3 \"Atividade 3 — Validação de diagrama UML\" (p. 20 impressa) — Q10 do banco anterior",
+   "caso": null,
+   "enun": "<p>Modele uma plataforma de cursos. O modelo deve conter Aluno, Curso, Disciplina e Matricula. Inclua multiplicidades, papéis, ordem e unicidade quando forem relevantes. Crie quatro instâncias válidas e quatro inválidas. Explique quais regras precisam de OCL, restrição de banco ou código além da multiplicidade.</p>",
+   "topicos": [
+    "Curso 1..* —— 1..* Disciplina (grade curricular, associação simples; pode ser {ordered} por período).",
+    "Aluno 0..* —— 1 Curso.",
+    "Matricula como classe de associação entre Aluno e Disciplina (semestre, nota, frequência, situação); aluno com 0..* matrículas {ordered} por semestre.",
+    "Quatro instâncias válidas (ex.: caso mínimo; aluno sem matrículas; disciplina sem matrículas; mesma disciplina em semestres diferentes) e quatro inválidas (matrícula sem aluno; curso sem disciplina; duas matrículas na mesma disciplina e semestre; disciplina fora do curso do aluno).",
+    "Regras além da multiplicidade: unicidade composta (aluno, disciplina, semestre), disciplina pertencente ao curso do aluno, faixa de nota — via OCL, UNIQUE/CHECK no banco e validação no código (método matricular)."
+   ],
+   "exemplo": "<p>Modelo: Curso 1..* —— 1..* Disciplina (papel \"grade\"), associação simples porque a disciplina pode ser compartilhada por cursos. Aluno 0..* —— 1 Curso. Matricula é classe de associação entre Aluno e Disciplina, com semestre, nota, frequencia e situacao; cada matrícula liga exatamente 1 aluno e 1 disciplina, e um aluno tem 0..* matrículas {ordered} por semestre.</p><p>Instâncias válidas: V1 curso c1 com disciplina d1, aluno a1 em c1 e matrícula m1(a1, d1, 2026.1); V2 aluno a2 em c1 sem matrículas (0..* permite vazio); V3 disciplina d2 sem matrículas no semestre; V4 a1 reprovado em d1 em 2026.1 e matriculado de novo em 2026.2.</p><p>Instâncias inválidas: I1 matrícula sem aluno (extremo 1 violado); I2 curso sem disciplinas (viola 1..*); I3 duas matrículas de a1 em d1 no mesmo semestre (viola unicidade composta, que a multiplicidade não capta); I4 a1, do curso c1, matriculado em d9, que não pertence a c1 (regra entre associações).</p><p>Regras extras: em OCL, context Aluno inv: self.matriculas-&gt;forAll(m1, m2 | m1 &lt;&gt; m2 implies not (m1.disciplina = m2.disciplina and m1.semestre = m2.semestre)); context Matricula inv: self.aluno.curso.disciplinas-&gt;includes(self.disciplina); nota entre 0 e 10. No banco: UNIQUE(aluno_id, disciplina_id, semestre), CHECK (nota BETWEEN 0 AND 10) e FKs NOT NULL. No código: aluno.matricular(disciplina, semestre) valida as regras e não expõe a coleção interna mutável. Multiplicidade só expressa mínimo e máximo; ordem, unicidade composta e restrições entre associações exigem esses mecanismos.</p>"
+  }
+ ],
+ "observacoes": "Não há caderno novo de OO; as 6 questões estão só nos slides do squad (Apresentação Orientacao a Objetos.pdf). As transcrições reais-19/20/21 foram conferidas contra o PDF (texto, código, tabela e gabaritos D, C, B batem); removi só o rótulo \"(Squad 10 · Questão N)\". Gabaritos conferidos de forma independente: Q1 = (100×1.5)+25 = 175.0 (D); Q2 = composição (C); Q3 = B. Nenhuma divergência. Nenhuma figura recortada (o diagrama da Q3 nos slides mostra a resposta e foi omitido). O \"Material sobre Orientação a Objetos.pdf\" NÃO tem questões objetivas no padrão ENADE nem gabarito: tem só a \"Verificação rápida\" (§3.1.6) e as Atividades 1–3 (§8), abertas. Elas entraram em \"dissertativas\" (= Q7–Q10 de questoes_por_topico/04_Orientacao_a_Objetos.md); as respostas-modelo NÃO constam no material — vêm da resolução proposta naquele .md, baseada na apostila."
+}

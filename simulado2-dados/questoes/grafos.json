@@ -1,0 +1,387 @@
+{
+ "topico": "09 · Teoria dos Grafos",
+ "slug": "grafos",
+ "excluidas_simulado1": [
+  {
+   "banco": "Caderno Q2",
+   "simulado": "Q13",
+   "motivo": "mesma situação: seis equipamentos v1–v6, graus 4,3,3,2,2,2, sub-rede /29; 8 arestas e função bijetora (B nos dois)"
+  },
+  {
+   "banco": "Caderno Q5",
+   "simulado": "Q27",
+   "motivo": "mesma situação: rede com-Amazon (SNAP), alternativa que NÃO está de acordo com a lista de adjacência; alternativas reordenadas (caderno C = simulado A)"
+  }
+ ],
+ "questoes": [
+  {
+   "ref": "Caderno do squad: Q1",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma loja virtual organizada em microsserviços modelou as comunicações diretas entre seis serviços por um grafo simples e não dirigido. Na Figura 1, A representa o API Gateway; B, o catálogo; C, os pedidos; D, o estoque; E, os pagamentos; e F, o antifraude. Cada aresta representa uma comunicação direta possível entre dois serviços.</p><p><b>Dado de suporte</b></p>{{IMG:grafos-q1.webp|Figura 1: grafo com vértices A a F e arestas A–B, A–C, B–D, C–D, C–E e E–F}}<p><i>Figura 1 - Comunicação entre os microsserviços da loja virtual. Fonte: elaborado pelos autores.</i></p><p><i>Fonte de apoio: ROSEN, Kenneth H. Discrete Mathematics and Its Applications. 8. ed. McGraw-Hill, 2019; WEST, Douglas B. Introduction to Graph Theory. 2. ed. Prentice Hall, 2001.</i></p><p><b>Comando:</b> Com base no modelo apresentado, a análise que interpreta corretamente os elementos e as relações do grafo é:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "O grafo possui 6 vértices e 7 arestas; C tem grau 4, F tem grau 1 e A não alcança F por caminho algum."
+    },
+    {
+     "l": "B",
+     "t": "O grafo possui 6 vértices e 5 arestas; B tem grau 1, E tem grau 3 e C-F constitui uma aresta do modelo."
+    },
+    {
+     "l": "C",
+     "t": "O grafo possui 6 vértices e 6 arestas; C tem grau 3, F tem grau 1 e existe o caminho A-C-E-F entre A e F."
+    },
+    {
+     "l": "D",
+     "t": "O grafo possui 5 vértices e 6 arestas; D tem grau 3, F tem grau 2 e A-E constitui uma aresta do modelo."
+    }
+   ],
+   "cor": "C",
+   "just": "Da figura: V = {A, B, C, D, E, F} e E = {AB, AC, BD, CD, CE, EF}, logo 6 vértices e 6 arestas. Graus: A=2, B=2, C=3 (A, D, E), D=2, E=2, F=1; soma 12 = 2·6 confere pelo Handshake Lemma. AC, CE e EF são arestas, então A-C-E-F é caminho e o grafo é conexo. A erra ao contar 7 arestas, dar grau 4 a C e dizer que A não alcança F; B erra o número de arestas e os graus de B e E e toma o caminho C-E-F por uma aresta C-F; D conta 5 vértices, dá grau 3 a D e grau 2 a F e inventa a aresta A-E.",
+   "nota": null,
+   "tags": [
+    "Grafos: Definições e terminologia"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q3",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Dois analistas entregaram os desenhos G e H abaixo, cada um com seis componentes (vértices) e nove ligações (arestas). Antes de fabricar uma placa de circuito impresso de face simples, na qual as trilhas de cobre não podem se cruzar, a equipe precisa saber se os desenhos representam a mesma estrutura e se ela pode ser traçada no plano sem cruzamentos.</p><p><b>Dado de suporte</b></p>{{IMG:grafos-q3.webp|Figura 2: G com vértices u1, u2, u3 cada um ligado a v1, v2, v3; H hexágono c-b-a-f-e-d com as três diagonais c–f, b–e e d–a}}<p><i>Figura 2 - Grafos G e H. Fonte: elaborado pelos autores.</i></p><p><i>Fonte de apoio: BONDY, J. A.; MURTY, U. S. R. Graph Theory. Springer, 2008; WEST, Douglas B. Introduction to Graph Theory. 2. ed. Prentice Hall, 2001.</i></p><p><b>Comando:</b> Ao analisar os dois desenhos, conclui-se que ambos representam um grafo isomorfo a ______; pelo Teorema de Kuratowski, esse grafo é ______; e a relação entre G e H caracteriza ______.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "K5; planar; equivalência determinada somente pelos graus."
+    },
+    {
+     "l": "B",
+     "t": "K3,3; planar; igualdade geométrica entre os dois desenhos."
+    },
+    {
+     "l": "C",
+     "t": "K5; não planar; apenas igualdade do número de vértices."
+    },
+    {
+     "l": "D",
+     "t": "K3,3; não planar; isomorfismo entre as duas representações."
+    }
+   ],
+   "cor": "D",
+   "just": "Em G, cada u ligado a cada v, sem arestas dentro dos grupos: é o bipartido completo K3,3 (6 vértices, 9 arestas, todos de grau 3). Em H, a, c e e são adjacentes exatamente a b, d e f, então φ(u1)=a, φ(u2)=c, φ(u3)=e, φ(v1)=b, φ(v2)=d, φ(v3)=f é uma bijeção que preserva adjacências: G ≅ H ≅ K3,3. Pelo Teorema de Kuratowski, K3,3 não é planar (também pela Euler para bipartidos: 9 > 2·6 − 4 = 8), logo a placa de face simples exigiria cruzamento. A e C erram o grafo (K5 tem 5 vértices e 10 arestas) e reduzem o isomorfismo a graus ou a número de vértices, que são só condições necessárias; B chama K3,3 de planar e fala em \"igualdade geométrica\", quando os desenhos diferem e o que se preserva é a estrutura de adjacências.",
+   "nota": "Os desenhos do caderno são indispensáveis aqui (recortados da Figura 2). Pegadinha: graus iguais não provam isomorfismo; é preciso exibir a bijeção.",
+   "tags": [
+    "Grafos: Isomorfismo",
+    "Grafos: Planaridade, Euler e Kuratowski"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q4",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Um sistema de monitoramento registra as conexões diretas entre cinco roteadores, A, B, C, D e E, na matriz de adjacência M abaixo, em que linhas e colunas seguem essa ordem. Antes de definir a estrutura de dados definitiva, a equipe precisa interpretar o grafo representado e os custos dessa representação.</p><p><b>Dado de suporte</b></p><table><thead><tr><th>M</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th></tr></thead><tbody><tr><th>A</th><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr><tr><th>B</th><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr><tr><th>C</th><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td></tr><tr><th>D</th><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr><tr><th>E</th><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td></tr></tbody></table><p><i>Fonte de apoio: CORMEN, Thomas H. et al. Introduction to Algorithms. 4. ed. MIT Press, 2022.</i></p><p><b>Comando:</b> A partir da matriz e dos custos típicos dessa representação, qual interpretação é correta?</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "É um grafo simples não dirigido com 6 arestas; grau(C)=3; a matriz ocupa Θ(V²) e testa adjacência em Θ(1)."
+    },
+    {
+     "l": "B",
+     "t": "É um grafo dirigido com 6 arcos; grau(C)=2; a matriz ocupa Θ(V+E) e testa adjacência em Θ(grau(C))."
+    },
+    {
+     "l": "C",
+     "t": "É um grafo simples não dirigido com 5 arestas; grau(D)=2; a matriz ocupa Θ(E²) e exige busca linear para adjacência."
+    },
+    {
+     "l": "D",
+     "t": "É um grafo dirigido acíclico com 7 arcos; grau(E)=3; a matriz ocupa Θ(V) e testa adjacência em Θ(log V)."
+    }
+   ],
+   "cor": "A",
+   "just": "A matriz é simétrica e tem diagonal nula: grafo simples não dirigido. Há 12 entradas 1, cada aresta contada duas vezes, logo 6 arestas (AB, AC, BD, CD, CE, DE). grau(C) = soma da linha C = 3 (A, D, E). A matriz ocupa Θ(V²) independentemente de E e testa (u,v) por acesso direto M[u][v] em Θ(1). B confunde com os custos da lista de adjacência (Θ(V+E), Θ(grau)) e ignora a simetria; C conta 5 arestas, dá grau 2 a D (é 3) e inventa Θ(E²) e busca linear; D chama de dirigido acíclico um grafo com o ciclo A-B-D-C-A, conta 7 arcos, dá grau 3 a E (é 2) e cita custos que não são da matriz.",
+   "nota": null,
+   "tags": [
+    "Grafos: Matriz e lista de adjacência"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q6",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Ferramentas de build, como Make e Gradle, executam tarefas respeitando dependências. Em um projeto, o arco X→Y indica que a tarefa X deve terminar antes da tarefa Y, e as dependências são A→B, A→C, B→D, C→D, D→E e E→C. A equipe utiliza DFS para examinar alcançabilidade, ciclos e a possibilidade de ordenação topológica das tarefas.</p><p><i>Fonte de apoio: CORMEN, Thomas H. et al. Introduction to Algorithms. 4. ed. MIT Press, 2022.</i></p><p><b>Comando:</b> Analise as afirmativas:</p><p>I. Iniciando a DFS em A, todos os cinco vértices são alcançáveis.</p><p>II. O ciclo C→D→E→C impede a existência de uma ordenação topológica válida.</p><p>III. Uma implementação recursiva de DFS pode ser entendida como uso implícito de uma pilha LIFO.</p><p>IV. Como D possui dois predecessores, a DFS precisa obrigatoriamente de uma fila FIFO para decidir alcançabilidade.</p><p>É correto o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I, II e IV, apenas."
+    },
+    {
+     "l": "B",
+     "t": "I, II e III, apenas."
+    },
+    {
+     "l": "C",
+     "t": "II, III e IV, apenas."
+    },
+    {
+     "l": "D",
+     "t": "I, III e IV, apenas."
+    }
+   ],
+   "cor": "B",
+   "just": "Simulando a DFS a partir de A (vizinhos em ordem alfabética): A → B → D → E → C, então I é verdadeira. Em C, o arco C→D aponta para D ainda na pilha de recursão (aresta de retorno): há o ciclo C→D→E→C, e ordenação topológica só existe em DAG, então II é verdadeira. III é verdadeira: a recursão usa a pilha de chamadas (LIFO), e a DFS iterativa usa pilha explícita. IV é falsa: fila FIFO é da BFS, e ter vários predecessores não muda nada, pois a marcação de visitados processa D uma única vez. A, C e D incluem a IV (C ainda exclui a I e D exclui a II).",
+   "nota": null,
+   "tags": [
+    "Grafos: DFS, BFS e aplicações"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q7",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Na rede profissional LinkedIn, as conexões de 1º grau estão ligadas diretamente ao usuário; as de 2º grau estão ligadas às conexões de 1º grau; e as de 3º grau, às de 2º grau. Um recurso de apresentações quer sugerir, entre um usuário s e um profissional t, uma cadeia de contatos com o menor número possível de intermediários, tratando a rede como um grafo não ponderado.</p><p><i>Fonte de apoio: LINKEDIN. Sua rede e os graus de conexão. Disponível em: https://www.linkedin.com/help/linkedin/answer/a539731. Acesso em: 28 set. 2026; CORMEN, Thomas H. et al. Introduction to Algorithms. 4. ed. MIT Press, 2022.</i></p><p><b>Comando:</b> Considerando essas informações, avalie as asserções a seguir e a relação proposta entre elas.</p><p>I. A BFS é adequada para obter uma rota de s a t com número mínimo de arestas em um grafo não ponderado.</p><p>PORQUE</p><p>II. A BFS explora os vértices em camadas de distância crescente a partir de s, utilizando uma fila FIFO para processar os vértices mais próximos antes dos mais distantes.</p><p>A respeito dessas asserções, assinale a opção correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    },
+    {
+     "l": "E",
+     "t": "As asserções I e II são proposições falsas."
+    }
+   ],
+   "cor": "A",
+   "just": "I é verdadeira: em grafo não ponderado, menor caminho é o de menos arestas, e a BFS calcula essa distância para todo vértice alcançável, reconstruindo a rota pelos predecessores em O(V + E). II é verdadeira: a fila FIFO faz a BFS processar toda a camada k antes da camada k + 1 (no LinkedIn, as camadas são os graus de conexão). A II justifica a I: é a exploração em camadas que garante que cada vértice seja descoberto pela primeira vez por um caminho mínimo. B nega o nexo causal; C confunde BFS (fila) com DFS (pilha); D supõe que menor caminho exige Dijkstra; E nega duas proposições verdadeiras.",
+   "nota": "Os slides do squad têm a mesma questão (banco anterior reais-64, slides Q3), com outra situação-problema (rede de estações de transporte, origem S e destino T), as mesmas asserções I e II e só 4 alternativas; lá a correta é a letra C (\"As asserções I e II são verdadeiras, e a II justifica corretamente a I\"). Incluída uma única vez, com o texto do caderno. Versão alterada provável: grafo ponderado ou \"menor custo\" torna a I falsa (aí entra Dijkstra ou Bellman-Ford).",
+   "tags": [
+    "Grafos: DFS, BFS e aplicações"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q8",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Protocolos de roteamento usados na Internet aplicam algoritmos de menor caminho: o OSPF, de estado de enlace, calcula rotas com o algoritmo de Dijkstra, e o RIP, de vetor de distâncias, é baseado no algoritmo de Bellman-Ford. Uma equipe de redes compara esses algoritmos para menores caminhos a partir de uma única origem. Considere: (I) Dijkstra; (II) Bellman-Ford; (III) Ambos.</p><p><i>Fonte de apoio: KUROSE, James F.; ROSS, Keith W. Redes de computadores e a Internet: uma abordagem top-down. 8. ed. Porto Alegre: Bookman, 2021; MALKIN, G. RIP Version 2. RFC 2453. IETF, 1998; CORMEN, Thomas H. et al. Introduction to Algorithms. 4. ed. MIT Press, 2022.</i></p><p><b>Comando:</b> Associe cada característica ao algoritmo correspondente:</p><p>1. Admite arestas de peso negativo e pode detectar ciclo negativo alcançável a partir da origem.</p><p>2. Com pesos não negativos, pode usar uma estratégia gulosa baseada na menor distância provisória.</p><p>3. Resolve o problema de menores caminhos a partir de uma única origem.</p><p>4. Relaxa repetidamente todas as arestas, com até |V|-1 passadas principais para consolidar distâncias.</p><p>A associação correta é:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "1-I; 2-II; 3-III; 4-I."
+    },
+    {
+     "l": "B",
+     "t": "1-III; 2-I; 3-II; 4-III."
+    },
+    {
+     "l": "C",
+     "t": "1-II; 2-III; 3-I; 4-I."
+    },
+    {
+     "l": "D",
+     "t": "1-II; 2-I; 3-III; 4-II."
+    }
+   ],
+   "cor": "D",
+   "just": "1 → Bellman-Ford: aceita pesos negativos e, se após |V| − 1 passadas ainda houver relaxamento possível, existe ciclo negativo alcançável. 2 → Dijkstra: guloso, extrai sempre o vértice de menor distância provisória, o que só é seguro com pesos não negativos. 3 → Ambos resolvem caminhos mínimos de origem única. 4 → Bellman-Ford: relaxa todas as arestas em até |V| − 1 passadas, O(V·E). A inverte os algoritmos nos itens 1, 2 e 4; B atribui a ambos a detecção de ciclo negativo e as |V| − 1 passadas e dá o item 3 só a Bellman-Ford; C dá a estratégia gulosa a ambos, o item 3 só a Dijkstra e as passadas a Dijkstra.",
+   "nota": null,
+   "tags": [
+    "Grafos: Caminhos mínimos (Dijkstra e Bellman-Ford)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q9",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma prefeitura planeja interligar seis prédios públicos (escolas e unidades de saúde), identificados de A a F, por uma rede própria de fibra óptica. A Figura 3 mostra os trechos de implantação viáveis e o custo estimado de cada um, em centenas de milhares de reais. O objetivo é conectar todos os prédios com o menor custo total, sem trechos redundantes, problema de projeto de redes de comunicação estudado por R. C. Prim nos Laboratórios Bell (PRIM, 1957).</p><p><b>Dado de suporte</b></p>{{IMG:grafos-q9.webp|Figura 3: grafo ponderado A–B 4, A–C 2, B–C 1, B–D 5, C–D 8, C–E 10, D–E 2, D–F 6, E–F 3}}<p><i>Figura 3 - Trechos viáveis de fibra óptica e custos estimados. Fonte: elaborado pelos autores.</i></p><p><i>Fonte de apoio: PRIM, R. C. Shortest connection networks and some generalizations. Bell System Technical Journal, v. 36, n. 6, p. 1389-1401, 1957; CORMEN, Thomas H. et al. Introduction to Algorithms. 4. ed. MIT Press, 2022.</i></p><p><b>Comando:</b> Aplicando corretamente o princípio do algoritmo de Prim, qual conjunto de arestas forma uma árvore geradora mínima e qual é seu custo total?</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "{AB, AC, BC, DE, EF}; custo total 12."
+    },
+    {
+     "l": "B",
+     "t": "{AC, BC, BD, DE, EF}; custo total 13."
+    },
+    {
+     "l": "C",
+     "t": "{AB, BC, BD, DE, EF}; custo total 15."
+    },
+    {
+     "l": "D",
+     "t": "{AC, BC, CD, DE, EF}; custo total 16."
+    }
+   ],
+   "cor": "B",
+   "just": "Prim a partir de A escolhe sempre a aresta mais leve que cruza o corte: AC (2), BC (1), BD (5) (AB agora formaria ciclo e CD = 8, CE = 10 são mais caras), DE (2) e EF (3). Árvore {AC, BC, BD, DE, EF} com 5 = |V| − 1 arestas e custo 13, a única mínima entre as 55 árvores geradoras (Kruskal dá o mesmo). A soma só as cinco arestas mais baratas: AB, AC e BC formam ciclo e nada liga {A, B, C} a {D, E, F}, por isso o custo 12 fica abaixo do mínimo. C usa AB (4) no lugar de AC (2), que Prim escolhe já no 1º passo (custo 15). D liga os grupos por CD (8) em vez de BD (5), sem comparar todas as arestas do corte (custo 16).",
+   "nota": "Figura indispensável (pesos); recortada do caderno. Pegadinha: um custo menor que o mínimo (alternativa A) denuncia um conjunto que não é árvore geradora. Kruskal chega à mesma árvore; a segunda melhor árvore custa 15.",
+   "tags": [
+    "Grafos: Árvore geradora mínima (Prim)"
+   ]
+  },
+  {
+   "ref": "Slides do squad (Teoria dos Grafos.pdf): Q1, p. 16–18",
+   "origem": "slides",
+   "tipo": "mc",
+   "enun": "<p><b>SITUAÇÃO-PROBLEMA</b></p><p>Uma equipe de desenvolvimento está modelando uma rede de comunicação entre diferentes pontos de uma infraestrutura computacional. Para representar a rede, foi utilizado um grafo não direcionado G=(V,E), no qual os vértices representam os pontos da rede e as arestas representam as conexões entre eles.<br>Durante a análise da representação, a equipe identificou que o grafo possui 10 vértices e 15 arestas. Além disso, após reorganizar visualmente os vértices e as arestas, foi identificada uma subdivisão de K3,3 na estrutura do grafo.</p><p><b>COMANDO</b></p><p>Considerando os conceitos de grau dos vértices, Handshake Lemma e planaridade, analise a situação apresentada e assinale a alternativa que apresenta a conclusão correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A soma dos graus dos vértices é 15, e o grafo pode ser planar, pois os cruzamentos das arestas podem ser eliminados pela reorganização dos vértices."
+    },
+    {
+     "l": "B",
+     "t": "A soma dos graus dos vértices é 30, e o grafo é não planar devido à presença de uma subdivisão de K3,3."
+    },
+    {
+     "l": "C",
+     "t": "A soma dos graus dos vértices é 25, e o grafo é não planar porque possui número ímpar de arestas."
+    },
+    {
+     "l": "D",
+     "t": "A soma dos graus dos vértices é 30, porém não é possível determinar a planaridade do grafo apenas pela identificação de uma subdivisão de K3,3."
+    }
+   ],
+   "cor": "B",
+   "just": "Pelo Handshake Lemma, Σ graus = 2|E| = 2·15 = 30 (o número de vértices não entra na conta). Pelo Teorema de Kuratowski, conter uma subdivisão de K3,3 basta para o grafo ser não planar, seja qual for o desenho. A confunde soma dos graus com número de arestas e supõe que reorganizar o desenho elimina cruzamentos; C erra a soma (25 é ímpar, impossível) e usa um critério inexistente (paridade de arestas); D acerta a soma, mas nega que a subdivisão de K3,3 decide a planaridade.",
+   "nota": "Versão alterada provável: usar 15 ≤ 3·10 − 6 = 24 como prova de planaridade. É só condição necessária; quem decide é a subdivisão de K3,3.",
+   "tags": [
+    "Grafos: Handshake Lemma (graus)",
+    "Grafos: Planaridade, Euler e Kuratowski"
+   ]
+  },
+  {
+   "ref": "Slides do squad (Teoria dos Grafos.pdf): Q2, p. 27–28",
+   "origem": "slides",
+   "tipo": "mc",
+   "enun": "<p><b>SITUAÇÃO-PROBLEMA</b></p><p>Uma equipe de engenharia de software está projetando o módulo de conexões e rotas de uma aplicação. O sistema precisa armazenar e manipular um grafo na memória, onde as interseções representam vértices e as rotas representam arestas direcionadas. Diante da preocupação com a alocação de memória e com a velocidade de acesso às conexões, a equipe analisa a adoção de Matrizes de Adjacência ou Listas de Adjacência.</p><p><b>COMANDO</b></p><p>Analise as afirmações a seguir sobre as estruturas de representação computacional de grafos e a tomada de decisão da equipe, identificando-as como Verdadeiras (V) ou Falsas (F):</p><p>( ) A Matriz de Adjacência aloca uma tabela com dimensão fixa proporcional a V x V (onde V é o número de vértices), reservando espaço na memória para todas as conexões possíveis, existam elas ou não.</p><p>( ) Em grafos direcionados, a Matriz de Adjacência é naturalmente simétrica, de modo que a posição (Linha A, Coluna B) terá sempre o mesmo valor que a posição (Linha B, Coluna A).</p><p>( ) A Lista de Adjacência é mais eficiente em termos de armazenamento quando o grafo é esparso (possui poucas conexões em relação ao número de vértices), pois guarda apenas os vértices vizinhos com os quais realmente existe conexão.</p><p>( ) A verificação direta da existência de uma conexão entre dois vértices específicos é operacionalmente mais rápida em uma Lista de Adjacência do que em uma Matriz de Adjacência, pois a lista permite acesso indexado direto em tempo constante O(1).</p><p>Assinale a alternativa com a sequência correta.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "V – F – V – F"
+    },
+    {
+     "l": "B",
+     "t": "V – V – V – F"
+    },
+    {
+     "l": "C",
+     "t": "F – F – V – V"
+    },
+    {
+     "l": "D",
+     "t": "V – F – F – V"
+    }
+   ],
+   "cor": "A",
+   "just": "1ª V: a matriz ocupa |V|×|V| posições, existindo ou não a aresta. 2ª F: em grafo direcionado a matriz em geral é assimétrica ((A,B) = 1 não implica (B,A) = 1). 3ª V: a lista guarda só os vizinhos existentes, Θ(V + E), vantajosa em grafos esparsos. 4ª F: o teste em O(1) por acesso indexado é vantagem da matriz; na lista o teste custa O(grau). Logo V – F – V – F (A); B aceita a simetria em dirigidos, C troca as vantagens das estruturas e D nega a economia da lista e aceita o O(1) na lista.",
+   "nota": null,
+   "tags": [
+    "Grafos: Matriz e lista de adjacência"
+   ]
+  },
+  {
+   "ref": "Slides do squad (Teoria dos Grafos.pdf): Q4, p. 51–52",
+   "origem": "slides",
+   "tipo": "mc",
+   "enun": "<p><b>SITUAÇÃO-PROBLEMA</b></p><p>Uma equipe de engenharia de software está arquitetando a infraestrutura de rede para um ecossistema de microsserviços em nuvem, semelhante a ambientes AWS com contêineres Docker. Durante o planejamento, os engenheiros de backend identificaram três desafios distintos de otimização de rede que precisam ser resolvidos de forma automatizada:</p><ul><li><b>Desafio 1:</b> Encontrar a rota de menor latência (tempo de resposta) entre o API Gateway (nó de origem) e todos os outros microsserviços da rede. Sabe-se que todos os links possuem latência estritamente positiva.</li><li><b>Desafio 2:</b> Calcular o custo de roteamento de sincronização de um banco de dados relacional distribuído. Devido a acordos de tráfego com provedores, alguns links geram \"créditos\" de banda, operando efetivamente como arestas de peso negativo. É necessário encontrar o menor custo a partir do nó primário e garantir que não existam ciclos de retroalimentação infinita (ciclos negativos).</li><li><b>Desafio 3:</b> Interligar fisicamente todos os servidores de um novo data center com cabos de fibra óptica. O objetivo não é a velocidade entre dois pontos específicos, mas sim garantir que todos os servidores estejam conectados na mesma rede gastando o mínimo possível em metros de cabo.</li></ul><p><b>COMANDO</b></p><p>Considerando os algoritmos clássicos de otimização em Teoria dos Grafos, assinale a alternativa que indica a escolha tecnicamente correta para resolver os Desafios 1, 2 e 3, respectivamente.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "1 - Bellman-Ford; 2 - Dijkstra; 3 - Prim."
+    },
+    {
+     "l": "B",
+     "t": "1 - Dijkstra; 2 - Bellman-Ford; 3 - Prim."
+    },
+    {
+     "l": "C",
+     "t": "1 - Dijkstra; 2 - Prim; 3 - Bellman-Ford."
+    },
+    {
+     "l": "D",
+     "t": "1 - Prim; 2 - Bellman-Ford; 3 - Dijkstra."
+    }
+   ],
+   "cor": "B",
+   "just": "Desafio 1: menor latência de uma origem para todos, com pesos estritamente positivos → Dijkstra. Desafio 2: pesos negativos e necessidade de detectar ciclo negativo → Bellman-Ford. Desafio 3: conectar todos os servidores com custo total mínimo de cabo → árvore geradora mínima → Prim. A erra ao trocar Dijkstra e Bellman-Ford (Dijkstra não admite pesos negativos nem detecta ciclo negativo); C usa Prim para pesos negativos e Bellman-Ford para AGM; D usa Prim para caminho mínimo e Dijkstra para AGM, confundindo AGM com caminhos mínimos.",
+   "nota": "Se uma versão alterada trouxer Kruskal no Desafio 3, também vale: é problema de AGM.",
+   "tags": [
+    "Grafos: Caminhos mínimos (Dijkstra e Bellman-Ford)",
+    "Grafos: Árvore geradora mínima (Prim)"
+   ]
+  }
+ ],
+ "dissertativas": [
+  {
+   "fonte": "Teoria dos Grafos · Slides do squad (Teoria dos Grafos.pdf), p. 15 — pergunta discursiva sobre o Teorema de Kuratowski",
+   "caso": "<p>Figura do slide: K5 (cinco vértices, todos ligados entre si, 10 arestas) e K3,3 (dois grupos de três vértices, cada vértice de um grupo ligado aos três do outro, 9 arestas).</p>",
+   "enun": "<p>\"Um grafo possui uma estrutura equivalente a uma subdivisão de K5 ou K3,3. O que podemos concluir sobre sua planaridade?\"</p>",
+   "topicos": [
+    "Conclusão: o grafo é não planar (resposta do slide).",
+    "Enunciado do Teorema de Kuratowski: um grafo finito é planar se, e somente se, não contém subgrafo que seja subdivisão de K5 ou de K3,3.",
+    "O que é subdivisão: trocar arestas por caminhos, inserindo vértices de grau 2; o padrão pode estar \"disfarçado\".",
+    "Um cruzamento num desenho particular não prova nada; planar = existe algum desenho sem cruzamentos."
+   ],
+   "exemplo": "<p>O grafo é não planar. Pelo Teorema de Kuratowski, um grafo finito é planar se, e somente se, não contém como subgrafo uma subdivisão de K5 ou de K3,3. Subdividir uma aresta significa substituí-la por um caminho, inserindo vértices de grau 2 ao longo dela; isso não altera a possibilidade de desenhar o grafo sem cruzamentos.</p><p>Assim, se o grafo contém uma estrutura equivalente a uma subdivisão de K5 ou de K3,3, ele herda a não planaridade desses grafos: K5 viola |E| ≤ 3|V| − 6 (10 > 9) e K3,3, bipartido, viola |E| ≤ 2|V| − 4 (9 > 8). Não importa como os vértices sejam reposicionados: nenhum desenho no plano eliminará todos os cruzamentos. O teorema troca a pergunta geométrica (\"consigo desenhar sem cruzar?\") por uma estrutural (\"há uma subdivisão de K5 ou K3,3?\").</p>"
+  },
+  {
+   "fonte": "Teoria dos Grafos · Slides do squad (Teoria dos Grafos.pdf), p. 31 (pergunta), respostas nas p. 33, 35 e 41 — percursos DFS e BFS",
+   "caso": "<p>Grafo do slide (árvore com 6 vértices): A ligado a B e C; B ligado a D e E; C ligado a F. Arestas: A–B, A–C, B–D, B–E, C–F. Vizinhos considerados em ordem alfabética.</p>",
+   "enun": "<p>\"A PERGUNTA: COMO PERCORRER? A partir de A, qual caminho devemos seguir?\" Indique a ordem de visita dos vértices na busca em profundidade (DFS) e na busca em largura (BFS) a partir de A, explicando a estrutura de dados usada em cada uma.</p>",
+   "topicos": [
+    "DFS (pilha ou recursão): A → B → D → E → C → F.",
+    "BFS (fila FIFO): A → B → C → D → E → F, por níveis {A}, {B, C}, {D, E, F}.",
+    "DFS aprofunda um ramo e faz backtracking; BFS completa cada nível antes de descer.",
+    "Custo O(V + E) com lista de adjacência (O(V²) com matriz); a ordem depende da ordem dos vizinhos."
+   ],
+   "exemplo": "<p><b>DFS</b> (profundidade): usa uma pilha, explícita ou implícita na recursão. Partindo de A, visita o primeiro vizinho, B, e continua descendo: D. Como D não tem vizinhos novos, volta (backtracking) a B e visita E. Esgotado o ramo de B, volta a A e segue para C e, em seguida, F. Ordem: A → B → D → E → C → F.</p><p><b>BFS</b> (largura): usa uma fila FIFO. Enfileira A; ao processá-lo, enfileira B e C (nível 1); ao processar B, enfileira D e E; ao processar C, enfileira F (nível 2). Ordem: A → B → C → D → E → F, com níveis {A}, {B, C}, {D, E, F}.</p><p>A DFS esgota um ramo antes de voltar, o que é útil para detectar ciclos e fazer ordenação topológica; a BFS percorre em camadas de distância crescente, o que dá o menor número de arestas até cada vértice em grafo não ponderado. Ambas custam O(V + E) com lista de adjacência. Outra ordem dos vizinhos na lista gera outra sequência igualmente válida.</p>"
+  },
+  {
+   "fonte": "Teoria dos Grafos · Material explicativo (TEORIA_DOS_GRAFOS - MATERIAL EXPLICATIVO.pdf), p. 15, item 3.4 — exemplo resolvido",
+   "caso": null,
+   "enun": "<p>\"Suponha que uma rede simples tenha seis vértices com graus 3, 2, 4, 1, 2 e 4. Quantas arestas existem?\"</p>",
+   "topicos": [
+    "Handshake Lemma: Σ deg(v) = 2|E|, pois cada aresta contribui com 1 para o grau de cada extremidade.",
+    "Soma: 3 + 2 + 4 + 1 + 2 + 4 = 16, logo |E| = 8.",
+    "Não é preciso desenhar o grafo; opcionalmente, verificar que a sequência é realizável (Havel-Hakimi)."
+   ],
+   "exemplo": "<p>Pelo Handshake Lemma, em todo grafo não direcionado a soma dos graus é o dobro do número de arestas, Σ deg(v) = 2|E|, porque cada aresta é contada uma vez em cada uma de suas duas extremidades.</p><p>Somando os graus: 3 + 2 + 4 + 1 + 2 + 4 = 16. Logo 16 = 2|E| e |E| = 8: a rede tem 8 arestas. O lema permite obter o número de arestas sem desenhar nem enumerar as conexões.</p><p>Como conferência, a sequência é realizável como grafo simples (Havel-Hakimi: 4,4,3,2,2,1 → 3,2,1,1,1 → 1,0,0,1 → 0,0,0), e a quantidade de vértices de grau ímpar (dois: graus 3 e 1) é par, como exige o lema.</p>"
+  },
+  {
+   "fonte": "Teoria dos Grafos · Material explicativo (TEORIA_DOS_GRAFOS - MATERIAL EXPLICATIVO.pdf), p. 15, itens 3.5–3.6 — exemplo de diagnóstico",
+   "caso": null,
+   "enun": "<p>\"Uma pessoa afirma ter construído um grafo simples com cinco vértices cujos graus são 3, 3, 2, 2 e 1. Antes mesmo de desenhar o grafo, podemos testar a consistência da sequência.\" A afirmação é possível? Justifique.</p>",
+   "topicos": [
+    "Soma dos graus: 3 + 3 + 2 + 2 + 1 = 11, ímpar.",
+    "Handshake Lemma exige soma = 2|E|, sempre par: a sequência é impossível.",
+    "Equivalente: há três vértices de grau ímpar, e o número de vértices de grau ímpar em grafo finito não direcionado é sempre par.",
+    "O lema não exige que cada grau seja par, só a soma."
+   ],
+   "exemplo": "<p>A afirmação é impossível. Pelo Handshake Lemma, Σ deg(v) = 2|E|, de modo que a soma dos graus de qualquer grafo não direcionado é necessariamente par.</p><p>Aqui, 3 + 3 + 2 + 2 + 1 = 11, que é ímpar; portanto não existe grafo (simples ou não) com essa sequência de graus. Uma forma equivalente de ver: a sequência tem três vértices de grau ímpar (3, 3 e 1), e como uma soma de inteiros só é par quando a quantidade de parcelas ímpares é par, todo grafo finito não direcionado tem um número par de vértices de grau ímpar.</p><p>O teste dispensa desenhar o grafo. Atenção: o lema não diz que cada vértice tem grau par, e sim que a soma é par. Em grafos direcionados, vale Σ deg⁺(v) = Σ deg⁻(v) = |E|.</p>"
+  },
+  {
+   "fonte": "Teoria dos Grafos · Material explicativo (TEORIA_DOS_GRAFOS - MATERIAL EXPLICATIVO.pdf), p. 20, item 4.6 — exemplo de diagnóstico rápido",
+   "caso": null,
+   "enun": "<p>Usando as desigualdades derivadas da fórmula de Euler, mostre que K₅ (|V| = 5, |E| = 10) e K₃,₃ (6 vértices e 9 arestas) são não planares.</p>",
+   "topicos": [
+    "Fórmula de Euler para grafo planar conexo: V − E + F = 2.",
+    "Grafo simples planar com |V| ≥ 3: |E| ≤ 3|V| − 6; K5 dá 10 ≤ 9, falso.",
+    "K3,3 passa na desigualdade geral (9 ≤ 12), mas é bipartido (sem triângulos): |E| ≤ 2|V| − 4 dá 9 ≤ 8, falso.",
+    "As desigualdades são condições necessárias: violá-las prova não planaridade; satisfazê-las não prova planaridade."
+   ],
+   "exemplo": "<p>Para um grafo planar conexo vale a fórmula de Euler, V − E + F = 2. Como, num grafo simples com |V| ≥ 3, cada face é limitada por pelo menos 3 arestas e cada aresta separa no máximo 2 faces, obtém-se |E| ≤ 3|V| − 6.</p><p><b>K₅:</b> |V| = 5 e |E| = 10. Se fosse planar, teríamos 10 ≤ 3·5 − 6 = 9, o que é falso. Logo K₅ é não planar.</p><p><b>K₃,₃:</b> |V| = 6 e |E| = 9. A desigualdade geral não o elimina (9 ≤ 12). Porém K₃,₃ é bipartido e não tem triângulos, então cada face teria pelo menos 4 arestas, o que leva a |E| ≤ 2|V| − 4 = 8. Como 9 > 8, K₃,₃ também é não planar.</p><p>Essas desigualdades são apenas condições necessárias: violá-las prova a não planaridade, mas satisfazê-las não garante que o grafo seja planar. A caracterização completa é o Teorema de Kuratowski (ausência de subdivisões de K₅ e K₃,₃).</p>"
+  }
+ ],
+ "observacoes": "Caderno com 9 questões; Q2 e Q5 caíram no Simulado 1 (Q13 e Q27) e foram excluídas. Gabarito oficial lido sem problemas no .txt (C, B, D, A, C, B, A, D, B). Conferidos de forma independente (leitura das figuras, matriz, simulação da DFS, Prim/Kruskal com enumeração das 55 árvores geradoras da Q9): nenhuma divergência. Figuras recortadas: grafos-q1.webp (grafo da loja virtual), grafos-q3.webp (desenhos G e H de K3,3), grafos-q9.webp (grafo ponderado do Prim). Extras dos slides (Teoria dos Grafos.pdf): Q1 (Handshake + subdivisão de K3,3, reais-62), Q2 (V/F matriz × lista, reais-63) e Q4 (Dijkstra/Bellman-Ford/Prim em três desafios, reais-65). A Q3 dos slides (BFS em rede de estações, reais-64) é a mesma questão da Q7 do caderno (mesmas asserções I e II, outra situação-problema; letra C nos slides × A no caderno): incluída só a do caderno, com registro na nota. Dissertativas: 2 perguntas discursivas dos slides (p. 15 Kuratowski; p. 31 DFS/BFS, figura descrita em texto) e 3 exemplos resolvidos do material explicativo (p. 15 itens 3.4 e 3.6; p. 20 item 4.6). O material explicativo não traz questões objetivas."
+}

@@ -1,0 +1,302 @@
+{
+ "topico": "01 · Complexidade de Algoritmos",
+ "slug": "cx",
+ "excluidas_simulado1": [
+  {
+   "banco": "Caderno Q4 (= Slides Q6)",
+   "simulado": "Q2",
+   "motivo": "Mesma situação (e-commerce, top-k com Abordagens I Merge Sort, II Min-Heap e III Hash + Heapsort) e mesmo comando (análise INCORRETA); texto idêntico, gabarito C nos três. Gabarito do simulado lista #4 Complexidade."
+  },
+  {
+   "banco": "Caderno Q11 (= Slides Q2)",
+   "simulado": "Q18",
+   "motivo": "Mesma questão (Modelo de Knuth, busca sequencial com sentinela, afirmativas I–III); texto idêntico, gabarito D. Gabarito do simulado lista #11."
+  },
+  {
+   "banco": "Caderno Q5",
+   "simulado": "Q24",
+   "motivo": "Mesma associação busca binária (pior caso) / sequencial (melhor caso) / hash com colisão total → Θ(1), Θ(log n), Θ(n); texto idêntico, gabarito A. Gabarito do simulado lista #5."
+  },
+  {
+   "banco": "Caderno Q7",
+   "simulado": "Q29",
+   "motivo": "Mesmo V/F sobre Mergesort, Quicksort, Insertion Sort e Heapsort; alternativas reordenadas (V–F–V–F é A no caderno e C no simulado). Gabarito do simulado lista #7."
+  }
+ ],
+ "questoes": [
+  {
+   "ref": "Caderno do squad: Q1",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>SITUAÇÃO-PROBLEMA</b></p><p>Uma corretora de valores precisa otimizar o seu módulo de monitoramento de transações em tempo real. O sistema recebe um fluxo contínuo de dados contendo n transações financeiras e precisa exibir instantaneamente em um painel do backend apenas as k maiores transações de compra efetuadas (onde k ≪ n e k é um valor fixo, ex: k = 100). Atualmente, a equipe utiliza uma biblioteca genérica que armazena todas as transações em um vetor dinâmico e aplica um algoritmo de ordenação rápida a cada inserção, o que tem gerado gargalos de latência severos à medida que o fluxo de dados cresce. A arquiteta de software do projeto propôs a refatoração do código com foco no gerenciamento da qualidade e no uso racional dos recursos de hardware.</p><p><b>DADOS DE SUPORTE</b></p><p>De acordo com Cormen et al. (2012), a modelagem matemática do pior caso de algoritmos e a compreensão de suas estruturas físicas associadas devem guiar a tomada de decisões de projeto de software para garantir escalabilidade. Considere o seguinte algoritmo alternativo proposto pela arquiteta para gerenciar o fluxo dinâmico:</p><p><b>1. Inicialização:</b> Instanciar um Heap Mínimo (Fila de Prioridades Mínima) de tamanho fixo k e preenchê-lo com as primeiras k transações lidas do fluxo.</p><p><b>2. Processamento:</b> Para cada uma das n − k transações subsequentes (representadas por x) do fluxo:</p><ul><li>Comparar x com o elemento raiz da estrutura.</li><li>Se x for estritamente maior que a raiz, substituir o valor da raiz por x e chamar a função auxiliar <code>heapify</code> para reorganizar a estrutura e restaurar a propriedade de Heap Mínimo.</li></ul><p><b>COMANDO DA QUESTÃO</b></p><p>Considerando o comportamento das estruturas de dados sob condições críticas de fluxo de dados, as definições formais de tempo de execução e a correta aplicação do algoritmo para otimizar o tempo e o consumo de memória adicional, assinale a alternativa que apresenta a análise diagnóstica correta:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A aplicação do algoritmo proposto utilizando um Min-Heap de tamanho k garante que o pior caso de processamento para todo o fluxo de n elementos seja limitado assintoticamente a O(n log k) de tempo, oferecendo uma solução otimizada que consome apenas O(k) de memória adicional."
+    },
+    {
+     "l": "B",
+     "t": "A aplicação de uma Árvore Binária de Pesquisa (ABP) balanceada de tamanho n seria superior, pois o percurso pós-ordem (post-order) realizaria a busca e ordenação das transações em tempo estritamente constante O(1), eliminando a necessidade de reconstruções periódicas heapify."
+    },
+    {
+     "l": "C",
+     "t": "A utilização de uma Tabela Hash com endereçamento aberto contendo os n elementos é a alternativa ideal, pois seu tempo de inserção de pior caso é de ordem O(1), permitindo recuperar as k maiores transações em tempo sublinear através de uma varredura sequencial."
+    },
+    {
+     "l": "D",
+     "t": "O emprego do algoritmo Quicksort tradicional é preferível ao uso de Heaps, pois a técnica de divisão e conquista assegura estabilidade estrita e uma complexidade de tempo de pior caso limitada a O(n log n) independente do ordenamento inicial dos dados do fluxo."
+    }
+   ],
+   "cor": "A",
+   "just": "Montar o heap com k elementos custa O(k); cada um dos n − k elementos seguintes faz 1 comparação com a raiz (O(1)) e, se entrar, um heapify em heap de tamanho k (O(log k)). Total O(k + (n − k) log k) = O(n log k), guardando só k elementos: O(k) de memória (A). B é falsa: nenhum percurso de árvore é O(1) (é linear) e guardar n elementos custa O(n). C é falsa: hash com colisões tem inserção O(n) no pior caso e não mantém ordem; achar os k maiores exige varrer tudo. D é falsa: o Quicksort não é estável e tem pior caso O(n²) (pivô ruim ou dados já ordenados).",
+   "nota": "Mesmo tema (top-k com Min-Heap) da Q4 do caderno, que caiu no Simulado 1 (Q2), mas aqui a situação (corretora, uma só proposta) e o comando (análise correta, não INCORRETA) são outros.",
+   "tags": [
+    "Complex.: ABP e Heap"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q2",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>SITUAÇÃO-PROBLEMA</b></p><p>Uma equipe de engenharia de software de uma empresa de geoprocessamento está desenvolvendo um sistema de renderização de mapas de alta resolução. O módulo principal processa matrizes de elevação de terreno de dimensão n × n (onde n é uma potência de 2). Para otimizar o tempo de renderização, dois engenheiros seniores propuseram estratégias de projeto distintas baseadas no paradigma de divisão e conquista para realizar o processamento das matrizes. A escolha da estratégia correta requer uma análise crítico-reflexiva rigorosa para antecipar possíveis cenários de gargalo temporal em ambiente de produção sob cargas de trabalho extremas.</p><p><b>DADOS DE SUPORTE</b></p><p>De acordo com Cormen et al. (2012), a análise de algoritmos recursivos baseados em divisão e conquista fundamenta-se na modelagem de equações de recorrência do tipo T(n) = aT(n/b) + f(n). A resolução analítica dessas recorrências pelo Teorema Mestre permite classificar e comparar a eficiência assintótica de diferentes abordagens. Considere as duas estratégias de divisão e conquista propostas pela equipe de engenharia:</p><ul><li><b>Estratégia Alfa (Algoritmo A):</b> Divide a matriz de dimensão n × n em 4 submatrizes quadradas de tamanho n/2 × n/2. Cada submatriz é processada recursivamente e a combinação dos resultados é feita por uma varredura linear que consome tempo de execução de ordem Θ(n).</li><li><b>Estratégia Beta (Algoritmo B):</b> Divide o problema em apenas 2 subproblemas recursivos de tamanho n/2, mas exige um processamento de combinação quadrático que consome tempo de execução de ordem Θ(n²).</li></ul><p>As equações de recorrência para os algoritmos A e B são dadas, respectivamente, por:</p><ul><li>T_A(n) = 4T_A(n/2) + Θ(n)</li><li>T_B(n) = 2T_B(n/2) + Θ(n²)</li></ul><p><b>COMANDO DA QUESTÃO</b></p><p>A partir da modelagem matemática das equações de recorrência de ambos os algoritmos e aplicando as definições e os casos do Teorema Mestre, analise as afirmações sobre a eficiência assintótica das duas estratégias propostas e assinale a alternativa correta:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Ambas as estratégias apresentam a mesma complexidade assintótica de pior caso T(n) = Θ(n²), indicando que os algoritmos possuem o mesmo comportamento de desempenho em escala, sendo indiferente a escolha técnica sob o ponto de vista de eficiência de hardware."
+    },
+    {
+     "l": "B",
+     "t": "A Estratégia Alfa é assintoticamente superior à Estratégia Beta, pois a recorrência T_A(n) = 4T_A(n/2) + Θ(n) resulta em complexidade de tempo de execução O(n log n) pelo Caso 2 do Teorema Mestre, enquanto a recorrência T_B(n) = 2T_B(n/2) + Θ(n²) resulta em complexidade quadrática O(n²)."
+    },
+    {
+     "l": "C",
+     "t": "A Estratégia Beta é assintoticamente superior à Estratégia Alfa, uma vez que realiza apenas 2 chamadas recursivas, gerando uma equação de recorrência que resulta em complexidade logarítmica O(log n) pelo Caso 2 do Teorema Mestre, enquanto o Algoritmo A apresenta complexidade cúbica O(n³)."
+    },
+    {
+     "l": "D",
+     "t": "A Estratégia Alfa apresenta complexidade exponencial T(n) = O(2ⁿ) pelo Caso 1 do Teorema Mestre, enquanto a Estratégia Beta apresenta complexidade polinomial T(n) = O(n⁴), evidenciando a instabilidade crítica de laços recursivos que dependem de divisões de escopo fracionárias."
+    }
+   ],
+   "cor": "A",
+   "just": "Alfa: a = 4, b = 2, n^(log₂ 4) = n², que domina f(n) = n → Caso 1, Θ(n²). Beta: a = 2, b = 2, n^(log₂ 2) = n, dominado por f(n) = n²; vale a regularidade (2(n/2)² = n²/2 ≤ ½·n²) → Caso 3, Θ(n²). Empate em Θ(n²) (A). B usa a fronteira errada para Alfa (n em vez de n²) e cai num falso Caso 2. C ignora que a combinação quadrática domina Beta e inventa O(n³) para Alfa. D fala em exponencial e n⁴, que não saem de nenhum caso do Teorema Mestre.",
+   "nota": "Mesma questão da Q5 dos slides do squad (Resumo de Complexidade, p. 12), com o mesmo gabarito (A). \"Indiferente sob o ponto de vista de eficiência de hardware\" é exagero na prática (constantes, cache), mas é a conclusão pretendida.",
+   "tags": [
+    "Complex.: Teorema Mestre"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q3",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>SITUAÇÃO-PROBLEMA</b></p><p>No desenvolvimento de algoritmos de ordenação para sistemas embarcados com limitações severas de hardware, a escolha do método adequado deve basear-se no conhecimento científico rigoroso dos limites assintóticos de tempo. Um programador precisa implementar o algoritmo clássico de ordenação por inserção (Insertion Sort) para ordenar um vetor de tamanho n contendo registros de telemetria. Sabendo que o vetor pode chegar em diferentes estados de pré-ordenação (crescente, decrescente ou aleatório), o programador modela o custo das operações fundamentais de comparação de chaves por meio de somatórios matemáticos.</p><p><b>DADOS DE SUPORTE</b></p><p>De acordo com Cormen et al. (2012), o algoritmo Insertion Sort possui tempo de execução dependente da ordenação inicial dos dados de entrada. O número de comparações executadas no laço interno varia conforme o estado do vetor.</p><p>Considere o código corrigido do Insertion Sort em C:</p><pre><code>void insertion_sort(int v[], int n) { int i, j, chave;\n    for (i = 1; i &lt; n; i++) {\n        chave = v[i];\n        j = i - 1;\n        while (j &gt;= 0 &amp;&amp; v[j] &gt; chave) {\n            v[j + 1] = v[j];\n            j = j - 1;\n        }\n        v[j + 1] = chave;\n    }\n}</code></pre><p>Considere também os limites de comparações expressos pelas seguintes somas analíticas:</p><ul><li>S_1 = Σ<sub>i=1</sub><sup>n−1</sup> 1</li><li>S_2 = Σ<sub>i=1</sub><sup>n−1</sup> i</li><li>S_3 = Σ<sub>i=1</sub><sup>n−1</sup> (i / 2)</li></ul><p><b>COMANDO DA QUESTÃO</b></p><p>A partir da interpretação das propriedades do algoritmo Insertion Sort e identificando os somatórios que regem cada cenário de pré-ordenação dos dados de entrada, assinale a alternativa que associa corretamente o cenário de desempenho de tempo à sua respectiva expressão de somatório e limite assintótico Big-O de pior caso, melhor caso ou caso médio:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "O Melhor Caso (Cenário A) é modelado pelo somatório S_1, resultando em uma complexidade de tempo linear O(n), enquanto o Pior Caso (Cenário B) é modelado pelo somatório S_2, resultando em uma complexidade quadrática O(n²)."
+    },
+    {
+     "l": "B",
+     "t": "O Caso Médio (Cenário C) é modelado pelo somatório S_2, resultando em uma complexidade de tempo linear O(n), ao passo que o Melhor Caso (Cenário A) é modelado pelo somatório S_3, resultando em uma complexidade quadrática O(n²)."
+    },
+    {
+     "l": "C",
+     "t": "O Pior Caso (Cenário B) é modelado pelo somatório S_1, resultando em uma complexidade de tempo quadrática O(n²), enquanto o Caso Médio (Cenário C) é modelado pelo somatório S_3, resultando em uma complexidade linear O(n)."
+    },
+    {
+     "l": "D",
+     "t": "O Melhor Caso (Cenário A) é modelado pelo somatório S_3, resultando em uma complexidade de tempo constante O(1), ao passo que o Pior Caso (Cenário B) é modelado pelo somatório S_1, resultando em uma complexidade exponencial O(2ⁿ)."
+    }
+   ],
+   "cor": "A",
+   "just": "Vetor já crescente (melhor caso): o while falha na 1ª comparação em cada uma das n − 1 iterações → S_1 = n − 1 = O(n). Vetor decrescente (pior caso): cada chave é comparada com todos os i anteriores → S_2 = n(n − 1)/2 = O(n²). Caso médio: cerca de metade disso, S_3 = n(n − 1)/4, ainda O(n²). B diz que S_2 é linear e põe S_3 no melhor caso. C põe S_1 (linear) no pior caso e chama S_3 de linear. D fala em melhor caso O(1) e pior caso exponencial, ambos errados.",
+   "nota": "⚠️ O enunciado cita \"Cenário A/B/C\" sem defini-los (provável resto de uma versão anterior). Não atrapalha, porque cada alternativa diz por extenso qual caso é.",
+   "tags": [
+    "Complex.: Algoritmos de ordenação",
+    "Complex.: Laços e somatórios (PA e PG)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q6",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>SITUAÇÃO-PROBLEMA</b></p><p>No desenvolvimento de drivers para dispositivos embarcados e sistemas de tempo real, loops mal formulados ou a escolha inadequada de laços de repetição podem comprometer a estabilidade do sistema, levando a travamentos ou consumo excessivo de energia. Um engenheiro de software precisa otimizar o algoritmo de processamento de dados que realiza a sincronização de múltiplos sensores industriais de telemetria. Sabendo que os laços iterativos podem apresentar limites de repetição variáveis e que sua análise deve ser apoiada por ferramentas matemáticas rigorosas para prever gargalos de latência, o profissional decide consolidar o conhecimento das propriedades dos laços iterativos estruturados e de sua modelagem por meio de somatórios clássicos.</p><p><b>DADOS DE SUPORTE</b></p><p>Conforme Cormen et al. (2012), a análise matemática de laços iterativos (laços sequenciais, laços aninhados independentes e laços triangularmente aninhados) baseia-se na tradução de suas estruturas de repetição em somatórios analíticos matemáticos de limites correspondentes, garantindo o rigor e a precisão assintótica na determinação de limites de pior caso de desempenho.</p><p>Considere os três trechos de algoritmos iterativos analisados pelo engenheiro para processar vetores ou matrizes de tamanho n:</p><p><b>1. Algoritmo Linear de Sincronização:</b></p><pre><code>for (int i = 0; i &lt; n; i++) {\n    processar_dados(i); // Custo constante Θ(1)\n}</code></pre><p><b>2. Algoritmo Triangular de Ajuste de Fase:</b></p><pre><code>for (int i = 0; i &lt; n; i++) {\n    for (int j = i + 1; j &lt; n; j++) {\n        ajustar_fase(i, j); // Custo constante Θ(1)\n    }\n}</code></pre><p><b>3. Algoritmo Logarítmico de Calibração:</b></p><pre><code>for (int i = 1; i &lt; n; i = i * 2) {\n    calibrar_sensor(i); // Custo constante Θ(1)\n}</code></pre><p><b>COMANDO DA QUESTÃO</b></p><p>Considerando as definições formais de tempo de execução, a representação matemática por meio de somatórios clássicos e os limites assintóticos de pior caso para os algoritmos iterativos apresentados, assinale a alternativa que apresenta uma análise de projeto ou afirmativa matemática <b>INCORRETA</b>:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A análise de tempo do Algoritmo 1 é modelada diretamente pelo somatório linear Σ<sub>i=0</sub><sup>n−1</sup> Θ(1), determinando que o tempo total de pior caso cresce em proporção direta ao tamanho da entrada n, sendo classificado de forma correta como de ordem linear Θ(n)."
+    },
+    {
+     "l": "B",
+     "t": "A análise de tempo do Algoritmo 2 é modelada matematicamente pelo somatório duplo triangular Σ<sub>i=0</sub><sup>n−1</sup> Σ<sub>j=i+1</sub><sup>n−1</sup> Θ(1), o qual, ao ser simplificado algebricamente, resulta em exatamente n(n−1)/2 iterações, caracterizando complexidade quadrática Θ(n²)."
+    },
+    {
+     "l": "C",
+     "t": "A análise de tempo do Algoritmo 3 é modelada por uma progressão geométrica onde a variável de controle do laço é multiplicada por 2, resultando em um limite de pior caso linear de ordem Θ(n) devido ao cancelamento dos termos de divisão de escopo sucessivos."
+    },
+    {
+     "l": "D",
+     "t": "A escolha inadequada de laços de repetição cujos critérios de parada dependem de dados não normalizados ou de suporte geram riscos graves de travamentos e degradação crítica de latência em sistemas reais, violando os compromissos de previsibilidade operacional."
+    }
+   ],
+   "cor": "C",
+   "just": "Questão negativa. C é a incorreta: i vale 1, 2, 4, 8, … enquanto i < n, ou seja, ⌈log₂ n⌉ iterações → Θ(log n), não Θ(n). A é correta: n iterações de custo constante → Θ(n). B é correta: Σ(n − 1 − i) = (n − 1) + … + 0 = n(n − 1)/2 → Θ(n²). D é uma afirmação qualitativa verdadeira (laços com critério de parada mal definido podem travar ou degradar a latência).",
+   "nota": "Pegadinha: \"progressão geométrica\" está certo para o Algoritmo 3 (os valores de i formam uma PG); o erro está em concluir Θ(n). Não confunda com o laço da Q10, em que uma PG de custos soma 2n − 1 = Θ(n).",
+   "tags": [
+    "Complex.: Laços e somatórios (PA e PG)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q8",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>SITUAÇÃO-PROBLEMA</b></p><p>No desenvolvimento de sistemas de software embarcado e de alta criticidade, a concepção de laços de repetição exige uma postura crítico-reflexiva por parte do engenheiro de software para antecipar possíveis cenários de gargalo temporal. Durante a análise analítica de um módulo de filtragem de dados de sensores compostos por n elements, um cientista da computação avalia o custo de processamento de um laço duplamente aninhado. O laço externo executa de forma sequencial de 1 até n, e o laço interno realiza operações de cálculo cuja iteração depende do índice do laço externo. Para garantir o rigor científico nas suposições de eficiência e afastar estimativas superficiais, o engenheiro traduz o fluxo lógico de controle em uma modelagem formal de contagem fundamentada em somatórios matemáticos.</p><p><b>DADOS DE SUPORTE</b></p><p>De acordo com Cormen et al. (2012), a análise de algoritmos iterativos aninhados de limites variáveis baseia-se na resolução de somatórios matemáticos clássicos para determinar os limites de pior caso. Considere o fragmento de código-fonte estruturado em linguagem C em que a variável n representa um valor inteiro positivo:</p><pre><code>for (int i = 1; i &lt;= n; i++) {\n    for (int j = 1; j &lt;= i; j++) {\n        processar_sinal(i, j); // Operação de custo constante Θ(1)\n    }\n}</code></pre><p><b>COMANDO DA QUESTÃO</b></p><p>Com base na análise analítica do fluxo de controle iterativo apresentado e aplicando os fundamentos matemáticos de somatórios, o número total de execuções da função interna <code>processar_sinal(i, j)</code> é modelado pela progressão aritmética dada pela expressão ____________ e o seu limite de tempo de execução no pior caso pertence à classe de complexidade assintótica de ordem ____________. Assinale a alternativa que preenche corretamente as lacunas da afirmação acima:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "n(n+1)/2 / Θ(n²)"
+    },
+    {
+     "l": "B",
+     "t": "n(n−1)/2 / Θ(n)"
+    },
+    {
+     "l": "C",
+     "t": "(n+1)/2 / Θ(n²)"
+    },
+    {
+     "l": "D",
+     "t": "n(n+1) / Θ(n³)"
+    }
+   ],
+   "cor": "A",
+   "just": "Para cada i de 1 a n, o laço interno roda i vezes: 1 + 2 + … + n = n(n + 1)/2 = 0,5n² + 0,5n → Θ(n²) (A). B usa a soma do laço triangular exclusivo (j de i+1 a n−1, como na Q6) e ainda classifica como linear. C toma a média (n + 1)/2 pelo total. D esquece de dividir por 2 e chama de cúbico um polinômio de grau 2.",
+   "nota": "\"n elements\" está assim (em inglês) no caderno.",
+   "tags": [
+    "Complex.: Laços e somatórios (PA e PG)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q9",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>SITUAÇÃO-PROBLEMA</b></p><p>No desenvolvimento de sistemas de software crítico de alto desempenho, como motores de bancos de dados relacionais e indexadores de busca web, a escolha adequada de estruturas lógicas de armazenamento e processamento de dados deve ser apoiada por análises teóricas rigorosas, recusando-se a confiar em estimativas superficiais ou intuições vagas. Durante a otimização de um microsserviço de análise de dados estruturados de larga escala, um cientista da computação precisa classificar e ordenar cinco algoritmos concorrentes em termos de eficiência de pior caso. O engenheiro aplica o Modelo de Knuth para modelar analiticamente a contagem exata das instruções críticas dominantes, obtendo cinco funções de custo de tempo de execução denominadas de T<sub>I</sub>(n) a T<sub>V</sub>(n).</p><p><b>DADOS DE SUPORTE</b></p><p>De acordo com Cormen et al. (2012), a modelagem matemática das classes de complexidade representada pela Notação Big-O permite abstrair o comportamento das funções de custo sob picos de carregamento de dados e prever formalmente os limites de tempo de execução quando o tamanho da entrada n cresce de forma ilimitada para o infinito. Considere as mais cinco funções de contagem de operações dominantes obtidas analiticamente para as instruções críticas de cada algoritmo, operando sob uma entrada de tamanho n (onde n ≥ 2):</p><ul><li><b>Algoritmo I:</b> T<sub>I</sub>(n) = 100n + 15</li><li><b>Algoritmo II:</b> T<sub>II</sub>(n) = log₂(n⁵)</li><li><b>Algoritmo III:</b> T<sub>III</sub>(n) = Σ<sub>i=1</sub><sup>n</sup> i</li><li><b>Algoritmo IV:</b> T<sub>IV</sub>(n) = n log₂(n³)</li><li><b>Algoritmo V:</b> T<sub>V</sub>(n) = 2ⁿ + n⁴</li></ul><p>Para fins de ordenação e seleção de projeto, os algoritmos devem ser listados em ordem crescente da taxa de crescimento de suas funções de complexidade assintótica de tempo de pior caso, ou seja, partindo do algoritmo de maior eficiência (menor taxa de crescimento) para o de menor eficiência (maior taxa de crescimento).</p><p><b>COMANDO DA QUESTÃO</b></p><p>A partir da simplificação analítica de cada modelo de contagem estruturado e aplicando as definições formais de limites assintóticos da Notação Big-O, assinale a alternativa que apresenta a ordenação correta das funções de custo de tempo, do algoritmo mais eficiente ao menos eficiente:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "II – I – IV – III – V, representando as classes de complexidade Θ(log n), Θ(n), Θ(n log n), Θ(n²) e Θ(2ⁿ), do mais eficiente ao menos eficiente."
+    },
+    {
+     "l": "B",
+     "t": "II – IV – I – III – V, representando as classes de complexidade Θ(log n), Θ(n log n), Θ(n), Θ(n²) e Θ(2ⁿ), do mais eficiente ao menos eficiente."
+    },
+    {
+     "l": "C",
+     "t": "I – II – IV – III – V, representando as classes de complexidade Θ(n), Θ(log n), Θ(n log n), Θ(n²) e Θ(2ⁿ), do mais eficiente ao menos eficiente."
+    },
+    {
+     "l": "D",
+     "t": "II – I – III – IV – V, representando as classes de complexidade Θ(log n), Θ(n), Θ(n²), Θ(n log n) e Θ(2ⁿ), do mais eficiente ao menos eficiente."
+    }
+   ],
+   "cor": "A",
+   "just": "Simplificando: log₂(n⁵) = 5 log₂ n → Θ(log n); 100n + 15 → Θ(n); n log₂(n³) = 3n log₂ n → Θ(n log n); Σ i = n(n + 1)/2 → Θ(n²); 2ⁿ + n⁴ → Θ(2ⁿ). Ordem: II – I – IV – III – V (A). B põe n log n abaixo de n; C põe n abaixo de log n; D põe n² abaixo de n log n (quem não simplifica log₂(n³) pode achar que IV cresce mais).",
+   "nota": "Mesma questão da Q3 dos slides do squad (Resumo de Complexidade, p. 8), mesmo gabarito (A). Para n pequeno, a ordem numérica é outra (3n log₂ n só passa 100n + 15 perto de n ≈ 10¹⁰), mas a questão pede a taxa de crescimento com n → ∞. \"as mais cinco funções\" está assim no caderno.",
+   "tags": [
+    "Complex.: Escala de crescimento e dominância"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q10",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>SITUAÇÃO-PROBLEMA</b></p><p>Uma equipe de desenvolvimento está otimizando um algoritmo de compressão de imagens em tons de cinza para dispositivos de Internet das Coisas (IoT), que possuem restrições rígidas de consumo de energia e memória. Um dos submódulos críticos reduz sequencialmente a resolução de uma matriz de pixels de tamanho n (onde n é uma potência de 2) através de um laço de repetição aninhado. Para evitar estimativas vagas e intuitivas, os engenheiros precisam analisar matematicamente a contagem exata das instruções críticas executadas, garantindo que o tempo de resposta se mantenha dentro de limites estáveis e escaláveis para a infraestrutura do backend.</p><p><b>DADOS DE SUPORTE</b></p><p>De acordo com Cormen et al. (2012), a análise matemática de laços aninhados com dependências de controle exige a modelagem analítica da soma acumulada de suas iterações, expressa na forma de somatórios matemáticos ou séries geométricas decrescentes.</p><p>Considere o seguinte trecho de código-fonte estruturado em linguagem C em que n representa o tamanho do vetor de pixels de entrada:</p><pre><code>int processar_matriz(int n) {\n    int count = 0;\n    for (int i = n; i &gt; 0; i /= 2) {\n        for (int j = 0; j &lt; i; j++) {\n            count++; // Operação crítica de custo constante Θ(1)\n        }\n    }\n    return count;\n}</code></pre><p>Considere também a fórmula da soma de uma progressão geométrica (PG) finita de razão q ≠ 1: S<sub>k</sub> = a<sub>1</sub> · (1 − q<sup>k</sup>) / (1 − q)</p><p><b>COMANDO DA QUESTÃO</b></p><p>A partir da análise do fluxo lógico de repetição do algoritmo e aplicando as propriedades matemáticas de séries geométricas, assinale a alternativa que apresenta a simplificação fechada exata do número de operações críticas realizadas e sua respectiva classificação assintótica de pior caso:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A contagem exata é expressa por 2n − 1 operações críticas, estabelecendo uma classe de complexidade de tempo linear de ordem Θ(n)."
+    },
+    {
+     "l": "B",
+     "t": "A contagem exata é expressa por n log₂ n operações críticas, estabelecendo uma classe de complexidade de tempo linearítmica de ordem Θ(n log n)."
+    },
+    {
+     "l": "C",
+     "t": "A contagem exata é expressa por n(n+1)/2 operações críticas, estabelecendo uma classe de complexidade de tempo quadrática de ordem Θ(n²)."
+    },
+    {
+     "l": "D",
+     "t": "A contagem exata é expressa por 2ⁿ − 1 operações críticas, estabelecendo uma classe de complexidade de tempo exponencial de ordem Θ(2ⁿ)."
+    }
+   ],
+   "cor": "A",
+   "just": "i assume n, n/2, n/4, …, 1 (log₂ n + 1 valores) e o laço interno roda i vezes: n + n/2 + … + 1 é uma PG com a₁ = n, q = 1/2 e k = log₂ n + 1 termos, que soma n·(1 − 1/(2n))/(1/2) = 2n − 1 → Θ(n) (A). Ex.: n = 8 → 8 + 4 + 2 + 1 = 15 = 2·8 − 1. B multiplica log n iterações externas por n internas, ignorando que o interno encolhe. C aplica a soma de Gauss do laço triangular. D confunde a divisão por 2 com crescimento exponencial.",
+   "nota": "Mesma questão da Q4 dos slides do squad (Resumo de Complexidade, p. 10), mesmo gabarito (A).",
+   "tags": [
+    "Complex.: Laços e somatórios (PA e PG)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q12",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>SITUAÇÃO-PROBLEMA</b></p><p>No projeto de algoritmos e estruturas de dados de alta performance, a compreensão das dimensões quantitativas e dos limites teóricos de complexidade é indispensável para subsidiar decisões técnicas maduras de desenvolvimento de software. Um engenheiro de software precisa projetar um algoritmo para processar grandes volumes de dados corporativos de suporte de tamanho n. Para isso, ele modela analiticamente dois algoritmos concorrentes e obtém duas funções de custo temporal: f(n) = n² e g(n) = n log₂ n. Ao avaliar a eficiência de longo prazo das soluções sob picos críticos de processamento, o engenheiro deve classificar esses algoritmos em categorias de tempo utilizando as definições formais de limites assintóticos fornecidas pela Notação Big-O.</p><p><b>DADOS DE SUPORTE</b></p><p>De acordo com Cormen et al. (2012), a Notação Big-O estabelece uma ferramenta analítica fundamental para classificar o crescimento relativo de funções matemáticas. Do ponto de vista conceitual, dizemos que f(n) = O(g(n)) se existirem constantes positivas c e n₀ tais que 0 ≤ f(n) ≤ c · g(n) para todo n ≥ n₀. Esse formalismo é essencial para que o estudante de computação abandone intuições vagas ou estimativas superficiais e busque rigor e precisão científica em suas suposições de engenharia de software.</p><p>Considere as duas asserções a seguir e a relação proposta entre elas:</p><p><b>I.</b> A função de complexidade temporal quadrática f(n) = n² é limitada assintoticamente de forma superior pela classe O(n log₂ n), ou seja, f(n) = O(n log₂ n),</p><p><b>PORQUE</b></p><p><b>II.</b> para valores suficientemente grandes de n, a função de crescimento linearítmico g(n) = n log₂ n domina de maneira estrita a função quadrática f(n) = n² à medida que o tamanho da entrada cresce em direção ao infinito, satisfazendo a desigualdade n² ≤ c · (n log₂ n) para alguma constante real positiva c.</p><p><b>COMANDO DA QUESTÃO</b></p><p>A respeito dessas asserções, assinale a opção correta:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "As asserções I e II são proposições falsas."
+    }
+   ],
+   "cor": "D",
+   "just": "n²/(n log₂ n) = n/log₂ n → ∞, então nenhuma constante c garante n² ≤ c · n log₂ n para todo n grande: I é falsa. II inverte a dominância: é n² que domina n log₂ n, e não o contrário — também falsa. Logo D. A e B aceitam duas proposições falsas; C aceita a I por intuição e só percebe o erro da II.",
+   "nota": "Mesma questão da Q1 dos slides do squad (Resumo de Complexidade, p. 4), mesmo gabarito (D). Atenção: as alternativas fogem do padrão ENADE (não há \"I falsa e II verdadeira\"). Versão alterada provável: \"I. n log₂ n = O(n²) PORQUE II. n² domina n log₂ n\" deixa as duas verdadeiras, com a II justificando a I.",
+   "tags": [
+    "Complex.: Notações O, Ω e Θ",
+    "Complex.: Escala de crescimento e dominância"
+   ]
+  },
+  {
+   "ref": "Exemplo do professor (Estrutura de Questões sob o padrão do ENADE, p. 9)",
+   "origem": "professor",
+   "tipo": "mc",
+   "enun": "<p><b>Situação-Problema:</b></p><p>Um desenvolvedor precisa implementar um mecanismo de busca de usuários em uma plataforma de streaming. O sistema armazena uma lista de <b>1.048.576 usuários</b> ordenados alfabeticamente pelo ID. Para otimizar o tempo de resposta, o desenvolvedor optou por utilizar o algoritmo de <b>Busca Binária</b> para localizar um ID específico.</p><p><b>Comando:</b></p><p>No <b>pior cenário possível</b>, qual é o número máximo de comparações que o algoritmo realizará para encontrar o usuário ou determinar que ele não está na lista?</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "1.048.576 comparações."
+    },
+    {
+     "l": "B",
+     "t": "524.288 comparações."
+    },
+    {
+     "l": "C",
+     "t": "20 comparações."
+    },
+    {
+     "l": "D",
+     "t": "10 comparações."
+    }
+   ],
+   "cor": "C",
+   "just": "A busca binária corta o intervalo pela metade a cada comparação, então o pior caso é da ordem de log₂ n; como 2²⁰ = 1.048.576, log₂(1.048.576) = 20 (C). A (n) é o pior caso da busca linear. B (n/2) aplica a divisão ao meio uma vez só. D vem de confundir com log₁₀ (10⁶ → 6) ou com 2¹⁰, ou de dividir 20 por 2.",
+   "nota": "Pela contagem rigorosa, a busca binária faz ⌊log₂ n⌋ + 1 = 21 comparações no pior caso; o 20 do gabarito segue o modelo log₂ n. Como 21 não está entre as alternativas, C é a única aceitável. Não caiu no Simulado 1 (a Q24 do simulado só cita a busca binária numa associação de colunas).",
+   "tags": [
+    "Complex.: Busca linear e busca binária"
+   ]
+  }
+ ],
+ "dissertativas": [],
+ "observacoes": "Caderno com 12 questões e gabarito oficial; todos os gabaritos conferidos de forma independente, sem divergências. O pdftotext perdeu os símbolos Θ e Σ e os expoentes (\"(n2)\", \"i=1n-1 i\"); restaurei pelo PDF renderizado (Θ, Σ, n², 2ⁿ, log₂). As 6 questões dos slides do squad (reais-1..6) são as mesmas do caderno: Slides Q1 = Caderno Q12, Q2 = Q11, Q3 = Q9, Q4 = Q10, Q5 = Q2, Q6 = Q4. Todas com as mesmas letras; entraram só pelo caderno, e Slides Q2 e Q6 ficaram de fora junto com Caderno Q11 e Q4, que caíram no Simulado 1. O exemplo do professor (busca binária com 2²⁰ usuários, reais-7) não caiu no simulado e entrou como origem \"professor\". Pequenos defeitos no caderno: a Q3 cita \"Cenário A/B/C\" sem defini-los; a Q8 traz \"n elements\" e a Q9 \"as mais cinco funções\". O Manual e o Resumo de Complexidade não trazem outras questões; não há figuras nem discursivas no tópico."
+}

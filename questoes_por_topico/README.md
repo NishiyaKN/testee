@@ -10,6 +10,7 @@ Os gabaritos foram conferidos de forma independente: cálculos refeitos e autôm
 
 > **Também neste repositório:**
 > - [`../questoes_inferidas/`](../questoes_inferidas/README.md): questões **inferidas** para os subtópicos sem questão conhecida (não constam no material);
+> - [`../simulado2-enade-2026.html`](../simulado2-enade-2026.html): **preparação para o Simulado 2**, um arquivo só que abre no navegador e funciona offline. Tem as objetivas dos squads que não caíram no Simulado 1, a Formação Geral dos temas do ENADE Talks de 11/11 e as dissertativas. As fontes e o script de montagem estão em [`../simulado2-dados/`](../simulado2-dados/README.md).
 > - [`../treino-enade-2026.html`](../treino-enade-2026.html): quiz interativo com as reais e as inferidas (abra no navegador).
 > - [`../guia-estudos-enade-2026.html`](../guia-estudos-enade-2026.html): guia de estudos resumido por tópico, com menu em árvore e feito para o celular.
 

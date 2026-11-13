@@ -1,0 +1,115 @@
+{
+ "topico": "02 · Estruturas de Dados",
+ "slug": "ed",
+ "excluidas_simulado1": [
+  {
+   "banco": "Caderno Q2 (pilhas Desfazer/Refazer, ordenação 2–4–3–1)",
+   "simulado": "Q4",
+   "motivo": "mesma situação e comando; alternativas reordenadas (no caderno a correta é C; no Simulado, A)."
+  },
+  {
+   "banco": "Caderno Q3 (BST, AVL e rubro-negra, afirmativas I–IV)",
+   "simulado": "Q20",
+   "motivo": "mesmo texto e afirmativas; alternativas reordenadas (caderno B; Simulado C)."
+  },
+  {
+   "banco": "Caderno Q6 (BFS × DFS, grau de conexão, asserção-razão)",
+   "simulado": "Q6",
+   "motivo": "mesmo texto; alternativas em outra ordem (caderno D; Simulado B)."
+  }
+ ],
+ "questoes": [
+  {
+   "ref": "Caderno do squad: Q1",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>QUESTÃO 1 — Listas Encadeadas</b></p><p><b>SITUAÇÃO-PROBLEMA</b></p><p>Uma equipe está implementando o mecanismo de uma playlist dinâmica na qual o usuário pode remover, a qualquer momento, a faixa atualmente selecionada. A aplicação mantém sempre um ponteiro direto para o nó correspondente à faixa selecionada. A equipe precisa decidir entre implementar a playlist com uma lista simplesmente encadeada ou com uma lista duplamente encadeada, priorizando o menor custo para a operação de remoção dessa faixa.</p><p><b>DADOS DE SUPORTE</b></p><pre><code>// Nó de lista simplesmente encadeada\ntypedef struct No {\n    int        dado;\n    struct No *prox;         // referência ao próximo nó\n} No;\n\n// Nó de lista duplamente encadeada\ntypedef struct NoD {\n    int         dado;\n    struct NoD *ant, *prox; // referências ao anterior e ao próximo\n} NoD;</code></pre><p><b>COMANDO</b></p><p>Considerando os custos das operações em listas encadeadas, avalie as asserções a seguir e a relação proposta entre elas.</p><p>I. Para remover em tempo O(1) a faixa selecionada, da qual já se dispõe do ponteiro para o nó, a lista duplamente encadeada é mais adequada que a simplesmente encadeada.</p><p><b>PORQUE</b></p><p>II. Na lista duplamente encadeada cada nó mantém referências para o nó anterior e para o próximo, permitindo reconectar os vizinhos do nó removido sem percorrer a lista em busca do antecessor.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é verdadeira, e a II é falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é falsa, e a II é verdadeira."
+    }
+   ],
+   "cor": "A",
+   "just": "I é verdadeira: com o ponteiro para o nó, a lista dupla remove em O(1) (p-&gt;ant-&gt;prox = p-&gt;prox; p-&gt;prox-&gt;ant = p-&gt;ant), enquanto a simples precisa percorrer a lista para achar o antecessor, O(n). II é verdadeira: cada nó da lista dupla guarda anterior e próximo. E II justifica I, pois é justamente o ponteiro ant que permite religar os vizinhos sem busca. B nega esse nexo causal; C declara falsa uma descrição correta da lista dupla; D supõe que remover é sempre O(n), qualquer que seja a estrutura.",
+   "nota": "Na versão anterior (Questoes_ENADE_Estruturas_de_Dados.pdf e slides) havia uma 5ª alternativa E (\"As asserções I e II são falsas\"); o gabarito novo tem 4 alternativas e a letra A não muda. Truque da lista simples (copiar o dado do sucessor e removê-lo) também é O(1), mas falha no último nó e invalida ponteiros externos — não muda o gabarito.",
+   "tags": [
+    "ED: Listas encadeadas"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q4",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>QUESTÃO 4 — Tabela Hash e Colisões</b></p><p><b>SITUAÇÃO-PROBLEMA</b></p><p>Um desenvolvedor implementa uma tabela hash para armazenar pares chave-valor em uma aplicação com alto volume de consultas. Ele analisa o papel da função hash, do fator de carga e das técnicas de tratamento de colisões.</p><p><b>COMANDO</b></p><p>Sobre tabelas hash e o tratamento de colisões, assinale a alternativa <b>INCORRETA</b>:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "No tratamento por encadeamento separado, cada posição da tabela referencia uma lista que reúne todas as chaves que colidiram naquele índice."
+    },
+    {
+     "l": "B",
+     "t": "O fator de carga é a razão entre o número de elementos armazenados e o número de posições da tabela, e o seu aumento tende a elevar o número de colisões."
+    },
+    {
+     "l": "C",
+     "t": "Uma função hash bem projetada distribui as chaves de maneira uniforme pelas posições, reduzindo a probabilidade de colisões."
+    },
+    {
+     "l": "D",
+     "t": "Com uma função hash adequada, a busca em uma tabela hash tem custo O(log n) no caso médio, pois as chaves são mantidas internamente ordenadas para permitir busca binária."
+    }
+   ],
+   "cor": "D",
+   "just": "Pede-se a INCORRETA. D erra duas vezes: a busca em tabela hash é O(1) no caso médio (O(n) no pior, com todas as chaves colidindo), e a tabela não mantém chaves ordenadas nem faz busca binária — ela calcula o índice pela função hash; ordenação e O(log n) são características de árvores balanceadas. A (encadeamento separado: uma lista por posição), B (fator de carga α = n/m; quanto maior, mais colisões) e C (distribuição uniforme reduz colisões) são verdadeiras.",
+   "nota": "Atenção ao comando negativo (INCORRETA). Versão alterada provável: trocar \"O(log n)\" por \"O(1)\" e retirar a parte da ordenação — então D vira verdadeira e é preciso procurar outro erro.",
+   "tags": [
+    "ED: Tabela hash e colisões"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q5",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>QUESTÃO 5 — Grafos: Matriz e Lista de Adjacência</b></p><p><b>SITUAÇÃO-PROBLEMA</b></p><p>Ao modelar diferentes sistemas como grafos, um analista precisa escolher a representação mais adequada — matriz de adjacência ou lista de adjacência — conforme a densidade do grafo e as operações mais frequentes.</p><p><b>COMANDO</b></p><p>Relacione cada necessidade da Coluna 1 à representação de grafos mais adequada, descrita na Coluna 2.</p><table><thead><tr><th>Coluna 1 — Necessidade</th><th>Coluna 2 — Representação adequada (e razão)</th></tr></thead><tbody><tr><td>1. Consultar em tempo O(1) se existe a aresta entre dois vértices dados.</td><td>( ) Lista de adjacência — o espaço cresce com O(V + E), evitando desperdício.</td></tr><tr><td>2. Minimizar o uso de memória em um grafo esparso (poucas arestas).</td><td>( ) Lista de adjacência — percorre-se apenas a lista do próprio vértice, em O(grau(v)).</td></tr><tr><td>3. Iterar eficientemente sobre os vizinhos de um vértice.</td><td>( ) Matriz de adjacência — o acesso direto à célula [u][v] responde em O(1).</td></tr></tbody></table><p>Assinale a alternativa com a associação correta, de cima para baixo:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "1 – 2 – 3"
+    },
+    {
+     "l": "B",
+     "t": "2 – 3 – 1"
+    },
+    {
+     "l": "C",
+     "t": "3 – 2 – 1"
+    },
+    {
+     "l": "D",
+     "t": "1 – 3 – 2"
+    }
+   ],
+   "cor": "B",
+   "just": "De cima para baixo: espaço O(V + E) é o que economiza memória em grafo esparso (2); percorrer só a lista do vértice em O(grau(v)) é iterar sobre os vizinhos (3); acesso direto à célula [u][v] em O(1) é a consulta de aresta (1) — logo 2 – 3 – 1. A (1 – 2 – 3) erra as três lacunas. C (3 – 2 – 1) acerta só a matriz e troca entre si as duas vantagens da lista. D (1 – 3 – 2) acerta só a segunda lacuna e associa a matriz, que gasta O(V²), à economia de memória.",
+   "nota": "A justificativa antiga (Questoes_ENADE_Estruturas_de_Dados.pdf) dizia que a C \"desloca a matriz de posição\", o que é falso — em 3 – 2 – 1 a matriz continua certa; o gabarito novo corrigiu. Gabarito B nas duas versões.",
+   "tags": [
+    "ED: Representação de grafos (matriz × lista)"
+   ]
+  }
+ ],
+ "dissertativas": [],
+ "observacoes": "Fontes conferidas: Questoes_ENADE_Estruturas_de_Dados.pdf, Apresentacao_Questoes_ENADE (1).pdf e o gabarito novo (ESTRUTURAS_DE_DADOS - GABARITO (1)). As três trazem o mesmo texto e o mesmo gabarito (1 A, 2 C, 3 B, 4 D, 5 B, 6 D). Diferença: nas versões antigas as asserção-razão (Q1 e Q6) tinham 5 alternativas (E: \"ambas falsas\"); o gabarito novo usa 4 (A–D), sem mudar as letras. Usado o texto do gabarito novo (4 alternativas). Gabaritos refeitos de forma independente: sem divergência. O Material_Estruturas_de_Dados.pdf não contém questões (e o texto não é extraível por pdftotext; já registrado no banco anterior que são 18 páginas só de teoria). Sem discursivas no tópico. Nenhuma figura necessária."
+}

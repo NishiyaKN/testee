@@ -1,0 +1,627 @@
+{
+ "topico": "07 · Redes de Computadores",
+ "slug": "redes",
+ "excluidas_simulado1": [
+  {
+   "banco": "Caderno Q5 (= Slides \"Questão 5\")",
+   "simulado": "Q11",
+   "motivo": "Mesma questão de associação: encapsulamento TCP/IP e PDUs da requisição HTTP POST (texto idêntico, gabarito D)."
+  },
+  {
+   "banco": "Caderno Q12",
+   "simulado": "Q28",
+   "motivo": "Mesma questão: MitM em roteador de ISP entre matriz SP e filial RJ, firewalls stateful nas pontas; solução VPN IPsec (texto idêntico, gabarito D)."
+  }
+ ],
+ "questoes": [
+  {
+   "ref": "Caderno do squad: Q1 (Interpretação)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"Os switches segmentam a rede em múltiplos domínios de colisão, estabelecendo um domínio de colisão individual por porta. [...] Diferentemente dos hubs e repetidores, que operam na camada física encaminhando bits para todas as interfaces simultaneamente, um switch opera na camada de enlace filtrando e encaminhando quadros (frames) baseando-se no endereço MAC de destino impresso no cabeçalho. Já os roteadores vão além: operando na camada de rede, eles limitam não apenas os domínios de colisão, mas também os domínios de broadcast, delimitando fronteiras de sub-redes lógicas.\" (Fonte: KUROSE, James F.; ROSS, Keith W. Redes de Computadores e a Internet: Uma Abordagem Top-Down. 6ª ed. São Paulo: Pearson Education do Brasil, 2013. p. 331-334. Adaptado.)</p><p><b>Situação-Problema (Enunciado):</b> Considere a infraestrutura de rede do laboratório de pesquisas de uma universidade. Atualmente, 50 estações de trabalho estão interconectadas a um único equipamento central \"X\". O monitoramento de desempenho constatou uma drástica degradação na rede: a taxa de colisões de quadros (acionando constantemente o algoritmo de recuo exponencial do CSMA/CD) chegou a 45% do tráfego total.</p><p>Preocupada, a direção administrativa sugeriu trocar o equipamento \"X\" por um \"Hub Enterprise Class 1000BASE-T\" de uma marca famosa, acreditando intuitivamente que a compra do equipamento mais rápido e caro resolveria o gargalo, independentemente de sua arquitetura lógica. Como requisito técnico inegociável, o administrador de redes definiu que todas as estações de trabalho devem obrigatoriamente permanecer na mesma sub-rede lógica IP (ou seja, no mesmo domínio de broadcast) para não quebrar a comunicação de um software de simulação científica utilizado no laboratório.</p><p><b>Comando:</b> Com base no texto de apoio, nos preceitos de arquitetura do Modelo de Referência OSI e exigindo rigor técnico na escolha que rejeite argumentos puramente comerciais, analise o cenário apresentado e avalie qual é a decisão de projeto tecnicamente adequada para substituir o equipamento \"X\":</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Substituir o equipamento central por um novo Hub Gigabit Ethernet. Embora opere apenas na Camada Física (L1), o aumento exponencial na velocidade de transmissão isola falhas e reduz o domínio de colisão geral da rede."
+    },
+    {
+     "l": "B",
+     "t": "Substituir o equipamento central por um Switch Ethernet. Operando na Camada de Enlace (L2), este dispositivo encaminha quadros com base no endereço MAC, dividindo a rede em múltiplos domínios de colisão distintos."
+    },
+    {
+     "l": "C",
+     "t": "Substituir o equipamento central por um Roteador de Borda. Operando na Camada de Rede (L3), este equipamento realiza o isolamento de tráfego por endereços IP, mantendo todos obrigatoriamente no mesmo domínio de broadcast."
+    },
+    {
+     "l": "D",
+     "t": "Substituir o equipamento central por uma cascata de novos Hubs. Essa decisão, comercialmente otimizada, garante a vazão de rede sem necessitar de custoso processamento de cabeçalhos lógicos na Camada de Enlace do modelo OSI."
+    }
+   ],
+   "cor": "B",
+   "just": "O switch (L2) comuta quadros pelo MAC de destino e cria um domínio de colisão por porta, eliminando as colisões do CSMA/CD; como não bloqueia broadcast (FF:FF:FF:FF:FF:FF é inundado), as 50 estações continuam no mesmo domínio de broadcast, como exige o requisito. A está errada: hub, por mais rápido, é L1 e mantém um único domínio de colisão. C está errada: o roteador separa domínios de broadcast (sub-redes distintas), violando o requisito. D está errada: hubs em cascata ampliam o domínio de colisão e pioram o problema.",
+   "nota": "Mesma questão dos slides do squad (Preparatório ENADE 2026, \"Questão 1\"), com o mesmo gabarito B. Só 4 alternativas. ⚠️ O gabarito do Simulado 1 aponta \"#ID 1\" para a Q3 do simulado, mas a Q3 do simulado é outra questão (máscara para 4 sub-redes de 192.168.1.0/24); por conteúdo, esta questão NÃO caiu no Simulado 1. Tema parecido com a questão comentada do Manual (troca de hubs por switches), incluída no fim.",
+   "tags": [
+    "Redes: Equipamentos, topologias, domínios e VLANs"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q2 (Asserção-Razão)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"Para limitar o número de adjacências e o tráfego de roteamento associado em redes de difusão (broadcast) e de acesso múltiplo, os protocolos de roteamento de estado de enlace não exigem que os roteadores formem adjacências uns com os outros. Em vez disso, a rede elege um nó centralizador para atuar como ponto de coleta e distribuição topológica. [...] O funcionamento eficiente do algoritmo de roteamento depende intimamente das características da camada subjacente.\"</p><p>(Fonte: TANENBAUM, Andrew S.; WETHERALL, David J. Redes de Computadores. 5ª ed. São Paulo: Pearson Prentice Hall, 2011. p. 302-305. Adaptado.)</p><p><b>Situação-Problema (Enunciado):</b></p><p>O arquiteto de redes de uma infraestrutura corporativa distribuída em múltiplos segmentos decidiu unificar o roteamento do datacenter interno. Nesse cenário, existem 15 roteadores de borda de diferentes departamentos que estão fisicamente interconectados a um único Switch Core Gigabit Ethernet. O arquiteto decidiu implementar o protocolo de roteamento OSPF (estado de enlace) em todos eles para garantir uma convergência rápida. Ao configurar a rede, um estagiário questionou por que os roteadores não estavam trocando atualizações diretamente com todos os outros 14 pares, mas sim se comunicando majoritariamente com apenas um roteador específico daquele segmento.</p><p>Com base no texto de apoio, nos preceitos técnicos de protocolos de roteamento e no comportamento da camada de enlace, analise e avalie a relação lógica entre as duas asserções a seguir elaboradas pelo arquiteto para responder ao estagiário:</p><p>I. Na rede corporativa descrita, a implementação do protocolo de roteamento OSPF sobre o segmento Ethernet exige o processo de eleição de um Roteador Designado (DR) e um Roteador Designado de Backup (BDR) para coordenar a troca de rotas.</p><p><b>PORQUE</b></p><p>II. A camada de enlace subjacente opera como um meio de acesso múltiplo com suporte a broadcast, o que ocasionaria uma inundação de tráfego quadrática insustentável de mensagens de estado de enlace (LSAs) caso cada roteador formasse adjacência direta com todos os demais.</p><p><b>Comando:</b></p><p>Avaliando a validade técnica das afirmações e exigindo rigor lógico para não aceitar justificativas desconexas, assinale a alternativa que apresenta a correlação correta entre a Asserção I e a Asserção II:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II constituem proposições tecnicamente verdadeiras, e a asserção II é uma justificativa técnica rigorosa e correta para a asserção I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II constituem proposições tecnicamente verdadeiras, mas a asserção II não é uma justificativa técnica rigorosa e correta para a I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I constitui uma proposição tecnicamente verdadeira, ao passo que a asserção II consiste em uma proposição técnica integralmente falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I constitui uma proposição tecnicamente falsa, ao passo que a asserção II consiste em uma proposição técnica integralmente verdadeira."
+    }
+   ],
+   "cor": "A",
+   "just": "I é verdadeira: em segmentos Ethernet (broadcast multiaccess), o OSPF elege DR e BDR, e os demais roteadores formam adjacência plena só com eles. II é verdadeira e é a causa: sem DR, 15 roteadores formariam n(n−1)/2 = 105 adjacências, inundando LSAs de forma quadrática. Por isso a II justifica a I (A). B erra ao negar a relação causal; C erra ao julgar falsa a II; D erra ao negar a eleição de DR/BDR, comportamento padrão do OSPF nesse tipo de enlace.",
+   "nota": "Só 4 alternativas (falta a clássica \"I e II falsas\"). Pegadinha de versão alterada: em enlaces ponto a ponto o OSPF NÃO elege DR/BDR.",
+   "tags": [
+    "Redes: Roteamento (prefixo mais longo, OSPF/RIP, BGP)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q3 (Ordenação)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"Para estabelecer uma conexão, o TCP utiliza um procedimento de três vias (three-way handshake). Primeiramente, o cliente envia um segmento de controle sem dados, contendo a flag SYN. Em seguida, o servidor aloca buffers e variáveis, respondendo com um segmento de controle contendo as flags SYN e ACK. Por fim, o cliente aloca seus próprios recursos e confirma a resposta do servidor com um segmento ACK, o qual, mediante a especificação do protocolo, já pode carregar dados de aplicação no mesmo pacote.\" (Fonte: KUROSE, James F.; ROSS, Keith W. Redes de Computadores e a Internet: Uma Abordagem Top-Down. 6ª ed. São Paulo: Pearson Education do Brasil, 2013. p. 159-161. Adaptado.)</p><p><b>Situação-Problema (Enunciado):</b> Um engenheiro de software está depurando o tráfego de rede de uma nova aplicação financeira cliente-servidor que exige alta confiabilidade. Para garantir que as transações ocorram sem erros, ele utiliza um analisador de protocolos (Wireshark) para inspecionar a troca de pacotes exata que ocorre no início de uma sessão antes que qualquer transação bancária seja efetivada. A captura revelou os seguintes eventos não ordenados ocorrendo entre a máquina do usuário (cliente) e o datacenter (servidor):</p><p>I. O TCP do cliente, acionado pela aplicação, gera um segmento sem carga útil, definindo um número de sequência inicial aleatório e ativando a flag SYN, enviando-o pela rede.</p><p>II. O TCP do servidor extrai os primeiros bytes de dados financeiros recebidos após a confirmação e os entrega à camada de aplicação de destino para processamento.</p><p>III. O TCP do servidor processa o pedido inicial, aloca os buffers locais da conexão e responde com um segmento contendo as flags SYN e ACK ativadas e seu próprio número de sequência.</p><p>IV. O TCP do cliente recebe a resposta, finaliza a alocação de seus buffers e envia ao servidor um segmento com a flag ACK ativada, carregando consigo os primeiros dados da transação.</p><p><b>Comando:</b> Com base no texto de apoio, no rigor técnico da especificação da camada de transporte e na necessidade de analisar cronologicamente o protocolo TCP (evitando intuições superficiais), assinale a alternativa que apresenta a ordem técnica e temporal correta dos eventos que concretizam o estabelecimento da conexão e o início da transferência de dados:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A sequência correta é I, III, IV e II. O cliente inicia enviando o SYN; o servidor responde com SYN/ACK; o cliente finaliza o handshake enviando o ACK com os dados; e o servidor processa a aplicação."
+    },
+    {
+     "l": "B",
+     "t": "A sequência correta é I, IV, III e II. O cliente envia o SYN e logo envia o ACK com seus dados; o servidor responde com SYN/ACK; e por fim o servidor extrai e entrega os dados para sua aplicação."
+    },
+    {
+     "l": "C",
+     "t": "A sequência correta é III, I, IV e II. O servidor inicia alocando buffers e envia SYN/ACK; o cliente confirma com SYN; depois o cliente manda o ACK com os dados; e o servidor os processa."
+    },
+    {
+     "l": "D",
+     "t": "A sequência correta é I, III, II e IV. O cliente inicia enviando o SYN; o servidor responde com SYN/ACK; o servidor extrai e processa dados pendentes; e o cliente finaliza a transação com um ACK."
+    }
+   ],
+   "cor": "A",
+   "just": "O handshake é SYN do cliente (I), SYN-ACK do servidor (III) e ACK do cliente, que já pode levar dados (IV); só depois o servidor entrega esses dados à aplicação (II): I, III, IV, II. B põe o ACK antes do SYN-ACK que ele confirma. C começa pelo SYN-ACK, mas o servidor apenas escuta (abertura passiva) e nunca envia SYN-ACK sem um SYN prévio. D faz o servidor processar dados antes de o cliente enviá-los.",
+   "nota": "As alternativas trazem a explicação embutida; numa versão alterada podem vir só as sequências. Só 4 alternativas.",
+   "tags": [
+    "Redes: Transporte (TCP e UDP)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q4 (Asserção-Razão)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"Em ambientes corporativos, o padrão 802.11 operando no modo Enterprise (como WPA2 ou WPA3) fornece segurança robusta ao utilizar o framework IEEE 802.1X. Nesse cenário, o Ponto de Acesso (AP) não possui inteligência para tomar a decisão de acesso. Ele atua puramente como um intermediário (Autenticador) que bloqueia as portas lógicas e repassa as credenciais do cliente (Suplicante) para um Servidor de Autenticação central, tipicamente um servidor RADIUS. É este servidor central quem verifica a identidade do usuário, deriva as chaves criptográficas de sessão e, inclusive, pode instruir o AP sobre a qual VLAN (segmento de rede) o cliente deve ser associado.\" (Fonte: KUROSE, James F.; ROSS, Keith W. Redes de Computadores e a Internet: Uma Abordagem Top-Down. 6ª ed. São Paulo: Pearson Education do Brasil, 2013. p. 435-438. Adaptado.)</p><p><b>Situação-Problema (Enunciado):</b> Um arquiteto de infraestrutura foi contratado para modernizar a rede sem fio de uma grande empresa, que sofria com falhas de segurança e uso indevido de privilégios entre departamentos. Como solução, ele desenhou uma arquitetura com segmentação departamental baseada em identidade. Ao apresentar o projeto técnico para a diretoria de TI, o arquiteto defendeu sua escolha de criptografia e autenticação estruturando a seguinte justificativa de causa e efeito:</p><p>I. A arquitetura da nova rede corporativa sem fio utilizará o padrão WPA3-Enterprise (com IEEE 802.1X), eliminando o uso de uma senha global pré-compartilhada (PSK) e permitindo a alocação dinâmica de usuários em diferentes VLANs de acordo com o departamento.</p><p><b>PORQUE</b></p><p>II. O padrão IEEE 802.1X delega ao próprio Ponto de Acesso (AP) a função de atuar como servidor de autenticação, exigindo que o AP armazene localmente toda a base de certificados corporativos para validar identidades na borda e reduzir o tráfego da rede.</p><p><b>Comando:</b> Avaliando a coerência técnica da proposta do arquiteto em face aos preceitos da arquitetura de segurança em redes sem fio, e exigindo ceticismo para não aceitar justificativas que soam plausíveis mas violam os protocolos estabelecidos, assinale a alternativa que apresenta a correlação correta entre a Asserção I e a Asserção II:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II constituem proposições tecnicamente verdadeiras, sendo a asserção II uma justificativa arquitetural rigorosa e correta para o comportamento descrito na asserção I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II constituem proposições tecnicamente verdadeiras, contudo a asserção II não funciona como uma justificativa técnica correta para o projeto de rede descrito na asserção I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I constitui uma proposição tecnicamente verdadeira, ao passo que a asserção II consiste em uma proposição técnica integralmente falsa sobre a arquitetura de rede e de segurança."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I constitui uma proposição tecnicamente falsa, ao passo que a asserção II consiste em uma proposição técnica integralmente verdadeira sobre o comportamento da infraestrutura."
+    }
+   ],
+   "cor": "C",
+   "just": "I é verdadeira: o WPA3-Enterprise usa 802.1X/EAP, troca a PSK global por credenciais individuais e permite VLAN dinâmica atribuída pelo RADIUS. II é falsa: no 802.1X o AP é só o Autenticador (repassa o EAP); quem valida identidades e guarda a base é o Servidor de Autenticação (RADIUS), como diz o texto-base. A e B aceitam a II como verdadeira; D nega as vantagens reais do modo Enterprise descritas na I.",
+   "nota": "Só 4 alternativas. Pegadinha: o texto-base já contradiz a II (\"o AP não possui inteligência para tomar a decisão de acesso\").",
+   "tags": [
+    "Redes: Segurança (criptografia, firewall, VPN, Wi-Fi)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q6 (Alternativas Constantes V/F)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"O uso de sub-redes (subnetting) permite que um único bloco de endereços IP seja dividido em redes lógicas menores, otimizando o espaço de endereçamento. Para o roteamento entre essas redes, protocolos de estado de enlace (como o OSPF) constroem um mapa topológico completo usando algoritmos de caminho mais curto baseados em métricas de custo (frequentemente associadas à largura de banda), enquanto protocolos de vetor de distâncias (como o RIP clássico) operam iterativamente baseando-se em métricas simples, como a contagem de saltos.\"</p><p>(Fonte: KUROSE, James F.; ROSS, Keith W. Redes de Computadores e a Internet: Uma Abordagem Top-Down. 6ª ed. São Paulo: Pearson Education do Brasil, 2013. p. 245-255. Adaptado.)</p><p><b>Situação-Problema (Enunciado):</b></p><p>Um engenheiro de redes recebeu o bloco de endereços IP 192.168.50.0/24 para planejar a infraestrutura de uma organização departamental. O projeto exige a criação de 4 sub-redes iguais e a interligação dessas redes através de roteadores conectados por enlaces com diferentes capacidades de transmissão (10 Mbps, 100 Mbps e 1 Gbps). Durante a revisão do projeto técnico, o estagiário da equipe apresentou quatro afirmações sobre o endereçamento planejado e o protocolo de roteamento a ser adotado.</p><p><b>Comando:</b></p><p>Aplicando rigor matemático e técnico sobre a arquitetura de protocolos, analise as afirmações do estagiário e classifique cada uma delas como Verdadeira (V) ou Falsa (F):</p><p>( ) I. Ao aplicar a máscara de sub-rede /26 (255.255.255.192) ao bloco original, a primeira sub-rede gerada (192.168.50.0) disponibilizará exatos 64 endereços IP válidos para atribuição aos computadores (hosts) dos usuários.</p><p>( ) II. Se uma impressora na segunda sub-rede for configurada com o endereço IP 192.168.50.75/26, o endereço IP de destino utilizado para envio de quadros em broadcast restritos exclusivamente à sua sub-rede será o 192.168.50.127.</p><p>( ) III. O protocolo RIP (Routing Information Protocol) é o mais recomendado para a topologia de enlaces variáveis descrita, pois seu algoritmo nativo calcula a melhor rota considerando a velocidade (largura de banda) das conexões, otimizando a latência.</p><p>( ) IV. Caso a equipe adote o protocolo OSPF, todos os roteadores pertencentes a uma mesma área lógica deverão convergir até possuírem um banco de dados de estado de enlace (LSDB) idêntico, a partir do qual calcularão as rotas.</p><p>Assinale a alternativa que apresenta a sequência correta de classificação, lida de cima para baixo:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A avaliação sequencial correta das proposições analisadas é: V – V – F – F."
+    },
+    {
+     "l": "B",
+     "t": "A avaliação sequencial correta das proposições analisadas é: F – V – F – V."
+    },
+    {
+     "l": "C",
+     "t": "A avaliação sequencial correta das proposições analisadas é: F – F – V – V."
+    },
+    {
+     "l": "D",
+     "t": "A avaliação sequencial correta das proposições analisadas é: V – F – V – F."
+    }
+   ],
+   "cor": "B",
+   "just": "I é F: a /26 tem 64 endereços, mas só 62 hosts válidos (2^6 − 2, descontando rede e broadcast). II é V: .75 está na sub-rede .64–.127, cujo broadcast é .127. III é F: o RIP usa só contagem de saltos e ignora a largura de banda. IV é V: no OSPF todos os roteadores da área convergem para a mesma LSDB e rodam Dijkstra localmente. F–V–F–V (B). A erra I e IV; C erra II e III; D inverte quase tudo.",
+   "nota": "Mesma questão dos slides (Preparatório, \"Questão 6\"), mesmo gabarito. A II fala em \"quadros\" em broadcast, misturando camadas (no quadro, o broadcast é o MAC FF:FF:FF:FF:FF:FF); o endereço pedido é o broadcast direcionado 192.168.50.127. ⚠️ O cálculo da afirmativa I (/26 para 4 sub-redes de um /24, 62 hosts) é o mesmo conteúdo da Q3 do Simulado 1 (192.168.1.0/24, gabarito /26 e 62 hosts), mas a situação e o comando aqui são outros (V/F com roteamento RIP/OSPF); por isso a questão foi mantida.",
+   "tags": [
+    "Redes: Endereçamento IPv4/IPv6, sub-redes e CIDR",
+    "Redes: Roteamento (prefixo mais longo, OSPF/RIP, BGP)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q7 (Lacunas)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"Aplicações de rede, como a Web, utilizam múltiplos protocolos da camada de aplicação para realizar suas tarefas. Antes de uma requisição HTTP ser enviada ao servidor, o cliente frequentemente precisa resolver o nome de hospedeiro usando o DNS. O DNS é, em grande parte, executado sobre um protocolo de transporte não confiável visando a rapidez das consultas. Já o HTTP, responsável por transferir os dados da Web, utiliza um serviço de transporte confiável e foi projetado em sua base como um protocolo que não retém informações sobre interações passadas com o cliente.\" (Fonte: KUROSE, James F.; ROSS, Keith W. Redes de Computadores e a Internet: Uma Abordagem Top-Down. 6ª ed. São Paulo: Pearson Education do Brasil, 2013. p. 83-102. Adaptado.)</p><p><b>Situação-Problema (Enunciado):</b> Considere a situação em que um usuário digita a URL de um portal de notícias em seu navegador. Para que a página principal seja carregada e exibida corretamente, uma série de mensagens é trocada nos bastidores pelas camadas de rede. Leia a descrição textual desse processo e preencha as lacunas com a terminologia técnica precisa, recusando-se a aceitar termos genéricos ou aproximados:</p><p>\"Para que o navegador acesse a página solicitada, ele inicialmente precisa descobrir o endereço IP do servidor web. Para isso, o cliente emite uma consulta ao sistema de resolução de nomes (DNS), o qual opera primariamente encapsulado sobre o protocolo de transporte [Lacuna 1] para garantir menor latência na resposta. Após obter o IP correspondente, o navegador inicia uma conexão TCP e envia sua requisição. Como o protocolo web é inerentemente [Lacuna 2], o servidor, em sua especificação original, não guarda memória sobre requisições anteriores desse mesmo cliente. Para solicitar explicitamente a leitura e o envio do arquivo HTML da página principal, o navegador utiliza o método HTTP [Lacuna 3]. Por fim, ao processar a requisição com sucesso e enviar a página solicitada, o servidor incluirá no cabeçalho de resposta o código de status [Lacuna 4].\"</p><p><b>Comando:</b> Aplicando seus conhecimentos sobre a terminologia técnica da camada de aplicação, assinale a alternativa que preenche correta e respectivamente as lacunas do texto:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Lacuna 1: TCP; Lacuna 2: stateful (com estado); Lacuna 3: POST; Lacuna 4: 404 Not Found."
+    },
+    {
+     "l": "B",
+     "t": "Lacuna 1: TCP; Lacuna 2: stateless (sem estado); Lacuna 3: FETCH; Lacuna 4: 500 Internal."
+    },
+    {
+     "l": "C",
+     "t": "Lacuna 1: UDP; Lacuna 2: stateless (sem estado); Lacuna 3: GET; Lacuna 4: 200 OK."
+    },
+    {
+     "l": "D",
+     "t": "Lacuna 1: UDP; Lacuna 2: stateful (com estado); Lacuna 3: REQUEST; Lacuna 4: 301 Moved."
+    }
+   ],
+   "cor": "C",
+   "just": "Consultas DNS usam primariamente UDP (porta 53) pela baixa latência; o HTTP é stateless (sessões dependem de cookies); a leitura de um recurso usa o método GET; e o sucesso retorna 200 OK. A erra em TCP, stateful, POST (envio de dados) e 404 (erro). B usa TCP e o falso método FETCH (é uma API do JavaScript, não um verbo HTTP), além de 500 (erro do servidor). D usa stateful, o falso método REQUEST e 301 (redirecionamento).",
+   "nota": "No gabarito do squad, as justificativas dos distratores aparecem rotuladas como \"(AB)\" e \"(BC)\" por erro de digitação; correspondem a A e B. DNS usa TCP em respostas grandes e transferências de zona.",
+   "tags": [
+    "Redes: Camada de aplicação (HTTP, DNS, e-mail, DHCP)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q8 (Associação)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"Devido à natureza de difusão de seu meio físico, as redes sem fio são inerentemente mais suscetíveis a interceptações, injeção de pacotes e falsificação de identidade do que as redes cabeadas. Para proteger o ambiente corporativo, arquitetos de rede devem implementar mecanismos de defesa em profundidade: protocolos rigorosos de criptografia garantem a confidencialidade dos dados em trânsito; o controle de acesso baseado em porta (port-based) valida a identidade dos usuários de forma centralizada; enquanto sensores e sistemas de monitoramento contínuo varrem o espectro de radiofrequência para detectar anomalias físicas e operacionais.\" (Fonte: STALLINGS, William. Criptografia e Segurança de Redes: Princípios e Práticas. 6ª ed. São Paulo: Pearson Education do Brasil, 2014. p. 412-416. Adaptado.)</p><p><b>Situação-Problema (Enunciado):</b> Após uma auditoria de segurança na infraestrutura wireless de uma grande corporação, a equipe de TI elaborou um relatório com quatro vulnerabilidades críticas e incidentes ocorridos no último semestre. Como engenheiro de redes responsável, você precisa aprovar o plano de ação, correlacionando rigorosamente cada risco identificado com a tecnologia de mitigação técnica apropriada para resolvê-lo.</p><p>Considere as ameaças relatadas na Coluna 1 e as soluções técnicas de proteção listadas na Coluna 2:</p><p><b>Coluna 1: Ameaças / Vulnerabilidades Relatadas</b></p><p>1. Interceptação passiva: Leitura não autorizada do conteúdo dos quadros de dados (payload) transmitidos pelo ar por usuários legítimos.</p><p>2. Ponto de Acesso Clandestino (Rogue AP): Instalação de um roteador doméstico por um funcionário em uma porta de rede cabeada da empresa para criar um acesso Wi-Fi próprio e invisível à TI.</p><p>3. Vazamento de credencial global: Ex-colaboradores acessando o estacionamento e conectando-se à rede porque a empresa utiliza uma única senha de rede compartilhada (PSK).</p><p>4. Ataque de Deautenticação: Invasor injetando pacotes falsos de controle na rede, fingindo ser o Ponto de Acesso, para forçar a desconexão repetida de usuários legítimos.</p><p><b>Coluna 2: Mecanismos de Proteção e Contramedidas</b></p><p>( ) Adoção do padrão IEEE 802.1X integrado a um servidor RADIUS para fornecer credenciais exclusivas.</p><p>( ) Implementação do protocolo AES-CCMP (padrão no WPA2/WPA3) para a carga útil (payload) dos quadros.</p><p>( ) Ativação do recurso PMF (Protected Management Frames, padrão IEEE 802.11w) na controladora.</p><p>( ) Implantação de um WIPS (Wireless Intrusion Prevention System) nos Pontos de Acesso em modo monitor.</p><p><b>Comando:</b> Exigindo rigor técnico ao associar a contramedida correta ao vetor do ataque, assinale a alternativa que apresenta a sequência correta de associação da Coluna 2, lida de cima para baixo:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A sequência correta de associação é 1, 3, 2, 4. Esta associação sugere erroneamente que o 802.1X atua como um cifrador contra a interceptação de pacotes de dados, e que o AES-CCMP tem como função primária revogar o acesso de ex-funcionários."
+    },
+    {
+     "l": "B",
+     "t": "A sequência correta de associação é 2, 4, 1, 3. Esta associação falha tecnicamente ao propor que o servidor 802.1X localiza roteadores clandestinos (Rogue APs), e que o recurso PMF serve para mitigar o vazamento da senha global."
+    },
+    {
+     "l": "C",
+     "t": "A sequência correta de associação é 3, 1, 4, 2. O 802.1X barra as PSKs provendo credenciais únicas; o AES-CCMP criptografa os dados contra interceptação; o PMF assina quadros contra deautenticação; e o WIPS rastreia transmissores físicos não autorizados."
+    },
+    {
+     "l": "D",
+     "t": "A sequência correta de associação é 4, 2, 3, 1. Esta associação inverte a arquitetura ao indicar que o 802.1X é a tecnologia usada para impedir injeção de pacotes de gerência, e que o WIPS funciona como o algoritmo de criptografia da rede."
+    }
+   ],
+   "cor": "C",
+   "just": "802.1X + RADIUS dá credenciais individuais e revogáveis no lugar da PSK (3); AES-CCMP cifra o payload contra sniffing (1); PMF/802.11w protege os quadros de gerência contra deautenticação forjada (4); WIPS em modo monitor detecta o Rogue AP (2): 3, 1, 4, 2. A trata o 802.1X como cifrador; B usa o 802.1X para achar Rogue AP; D usa o 802.1X contra injeção de gerência e o WIPS como criptografia.",
+   "nota": "Mesma questão dos slides (Preparatório, \"Questão 8\"), mesmo gabarito. Na alternativa B, o comentário não bate com a própria sequência 2, 4, 1, 3 (liga o PMF à senha global). As alternativas trazem análise embutida e são só 4.",
+   "tags": [
+    "Redes: Segurança (criptografia, firewall, VPN, Wi-Fi)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q9 (Resposta Única)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"Os esquemas de verificação de paridade são as formas mais simples de detecção de erros na camada de enlace. Em um esquema de paridade par, o transmissor simplesmente inclui um bit adicional de tal forma que o número total de bits em '1' na mensagem transmitida seja par. O receptor pode detectar facilmente qualquer número ímpar de erros de bit; contudo, se um número par de bits for invertido devido a ruídos, o erro passará despercebido, pois a paridade final continuará parecendo correta.\"</p><p>(Fonte: KUROSE, James F.; ROSS, Keith W. Redes de Computadores e a Internet: Uma Abordagem Top-Down. 6ª ed. São Paulo: Pearson Education do Brasil, 2013. p. 308. Adaptado.)</p><p><b>Situação-Problema (Enunciado):</b></p><p>Em um ambiente industrial sujeito a forte interferência eletromagnética, um sensor transmite blocos de dados de 3 bits úteis acrescidos de 1 bit de controle (paridade par), totalizando um quadro de tamanho N = 4 bits. O engenheiro responsável modelou estatisticamente o canal de comunicação e determinou que, a cada transmissão, a probabilidade independente de um único bit ser invertido (sofrer erro) é de p = 0,1 (ou seja, 10%).</p><p>Para homologar a confiabilidade do sistema e avaliar se métodos mais avançados (como CRC) serão necessários, o engenheiro precisa calcular a probabilidade exata de que um quadro qualquer sofra corrupção durante a viagem, mas que essa falha não seja detectada pelo receptor.</p><p><b>Comando:</b></p><p>Aplicando os princípios de combinatória e probabilidade sobre o comportamento do bit de paridade e exigindo exatidão matemática (sem recorrer a aproximações grosseiras), assinale a alternativa que apresenta a probabilidade calculada corretamente pelo engenheiro:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A probabilidade exata é de 0,0486 (ou 4,86%). O modelo matemático restringe-se ao cálculo do evento no qual exatos dois bits sofrem inversão no quadro, desprezando as demais anomalias de rede."
+    },
+    {
+     "l": "B",
+     "t": "A probabilidade exata é de 0,0487 (ou 4,87%). O modelo matemático engloba a soma das probabilidades de todas as permutações que resultam em uma quantidade par de erros (dois ou quatro bits)."
+    },
+    {
+     "l": "C",
+     "t": "A probabilidade exata é de 0,0081 (ou 0,81%). O modelo matemático avalia a inversão estatística dos bits sem aplicar o coeficiente binomial para determinar a posição alternada dessas falhas."
+    },
+    {
+     "l": "D",
+     "t": "A probabilidade exata é de 0,0523 (ou 5,23%). O modelo matemático soma as probabilidades de ocorrência de qualquer cenário com múltiplas falhas no quadro (dois, três ou quatro bits errados)."
+    }
+   ],
+   "cor": "B",
+   "just": "A paridade só deixa passar números pares de erros (2 ou 4 em 4 bits). Binomial: P(2) = C(4,2)·0,1²·0,9² = 6·0,01·0,81 = 0,0486; P(4) = 0,1⁴ = 0,0001; total 0,0487 (B). A esquece o caso de 4 erros; C esquece o coeficiente C(4,2) = 6 (0,01·0,81 = 0,0081); D soma também 3 erros (0,0036), que a paridade detecta.",
+   "nota": "Conferido: 0,0486 + 0,0001 = 0,0487. Versão alterada provável: paridade com N = 8 bits ou p diferente; a lógica é somar só as quantidades pares de erros (k = 2, 4, …).",
+   "tags": [
+    "Redes: Enlace (erros, acesso ao meio, ARP)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q10 (Afirmativa Incompleta)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"A exaustão do espaço de endereçamento IPv4 público motivou a transição para o IPv6, que expande o endereço de 32 bits para 128 bits. No IPv6, a prática arquitetural padronizada pelo IETF (RFC 4291 e RFC 4862) estabelece a alocação de prefixos com tamanho de 64 bits (/64) para as redes locais (LANs). Esse tamanho fixo é um pré-requisito fundamental para o funcionamento da Autoconfiguração de Endereço Stateless (SLAAC), que utiliza os 64 bits restantes do endereço para gerar o identificador único da interface da máquina (Host ID) sem a necessidade de um servidor DHCP.\"</p><p>(Fonte: KUROSE, James F.; ROSS, Keith W. Redes de Computadores e a Internet: Uma Abordagem Top-Down. 6ª ed. São Paulo: Pearson, 2013. p. 270-275. Adaptado.)</p><p><b>Situação-Problema (Enunciado):</b></p><p>Um engenheiro foi encarregado de projetar o esquema de endereçamento para a nova sede de uma empresa que operará em Dual-Stack (IPv4 e IPv6 simultâneos). No escopo do IPv4, ele possui o bloco 192.168.100.0/24 e precisa dividi-lo no maior número possível de sub-redes, desde que cada uma suporte obrigatoriamente pelo menos 25 estações de trabalho, minimizando o desperdício matemático de IPs. Simultaneamente, no escopo do IPv6, a operadora de telecomunicações delegou à empresa o prefixo corporativo global 2001:db8:acad::/48. O engenheiro deverá subdividir esse bloco IPv6 respeitando rigorosamente o padrão arquitetural exigido pelo mecanismo SLAAC para as VLANs.</p><p><b>Comando:</b></p><p>Aplicando as regras matemáticas de endereçamento para completar adequadamente a decisão técnica do projeto, sem recorrer a aproximações, leia o trecho abaixo e assinale a alternativa que o completa corretamente:</p><p>\"Na reestruturação do endereçamento IP corporativo, para atender aos requisitos operacionais e evitar o desperdício, o engenheiro definirá a...\"</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "... máscara 255.255.255.192 (prefixo /26) no IPv4 para comportar os hosts, e a criação de exatas 4.096 sub-redes de tamanho padrão no IPv6."
+    },
+    {
+     "l": "B",
+     "t": "... máscara 255.255.255.240 (prefixo /28) no IPv4 para comportar os hosts, e a criação de exatas 256 sub-redes de tamanho padrão no IPv6."
+    },
+    {
+     "l": "C",
+     "t": "... máscara 255.255.255.128 (prefixo /25) no IPv4 para comportar os hosts, e a criação de exatas 16.384 sub-redes de tamanho padrão no IPv6."
+    },
+    {
+     "l": "D",
+     "t": "... máscara 255.255.255.224 (prefixo /27) no IPv4 para comportar os hosts, e a criação de exatas 65.536 sub-redes de tamanho padrão no IPv6."
+    }
+   ],
+   "cor": "D",
+   "just": "IPv4: 2^h − 2 ≥ 25 dá h = 5 (30 hosts), logo /27 = 255.255.255.224, com 8 sub-redes no /24 (o máximo que atende). IPv6: de /48 até /64 sobram 16 bits, 2^16 = 65.536 sub-redes /64 (D). A usa /26 (desperdiça e gera só 4 sub-redes) e 2^12 (sub-redes /60, incompatíveis com SLAAC). B usa /28 (só 14 hosts) e 2^8. C usa /25 (126 hosts, desperdício) e 2^14.",
+   "nota": null,
+   "tags": [
+    "Redes: Endereçamento IPv4/IPv6, sub-redes e CIDR"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q11 (Afirmativas Múltiplas)",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"O UDP tira proveito da ausência de mecanismos de estabelecimento de conexão e de manutenção de estado para transmitir dados de forma ágil, transferindo o controle para a camada de aplicação quando necessário. Já o TCP fornece um serviço de transferência de dados confiável e orientado à conexão, garantindo a entrega exata, em ordem, e implementando mecanismos complexos de controle de fluxo e de congestionamento. Contudo, essa confiabilidade ocorre à custa de uma maior sobrecarga (overhead) e de atrasos pontuais impostos pelas retransmissões.\" (Fonte: KUROSE, James F.; ROSS, Keith W. Redes de Computadores e a Internet: Uma Abordagem Top-Down. 6ª ed. São Paulo: Pearson, 2013. p. 153-155. Adaptado.)</p><p><b>Situação-Problema (Enunciado):</b> Uma startup de desenvolvimento de software está projetando a arquitetura de rede para três novos produtos: um aplicativo de transferência segura de arquivos corporativos, um jogo on-line de tiro em primeira pessoa (FPS) competitivo, e um sistema de streaming de vídeo ao vivo (tempo real). Durante a reunião de engenharia de software, a equipe precisou julgar as características dos protocolos de transporte para definir qual utilizar em cada aplicação.</p><p>A partir dos debates, o arquiteto de rede registrou as seguintes afirmativas:</p><p>I. Para a transferência de arquivos, o uso do TCP é essencial, pois a aplicação não tolera a corrupção ou perda de bytes, dependendo dos números de sequência e das confirmações (ACKs) do TCP para garantir a remontagem íntegra dos dados no destino.</p><p>II. No desenvolvimento do jogo on-line (FPS), o TCP deve ser escolhido obrigatoriamente porque o seu mecanismo de controle de congestionamento estabiliza o envio de dados na rede, reduzindo a latência (ping) e evitando engasgos (lag) na partida.</p><p>III. No streaming de vídeo ao vivo, o UDP é frequentemente preferido, pois a perda ocasional de pacotes (gerando uma leve falha visual passageira) é mais tolerável do que o atraso na reprodução causado pelas retransmissões obrigatórias do TCP.</p><p>IV. Em redes com alta taxa de perda de pacotes no meio físico (como redes sem fio ruidosas), o TCP sempre apresentará maior velocidade e eficiência que o UDP, pois ele recupera os dados perdidos sem alterar a sua taxa de transmissão.</p><p><b>Comando:</b> Analisando e avaliando rigorosamente a veracidade das características técnicas de funcionamento da camada de transporte para aplicações do mundo real, assinale a alternativa correta:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Estão corretas apenas as afirmativas I e III, compreendendo que o TCP garante integridade para arquivos e o UDP evita o atraso de retransmissões no streaming."
+    },
+    {
+     "l": "B",
+     "t": "Estão corretas apenas as afirmativas II e IV, assumindo erroneamente que os algoritmos de controle de congestionamento do TCP diminuem a latência e ignoram erros físicos."
+    },
+    {
+     "l": "C",
+     "t": "Estão corretas apenas as afirmativas I, II e III, julgando, de forma precipitada, que ambos os protocolos de transporte garantem a redução do tempo de resposta em jogos on-line."
+    },
+    {
+     "l": "D",
+     "t": "Estão corretas apenas as afirmativas II, III e IV, avaliando que o UDP se adapta a qualquer cenário, mas falhando ao superestimar o desempenho prático do TCP em enlaces sem fio."
+    }
+   ],
+   "cor": "A",
+   "just": "I é V: arquivo exige integridade total (sequência, ACK, retransmissão do TCP). III é V: em vídeo ao vivo, perder um pacote é melhor que travar esperando retransmissão. II é F: no jogo, o TCP aumenta o lag ao bloquear à espera de retransmissões (jogos usam UDP). IV é F: em Wi-Fi ruidoso o TCP interpreta perda como congestionamento e reduz a cwnd, perdendo vazão. Logo, só I e III (A); B, C e D incluem a II e/ou a IV.",
+   "nota": "Mesma questão dos slides (Preparatório, \"Questão 11\"), mesmo gabarito. As alternativas trazem comentários (\"assumindo erroneamente\") que devem sumir numa prova real. Streaming sob demanda via HTTP (HLS/DASH) usa TCP; a III vale para tempo real interativo.",
+   "tags": [
+    "Redes: Transporte (TCP e UDP)"
+   ]
+  },
+  {
+   "ref": "Manual de Referência Redes de Computadores: questão comentada do cap. 1 (Modelo OSI), p. 9",
+   "origem": "manual",
+   "tipo": "mc",
+   "enun": "<p>Um técnico percebe que dois computadores da mesma sala não se comunicam. O LED da placa de rede de um deles está apagado. Em seguida, após trocar o cabo, os computadores se enxergam, mas o navegador ainda não abre um site pelo nome, apenas pelo endereço IP. Assinale a alternativa que indica, respectivamente, as camadas OSI dos dois problemas.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Enlace e Rede"
+    },
+    {
+     "l": "B",
+     "t": "Física e Aplicação"
+    },
+    {
+     "l": "C",
+     "t": "Física e Transporte"
+    },
+    {
+     "l": "D",
+     "t": "Rede e Sessão"
+    },
+    {
+     "l": "E",
+     "t": "Enlace e Apresentação"
+    }
+   ],
+   "cor": "B",
+   "just": "LED apagado resolvido com a troca do cabo = meio/sinal, camada física. Abre pelo IP e não pelo nome = falha de DNS, camada de aplicação. Pegadinha (A): cabo não é enlace, e a camada de rede funciona, já que o acesso pelo IP dá certo.",
+   "nota": null,
+   "tags": [
+    "Redes: Modelos OSI e TCP/IP e encapsulamento"
+   ]
+  },
+  {
+   "ref": "Manual de Referência Redes de Computadores: questão comentada do cap. 2 (TCP/IP e encapsulamento)",
+   "origem": "manual",
+   "tipo": "mc",
+   "enun": "<p>Uma aplicação envia 200 bytes de dados usando UDP sobre IPv4 sem opções, em um enlace Ethernet. Considerando os cabeçalhos de transporte, de rede e de enlace (14 bytes), além do trailer FCS (4 bytes), o tamanho do quadro e a porcentagem de sobrecarga são, aproximadamente:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "228 bytes e 12,3%"
+    },
+    {
+     "l": "B",
+     "t": "246 bytes e 18,7%"
+    },
+    {
+     "l": "C",
+     "t": "242 bytes e 17,4%"
+    },
+    {
+     "l": "D",
+     "t": "258 bytes e 22,5%"
+    },
+    {
+     "l": "E",
+     "t": "238 bytes e 16,0%"
+    }
+   ],
+   "cor": "B",
+   "just": "Quadro = 14 (Ethernet) + 20 (IPv4) + 8 (UDP) + 200 + 4 (FCS) = 246 bytes. Sobrecarga = 46/246 ≈ 18,7%. A esquece Ethernet e FCS, C esquece o FCS, D usa o cabeçalho TCP (20 B) e E esquece o UDP.",
+   "nota": "A sobrecarga é sobre o quadro inteiro (46/246). Uma versão alterada pode pedir sobre os dados (46/200 = 23%), a eficiência (200/246 ≈ 81,3%) ou incluir preâmbulo/SFD e IFG, como no Estudo de Caso E2.",
+   "tags": [
+    "Redes: Modelos OSI e TCP/IP e encapsulamento"
+   ]
+  },
+  {
+   "ref": "Manual de Referência Redes de Computadores: questão comentada do cap. 3 (Equipamentos), p. 18",
+   "origem": "manual",
+   "tipo": "mc",
+   "enun": "<p>Uma rede local com 40 computadores ligados a hubs apresenta lentidão nos horários de pico. O administrador substitui os hubs por switches, sem alterar mais nada. Sobre o efeito dessa troca, é correto afirmar que:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "o número de domínios de broadcast aumenta, reduzindo o tráfego de ARP."
+    },
+    {
+     "l": "B",
+     "t": "o número de domínios de colisão aumenta, e cada porta passa a poder operar em full-duplex."
+    },
+    {
+     "l": "C",
+     "t": "os computadores passam a estar em redes IP diferentes."
+    },
+    {
+     "l": "D",
+     "t": "o tráfego de broadcast deixa de ser propagado."
+    },
+    {
+     "l": "E",
+     "t": "não há mudança de desempenho, pois ambos operam na camada 2."
+    }
+   ],
+   "cor": "B",
+   "just": "O switch cria um domínio de colisão por porta e permite full-duplex. Sem VLAN, continua um único domínio de broadcast (A e D erradas), o endereçamento IP não muda (C) e o hub é camada 1, não 2 (E).",
+   "nota": "Tema parecido com a Q1 do caderno (hub × switch), mas é outra situação e outro comando: aqui só se pede o efeito da troca de hubs por switches (domínios de colisão, full-duplex), sem o requisito de broadcast único nem a opção do roteador. Nenhuma das duas caiu no Simulado 1.",
+   "tags": [
+    "Redes: Equipamentos, topologias, domínios e VLANs"
+   ]
+  },
+  {
+   "ref": "Manual de Referência Redes de Computadores: questão comentada do cap. 4 (Endereçamento IP)",
+   "origem": "manual",
+   "tipo": "mc",
+   "enun": "<p>Um administrador precisa dividir a rede 10.20.0.0/16 de forma que cada sub-rede comporte pelo menos 500 hosts, maximizando o número de sub-redes. Qual máscara deve ser usada e quantas sub-redes serão obtidas?</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "/23 e 128 sub-redes"
+    },
+    {
+     "l": "B",
+     "t": "/24 e 256 sub-redes"
+    },
+    {
+     "l": "C",
+     "t": "/22 e 64 sub-redes"
+    },
+    {
+     "l": "D",
+     "t": "/23 e 64 sub-redes"
+    },
+    {
+     "l": "E",
+     "t": "/25 e 512 sub-redes"
+    }
+   ],
+   "cor": "A",
+   "just": "2^h − 2 ≥ 500 ⇒ h = 9 (510 hosts) ⇒ /23. Bits emprestados: 23 − 16 = 7 ⇒ 2^7 = 128 sub-redes. A /24 só tem 254 hosts; a /22 atende, mas dá só 64 sub-redes; D usa a máscara certa com a contagem da /22.",
+   "nota": "Mesmo raciocínio da Q3 do Simulado 1 (2^h − 2 hosts, bits emprestados), mas com outro bloco (10.20.0.0/16), outro requisito (≥ 500 hosts) e outro comando; não é a mesma questão.",
+   "tags": [
+    "Redes: Endereçamento IPv4/IPv6, sub-redes e CIDR"
+   ]
+  },
+  {
+   "ref": "Manual de Referência Redes de Computadores: questão comentada do cap. 5 (Roteamento)",
+   "origem": "manual",
+   "tipo": "mc",
+   "enun": "<p>Um roteador possui as seguintes rotas: 10.0.0.0/8 → R1; 10.1.0.0/16 → R2; 10.1.2.0/24 → R3; 0.0.0.0/0 → R4. Os pacotes destinados a 10.1.2.9, 10.1.5.7 e 172.16.0.1 serão enviados, respectivamente, para:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "R1, R1 e R4"
+    },
+    {
+     "l": "B",
+     "t": "R3, R2 e R4"
+    },
+    {
+     "l": "C",
+     "t": "R3, R2 e R1"
+    },
+    {
+     "l": "D",
+     "t": "R2, R2 e R4"
+    },
+    {
+     "l": "E",
+     "t": "R3, R1 e R4"
+    }
+   ],
+   "cor": "B",
+   "just": "Vence a rota de maior prefixo que casa: 10.1.2.9 → /24 (R3); 10.1.5.7 não está em 10.1.2.0/24 → /16 (R2); 172.16.0.1 só casa a padrão /0 (R4). A pega a primeira rota que casa (/8), e C põe 172.16.0.1 dentro de 10/8.",
+   "nota": null,
+   "tags": [
+    "Redes: Roteamento (prefixo mais longo, OSPF/RIP, BGP)"
+   ]
+  },
+  {
+   "ref": "Manual de Referência Redes de Computadores: questão comentada do cap. 6 (TCP e UDP)",
+   "origem": "manual",
+   "tipo": "mc",
+   "enun": "<p>Uma conexão TCP opera com cwnd = 20 MSS e ssthresh = 32 MSS quando o transmissor detecta um <i>timeout</i>. Considerando o TCP Reno, após o evento os valores de cwnd e ssthresh serão, respectivamente:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "10 MSS e 20 MSS"
+    },
+    {
+     "l": "B",
+     "t": "1 MSS e 10 MSS"
+    },
+    {
+     "l": "C",
+     "t": "1 MSS e 16 MSS"
+    },
+    {
+     "l": "D",
+     "t": "10 MSS e 10 MSS"
+    },
+    {
+     "l": "E",
+     "t": "20 MSS e 32 MSS"
+    }
+   ],
+   "cor": "B",
+   "just": "Em qualquer perda, o novo ssthresh = cwnd atual/2 = 10 MSS. Como foi timeout, a cwnd volta a 1 MSS (partida lenta). C usa a metade do ssthresh antigo (16); D (10 e 10) é a reação a 3 ACKs duplicados.",
+   "nota": "No Reno estrito do Kurose, após 3 ACKs duplicados a cwnd vai a ssthresh + 3 (13 MSS) na recuperação rápida e só depois a 10; o Manual simplifica para \"cai pela metade\".",
+   "tags": [
+    "Redes: Transporte (TCP e UDP)"
+   ]
+  },
+  {
+   "ref": "Manual de Referência Redes de Computadores: questão comentada do cap. 7 (Camada de aplicação)",
+   "origem": "manual",
+   "tipo": "mc",
+   "enun": "<p>Sobre protocolos da camada de aplicação, avalie as afirmações:</p><p>I. O HTTP é um protocolo sem estado; por isso, aplicações web usam cookies para manter sessões de usuário.</p><p>II. O FTP envia comandos e dados pela mesma conexão TCP, na porta 21.</p><p>III. Consultas DNS normalmente usam UDP porque são pequenas e o custo de estabelecer conexão seria proporcionalmente alto.</p><p>IV. O SMTP é usado tanto para enviar quanto para ler mensagens da caixa postal do destinatário.</p><p>É correto apenas o que se afirma em:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e II"
+    },
+    {
+     "l": "B",
+     "t": "I e III"
+    },
+    {
+     "l": "C",
+     "t": "II e IV"
+    },
+    {
+     "l": "D",
+     "t": "I, III e IV"
+    },
+    {
+     "l": "E",
+     "t": "II, III e IV"
+    }
+   ],
+   "cor": "B",
+   "just": "I V: o HTTP é sem estado, daí os cookies. III V: o DNS usa UDP 53, porque as consultas são pequenas. II F: o FTP usa duas conexões (controle na 21, dados em outra). IV F: o SMTP só envia; a leitura usa IMAP, POP3 ou webmail.",
+   "nota": null,
+   "tags": [
+    "Redes: Camada de aplicação (HTTP, DNS, e-mail, DHCP)"
+   ]
+  },
+  {
+   "ref": "Manual de Referência Redes de Computadores: questão comentada do cap. 8 (Segurança de redes)",
+   "origem": "manual",
+   "tipo": "mc",
+   "enun": "<p>Uma empresa deseja que seus funcionários acessem, a partir de casa, um sistema interno que não está exposto à Internet, com garantia de confidencialidade e autenticação. Qual solução atende melhor a esse requisito?</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Publicar o sistema com NAT estático e liberar a porta no firewall."
+    },
+    {
+     "l": "B",
+     "t": "Implantar uma VPN de acesso remoto com autenticação multifator."
+    },
+    {
+     "l": "C",
+     "t": "Usar um IDS na borda da rede."
+    },
+    {
+     "l": "D",
+     "t": "Configurar uma VLAN exclusiva para os funcionários remotos."
+    },
+    {
+     "l": "E",
+     "t": "Trocar o protocolo de aplicação por FTP."
+    }
+   ],
+   "cor": "B",
+   "just": "A VPN cria um túnel cifrado pela Internet (confidencialidade) e a MFA garante que só funcionários entrem. NAT estático (A) expõe o sistema, o IDS (C) só detecta, VLAN (D) é segmentação local e o FTP (E) trafega em texto claro.",
+   "nota": "Parecida com a Q28 do Simulado 1 (= Q12 do caderno: VPN IPsec entre matriz e filial contra MitM no ISP), mas a situação é outra (acesso remoto de funcionários em casa a sistema interno não exposto) e o comando também; por isso foi mantida.",
+   "tags": [
+    "Redes: Segurança (criptografia, firewall, VPN, Wi-Fi)"
+   ]
+  },
+  {
+   "ref": "Manual de Referência Redes de Computadores: questão comentada do cap. 9 (Sem fio e IoT)",
+   "origem": "manual",
+   "tipo": "mc",
+   "enun": "<p>Uma prefeitura quer instalar centenas de sensores de nível de rio espalhados por vários quilômetros, alimentados por bateria, que enviam uma leitura de poucos bytes a cada 5 minutos. A combinação de tecnologias mais adequada é:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Wi-Fi 6 e HTTP/2"
+    },
+    {
+     "l": "B",
+     "t": "LoRaWAN e MQTT"
+    },
+    {
+     "l": "C",
+     "t": "Bluetooth Low Energy e FTP"
+    },
+    {
+     "l": "D",
+     "t": "5G mmWave e SMTP"
+    },
+    {
+     "l": "E",
+     "t": "Fibra óptica e HTTP/3"
+    }
+   ],
+   "cor": "B",
+   "just": "Sensores a quilômetros, a bateria e com poucos bytes pedem LPWAN (LoRaWAN) e um protocolo leve de publicar/assinar (MQTT, cabeçalho de 2 bytes). Wi-Fi, BLE e 5G mmWave têm alcance curto ou consumo alto; fibra é inviável; HTTP, FTP e SMTP são pesados ou inadequados.",
+   "nota": null,
+   "tags": [
+    "Redes: Sem fio, celular, SDN, nuvem e IoT"
+   ]
+  }
+ ],
+ "dissertativas": [],
+ "observacoes": "⚠️ O gabarito do Simulado 1 associa a Q3 do simulado ao \"#ID 1\" de Redes, mas por conteúdo a Q3 (máscara para 4 sub-redes de 192.168.1.0/24, /26 e 62 hosts) NÃO corresponde à Q1 do caderno (hub × switch no laboratório), nem a nenhuma questão objetiva do caderno, dos slides ou do Manual. A Q1 do caderno foi portanto INCLUÍDA. A Q6 do caderno (V/F sobre 192.168.50.0/24 em 4 sub-redes /26 + RIP/OSPF) cobre o mesmo cálculo na afirmativa I, mas tem situação e comando diferentes; foi mantida com nota. As 5 questões dos slides (Preparatório ENADE 2026 = Questões 1, 5, 6, 8 e 11) são idênticas às do caderno: ficou só a versão do caderno (Q5 excluída por ter caído no Simulado 1). As 9 questões comentadas do Manual entraram como origem \"manual\" (5 alternativas cada, gabaritos conferidos e corretos). Todos os gabaritos do caderno conferidos de forma independente (paridade 0,0487, /27 + 65.536 sub-redes /64, sub-rede .64–.127 etc.): nenhuma divergência. As questões do caderno têm só 4 alternativas (A–D). Não há discursivas formais nos materiais de Redes; o Manual tem 12 \"Estudos de Caso\" resolvidos (cálculo de atraso, eficiência de quadro, VLSM, Dijkstra, CRC, timeout TCP, RSA etc.), que são exemplos resolvidos e não questões, e por isso não foram incluídos em dissertativas (estão transcritos no Apêndice de questoes_por_topico/07_Redes_de_Computadores.md). Nenhuma figura precisou ser recortada."
+}

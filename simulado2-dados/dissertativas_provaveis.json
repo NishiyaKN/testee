@@ -1,0 +1,155 @@
+[
+ {
+  "fonte": "Inédita · Arquiteturas de Software (Simulado 1, Q14: 15,79% de acerto, a pior da prova)",
+  "prioridade": 1,
+  "caso": "<p>Uma fintech dividiu seu monólito de concessão de crédito em microsserviços. O serviço de <b>Cadastro</b> publica o evento <code>ClienteCadastrado</code> em um tópico do Apache Kafka, e o serviço de <b>Análise de Risco</b> consome esse tópico. Antes da migração, o Cadastro chamava a Análise de Risco por uma requisição REST síncrona e esperava a resposta para concluir o cadastro.</p><p>Na última Black Friday, a Análise de Risco ficou fora do ar por 40 minutos. Ainda assim, o Cadastro continuou aceitando clientes normalmente e, quando a Análise de Risco voltou, processou as mensagens acumuladas. Uma auditoria posterior, porém, encontrou alguns clientes analisados <b>duas vezes</b>, porque o consumidor caiu depois de processar a mensagem e antes de confirmar (fazer o <i>commit</i> do <i>offset</i>).</p>",
+  "enun": "Com base nessa situação, faça o que se pede nos itens a seguir.<br>a) Explique o que é <b>acoplamento temporal</b> e por que a comunicação assíncrona por um <i>message broker</i> o reduz em comparação com a chamada REST síncrona, relacionando sua explicação ao episódio da Black Friday. (valor: 4,0 pontos)<br>b) Explique por que ocorreram as análises duplicadas e proponha <b>dois</b> mecanismos para garantir que o resultado final seja correto mesmo com mensagens repetidas. (valor: 3,0 pontos)<br>c) Cite <b>uma</b> desvantagem (<i>trade-off</i>) da arquitetura assíncrona em relação à síncrona e uma forma de mitigá-la. (valor: 3,0 pontos)",
+  "topicos": [
+   "a) Acoplamento temporal: emissor e receptor precisam estar disponíveis <b>ao mesmo tempo</b>. No REST síncrono, se a Análise de Risco cai, o Cadastro trava ou falha.",
+   "a) Com o broker, o produtor publica e segue em frente (<i>fire-and-forget</i>); a mensagem fica persistida no tópico até o consumidor ler. Foi por isso que o Cadastro continuou funcionando e o backlog foi processado depois.",
+   "a) Por isso, no Simulado 1, as duas asserções eram FALSAS: o broker <b>diminui</b> o acoplamento temporal, e o emissor <b>não</b> espera a resposta.",
+   "b) A entrega padrão é <b>pelo menos uma vez</b> (<i>at-least-once</i>): se o consumidor processa e cai antes do commit do offset, a mensagem é entregue de novo.",
+   "b) Mecanismos: consumidor <b>idempotente</b> (chave única do evento ou do cliente, tabela de mensagens já processadas, <i>upsert</i>); transação que grava o resultado e o offset juntos; semântica <i>exactly-once</i> do Kafka (produtor idempotente + transações); padrão <i>Transactional Outbox</i>.",
+   "c) Trade-offs: <b>consistência eventual</b> (o cliente fica um tempo cadastrado sem análise); depuração e observabilidade mais difíceis; ordem das mensagens só garantida dentro da partição; transações distribuídas exigem <b>Saga</b>/compensação; mais infraestrutura para operar.",
+   "c) Mitigações: estado \"análise pendente\" na interface; <i>tracing</i> distribuído com ID de correlação (OpenTelemetry); chave de partição por cliente; <i>dead-letter queue</i> e retentativas com <i>backoff</i>; Saga orquestrada."
+  ],
+  "exemplo": "<p><b>a)</b> Há acoplamento temporal quando dois serviços precisam estar ativos no mesmo instante para que a operação termine. Na versão REST, o Cadastro esperava a resposta da Análise de Risco: se ela caísse, o cadastro falhava ou ficava travado, prendendo threads. Com o Kafka, o Cadastro só publica o evento no tópico, que o guarda de forma durável, e conclui seu trabalho sem esperar. O consumidor lê quando puder. Foi isso que aconteceu na Black Friday: com a Análise de Risco fora, os eventos se acumularam no tópico e foram processados quando ela voltou, sem afetar o Cadastro. O broker, portanto, <b>reduz</b> o acoplamento temporal.</p><p><b>b)</b> O Kafka entrega, por padrão, \"pelo menos uma vez\": o consumidor processou a mensagem, mas caiu antes de confirmar o offset, e ao reiniciar recebeu a mesma mensagem de novo. Soluções: (1) tornar o consumidor idempotente, guardando o ID de cada evento processado (ou usando uma restrição de unicidade/upsert por cliente) e ignorando repetições; (2) gravar o resultado da análise e o offset na mesma transação, ou usar as transações do Kafka (<i>exactly-once</i>).</p><p><b>c)</b> A principal desvantagem é a consistência eventual: durante alguns segundos ou minutos o cliente existe sem análise, e o fluxo fica mais difícil de rastrear. Para mitigar, o sistema expõe o estado \"análise pendente\" e usa tracing distribuído com ID de correlação. Se uma etapa falhar, uma Saga com ações de compensação desfaz os passos anteriores.</p>",
+  "tags": [
+   "ArqSoft: Microsserviços e mensageria"
+  ]
+ },
+ {
+  "fonte": "Inédita · Estruturas de Dados / Grafos: BFS × DFS (Simulado 1, Q6: 17,54% de acerto, a 2ª pior)",
+  "prioridade": 1,
+  "caso": "<p>Uma rede social quer exibir o <b>grau de conexão</b> entre dois usuários: o menor número de amizades (arestas) que separa um do outro. A rede é modelada como um grafo <b>não dirigido e não ponderado</b>, armazenado em <b>listas de adjacência</b>, com V usuários e E amizades. Um desenvolvedor júnior implementou o recurso com busca em profundidade (DFS) e devolve a profundidade em que o destino foi encontrado pela primeira vez.</p>",
+  "enun": "Com base nessa situação, faça o que se pede nos itens a seguir.<br>a) Explique por que a solução com DFS pode devolver um valor errado e por que a busca em largura (BFS) garante o menor número de arestas. Dê um pequeno exemplo de grafo em que a DFS erra. (valor: 4,0 pontos)<br>b) Escreva um pseudocódigo da função <code>grauConexao(G, origem, destino)</code> usando BFS, devolvendo −1 se não houver caminho. (valor: 4,0 pontos)<br>c) Informe a complexidade de tempo e de espaço da sua solução com listas de adjacência e diga o que mudaria com matriz de adjacência. (valor: 2,0 pontos)",
+  "topicos": [
+   "a) A DFS aprofunda um ramo até o fim antes de retroceder: o primeiro caminho que encontra até o destino não é necessariamente o mais curto.",
+   "a) A BFS usa <b>fila FIFO</b> e visita por <b>camadas</b>: todos os vértices a distância 1, depois a 2, e assim por diante. A primeira vez que alcança um vértice é pelo caminho com menos arestas.",
+   "a) Exemplo: arestas A–B, B–C, C–D e A–D. A DFS a partir de A que visita B primeiro chega a D pelo caminho A-B-C-D (3 arestas), mas a distância real é 1 (A–D).",
+   "b) Pseudocódigo com vetor/mapa de distâncias (ou de visitados) inicializado com −1 (ou infinito), dist[origem] = 0, fila; para cada vizinho não visitado: dist[v] = dist[u] + 1 e enfileira; devolve ao chegar ao destino.",
+   "b) Marcar o vértice como visitado <b>ao enfileirar</b> (não ao desenfileirar), para não enfileirar duplicatas.",
+   "c) Tempo <b>O(V + E)</b>; espaço <b>O(V)</b> para fila e distâncias (além do grafo, O(V + E)).",
+   "c) Com matriz, achar os vizinhos de cada vértice custa O(V) e a BFS passa a <b>O(V²)</b>, pior em grafos esparsos como redes sociais; a matriz também ocupa O(V²) de memória.",
+   "Se as arestas tivessem pesos diferentes (não negativos), a BFS não serviria: seria preciso Dijkstra."
+  ],
+  "exemplo": "<p><b>a)</b> A DFS segue um ramo até o fim antes de voltar, então o primeiro caminho que encontra até o destino depende da ordem dos vizinhos, não do comprimento. No grafo com arestas A–B, B–C, C–D e A–D, uma DFS a partir de A que explora B primeiro chega a D por A-B-C-D e devolve 3, embora A e D sejam amigos diretos (grau 1). A BFS usa fila FIFO e explora em camadas: primeiro todos os vizinhos de A (distância 1), depois os vizinhos deles (distância 2) etc. Como cada camada só é processada depois da anterior, o primeiro momento em que o destino é alcançado corresponde ao menor número de arestas.</p><pre><code>função grauConexao(G, origem, destino):\n    se origem = destino: retorne 0\n    dist ← mapa com −1 para todo vértice\n    dist[origem] ← 0\n    F ← fila vazia; enfileira(F, origem)\n    enquanto F não vazia:\n        u ← desenfileira(F)\n        para cada v em G.adj[u]:\n            se dist[v] = −1:            // ainda não visitado\n                dist[v] ← dist[u] + 1\n                se v = destino: retorne dist[v]\n                enfileira(F, v)\n    retorne −1                         // não há caminho</code></pre><p><b>c)</b> Cada vértice entra na fila no máximo uma vez e cada lista de adjacência é percorrida uma vez: tempo O(V + E) e espaço adicional O(V) (fila e vetor de distâncias). Com matriz de adjacência, listar os vizinhos de u exige ler a linha inteira (O(V)), e a BFS passa a O(V²), além de a matriz ocupar O(V²) de memória, um desperdício em redes sociais, que são grafos esparsos.</p>",
+  "tags": [
+   "ED: Busca em grafos (BFS e DFS)",
+   "Grafos: DFS, BFS e aplicações"
+  ]
+ },
+ {
+  "fonte": "Inédita · Teoria dos Grafos: lista × matriz de adjacência (Simulado 1, Q27: 28,07% de acerto)",
+  "prioridade": 2,
+  "caso": "<p>A rede pública <i>com-Amazon</i> (Stanford Network Analysis Project) modela o recurso \"clientes que compraram este item também compraram\": cada um dos <b>334.863 produtos</b> é um vértice e cada um dos <b>925.872 pares</b> de produtos comprados juntos é uma aresta não dirigida. Um sistema de recomendação percorre os vizinhos de um produto com muita frequência e roda em um servidor com 8 GB de memória disponível para o grafo.</p>",
+  "enun": "Com base nessas informações, faça o que se pede nos itens a seguir.<br>a) Estime a memória necessária para representar esse grafo por <b>matriz de adjacência</b> (considere 1 bit por célula) e por <b>lista de adjacência</b> (considere 4 bytes por entrada de vizinho e 8 bytes por cabeça de lista). Conclua qual cabe no servidor. (valor: 4,0 pontos)<br>b) Calcule o grau médio dos vértices e compare o custo de percorrer os vizinhos de um produto nas duas representações. (valor: 3,0 pontos)<br>c) Cite uma operação em que a matriz é mais vantajosa e proponha uma forma de obter essa vantagem sem abandonar a lista. (valor: 3,0 pontos)",
+  "topicos": [
+   "a) Matriz: V² = 334.863² ≈ 1,12 × 10¹¹ células → com 1 bit, ≈ 1,4 × 10¹⁰ bytes ≈ <b>14 GB</b> (não cabe em 8 GB). Com 1 byte por célula, ≈ 112 GB.",
+   "a) Lista: grafo não dirigido → cada aresta aparece 2 vezes: 2E = 1.851.744 entradas × 4 B ≈ 7,4 MB, mais V × 8 B ≈ 2,7 MB → <b>≈ 10 MB</b>. Espaço Θ(V + E).",
+   "a) Densidade ≈ E / (V(V−1)/2) ≈ 1,65 × 10⁻⁵: grafo muito esparso, quase toda a matriz seria zero.",
+   "b) Grau médio = 2E / V ≈ <b>5,5</b>. Na lista, percorrer os vizinhos custa O(grau) ≈ 5 a 6 acessos; na matriz, é preciso ler a linha inteira: O(V) = 334.863 células.",
+   "c) A matriz testa se a aresta (u, v) existe em <b>O(1)</b>; na lista, O(grau(u)). Também é natural para Floyd-Warshall e grafos densos.",
+   "c) Híbrido: guardar os vizinhos de cada vértice em uma <b>tabela hash</b> (conjunto) ou em lista <b>ordenada</b> com busca binária: teste em O(1) esperado ou O(log grau), mantendo Θ(V + E) de memória.",
+   "Pegadinha do Simulado 1: a alternativa que dizia que a matriz consome MENOS memória em rede esparsa era a INCORRETA."
+  ],
+  "exemplo": "<p><b>a)</b> A matriz tem V² = 334.863² ≈ 1,12 × 10¹¹ células. Com 1 bit por célula, são cerca de 1,4 × 10¹⁰ bytes, ou aproximadamente 14 GB, mais do que os 8 GB do servidor. A lista de adjacência guarda cada aresta não dirigida duas vezes: 2 × 925.872 = 1.851.744 entradas × 4 bytes ≈ 7,4 MB, mais 334.863 cabeças × 8 bytes ≈ 2,7 MB, totalizando cerca de 10 MB. Só a lista cabe. A diferença vem da densidade: o grafo usa cerca de 0,0017% das arestas possíveis, e a matriz gastaria memória com zeros.</p><p><b>b)</b> O grau médio é 2E/V ≈ 5,5. Na lista, visitar os vizinhos de um produto custa O(grau), cerca de 5 a 6 acessos. Na matriz, seria preciso varrer a linha inteira, O(V) = 334.863 posições, para achar esses mesmos 5 ou 6 vizinhos. Como o sistema percorre vizinhos com frequência, a lista também é melhor em tempo.</p><p><b>c)</b> A matriz responde \"existe a aresta (u, v)?\" em O(1), enquanto a lista simples exige percorrer os vizinhos de u. Para ter teste rápido sem perder a economia, cada vértice pode guardar seus vizinhos em um conjunto hash (O(1) esperado) ou em um vetor ordenado com busca binária (O(log grau)), mantendo memória Θ(V + E).</p>",
+  "tags": [
+   "Grafos: Matriz e lista de adjacência"
+  ]
+ },
+ {
+  "fonte": "Inédita · Complexidade de Algoritmos: casos de ordenação (Simulado 1, Q29: 29,82% de acerto)",
+  "prioridade": 2,
+  "caso": "<p>Uma equipe precisa ordenar lotes de n registros em um sistema bancário. Os lotes chegam, na maior parte das vezes, <b>quase ordenados</b> por data, mas alguns chegam em ordem inversa. A primeira versão usava um Quicksort que escolhe sempre o <b>último elemento como pivô</b>, e o tempo de resposta explodiu justamente nos lotes já ordenados.</p>",
+  "enun": "Com base nessa situação, faça o que se pede nos itens a seguir.<br>a) Explique por que esse Quicksort atingiu o pior caso nos lotes ordenados, escreva a recorrência desse caso e a do caso médio (ou melhor), com as respectivas complexidades. (valor: 4,0 pontos)<br>b) Analise o Insertion Sort no melhor e no pior caso, indicando que entradas os produzem e o número de comparações. (valor: 3,0 pontos)<br>c) Recomende um algoritmo para cada requisito: (i) pior caso garantido O(n log n) com memória extra O(1); (ii) pior caso O(n log n) e ordenação estável. Justifique. (valor: 3,0 pontos)",
+  "topicos": [
+   "a) Com pivô fixo no extremo e entrada ordenada, cada partição separa 0 e n−1 elementos (partições <b>desequilibradas</b>).",
+   "a) Pior caso: T(n) = T(n−1) + Θ(n) → Θ(n²) (soma da PA n + (n−1) + … + 1 = n(n+1)/2).",
+   "a) Melhor ou médio caso (partições equilibradas): T(n) = 2T(n/2) + Θ(n) → <b>Θ(n log n)</b> (Teorema Mestre, caso 2). O caso médio NÃO é O(log n), erro da Q29 do Simulado 1.",
+   "a) Correção: pivô aleatório ou mediana de três.",
+   "b) Melhor caso: vetor já ordenado → n − 1 comparações → Θ(n) (bom para lotes quase ordenados).",
+   "b) Pior caso: ordem inversa → Σ i (i = 1 até n−1) = n(n−1)/2 comparações → Θ(n²).",
+   "c) (i) <b>Heapsort</b>: Θ(n log n) em todos os casos, in-place, não estável (o caso médio NÃO é O(n)).",
+   "c) (ii) <b>Mergesort</b>: Θ(n log n) em todos os casos, estável, mas usa O(n) de memória auxiliar."
+  ],
+  "exemplo": "<p><b>a)</b> Com o último elemento como pivô e o vetor já ordenado, o pivô é sempre o maior elemento: a partição deixa n − 1 elementos de um lado e nenhum do outro. A recorrência fica T(n) = T(n − 1) + Θ(n), cuja soma n + (n − 1) + … + 1 = n(n + 1)/2 dá Θ(n²). Quando as partições são equilibradas (melhor caso, e em média com pivôs aleatórios), T(n) = 2T(n/2) + Θ(n), o que pelo Teorema Mestre dá Θ(n log n). Escolher o pivô aleatoriamente ou pela mediana de três evita o problema.</p><p><b>b)</b> No Insertion Sort, se o vetor já está ordenado, cada elemento é comparado só com o anterior: n − 1 comparações, Θ(n). Em ordem inversa, o i-ésimo elemento é comparado com todos os anteriores: 1 + 2 + … + (n − 1) = n(n − 1)/2, Θ(n²). Por isso ele é uma boa opção para os lotes quase ordenados.</p><p><b>c)</b> (i) Heapsort: constrói o heap em O(n) e faz n extrações de O(log n), Θ(n log n) em qualquer caso, ordenando no próprio vetor (O(1) extra). (ii) Mergesort: sempre divide ao meio e intercala em tempo linear, Θ(n log n) em todos os casos, e é estável, ao custo de O(n) de memória auxiliar.</p>",
+  "tags": [
+   "Complex.: Algoritmos de ordenação"
+  ]
+ },
+ {
+  "fonte": "Inédita · Desenvolvimento Ágil / Scrum (Simulado 1, Q19: 35,09% de acerto)",
+  "prioridade": 2,
+  "caso": "<p>Uma fábrica de software adotou Scrum. Depois de duas Sprints, o gerente relatou: \"O Scrum Master distribui as tarefas do Sprint Backlog para cada desenvolvedor toda manhã; o Product Owner raramente aparece, então o time decide sozinho a ordem do Product Backlog; e só consideramos a Sprint concluída quando o incremento é implantado em produção. Na Daily, o PO e o gerente cobram cada desenvolvedor pelo que fez ontem.\"</p>",
+  "enun": "Com base no Guia do Scrum, faça o que se pede nos itens a seguir.<br>a) Identifique <b>três</b> práticas do relato que contrariam o Scrum e explique a forma correta de cada uma. (valor: 6,0 pontos)<br>b) Diferencie incremento \"pronto\" (que atende à <i>Definition of Done</i>) de incremento \"implantado em produção\". (valor: 2,0 pontos)<br>c) Cite os três artefatos do Scrum e o compromisso associado a cada um. (valor: 2,0 pontos)",
+  "topicos": [
+   "a) O Scrum Master <b>não distribui tarefas</b>: os Developers se auto-organizam e gerenciam o Sprint Backlog. O SM é líder que serve, remove impedimentos e ensina o Scrum.",
+   "a) O <b>Product Owner</b> é o único responsável pelo conteúdo, ordenação e transparência do Product Backlog. Ele pode delegar trabalho, mas a responsabilidade continua sendo dele, e a ausência do PO é um impedimento.",
+   "a) A <b>Daily Scrum</b> (15 min) é dos Developers, para inspecionar o progresso rumo à Meta da Sprint e adaptar o plano. Não é reunião de status nem de cobrança; PO e SM só participam como Developers se estiverem trabalhando em itens.",
+   "a) A Sprint termina quando acaba o <b>time-box</b> (até 1 mês), não quando há deploy.",
+   "b) Pronto = atende à Definition of Done (qualidade, testado, utilizável) e pode ser liberado. Liberar ou implantar é decisão de negócio (pode acontecer várias vezes na Sprint ou depois dela).",
+   "c) Product Backlog → <b>Meta do Produto</b>; Sprint Backlog → <b>Meta da Sprint</b>; Incremento → <b>Definição de Pronto</b> (Guia 2020)."
+  ],
+  "exemplo": "<p><b>a)</b> (1) O Scrum Master não distribui tarefas: no Scrum, os Developers se auto-gerenciam e decidem como transformar os itens do Sprint Backlog em incremento. O SM atua como líder que serve, remove impedimentos e ajuda o time a aplicar o Scrum. (2) A ordem do Product Backlog é responsabilidade do Product Owner, que responde pelo valor do produto. Um PO ausente é um impedimento que o SM deve tratar com a organização, e não um motivo para o time assumir essa responsabilidade. (3) A Daily Scrum é um evento de 15 minutos dos Developers para inspecionar o progresso rumo à Meta da Sprint e adaptar o plano do dia, e não uma reunião de cobrança. Além disso, a Sprint termina ao fim do seu time-box, com ou sem implantação.</p><p><b>b)</b> O incremento está pronto quando cumpre a Definition of Done: está integrado, testado e utilizável. Implantar em produção é uma decisão de negócio que pode ocorrer antes do fim da Sprint, ao final dela ou mais tarde; não é condição para a Sprint ser considerada concluída.</p><p><b>c)</b> Product Backlog, com a Meta do Produto; Sprint Backlog, com a Meta da Sprint; e Incremento, com a Definição de Pronto.</p>",
+  "tags": [
+   "ES: Ágil, Scrum e PMBOK"
+  ]
+ },
+ {
+  "fonte": "Inédita · Sistemas Operacionais: escalonamento de CPU (Simulado 1, Q7: 38,60% de acerto)",
+  "prioridade": 3,
+  "caso": "<p>Considere quatro processos em um único núcleo, com tempos em milissegundos:</p><table><tr><th>Processo</th><th>Chegada</th><th>Duração (burst)</th></tr><tr><td>P1</td><td>0</td><td>8</td></tr><tr><td>P2</td><td>1</td><td>4</td></tr><tr><td>P3</td><td>2</td><td>2</td></tr><tr><td>P4</td><td>3</td><td>1</td></tr></table>",
+  "enun": "Com base nesses dados, faça o que se pede nos itens a seguir.<br>a) Desenhe o diagrama de Gantt e calcule o tempo médio de espera para FCFS, SJF não preemptivo e SRTF. (valor: 6,0 pontos)<br>b) Explique por que o SRTF minimiza o tempo médio de espera, mas pode causar inanição (<i>starvation</i>), e como a técnica de envelhecimento (<i>aging</i>) resolve isso. (valor: 2,0 pontos)<br>c) Na prática o escalonador não conhece a duração do próximo burst. Explique como ela pode ser estimada. (valor: 2,0 pontos)",
+  "topicos": [
+   "Espera = término − chegada − duração (ou início − chegada, se não houver preempção).",
+   "FCFS: P1 [0–8], P2 [8–12], P3 [12–14], P4 [14–15] → esperas 0, 7, 10, 11 → média <b>7,0 ms</b>.",
+   "SJF não preemptivo: P1 [0–8] (só ele havia chegado), depois P4 [8–9], P3 [9–11], P2 [11–15] → esperas 0, 10, 7, 6 → média <b>5,75 ms</b>.",
+   "SRTF: P1 [0–1], P2 [1–2], P3 [2–4], P4 [4–5], P2 [5–8], P1 [8–15] → esperas P1 7, P2 3, P3 0, P4 1 → média <b>2,75 ms</b>.",
+   "(Extra: Round-Robin q = 2 → P1 [0–2], P2 [2–4], P3 [4–6], P1 [6–8], P4 [8–9], P2 [9–11], P1 [11–15] → média 5,0 ms.)",
+   "b) O SRTF sempre executa o menor trabalho restante, o que é ótimo para a média; mas processos longos podem ser preteridos indefinidamente se chegarem curtos sem parar. Aging: aumentar a prioridade com o tempo de espera.",
+   "c) Média exponencial: τₙ₊₁ = α·tₙ + (1 − α)·τₙ, com 0 ≤ α ≤ 1 (tₙ = burst real mais recente)."
+  ],
+  "exemplo": "<p><b>a)</b> FCFS: P1 0–8 | P2 8–12 | P3 12–14 | P4 14–15. Esperas: P1 = 0, P2 = 8 − 1 = 7, P3 = 12 − 2 = 10, P4 = 14 − 3 = 11; média 28/4 = 7,0 ms. SJF não preemptivo: em t = 0 só P1 chegou e roda até 8; depois o menor é P4 (8–9), em seguida P3 (9–11) e P2 (11–15). Esperas: 0, 10, 7 e 6; média 23/4 = 5,75 ms. SRTF: P1 roda 0–1; P2 chega com 4 &lt; 7 restantes e preempta (1–2); P3 chega com 2 &lt; 3 e preempta (2–4); P4 roda 4–5; P2 termina 5–8; P1 termina 8–15. Esperas: P1 = 15 − 0 − 8 = 7, P2 = 8 − 1 − 4 = 3, P3 = 0, P4 = 5 − 3 − 1 = 1; média 11/4 = 2,75 ms.</p><p><b>b)</b> Atender sempre o menor tempo restante reduz a espera somada de todos (os curtos não ficam presos atrás dos longos), por isso o SRTF é ótimo para a média. Mas, se processos curtos continuarem chegando, um processo longo pode nunca ser escolhido. Com aging, a prioridade de um processo cresce conforme ele espera, até ele ser atendido.</p><p><b>c)</b> Estima-se o próximo burst pela média exponencial dos anteriores: τₙ₊₁ = α·tₙ + (1 − α)·τₙ. Com α próximo de 1, a estimativa privilegia o histórico recente.</p>",
+  "tags": [
+   "SO: Escalonamento de CPU"
+  ]
+ },
+ {
+  "fonte": "Inédita · Redes / Segurança: firewall × VPN IPsec (Simulado 1, Q28: 36,84% de acerto)",
+  "prioridade": 3,
+  "caso": "<p>A matriz (São Paulo) e a filial (Rio de Janeiro) de uma rede varejista trocam relatórios financeiros pela internet pública. As duas pontas têm firewalls <i>stateful</i> que só liberam o tráfego entre os IPs fixos das unidades. Um atacante que comprometeu um roteador de um provedor no meio do caminho leu os relatórios e alterou valores de transações antes de reencaminhar os pacotes, sem que os firewalls percebessem.</p>",
+  "enun": "Com base nessa situação, faça o que se pede nos itens a seguir.<br>a) Explique por que os firewalls não impediram o ataque e quais propriedades de segurança foram violadas. (valor: 3,0 pontos)<br>b) Descreva como uma VPN IPsec site-a-site (modo túnel com ESP e negociação IKE) mitiga o ataque, relacionando cada mecanismo à propriedade que ele garante. (valor: 5,0 pontos)<br>c) Compare essa solução com o uso de TLS na própria aplicação. (valor: 2,0 pontos)",
+  "topicos": [
+   "a) O firewall controla <b>o que entra e sai na borda</b> (IP/porta/estado), mas não protege o pacote <b>em trânsito</b> depois que ele sai da rede; o tráfego estava em texto claro.",
+   "a) Foram violadas a <b>confidencialidade</b> (leitura) e a <b>integridade</b> (alteração), além da autenticidade da origem.",
+   "b) ESP: cifra o payload (confidencialidade, ex.: AES); HMAC/AEAD (ex.: AES-GCM) garante integridade e autenticidade da origem; números de sequência dão <b>anti-replay</b>.",
+   "b) Modo túnel: encapsula o pacote IP inteiro em um novo cabeçalho entre os gateways, ocultando os endereços internos.",
+   "b) IKE: autentica os gateways (certificados ou PSK) e negocia chaves de sessão (Diffie-Hellman), evitando que o atacante se passe por uma das pontas.",
+   "c) IPsec atua na camada de rede e protege todo o tráfego entre as unidades, transparente às aplicações; TLS atua sobre o transporte, protege só a aplicação que o usa, é fim a fim (até o servidor) e dispensa infraestrutura de túnel. As duas soluções podem se complementar."
+  ],
+  "exemplo": "<p><b>a)</b> Firewalls stateful decidem o que pode atravessar a borda com base em endereços, portas e estado da conexão. Depois que o pacote sai da rede, eles não têm controle algum sobre o que acontece na internet. Como os relatórios trafegavam em texto claro, o roteador comprometido pôde lê-los (quebra de confidencialidade) e alterá-los (quebra de integridade e de autenticidade) sem violar nenhuma regra de borda.</p><p><b>b)</b> Na VPN IPsec site-a-site, os gateways das duas unidades primeiro se autenticam e negociam chaves pelo IKE (certificados ou chave pré-compartilhada, com troca Diffie-Hellman). Em seguida, cada pacote é encapsulado em modo túnel com ESP: o pacote original é cifrado (por exemplo, com AES), o que garante confidencialidade; recebe um código de autenticação (HMAC ou AEAD como AES-GCM), de modo que qualquer alteração faz o pacote ser descartado (integridade e autenticidade); e carrega número de sequência, o que impede a reinjeção de pacotes antigos (anti-replay). O atacante no provedor passa a ver só dados cifrados entre os dois gateways.</p><p><b>c)</b> O TLS também cifra e autentica, mas só protege a aplicação que o implementa, de ponta a ponta até o servidor. O IPsec protege todo o tráfego entre as redes, sem mudar as aplicações. Em geral, as duas soluções se complementam.</p>",
+  "tags": [
+   "Redes: Segurança (criptografia, firewall, VPN, Wi-Fi)"
+  ]
+ },
+ {
+  "fonte": "Inédita · Teoria da Computação: limites dos autômatos (Simulado 1, Q26: 40,35% de acerto)",
+  "prioridade": 3,
+  "caso": "<p>Um engenheiro precisa validar três formatos de mensagem sobre o alfabeto {a, b, c}: L₁ = { a b* a }, L₂ = { aⁿ bⁿ | n ≥ 0 } e L₃ = { aⁿ bⁿ cⁿ | n ≥ 1 }.</p>",
+  "enun": "Com base nessas linguagens, faça o que se pede nos itens a seguir.<br>a) Classifique cada linguagem na Hierarquia de Chomsky e indique o reconhecedor mínimo necessário (AFD, autômato de pilha ou máquina de Turing / autômato linearmente limitado). (valor: 3,0 pontos)<br>b) Explique, de forma intuitiva ou pelo Lema do Bombeamento, por que nenhum AFD reconhece L₂. (valor: 3,0 pontos)<br>c) Descreva a estratégia de uma máquina de Turing que reconheça L₃, simulando-a para a entrada \"aabbcc\". (valor: 4,0 pontos)",
+  "topicos": [
+   "a) L₁ regular (AFD com 3 estados úteis + estado de erro); L₂ livre de contexto, não regular (AP); L₃ sensível ao contexto, não livre de contexto (LBA / MT).",
+   "b) Um AFD tem número finito k de estados; para aᵏbᵏ, ao ler os k a's ele repete um estado (pombal) e não consegue \"lembrar\" quantos a's leu.",
+   "b) Lema do Bombeamento: w = aᵖbᵖ, |xy| ≤ p ⇒ y = aʲ (j ≥ 1); xy²z = aᵖ⁺ʲbᵖ ∉ L₂. Contradição.",
+   "c) MT: marca o primeiro a com X, anda à direita até o primeiro b e marca Y, depois até o primeiro c e marca Z, volta ao início e repete; aceita quando só restam X, Y, Z e encontra o branco; rejeita se faltar ou sobrar símbolo.",
+   "c) Simulação: aabbcc → após o 1º ciclo XaYbZc → após o 2º ciclo XXYYZZ → verifica → aceita.",
+   "Na Q26 do Simulado 1 a resposta certa era I, III e IV (fita XaYbZc após o 1º ciclo; L não é LLC; aceita aabbcc)."
+  ],
+  "exemplo": "<p><b>a)</b> L₁ = ab*a é regular: um AFD basta (lê a, fica em laço lendo b's e aceita ao ler o segundo a). L₂ = aⁿbⁿ é livre de contexto e não regular: um autômato de pilha empilha um símbolo para cada a e desempilha um para cada b, aceitando com a pilha vazia. L₃ = aⁿbⁿcⁿ é sensível ao contexto e não livre de contexto: exige um autômato linearmente limitado ou uma máquina de Turing.</p><p><b>b)</b> Suponha um AFD com p estados que reconheça L₂. Na palavra aᵖbᵖ, ao ler os p primeiros a's ele passa por p + 1 estados, então algum se repete: existe um trecho y = aʲ (j ≥ 1) que forma um ciclo. Repetindo o ciclo, o AFD também aceitaria aᵖ⁺ʲbᵖ, que não pertence a L₂. Falta-lhe memória ilimitada para contar.</p><p><b>c)</b> A MT faz ciclos: troca o primeiro a por X, avança até o primeiro b e troca por Y, avança até o primeiro c e troca por Z, e volta à esquerda até o X mais à direita. Quando não houver mais a's, confere se restam apenas Y's e Z's até o branco e aceita; qualquer símbolo fora de ordem ou faltando leva à rejeição. Em \"aabbcc\": após o 1º ciclo a fita fica XaYbZc; após o 2º, XXYYZZ; na verificação só há Y e Z antes do branco, e a máquina para no estado de aceitação.</p>",
+  "tags": [
+   "TC: Máquinas de Turing",
+   "TC: Linguagens não regulares (limites do AFD)"
+  ]
+ }
+]

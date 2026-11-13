@@ -1,0 +1,318 @@
+{
+ "topico": "06 · Sistemas Operacionais",
+ "slug": "so",
+ "excluidas_simulado1": [
+  {
+   "banco": "Caderno Q2 (= Slides Q1)",
+   "simulado": "Q22",
+   "motivo": "mesmo V/F sobre modo kernel, interrupção × exceção, syscall/trap e API (incidente da controladora de disco); mesmas alternativas, gabarito D"
+  },
+  {
+   "banco": "Caderno Q6",
+   "simulado": "Q7",
+   "motivo": "mesmo traço de 4 tarefas (P1–P4) e SLA de espera média ≤ 3,5 ms; mesmas alternativas, gabarito B (SRTF 3,0 ms)"
+  },
+  {
+   "banco": "Caderno Q7 (= Slides Q3)",
+   "simulado": "Q30",
+   "motivo": "mesmo mapa 100/500/200/300/600 KB e pedido de 212 KB (best-fit + fragmentação externa); alternativas reordenadas no simulado (correta = A no simulado, C no caderno, B nos slides)"
+  }
+ ],
+ "questoes": [
+  {
+   "ref": "Caderno do squad: Q1",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma fabricante de equipamentos médicos está integrando novos analistas ao time de software embarcado. No treinamento inicial, o arquiteto do produto apresenta o computador como uma máquina de níveis: cada camada oferece uma interface mais conveniente que a camada imediatamente inferior, e o sistema operacional ocupa a posição central dessa organização, cumprindo dois papéis complementares. Em seguida, ele explica como o código escrito pela equipe chega a ser executado pelo processador, passando pelos programas utilitários de tradução.</p><p><b>Considerando a organização do computador em máquina de níveis e as categorias de softwares tradutores, assinale a alternativa que preenche corretamente as lacunas do texto a seguir.</b></p><p>Ao ocultar do programador os detalhes do hardware e oferecer abstrações como arquivos, processos e chamadas de sistema, o sistema operacional atua como __________. Ao arbitrar o uso da CPU, da memória e dos dispositivos entre múltiplos programas e usuários concorrentes, ele atua como __________. Entre os programas utilitários, aquele que traduz um programa escrito em linguagem simbólica de montagem para a linguagem de máquina é o __________, enquanto aquele que traduz e executa o código-fonte comando a comando, sem gerar previamente um módulo objeto completo, é o __________.</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "gerenciador de recursos / máquina estendida / compilador / montador"
+    },
+    {
+     "l": "B",
+     "t": "máquina estendida / gerenciador de recursos / compilador / ligador"
+    },
+    {
+     "l": "C",
+     "t": "máquina estendida / gerenciador de recursos / montador / interpretador"
+    },
+    {
+     "l": "D",
+     "t": "gerenciador de recursos / máquina estendida / montador / compilador"
+    }
+   ],
+   "cor": "C",
+   "just": "C. Ocultar os detalhes do hardware e oferecer abstrações (arquivos, processos, chamadas de sistema) é a visão de máquina estendida; arbitrar CPU, memória e dispositivos entre programas concorrentes é a visão de gerenciador de recursos. O montador (assembler) traduz linguagem simbólica de montagem para linguagem de máquina, e o interpretador traduz e executa o código-fonte comando a comando, sem gerar um módulo objeto completo. A e D invertem as duas visões do SO; A ainda troca os tradutores (o compilador traduz alto nível, e o montador não executa nada). B acerta as visões, mas põe o compilador no lugar do montador e o ligador, que não traduz (apenas resolve referências entre módulos), no lugar do interpretador. D também trata compilador e interpretador como sinônimos.",
+   "nota": "Versão alterada provável: lacunas em outra ordem. Associe \"ocultar/abstrair\" → máquina estendida e \"arbitrar/compartilhar\" → gerenciador de recursos (duas visões do mesmo SO). Slides não trazem esta questão.",
+   "tags": [
+    "SO: Visão geral e softwares tradutores"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q3",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Um servidor de uma clínica deixou de inicializar após uma atualização malsucedida. Na tela, o equipamento exibe a mensagem de teste de memória e, logo em seguida, a informação de que nenhum dispositivo inicializável foi encontrado. Para isolar o ponto exato da falha, a analista responsável precisa percorrer mentalmente toda a sequência de inicialização, do acionamento do botão de energia até a disponibilização dos serviços do sistema.</p><p>Etapas da inicialização, apresentadas fora de ordem:</p><p>1. O gerenciador de boot apresenta as opções disponíveis, carrega a imagem do kernel para a memória principal e transfere o controle a ele.<br>2. O firmware residente na placa-mãe executa o autoteste de inicialização (POST), testando e inventariando os dispositivos de hardware essenciais.<br>3. O kernel cria o primeiro processo em modo usuário, de identificador 1, que ativa os serviços e conduz o sistema ao seu estado operacional padrão.<br>4. O firmware localiza o dispositivo de inicialização segundo a ordem configurada e lê o código do carregador nele gravado.<br>5. O kernel inicializa suas estruturas internas, monta o sistema de arquivos raiz e carrega os drivers necessários.</p><p><b>Considerando o processo de inicialização de um computador de uso geral, ordene as etapas acima na sequência lógica em que devem ocorrer.</b></p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "4 – 2 – 1 – 3 – 5"
+    },
+    {
+     "l": "B",
+     "t": "2 – 4 – 1 – 5 – 3"
+    },
+    {
+     "l": "C",
+     "t": "2 – 1 – 4 – 5 – 3"
+    },
+    {
+     "l": "D",
+     "t": "2 – 4 – 5 – 1 – 3"
+    }
+   ],
+   "cor": "B",
+   "just": "B. Sequência: (2) o firmware executa o POST → (4) localiza o dispositivo de boot e lê o carregador → (1) o gerenciador de boot carrega o kernel na memória e lhe passa o controle → (5) o kernel inicializa suas estruturas, monta a raiz e carrega drivers → (3) o kernel cria o processo 1 (init/systemd), que sobe os serviços. A mensagem do cenário (teste de memória concluído, \"nenhum dispositivo inicializável\") indica falha na etapa 4. A põe a busca do dispositivo antes do POST e o processo 1 antes da montagem da raiz, onde está o executável dele. C coloca o gerenciador de boot antes da leitura do dispositivo, mas ele é justamente o código lido nessa etapa. D inverte 1 e 5: o kernel não pode se inicializar antes de ser carregado.",
+   "nota": "Guarde a ordem das funções, não os números: uma versão alterada pode embaralhar as etapas de outro jeito. \"Nenhum dispositivo inicializável\" = falha entre o POST e o carregador.",
+   "tags": [
+    "SO: Boot e carregadores de kernel"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q4",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Uma equipe está implementando um núcleo didático multitarefa para uma disciplina de laboratório. O escalonador já funciona, mas os processos, ao retomarem a execução após terem sido preemptados, reiniciam do começo em vez de continuar do ponto em que pararam. A equipe conclui que falta salvar e restaurar corretamente a estrutura de dados que preserva a situação do processador no instante da preempção.</p><p><b>A estrutura de dados mantida pelo sistema operacional que armazena o contexto de hardware de um processo — em especial o conteúdo dos registradores, do contador de programa e do ponteiro de pilha no instante em que ele perde o processador, permitindo que sua execução seja retomada exatamente do ponto de interrupção — é denominada</b></p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Bloco de Controle de Processo (PCB), salvo e restaurado pelo dispatcher a cada troca de contexto."
+    },
+    {
+     "l": "B",
+     "t": "tabela de páginas do processo, mantida pela MMU para traduzir seus endereços lógicos durante a execução."
+    },
+    {
+     "l": "C",
+     "t": "pilha de execução do processo, na qual são alocados os registros de ativação das funções chamadas."
+    },
+    {
+     "l": "D",
+     "t": "vetor de interrupções, consultado pelo processador para localizar a rotina de tratamento do evento ocorrido."
+    }
+   ],
+   "cor": "A",
+   "just": "A. O Bloco de Controle de Processo (PCB) é a estrutura do núcleo que representa o processo e guarda seu contexto de hardware (registradores, PC, ponteiro de pilha, PSW), o contexto de software e informações do espaço de endereçamento; o dispatcher salva o contexto nele ao retirar o processo da CPU e o restaura ao devolvê-la. B: a tabela de páginas também é por processo e trocada no chaveamento, mas guarda o mapeamento página → quadro, não os registradores. C: a pilha guarda registros de ativação das funções dentro do mesmo fluxo; não preserva o estado completo do processador entre processos nem é gerida pelo dispatcher. D: o vetor de interrupções é global e contém endereços das rotinas de tratamento, não o estado de quem foi interrompido.",
+   "nota": "A rigor, o dispatcher salva o contexto de hardware no PCB e o restaura a partir dele; não muda a resposta.",
+   "tags": [
+    "SO: Processos, PCB e troca de contexto"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q5",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Um sistema de reservas mantém duas estruturas compartilhadas — a agenda de salas (protegida pelo mutex A) e o cadastro de participantes (protegido pelo mutex B). A rotina de criação de reunião adquire A e, ainda de posse dele, solicita B. A rotina de cancelamento adquire B e, ainda de posse dele, solicita A. Todas as regiões críticas estão corretamente delimitadas por operações de aquisição e liberação. Em produção, sob carga, o sistema trava de forma intermitente: as duas rotinas ficam bloqueadas indefinidamente e nenhuma delas prossegue.</p><p><b>Considerando os mecanismos de sincronização e as condições necessárias à ocorrência de impasses, avalie as asserções a seguir e a relação proposta entre elas.</b></p><p>I. O uso correto de semáforos binários (mutexes) em torno de todas as regiões críticas do sistema descrito é suficiente para garantir que ele não entre em deadlock,</p><p><b>PORQUE</b></p><p>II. a exclusão mútua assegurada pelos semáforos impede que dois fluxos de execução acessem simultaneamente a mesma estrutura compartilhada, eliminando as condições de corrida.</p><p><b>A respeito dessas asserções, assinale a opção correta.</b></p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    },
+    {
+     "l": "E",
+     "t": "As asserções I e II são proposições falsas."
+    }
+   ],
+   "cor": "D",
+   "just": "D. A asserção I é falsa: exclusão mútua não previne impasse — é a primeira das quatro condições de Coffman. No cenário, as outras três também ocorrem (posse e espera, não preempção e espera circular, com A e B adquiridos em ordens opostas), e o deadlock acontece justamente porque os mutexes funcionam. A asserção II é verdadeira, mas trata de outro problema (condição de corrida). A e B exigem I verdadeira, o que o próprio cenário desmente (A é a armadilha clássica de a II “parecer explicar” a I). C inverte os valores lógicos. E nega a II, que é a definição correta do papel do semáforo. A prevenção adequada seria impor uma ordem global de aquisição (sempre A antes de B).",
+   "nota": "Também está nos slides do squad (Slides Q2), com enunciado resumido e as mesmas alternativas e gabarito (D). Remédio típico (ENADE 2017): ordem global de aquisição dos locks, quebrando a espera circular.",
+   "tags": [
+    "SO: Exclusão mútua e deadlock"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q8",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>A arquiteta de um sistema operacional para dispositivos de borda precisa escolher a política de substituição de páginas do gerenciador de memória virtual. Para fundamentar a decisão, ela simula o comportamento de três algoritmos sobre a mesma carga de trabalho, com três quadros de página e memória inicialmente vazia.</p><p>Cadeia de referências a páginas utilizada na simulação:</p><p>7 · 0 · 1 · 2 · 0 · 3 · 0 · 4 · 2 · 3</p><p>Número de quadros disponíveis: 3. Memória inicialmente vazia (todas as faltas iniciais devem ser contabilizadas).</p><p><b>Ao simular os algoritmos FIFO, LRU e Ótimo sobre a cadeia de referências apresentada, qual é o número de faltas de página produzido por cada um deles, respectivamente, e qual conclusão de projeto se sustenta a partir do resultado?</b></p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "9, 8 e 6 faltas; o algoritmo Ótimo serve apenas como referência teórica de desempenho, e o LRU é a política implementável mais próxima dele."
+    },
+    {
+     "l": "B",
+     "t": "9, 9 e 8 faltas; FIFO e LRU têm desempenho equivalente nessa carga, de modo que a escolha entre eles deve considerar apenas o custo de implementação."
+    },
+    {
+     "l": "C",
+     "t": "6, 5 e 3 faltas; como as primeiras cargas ocorrem em memória vazia, elas não configuram falta de página e não entram na contagem."
+    },
+    {
+     "l": "D",
+     "t": "15, 13 e 9 faltas; toda referência a uma página que provoque substituição gera duas faltas, uma na retirada e outra na carga da nova página."
+    }
+   ],
+   "cor": "A",
+   "just": "A. Simulando com 3 quadros: FIFO = 9 faltas (só o 0 da 5ª referência é acerto); LRU = 8 (acertos nos 0 da 5ª e da 7ª referências; na 6ª a vítima é a página 1, a menos recentemente usada); Ótimo = 6 (sempre expulsa a página de uso mais distante: acertos em 0, 0, 2 e 3). O Ótimo exige conhecer o futuro, por isso é só referência teórica (limite inferior), e o LRU é a melhor aproximação implementável. B supõe empate FIFO × LRU e erra o Ótimo; além disso, o FIFO sofre a anomalia de Belady, então custo não é o único critério. C desconta as 3 faltas compulsórias (partida a frio), que o enunciado manda contar. D conta duas faltas por substituição (3 + 2×6, 3 + 2×5, 3 + 2×3), mas cada substituição é um único evento de falta.",
+   "nota": "Nos slides do squad (Slides Q4) a letra correta também é A, mas os distratores são outros: B) 9, 9 e 6 (LRU tratado como FIFO); C) 9, 8 e 7 (Ótimo mal simulado); D) 10, 8 e 6 (acerto do FIFO contado como falta). Em qualquer versão, refaça a simulação quadro a quadro.",
+   "tags": [
+    "SO: Memória virtual (substituição, TLB e thrashing)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q9",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Um servidor de aplicação apresenta degradação severa de desempenho. O monitoramento mostra utilização de CPU abaixo de 8%, fila de E/S do disco permanentemente saturada e taxa de faltas de página duas ordens de grandeza acima do valor histórico. A quantidade de processos residentes vinha sendo aumentada gradualmente ao longo da semana.</p><p><b>Considerando os conceitos de memória virtual e o diagnóstico do cenário apresentado, avalie as afirmativas a seguir.</b></p><p>I. O quadro descrito caracteriza thrashing, situação em que a utilização da CPU despenca em meio a intensa atividade de paginação, e que ocorre quando o conjunto de páginas ativas (working set) dos processos residentes excede o número de quadros disponíveis na memória principal.</p><p>II. Ampliar ainda mais o grau de multiprogramação é a medida corretiva adequada, pois, havendo mais processos prontos, o escalonador consegue manter a CPU ocupada enquanto os demais aguardam a conclusão das operações de E/S de página.</p><p>III. A TLB é uma memória associativa que armazena as traduções de páginas mais recentemente utilizadas; um acerto na TLB dispensa a consulta à tabela de páginas residente na memória principal para concluir a tradução do endereço.</p><p>IV. Sob política de substituição global, um processo pode tomar quadros de outro e, por isso, sua taxa de faltas de página passa a depender do comportamento dos demais processos, ao passo que, na política local, essa taxa depende apenas do próprio comportamento.</p><p><b>É correto apenas o que se afirma em</b></p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e II."
+    },
+    {
+     "l": "B",
+     "t": "II e III."
+    },
+    {
+     "l": "C",
+     "t": "I, III e IV."
+    },
+    {
+     "l": "D",
+     "t": "I, II e IV."
+    }
+   ],
+   "cor": "C",
+   "just": "C. I está correta: CPU abaixo de 8%, disco saturado e faltas de página explodindo após aumentar os processos residentes é o quadro de thrashing — o working set dos processos excede os quadros disponíveis. III define corretamente a TLB: um acerto dispensa consultar a tabela de páginas na memória. IV distingue bem a substituição global (a taxa de faltas depende dos outros processos) da local. II é falsa: aumentar a multiprogramação reduz ainda mais os quadros por processo e aprofunda o colapso; o remédio é reduzir a multiprogramação (suspender processos). A, B e D incluem a II; B ainda rejeita I e IV, que estão corretas.",
+   "nota": "Numa versão alterada os números podem mudar; o diagnóstico não: CPU baixa + disco saturado + faltas altas = thrashing, e o remédio é reduzir a multiprogramação.",
+   "tags": [
+    "SO: Memória virtual (substituição, TLB e thrashing)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q10",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Ao especificar o sistema de arquivos de um equipamento de aquisição de dados, uma equipe de projeto avalia como os blocos de cada arquivo serão distribuídos no disco. A decisão precisa levar em conta o desempenho no acesso sequencial e no acesso direto, a ocorrência de fragmentação e o custo de estruturas auxiliares.</p><p><b>Coluna 1 — Métodos de alocação</b><br>1. Alocação contígua<br>2. Alocação encadeada<br>3. Alocação indexada</p><p><b>Coluna 2 — Características</b></p><p>( ) Cada bloco do arquivo guarda um ponteiro para o bloco seguinte, o que elimina a fragmentação externa, mas torna o acesso direto ineficiente, pois exige percorrer a cadeia desde o início.</p><p>( ) O arquivo ocupa um conjunto de blocos sequenciais no disco, o que oferece o melhor desempenho em leitura sequencial e permite acesso direto por cálculo simples, mas provoca fragmentação externa e dificulta o crescimento do arquivo.</p><p>( ) Um bloco dedicado reúne os ponteiros para todos os blocos de dados do arquivo, o que preserva a eficiência do acesso direto e elimina a fragmentação externa, ao custo do espaço ocupado pela estrutura de índice.</p><p><b>Relacione os métodos de alocação de arquivos em disco da primeira coluna com as características apresentadas na segunda coluna e assinale a alternativa que contém a sequência correta.</b></p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "1 – 2 – 3"
+    },
+    {
+     "l": "B",
+     "t": "3 – 1 – 2"
+    },
+    {
+     "l": "C",
+     "t": "2 – 3 – 1"
+    },
+    {
+     "l": "D",
+     "t": "2 – 1 – 3"
+    }
+   ],
+   "cor": "D",
+   "just": "D (2 – 1 – 3). A 1ª característica (ponteiro em cada bloco para o seguinte, sem fragmentação externa, acesso direto ruim) é a alocação encadeada (2). A 2ª (blocos sequenciais, ótimo acesso sequencial, acesso direto por cálculo, fragmentação externa e dificuldade de crescimento) é a contígua (1). A 3ª (bloco de índice com todos os ponteiros) é a indexada (3). A atribui ponteiros à contígua, cujo próximo endereço é calculado. B troca encadeada e indexada (ambas usam ponteiros, mas em lugares diferentes: espalhados nos blocos × centralizados no índice). C acerta só a primeira e inverte contígua e indexada.",
+   "nota": "Associe pelas palavras-chave, não pela posição: numa versão alterada a ordem das características (e a sequência) pode mudar.",
+   "tags": [
+    "SO: Sistemas de arquivos e alocação em disco"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q11",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Um hospital vai implantar um servidor Linux para o arquivo de imagens de exames. Os requisitos são: arquivos individuais de 2 GB a 40 GB; leitura frequente de trechos específicos de cada exame, em posições arbitrárias do arquivo; e garantia de que uma queda de energia não deixe o volume em estado inconsistente nem exija horas de verificação para voltar ao ar.</p><p><b>Com o objetivo de projetar a solução de armazenamento que atenda aos requisitos de desempenho e de integridade descritos, analise as propostas formuladas pela equipe de infraestrutura.</b></p><p>I. Adotar um sistema de arquivos com journaling, como ext4 ou XFS, atende ao requisito de integridade: o registro prévio das operações em um diário permite que, após uma queda de energia, a recuperação se dê pela reaplicação ou pelo descarte das transações incompletas, dispensando a varredura completa do volume.</p><p>II. A alocação indexada é preferível à encadeada para os arquivos de imagem, pois preserva a eficiência do acesso direto a blocos arbitrários, necessária à leitura de regiões específicas de exames de grande porte.</p><p>III. A escolha do sistema FAT32 atenderia melhor ao cenário, uma vez que sua tabela de alocação centralizada oferece journaling nativo e comporta arquivos individuais do porte exigido pelos exames.</p><p>IV. A gerência de espaços livres por mapa de bits facilita a localização de conjuntos de blocos contíguos, o que é útil para reduzir a fragmentação dos arquivos de grande porte gravados no volume.</p><p><b>Devem compor a solução apenas as propostas</b></p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "I e III."
+    },
+    {
+     "l": "B",
+     "t": "I, II e IV."
+    },
+    {
+     "l": "C",
+     "t": "II e III."
+    },
+    {
+     "l": "D",
+     "t": "I, III e IV."
+    }
+   ],
+   "cor": "B",
+   "just": "B. I atende à integridade: com journaling (ext4, XFS) a recuperação após queda de energia reaplica ou descarta transações incompletas registradas no diário, sem varrer o volume inteiro. II atende ao desempenho: a alocação indexada mantém o acesso direto eficiente a blocos arbitrários, ao contrário da encadeada. IV é válida: o mapa de bits permite achar sequências de blocos livres contíguos com facilidade, reduzindo a fragmentação de arquivos grandes. III é falsa: o FAT32 não tem journaling e limita cada arquivo a 4 GB, inviável para exames de 2 a 40 GB. A, C e D incluem a III; C ainda descarta a I, e A descarta II e IV.",
+   "nota": "No modo padrão do ext4 (data=ordered) só os metadados vão para o diário; isso basta para o requisito de consistência do volume.",
+   "tags": [
+    "SO: Sistemas de arquivos e alocação em disco"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q12",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p>Ao revisar a configuração de um servidor que acumula as funções de arquivo e de impressão, um administrador de sistemas elabora um documento técnico com as premissas que orientaram suas decisões sobre o subsistema de entrada e saída. O documento será submetido à validação da equipe de arquitetura, que precisa identificar eventuais premissas equivocadas antes da aprovação.</p><p><b>Considerando o funcionamento do subsistema de entrada e saída e os mecanismos de proteção de recursos, assinale a alternativa que apresenta uma afirmação INCORRETA.</b></p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "Na E/S por acesso direto à memória (DMA), o controlador transfere blocos inteiros entre o dispositivo e a memória principal e interrompe o processador apenas ao final da transferência, reduzindo a sobrecarga da CPU em relação à E/S por interrupção."
+    },
+    {
+     "l": "B",
+     "t": "O spooling desacopla a aplicação do dispositivo ao gravar a saída em uma área intermediária em disco, permitindo que vários processos submetam trabalhos simultaneamente enquanto um processo servidor os envia à impressora, um de cada vez."
+    },
+    {
+     "l": "C",
+     "t": "O buffer cache mantém em memória principal blocos de disco recentemente acessados e aproveita o princípio da localidade de referência para reduzir o número de acessos físicos ao dispositivo."
+    },
+    {
+     "l": "D",
+     "t": "Em sistemas Linux, as permissões de leitura, escrita e execução aplicadas ao proprietário, ao grupo e aos demais usuários são verificadas pelo núcleo, e o bit de execução em um diretório controla a possibilidade de atravessá-lo para alcançar seu conteúdo."
+    },
+    {
+     "l": "E",
+     "t": "Na E/S programada por polling, o processador delega ao controlador o controle completo da transferência e permanece livre para executar outros processos, sendo por isso a técnica mais eficiente para dispositivos de alta taxa de transferência."
+    }
+   ],
+   "cor": "E",
+   "just": "E é a afirmação INCORRETA (portanto, o gabarito): na E/S programada por polling a CPU fica em espera ocupada, testando repetidamente o registrador de status e movendo os dados ela mesma; é a técnica de maior sobrecarga e a menos indicada para dispositivos rápidos — o texto da E descreve, na verdade, o DMA. A está correta: no DMA o controlador transfere o bloco inteiro e interrompe a CPU só no fim. B está correta: o spooling usa uma fila em disco para tornar compartilhável um dispositivo dedicado como a impressora. C está correta: o buffer cache explora a localidade de referência para evitar acessos físicos. D está correta: o núcleo verifica as permissões rwx, e o bit x em diretório controla a travessia (o r controla a listagem).",
+   "nota": "Também está nos slides do squad (Slides Q5), com situação-problema resumida e as mesmas alternativas e gabarito (E).",
+   "tags": [
+    "SO: E/S, spooling, cache e permissões"
+   ]
+  }
+ ],
+ "dissertativas": [
+  {
+   "fonte": "Sistemas Operacionais · Slides do squad, p. 35 (exercício sugerido na resolução da Questão 3 dos slides = Caderno Q7)",
+   "caso": "<p>Mapa de áreas livres da memória principal (partições variáveis, alocação contígua), em ordem crescente de endereço: 100 KB, 500 KB, 200 KB, 300 KB e 600 KB. O slide resolve o pedido de 212 KB (first-fit → 500 KB, resto 288; best-fit → 300 KB, resto 88; worst-fit → 600 KB, resto 388) e sugere: “o mesmo mapa é o exercício clássico de Silberschatz (100, 500, 200, 300, 600 KB) — treinem também com pedidos de 417, 112 e 426 KB”.</p>",
+   "enun": "<p>Considerando que chegam, nesta ordem, processos que requisitam 212 KB, 417 KB, 112 KB e 426 KB, e que cada alocação consome a lacuna escolhida (o resto continua livre no mesmo lugar), aplique as estratégias first-fit, best-fit e worst-fit. Para cada estratégia, indique a lacuna escolhida para cada pedido e o resto gerado, informe se algum pedido deixa de ser atendido e explique qual tipo de fragmentação está envolvido.</p>",
+   "topicos": [
+    "First-fit: 212 → 500 (resto 288); 417 → 600 (resto 183); 112 → 288 (resto 176); 426 não é atendido (lacunas 100, 176, 200, 300, 183).",
+    "Best-fit: 212 → 300 (resto 88); 417 → 500 (resto 83); 112 → 200 (resto 88); 426 → 600 (resto 174). Atende os quatro.",
+    "Worst-fit: 212 → 600 (resto 388); 417 → 500 (resto 83); 112 → 388 (resto 276); 426 não é atendido (lacunas 100, 83, 200, 300, 276).",
+    "Definição das estratégias: primeira que couber × menor que couber (varre a lista toda) × maior de todas.",
+    "Falha por fragmentação externa: há memória livre total suficiente (ex.: 959 KB no first-fit), mas nenhuma lacuna contígua ≥ 426 KB; soluções: compactação/relocação ou paginação.",
+    "Nenhuma das três estratégias elimina a fragmentação externa; best-fit tende a deixar restos pequenos demais para reuso."
+   ],
+   "exemplo": "<p><b>First-fit</b> (primeira lacuna que couber): 212 KB vai para a de 500 KB (sobram 288); 417 KB não cabe em 100, 288, 200 nem 300 e vai para a de 600 KB (sobram 183); 112 KB vai para a de 288 KB (sobram 176). Para 426 KB restam 100, 176, 200, 300 e 183 KB: nenhuma serve, e o pedido fica sem atendimento.</p><p><b>Best-fit</b> (menor lacuna suficiente): 212 → 300 (sobram 88); 417 → 500 (sobram 83); 112 → 200 (sobram 88); 426 → 600 (sobram 174). Todos os pedidos são atendidos.</p><p><b>Worst-fit</b> (maior lacuna): 212 → 600 (sobram 388); 417 → 500 (sobram 83); 112 → 388 (sobram 276); para 426 KB restam 100, 83, 200, 300 e 276 KB, e o pedido não é atendido.</p><p>Nos casos de falha há memória livre total mais que suficiente (959 KB no first-fit, por exemplo), mas ela está espalhada em lacunas não contíguas: é a <b>fragmentação externa</b>, típica de partições variáveis (a interna é típica de partições fixas). Neste exemplo só o best-fit atende os quatro pedidos, mas ele costuma deixar restos pequenos (83, 88 KB) difíceis de reaproveitar. A fragmentação externa pode ser resolvida por compactação (relocação dinâmica dos processos) ou evitada com paginação.</p>"
+  }
+ ],
+ "observacoes": "Caderno (docx, 12 questões) e gabarito comentado (PDF) completos e coerentes; todos os 12 gabaritos conferidos independentemente (Q6 SRTF/SJF/RR/FCFS e Q8 FIFO/LRU/Ótimo refeitos) — nenhuma divergência. Os slides (Slides.pdf) trazem 5 versões resumidas (Slides Q1–Q5 = Caderno Q2, Q5, Q7, Q8, Q12): Q2 e Q7 dos slides são as do Simulado 1 (excluídas); Q5 e Q12 idênticas às do caderno; Q8 com distratores diferentes (registrado em nota). O material explicativo não traz questões próprias, só cita ENADEs anteriores (2005, 2008, 2011, 2014, 2017, 2021) sem enunciado. A única figura do caderno (Gantt da Q6) pertence a questão excluída; nenhuma figura recortada. O caderno não tem discursivas; a dissertativa incluída é o exercício sugerido no slide 35 (first/best/worst-fit), sem gabarito no material — resposta esperada calculada aqui (leitura sequencial clássica de Silberschatz)."
+}
