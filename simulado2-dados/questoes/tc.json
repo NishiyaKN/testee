@@ -1,0 +1,185 @@
+{
+ "topico": "10 · Teoria da Computação",
+ "slug": "tc",
+ "excluidas_simulado1": [
+  {
+   "banco": "Caderno Q3 (= slides Q3, banco anterior reais-68)",
+   "simulado": "Q15",
+   "motivo": "mesma situação: AFD de 8 estados do handshake, funcionalidade X (ab*a) × Y (aⁿbⁿ); alternativas reordenadas (caderno C = simulado A)"
+  },
+  {
+   "banco": "Caderno Q5 (= slides Q5, banco anterior reais-70)",
+   "simulado": "Q26",
+   "motivo": "mesma Máquina de Turing para aⁿbⁿcⁿ com a fita \"aabbcc\" e as afirmativas I–IV; gabarito \"I, III e IV\" (D) nos dois"
+  }
+ ],
+ "questoes": [
+  {
+   "ref": "Caderno do squad: Q1",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"Na Teoria dos Conjuntos e Relações Binárias, a rigorosa formalização matemática de elementos, subconjuntos e propriedades de relações (como reflexividade, simetria e transitividade) constitui a base fundamental para a modelagem do espaço de estados em computação e para a teoria dos grafos.\"</p><p><b>Situação-Problema:</b></p><p>No estudo da Teoria dos Conjuntos e Relações Binárias sobre um conjunto finito A = {1, 2, 3}, um estudante de Ciência da Computação precisa avaliar o comportamento formal de diferentes relações e operações com conjuntos para validar a modelagem de um banco de dados relacional.</p><p><b>Comando:</b></p><p>Analise as afirmações a seguir, classificando cada uma como Verdadeira (V) ou Falsa (F):</p><p>1. O conjunto vazio ∅ é subconjunto de qualquer conjunto A, sendo que {} ≠ {∅}.</p><p>2. Dado o universo U = {1, 2, 3, 4} e o conjunto A = {1, 4}, o complemento A' é igual a {2, 3}.</p><p>3. Uma relação R é dita simétrica se, e somente se, para todo par (x, y) ∈ R, tivermos necessariamente x = y.</p><p>4. A transitividade de uma relação R exige que se (x, y) ∈ R e (y, z) ∈ R, então (x, z) ∈ R.</p><p>Assinale a opção que apresenta a sequência correta, de cima para baixo:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "V – V – F – V"
+    },
+    {
+     "l": "B",
+     "t": "V – F – F – V"
+    },
+    {
+     "l": "C",
+     "t": "F – V – V – F"
+    },
+    {
+     "l": "D",
+     "t": "V – V – V – F"
+    }
+   ],
+   "cor": "A",
+   "just": "Item 1 V: ∅ ⊆ A para todo A, e {} (vazio, cardinalidade 0) é diferente de {∅} (conjunto unitário que contém o vazio). Item 2 V: A' = U − A = {1,2,3,4} − {1,4} = {2,3}. Item 3 F: simetria exige (x,y) ∈ R ⇒ (y,x) ∈ R; {(1,2),(2,1)} é simétrica com 1 ≠ 2 (exigir x = y descreve uma relação contida na diagonal). Item 4 V: é a definição de transitividade. A B erra ao julgar falso o complemento; a C nega o item 1 e a transitividade e aceita a falsa definição de simetria; a D confunde simetria com igualdade x = y.",
+   "nota": "Mesma questão dos slides do squad (Teoria da Computação - Revisão ENADE / banco anterior reais-66), com as mesmas letras; incluída uma única vez, com o texto do caderno. No slide os quatro itens aparecem em grade 2×2 (leitura linha a linha); julgue cada item pelo conteúdo, pois a ordem pode mudar.",
+   "tags": [
+    "TC: Conjuntos e relações"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q2",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"A Hierarquia de Chomsky classifica as linguagens formais segundo a restrição de suas regras gramaticais. Linguagens que exigem a verificação de propriedades não locais ou contagens dependentes ultrapassam os limites do modelo regular, exigindo gramáticas mais expressivas ou gerando problemas inerentes de ambiguidade sintática.\"</p><p><b>Situação-Problema:</b></p><p>Considere a linguagem L = {w ∈ {a, b}* | o número de a's em w é igual ao número de b's em w}. Avalie as afirmações sobre a linguagem L:</p><p>I. A linguagem L pode ser reconhecida por um Autômato Finito Determinístico (AFD), pois basta alternar a paridade de estados para controlar os símbolos lidos.</p><p>II. A linguagem L pertence à classe do Tipo 2 da Hierarquia de Chomsky, podendo ser gerada por regras de produção da forma V → w, onde V é um único símbolo não terminal e w ∈ (V ∪ Σ)*.</p><p>III. A linguagem L é Livre de Contexto e possui uma gramática não ambígua que a gera diretamente.</p><p><b>Comando:</b></p><p>Assinale a opção correta:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "II e III, apenas."
+    },
+    {
+     "l": "B",
+     "t": "I e III, apenas."
+    },
+    {
+     "l": "C",
+     "t": "II, apenas."
+    },
+    {
+     "l": "D",
+     "t": "I, II e III."
+    }
+   ],
+   "cor": "A",
+   "just": "I é falsa: reconhecer L exige acompanhar a diferença #a − #b, que cresce sem limite; um AFD tem memória finita e a paridade não compara as duas quantidades (pelo Lema do Bombeamento, aᵖbᵖ bombeada no bloco de a's sai de L). II é verdadeira: S → aSbS | bSaS | ε é uma gramática livre de contexto (Tipo 2) que gera L. III é verdadeira: S → aBS | bAS | ε, A → a | bAA, B → b | aBB gera L sem ambiguidade (decompõe cada palavra no primeiro ponto em que o saldo volta a zero). B e D erram ao aceitar a I; C erra ao rejeitar a III, confundindo uma gramática ambígua (S → SS | aSb | bSa | ε) com ambiguidade inerente da linguagem.",
+   "nota": "Mesma questão dos slides do squad (Teoria da Computação - Revisão ENADE / banco anterior reais-67), com as mesmas letras; incluída uma única vez, com o texto do caderno. Pegadinha: o texto-base fala em \"problemas inerentes de ambiguidade\", mas L não é inerentemente ambígua; ambiguidade é propriedade da gramática, não da linguagem.",
+   "tags": [
+    "TC: Gramáticas e Hierarquia de Chomsky",
+    "TC: Linguagens não regulares (limites do AFD)"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q4",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"Autômatos de Pilha associam um controle finito de estados a uma estrutura de memória do tipo LIFO (Last In, First Out). Essa arquitetura permite o reconhecimento das Linguagens Livres de Contexto, essenciais para a verificação de estruturas aninhadas e balanceamento sintático em linguagens de programação e formatos de dados.\"</p><p><b>Situação-Problema:</b></p><p>Uma equipe de engenharia de software foi designada para desenvolver o módulo de parsing e validação sintática de um formato leve de troca de dados (similar ao JSON). O formato exige que todas as estruturas de dados compostas sigam regras rígidas de aninhamento e balanceamento de delimitadores:</p><p>1. Todo caractere de abertura de objeto { deve possuir um correspondente caractere de fechamento }.</p><p>2. Todo caractere de abertura de arranjo [ deve possuir um correspondente caractere de fechamento ].</p><p>3. Os delimitadores podem ser aninhados em qualquer profundidade (ex.: {[[]]}), desde que respeitem a ordem de fechamento LIFO, ou seja, o último delimitador aberto deve ser o primeiro a ser fechado.</p><p><b>Comando:</b></p><p>Com base no poder computacional dos Autômatos de Pilha e na teoria de compiladores, avalie as asserções a seguir e a relação proposta entre elas:</p><p>I. O módulo validador de delimitadores aninhados pode ser implementado por meio de um Autômato de Pilha Não Determinístico, pois a memória de pilha permite empilhar os símbolos de abertura ({ ou [) e desempilhá-los na ordem inversa conforme os símbolos de fechamento correspondentes são lidos.</p><p>PORQUE</p><p>II. O Autômato de Pilha é o modelo computacional exato que reconhece a classe das Linguagens Livres de Contexto, permitindo tratar dependências com memória ilimitada sob a regra LIFO, o que o torna ideal para a validação de parênteses, chaves e colchetes balanceados.</p><p>A respeito dessas asserções, assinale a opção correta:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "As asserções I e II são proposições verdadeiras, e a II é uma justificativa correta da I."
+    },
+    {
+     "l": "B",
+     "t": "As asserções I e II são proposições verdadeiras, mas a II não é uma justificativa correta da I."
+    },
+    {
+     "l": "C",
+     "t": "A asserção I é uma proposição verdadeira, e a II é uma proposição falsa."
+    },
+    {
+     "l": "D",
+     "t": "A asserção I é uma proposição falsa, e a II é uma proposição verdadeira."
+    }
+   ],
+   "cor": "A",
+   "just": "I é verdadeira: cada { ou [ é empilhado (push) e cada fechamento confere e desempilha (pop) o topo; ao fim, a pilha vazia indica balanceamento. II é verdadeira: o autômato de pilha (não determinístico) é exatamente o reconhecedor das Linguagens Livres de Contexto, com memória ilimitada sob disciplina LIFO. A II justifica a I, porque delimitadores balanceados formam uma LLC e é por isso que a pilha resolve o problema. A B nega esse nexo causal; a C nega a equivalência AP ↔ LLC; a D nega a mecânica de empilhar e desempilhar.",
+   "nota": "Mesma questão dos slides do squad (Teoria da Computação - Revisão ENADE / banco anterior reais-69), com as mesmas letras; incluída uma única vez, com o texto do caderno. Só 4 alternativas (falta \"ambas falsas\"). Delimitadores balanceados também são reconhecidos por um AP determinístico; a equivalência exata com todas as LLC vale para o AP não determinístico.",
+   "tags": [
+    "TC: Autômatos de pilha"
+   ]
+  },
+  {
+   "ref": "Caderno do squad: Q6",
+   "origem": "squad",
+   "tipo": "mc",
+   "enun": "<p><b>Dado de Suporte (Texto-Base):</b></p><p>\"A Hierarquia de Chomsky organiza as linguagens formais em quatro níveis de complexidade sintática (Tipo 3, Tipo 2, Tipo 1 e Tipo 0), estabelecendo uma correspondência biunívoca entre a gramática geradora e a classe do autômato reconhecedor associado.\"</p><p><b>Situação-Problema:</b></p><p>Um arquiteto de linguagens de programação precisa selecionar o modelo de autômato adequado para cada etapa do processamento de um compilador, correlacionando os níveis da Hierarquia de Chomsky aos seus respectivos modelos computacionais.</p><p><b>Comando:</b></p><p>Relacione a classe de linguagem da Coluna 1 ao seu respectivo autômato/reconhecedor exato na Coluna 2:</p><table><thead><tr><th>Coluna 1 (Classe da Linguagem)</th><th>Coluna 2 (Modelo Reconhecedor)</th></tr></thead><tbody><tr><td>(1) Linguagens Regulares (Tipo 3)</td><td>( A ) Autômato de Pilha Não Determinístico</td></tr><tr><td>(2) Linguagens Livres de Contexto (Tipo 2)</td><td>( B ) Máquina de Turing Não Determinística com Limite Linear (LBA)</td></tr><tr><td>(3) Linguagens Sensíveis ao Contexto (Tipo 1)</td><td>( C ) Autômato Finito (Determinístico ou Não Determinístico)</td></tr><tr><td>(4) Linguagens Recursivamente Enumeráveis (Tipo 0)</td><td>( D ) Máquina de Turing Universal</td></tr></tbody></table><p>Assinale a opção que apresenta a associação correta:</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "1-A, 2-C, 3-D, 4-B"
+    },
+    {
+     "l": "B",
+     "t": "1-B, 2-A, 3-C, 4-D"
+    },
+    {
+     "l": "C",
+     "t": "1-C, 2-D, 3-B, 4-A"
+    },
+    {
+     "l": "D",
+     "t": "1-C, 2-A, 3-B, 4-D"
+    }
+   ],
+   "cor": "D",
+   "just": "Tipo 3 (regulares) ↔ autômato finito, AFD ou AFND (1-C); Tipo 2 (livres de contexto) ↔ autômato de pilha não determinístico (2-A); Tipo 1 (sensíveis ao contexto) ↔ autômato linearmente limitado, LBA (3-B); Tipo 0 (recursivamente enumeráveis) ↔ Máquina de Turing (4-D). A A troca o autômato finito com o de pilha e o LBA com a MT; a B põe as regulares no LBA e as sensíveis ao contexto no autômato finito; a C põe as livres de contexto na MT e o Tipo 0 no autômato de pilha.",
+   "nota": "Mesma questão dos slides do squad (Teoria da Computação - Revisão ENADE / banco anterior reais-71), com as mesmas letras; incluída uma única vez, com o texto do caderno. As letras da Coluna 2 coincidem com as letras das alternativas: não confunda \"4-D\" com a alternativa D. \"Máquina de Turing Universal\" é impreciso: o Tipo 0 é a classe das linguagens reconhecidas por alguma Máquina de Turing.",
+   "tags": [
+    "TC: Gramáticas e Hierarquia de Chomsky"
+   ]
+  },
+  {
+   "ref": "Apostila \"Material de Estudos - Teoria da Computação\", Unidade 1, item 14 (Questão estilo ENADE)",
+   "origem": "apostila",
+   "tipo": "multi",
+   "enun": "<p>Considere os conjuntos A = {1,2,3}, B = {2,3,4} e a relação R = {(1,1),(2,2),(3,3),(1,2),(2,1)} definida sobre A. Analise as afirmações:</p><p>(No material, cada afirmação é julgada como V ou F, sem alternativas fechadas. Aqui, <b>marque todas as afirmações verdadeiras</b>.)</p>",
+   "alts": [
+    {
+     "l": "A",
+     "t": "A ∪ B = {1,2,3,4}."
+    },
+    {
+     "l": "B",
+     "t": "A ∩ B = {2,3}."
+    },
+    {
+     "l": "C",
+     "t": "A − B = {1}."
+    },
+    {
+     "l": "D",
+     "t": "R é reflexiva."
+    },
+    {
+     "l": "E",
+     "t": "R é simétrica."
+    },
+    {
+     "l": "F",
+     "t": "R é antissimétrica."
+    }
+   ],
+   "cor": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+   ],
+   "just": "As três primeiras seguem direto das operações: A ∪ B = {1,2,3,4}, A ∩ B = {2,3} e A − B = {1} (só o 1 está em A e fora de B). R é reflexiva porque contém (1,1), (2,2) e (3,3), todos os pares da diagonal de A. É simétrica porque (1,2) e (2,1) aparecem juntos e os demais pares são da diagonal. Não é antissimétrica: (1,2) e (2,1) estão em R com 1 ≠ 2, o que a antissimetria proíbe.",
+   "nota": "Gabarito do material (sequência V/F das afirmações I a VI): V, V, V, V, V, F. Mantida como \"marque todas\" porque a apostila não traz alternativas; criar sequências distratoras seria inventar conteúdo. Variações prováveis: A − B = {1, 4} (falsa, confunde com diferença simétrica) ou \"R é transitiva\" (verdadeira).",
+   "tags": [
+    "TC: Conjuntos e relações"
+   ]
+  }
+ ],
+ "dissertativas": [],
+ "observacoes": "Caderno com 6 questões; Q3 e Q5 caíram no Simulado 1 (Q15 e Q26) e foram excluídas. As 6 questões dos slides/\"Teoria da Computação - Revisão ENADE.pdf\" (banco anterior reais-66 a reais-71) são as mesmas do caderno, com as mesmas letras; não foram duplicadas. Gabaritos do squad conferidos (Q1 A, Q2 A, Q4 A, Q6 D): nenhuma divergência; só imprecisões de redação registradas em \"nota\" (Q4: AP determinístico já basta para delimitadores; Q6: \"MT Universal\"). Nenhuma das questões incluídas tem figura (o diagrama da MT está só na Q5, excluída). A questão estilo ENADE da apostila (Unidade 1, item 14) entrou como tipo multi (origem \"apostila\"), pois o material só dá a sequência V/F, sem alternativas. A apostila também tem ~35 \"questões de fixação\" (exercícios abertos curtos, já listados em questoes_por_topico/10_Teoria_da_Computacao.md, Q7–Q42); não são discursivas no padrão ENADE e não foram incluídas em \"dissertativas\"."
+}
