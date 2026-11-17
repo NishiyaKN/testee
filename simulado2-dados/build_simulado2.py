@@ -146,6 +146,11 @@ def main():
          'desc': 'Discursivas, exercícios e exemplos resolvidos que aparecem nos slides, cadernos e apostilas.'},
     ]
 
+    # alternativas que citam outra alternativa ficam com a ordem fixa no embaralhamento
+    cita = re.compile(r'alternativas?\s+[A-E]\b|\banteriores\b|todas as (opções|alternativas)', re.I)
+    for q in questions:
+        q['fixa'] = any(cita.search(re.sub(r'<[^>]+>', '', a['t'])) for a in q['alts'])
+
     # checagens
     ids = [q['id'] for q in questions]
     assert len(ids) == len(set(ids)), 'ids duplicados'

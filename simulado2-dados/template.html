@@ -303,6 +303,7 @@ body.in-quiz main{padding-top:.4rem}
 .diss .caso th{background:var(--pencil-soft)}
 .pill{display:inline-block;padding:.05rem .55rem;border-radius:1rem;font-size:.78rem;font-weight:700;background:var(--wrong-soft);color:var(--wrong);margin-left:.4rem;vertical-align:.1em}
 .pill.mid{background:var(--pencil-soft);color:var(--pencil)}
+.alt .orig{display:block;margin-top:.2rem;font-size:.78rem;color:var(--muted);font-weight:400}
 </style>
 </head>
 <body>
@@ -517,9 +518,22 @@ function labelOf(sel){
   const g = (DATA.sets.find(s => s.id === sel.sets[0]) || {}).grupo;
   return `${g === 'fg' ? 'Formação Geral' : 'Específico'}: ${sel.sets.length} conjuntos`;
 }
+/* alternativas embaralhadas: cada treino novo sorteia uma ordem por questão (guardada no treino).
+   As respostas continuam gravadas com a letra original; só a exibição usa a letra sorteada. */
+function makePerms(ids){
+  const P = {};
+  ids.forEach(id => { const q = BY_ID[id]; if (q && !q.fixa && q.alts.length > 1) P[id] = shuffle(q.alts.map(a => a.l)); });
+  return P;
+}
+function viewAlts(q){
+  const perm = run && run.perm && run.perm[q.id], byL = Object.fromEntries(q.alts.map(a => [a.l, a]));
+  const order = perm && perm.length === q.alts.length && perm.every(l => byL[l]) ? perm : q.alts.map(a => a.l);
+  return order.map((o, i) => ({l: String.fromCharCode(65 + i), o, t: byL[o].t}));
+}
+const dispOf = (q, o) => (viewAlts(q).find(v => v.o === o) || {}).l || o;
 function mkRun(sel, ids, answers, startedAt, idx){
   return { id: 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2,6), sel, sig: sigOf(sel), label: labelOf(sel),
-           ids, idx: idx || 0, answers: answers || {}, startedAt: startedAt || Date.now(), finishedAt: null };
+           ids, idx: idx || 0, answers: answers || {}, startedAt: startedAt || Date.now(), finishedAt: null, perm: makePerms(ids) };
 }
 const isDone = r => r.ids.every(id => r.answers[id]);
 
@@ -744,18 +758,22 @@ function render(){
   if (mk && document.activeElement !== $('mark-note')) $('mark-note').value = mk.note || '';
   $('enun').innerHTML = q.enun;
   const chosen = a ? (Array.isArray(a.chosen) ? a.chosen : [a.chosen]) : (q._pending || []);
-  $('alts').innerHTML = q.alts.map(al => {
+  const va = viewAlts(q), mixed = va.some(v => v.l !== v.o);
+  $('alts').innerHTML = va.map(al => {
     let cls = '';
-    if (a){ const isCor = corList(q).includes(al.l), picked = chosen.includes(al.l); cls = isCor ? 'right' : (picked ? 'wrong' : 'fade'); }
-    else if (chosen.includes(al.l)) cls = 'sel';
-    return `<li><button class="alt ${cls}" data-l="${al.l}" ${a ? 'disabled' : ''}><span class="bub">${al.l}</span><span>${al.t}</span></button></li>`;
+    if (a){ const isCor = corList(q).includes(al.o), picked = chosen.includes(al.o); cls = isCor ? 'right' : (picked ? 'wrong' : 'fade'); }
+    else if (chosen.includes(al.o)) cls = 'sel';
+    const orig = a && mixed ? `<span class="orig">letra original: ${al.o}</span>` : '';
+    return `<li><button class="alt ${cls}" data-l="${al.o}" ${a ? 'disabled' : ''}><span class="bub">${al.l}</span><span>${al.t}${orig}</span></button></li>`;
   }).join('');
   $('multi').classList.toggle('hidden', !(q.tipo === 'multi' && !a));
   $('check').disabled = !(q._pending && q._pending.length);
   const fb = $('fb');
   if (a){
     fb.className = 'fb ' + (a.ok ? 'good' : 'bad');
-    fb.innerHTML = `<div class="verdict">${a.ok ? 'Correta' : 'Incorreta. A correta é ' + corList(q).join(', ') + '.'}</div>
+    const corDisp = corList(q).map(o => dispOf(q, o)).sort().join(', ');
+    fb.innerHTML = `<div class="verdict">${a.ok ? 'Correta' : 'Incorreta. A correta é ' + corDisp + '.'}</div>
+      ${mixed ? '<p class="note">As alternativas foram embaralhadas nesta tentativa. As letras citadas na explicação são as da questão original, indicadas em cada alternativa.</p>' : ''}
       <p class="why"><mark>${q.just}</mark></p>${q.nota ? `<p class="note">${q.nota}</p>` : ''}
       <p class="tags">${q.tags.map(t => `<span class="tag">${esc(t)}</span>`).join(' ')}</p>
       ${a.ok ? '' : (S.marks[q.id] ? '<p class="flag">Esta questão já está nas suas marcadas para revisar.</p>' : '<p class="flag">O tema desta questão entrou na aba Revisar.</p>')}
@@ -961,7 +979,7 @@ document.addEventListener('keydown', e => {
   else if (e.key === 'Enter' && !$('multi').classList.contains('hidden')) confirmMulti();
   else {
     const map = {'1':'A','2':'B','3':'C','4':'D','5':'E'}, k = e.key.toUpperCase(), l = map[k] || k, q = qOf(run.idx);
-    if (q.alts.some(a => a.l === l)) answer(l);
+    const v = viewAlts(q).find(x => x.l === l); if (v) answer(v.o);
   }
 });
 initHome();

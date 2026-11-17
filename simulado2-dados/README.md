@@ -8,7 +8,7 @@
 | `inferidas.json` | As questões inferidas do treino antigo, que entram como extras desmarcados por padrão. |
 | `onde.json` | Onde estudar cada tema (aparece na aba Revisar). |
 | `img/` | Figuras recortadas dos cadernos, embutidas em base64 no HTML. |
-| `template.html` | O motor do quiz, derivado de `treino-enade-2026.html`, com as 3 seções e o simulado sorteado. |
+| `template.html` | O motor do quiz, derivado de `treino-enade-2026.html`, com as 3 seções e o simulado sorteado. A cada treino novo, as alternativas de cada questão são embaralhadas. A ordem fica guardada no treino, e as questões cujas alternativas citam outra alternativa mantêm a ordem original. |
 | `build_simulado2.py` | Script que monta o HTML. |
 
 Para regerar o HTML, rode na raiz do repositório:
